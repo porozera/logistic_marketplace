@@ -115,7 +115,7 @@
                                     <a href="services.html" class="nav-link text-left">Services</a>
                                 </li>
                                 <li>
-                                    <a href="testimonials.html" class="nav-link text-left">Testimonials</a>
+                                    <a href="testimonials.html" class="nav-link text-left">Price Calculator</a>
                                 </li>
                                 <li>
                                     <a href="blog.html" class="nav-link text-left">Contact</a>
@@ -187,7 +187,7 @@
             <!-- Judul -->
             <div class="row mb-4">
                 <div class="col-12 text-center">
-                    <h2 class="font-weight-bold">Keunggulan Layanan Kami</h2>
+                    <h2 class="font-weight-bold text-black">Layanan Kami</h2>
                 </div>
             </div>
     
@@ -198,8 +198,8 @@
                         <span class="wrap-icon-39293 d-block mb-3">
                             <span class="flaticon-yacht"></span>
                         </span>
-                        <h3>Jaringan Luas</h3>
-                        <p>Kami melayani pengiriman ke seluruh wilayah domestik, dari kota besar hingga daerah terpencil.</p>
+                        <h3>Shipping & Logistics</h3>
+                        <p>Solusi pengiriman dan logistik yang efisien untuk memastikan barang Anda tiba dengan cepat, aman, dan tepat waktu ke tujuan.</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
@@ -207,8 +207,8 @@
                         <span class="wrap-icon-39293 d-block mb-3">
                             <span class="flaticon-shield"></span>
                         </span>
-                        <h3>Keamanan Terjamin</h3>
-                        <p>Kami menggunakan sistem verifikasi yang ketat untuk memastikan keamanan barang selama proses pengiriman.</p>
+                        <h3>Book & Track Online</h3>
+                        <p>Pesan layanan pengiriman dengan mudah dan lacak status pengiriman Anda secara real-time melalui platform online kami.</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4">
@@ -216,8 +216,8 @@
                         <span class="wrap-icon-39293 d-block mb-3">
                             <span class="flaticon-captain"></span>
                         </span>
-                        <h3>Layanan Fleksibel</h3>
-                        <p>Anda dapat mengirim dalam jumlah besar atau kecil untuk keperluan usaha dengan harga yang tetap kompetitif.</p>
+                        <h3>Freight Marketplace</h3>
+                        <p>Platform digital yang menghubungkan pengirim dan penyedia jasa logistik untuk mendapatkan penawaran terbaik dalam pengiriman barang.</p>
                     </div>
                 </div>
             </div>
@@ -526,10 +526,15 @@
               </div>
             </div>
           </div>
-
           
-
         </div>
+
+        <div class="row justify-content-center">
+          <div class="col-md-7 text-center">
+            <p class="mb-0 pt-3"><a href="#" class="btn btn-primary py-3 px-5 text-white">Pesan Pengiriman</a></p>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -745,8 +750,8 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-md-7 text-center">
-            <h2 class="text-white">Get In Touch With Us</h2>
-            <p class="lead text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <h2 class="text-white">Dapatkan info dan berita terbaru dari kami</h2>
+            <p class="lead text-white">Tetap terhubung dengan kami untuk mendapatkan update terbaru, penawaran spesial, dan berita menarik lainnya!</p>
             <p class="mb-0"><a href="#" class="btn btn-warning py-3 px-5 text-white">Contact Us</a></p>
           </div>
         </div>
