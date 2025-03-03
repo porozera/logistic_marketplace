@@ -171,12 +171,12 @@
           <div class="col-md-6">
             <span class="text-serif text-primary">Tentang Kami</span>
             <h3 class="heading-92913 text-black">Mengapa Memilih Kami?</h3>
-            <p>
+            <p style="text-align: justify;">
             📦 <span style="font-weight: bold">Efisiensi Biaya</span> : Kurangi biaya pengiriman dengan sistem berbagi kontainer.<br>
             ⏳ <span style="font-weight: bold">Pengiriman Lebih Cepat</span> : Optimalkan rute dan kurangi waktu tunggu.<br>
             🔄 <span style="font-weight: bold">Sistem Penjadwalan Fleksibel</span> : Atur waktu pengiriman sesuai kebutuhan dan optimalkan kapasitas kendaraan.
             </p>
-            <p><a href="#" class="btn btn-primary py-3 px-4">Pelajari Lebih Lanjut</a></p>
+            <p class="mt-3"><a href="#" class="btn btn-primary py-3 px-4">Pelajari Lebih Lanjut</a></p>
           </div>
         </div>
       </div>
@@ -531,7 +531,7 @@
 
         <div class="row justify-content-center">
           <div class="col-md-7 text-center">
-            <p class="mb-0 pt-3"><a href="#" class="btn btn-primary py-3 px-5 text-white">Pesan Pengiriman</a></p>
+            <p class="mb-0 pt-3"><a href="#" class="btn btn-primary py-3 px-5 text-white">Cari Pengiriman</a></p>
           </div>
         </div>
 
@@ -764,7 +764,7 @@
         <div class="row">
           <div class="col-lg-3">
             <p class="mb-4"><img src="{{ asset('template/waterboat/images/logo.png') }}" alt="Image" class="img-fluid"></p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae nemo minima qui dolor, iusto iure.</p>  
+            <p style="text-align: justify; margin-right: 10px;">Platform digital yang menghubungkan pengirim dan penyedia jasa logistik untuk mendapatkan penawaran terbaik dalam pengiriman barang.</p>  
             <p><a href="#">Learn More</a></p>
           </div>
           <div class="col-lg-3">
