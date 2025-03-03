@@ -50,7 +50,7 @@
                 </main>
         @endif
     @endauth --}}
-
+    @include('../layouts.footers.footer')
 
     <!-- [ Pre-loader ] start -->
   <div class="loader-bg">

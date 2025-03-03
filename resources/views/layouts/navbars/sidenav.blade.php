@@ -2,9 +2,9 @@
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
       <div class="m-header">
-        <a href="../dashboard/index.html" class="b-brand text-primary">
+        <a href="" class="b-brand text-primary">
           <!-- ========   Change your logo from here   ============ -->
-          <img src="../assets/images/logo-dark.svg" class="img-fluid logo-lg" alt="logo">
+          <img src="{{ asset('template/mantis/dist/assets/images/logo-dark.svg') }}" class="img-fluid logo-lg" alt="logo">
         </a>
       </div>
       <div class="navbar-content">
