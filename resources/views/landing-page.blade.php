@@ -163,23 +163,23 @@
     <!-- END slider -->
 
     <div class="site-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <img src="{{ asset('template/waterboat/images/stuffing.jpg') }}" alt="Image" class="img-fluid rounded-2">
-          </div>
-          <div class="col-md-6">
-            <span class="text-serif text-primary">Tentang Kami</span>
-            <h3 class="heading-92913 text-black">Mengapa Memilih Kami?</h3>
-            <p style="text-align: justify;">
-            📦 <span style="font-weight: bold">Efisiensi Biaya</span> : Kurangi biaya pengiriman dengan sistem berbagi kontainer.<br>
-            ⏳ <span style="font-weight: bold">Pengiriman Lebih Cepat</span> : Optimalkan rute dan kurangi waktu tunggu.<br>
-            🔄 <span style="font-weight: bold">Sistem Penjadwalan Fleksibel</span> : Atur waktu pengiriman sesuai kebutuhan dan optimalkan kapasitas kendaraan.
-            </p>
-            <p class="mt-3"><a href="#" class="btn btn-primary py-3 px-4">Pelajari Lebih Lanjut</a></p>
-          </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="{{ asset('template/waterboat/images/stuffing.jpg') }}" alt="Image" class="img-fluid rounded-2">
+                </div>
+                <div class="col-md-6">
+                  <span class="text-serif text-primary">Tentang Kami</span>
+                  <h3 class="heading-92913 text-black">Mengapa Memilih Kami?</h3>
+                  <p style="text-align: justify;">
+                    📦 <span style="font-weight: bold">Efisiensi Biaya</span> : Kurangi biaya pengiriman dengan sistem berbagi kontainer.<br>
+                    ⏳ <span style="font-weight: bold">Pengiriman Lebih Cepat</span> : Optimalkan rute dan kurangi waktu tunggu.<br>
+                    🔄 <span style="font-weight: bold">Sistem Penjadwalan Fleksibel</span> : Atur waktu pengiriman sesuai kebutuhan dan optimalkan kapasitas kendaraan.
+                  </p>
+                  <p class="mt-3"><a href="#" class="btn btn-primary py-3 px-4">Pelajari Lebih Lanjut</a></p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <div class="" style="margin-bottom: 100px;">
