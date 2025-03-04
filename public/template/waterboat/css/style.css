@@ -255,7 +255,7 @@ h1, h2, h3, h4, h5,
     padding-left: 7rem;
     padding-right: 7rem; }
   .site-navbar .site-navigation.border-bottom {
-    border-bottom: 1px solid #f3f3f4 !important; }
+    border-bottom: 1px solid #1089ff !important; }
   .site-navbar .site-navigation .site-menu {
     margin-bottom: 0; }
     .site-navbar .site-navigation .site-menu .active > a {
@@ -271,7 +271,7 @@ h1, h2, h3, h4, h5,
         height: 2px;
         left: 0;
         bottom: 0;
-        background-color: #fff; }
+        background-color: #1089ff; }
     .site-navbar .site-navigation .site-menu a {
       text-decoration: none !important;
       display: inline-block; }
@@ -286,7 +286,7 @@ h1, h2, h3, h4, h5,
         letter-spacing: .05rem;
         font-weight: 900;
         padding: 20px 20px;
-        color: #fff;
+        color: #1089ff;
         display: inline-block;
         text-decoration: none !important; }
         .site-navbar .site-navigation .site-menu > li > a:hover {
@@ -459,7 +459,7 @@ h1, h2, h3, h4, h5,
       position: relative;
       display: block; }
       .site-mobile-menu .site-nav-wrap li.active > a {
-        color: #fff; }
+        color: #1089ff; }
     .site-mobile-menu .site-nav-wrap .arrow-collapse {
       position: absolute;
       right: 0px;
@@ -540,7 +540,7 @@ h1, h2, h3, h4, h5,
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
     transition: .3s all ease;
-    background: #1089ff; }
+    background: #f4f5f9; }
     .sticky-wrapper .site-navbar .site-logo a {
       color: #000; }
     .sticky-wrapper .site-navbar .site-menu > li {
@@ -550,21 +550,21 @@ h1, h2, h3, h4, h5,
         position: relative; }
         .sticky-wrapper .site-navbar .site-menu > li > a.active:after {
           height: 2px;
-          background: #fff;
+          background: #1089ff;
           content: "";
           position: absolute;
           bottom: 0;
           left: 20px;
           right: 20px; }
       .sticky-wrapper .site-navbar .site-menu > li.active > a {
-        color: #fff;
+        color: #1089ff;
         position: relative; }
         .sticky-wrapper .site-navbar .site-menu > li.active > a:before {
           content: "";
           position: absolute;
           bottom: 0;
           height: 2px;
-          background: #fff; }
+          background: #1089ff; }
   .sticky-wrapper.is-sticky .site-navbar {
     -webkit-box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.2);
     box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.2); }
@@ -583,7 +583,7 @@ h1, h2, h3, h4, h5,
         .sticky-wrapper.is-sticky .site-navbar .site-menu > li > a.active:after {
           background: #1089ff; }
       .sticky-wrapper.is-sticky .site-navbar .site-menu > li.active > a {
-        color: #fff; }
+        color: #1089ff; }
   .sticky-wrapper .shrink {
     padding-top: 10px !important;
     padding-bottom: 10px !important; }
