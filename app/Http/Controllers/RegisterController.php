@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class RegisterController extends Controller
+{
+    public function create_customer()
+    {
+        return view('auth.register_customer');
+    }
+
+    public function create_lsp()
+    {
+        return view('auth.register_lsp');
+    }
+
+
+    public function store_customer(Request $request)
+    {
+        try {
+            $attributes = $request->validate([
+                'username' => 'required|max:255|min:2',
+                'email' => 'required|email|max:255|unique:users,email',
+                'password' => 'required|min:5|max:255',
+                'firstName' => 'required',
+                'lastName' => 'required',
+                'telpNumber' => 'required',
+                'address' => 'required',
+                'role' => 'required'
+            ]);
+    
+            $data = User::create([
+                'username' => $attributes['username'],
+                'email' => $attributes['email'],
+                'password' => bcrypt($attributes['password']),
+                'firstName' => $attributes['firstName'],
+                'lastName' => $attributes['lastName'],
+                'telpNumber' => $attributes['telpNumber'],
+                'address' => $attributes['address'],
+                'role' => $attributes['role'],
+            ]);
+    
+            return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
+    
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Jika validasi gagal, tampilkan semua error
+            return back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            // Jika ada error lain, tampilkan pesan error
+            return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
+        }
+    }    
+}
