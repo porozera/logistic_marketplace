@@ -15,7 +15,7 @@
               <span class="pc-mtext">Dashboard</span>
             </a>
           </li>
-  
+
           <li class="pc-item pc-caption">
             <label>UI Components</label>
             <i class="ti ti-dashboard"></i>
@@ -38,7 +38,7 @@
               <span class="pc-mtext">Icons</span>
             </a>
           </li>
-  
+
           <li class="pc-item pc-caption">
             <label>Pages</label>
             <i class="ti ti-news"></i>
@@ -55,7 +55,7 @@
               <span class="pc-mtext">Register</span>
             </a>
           </li>
-  
+
           <li class="pc-item pc-caption">
             <label>Other</label>
             <i class="ti ti-brand-chrome"></i>
@@ -114,4 +114,4 @@
       </div>
     </div>
   </nav>
-  <!-- [ Sidebar Menu ] end --> 
+  <!-- [ Sidebar Menu ] end -->

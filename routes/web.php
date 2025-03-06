@@ -10,3 +10,9 @@ Route::get('/', function () {
 Route::get('/landing-page', function () {
     return view('landing-page');
 });
+
+
+Route::get('/kelolarute', function () {
+    return view('lsp.kelola-rute');
+});
+
