@@ -53,7 +53,7 @@
               <h3 class="mb-0"><b>Buat Akun LSP</b></h3>
               <a href="/login" class="link-primary">Sudah punya akun?</a>
             </div>
-            <form action="/register-customer" method="POST">
+            <form action="/register-lsp" method="POST">
                 @csrf
                 <div class="form-group mb-3">
                     <label class="form-label">Nama Perusahaan</label>
@@ -62,8 +62,8 @@
                 </div>
                 <div class="form-group mb-3">
                   <label class="form-label">Nomor Izin Penyelenggara</label>
-                  <input type="text" name="companyName" class="form-control" placeholder="Nama Perusahaan" value="{{ old('companyName') }}">
-                  @error('username') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                  <input type="text" name="permitNumber" class="form-control" placeholder="Nomor Izin Penyelenggara" value="{{ old('permitNumber') }}">
+                  @error('permitNumber') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
               </div>
                 <div class="form-group mb-3">
                     <label class="form-label">Email</label>
@@ -87,6 +87,16 @@
                   <div class="d-grid mt-3">
                     <button type="submit" class="btn btn-primary">Buat Akun</button>
                 </div>   
+                @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
             </form>       
           </div>
         </div>

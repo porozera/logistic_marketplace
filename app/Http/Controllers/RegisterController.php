@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RequestUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,37 @@ class RegisterController extends Controller
             ]);
     
             return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
+    
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Jika validasi gagal, tampilkan semua error
+            return back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            // Jika ada error lain, tampilkan pesan error
+            return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
+        }
+    }    
+
+    public function store_lsp(Request $request)
+    {
+        try {
+            $attributes = $request->validate([
+                'companyName' => 'required',
+                'permitNumber' => 'required',
+                'email' => 'required',
+                'address' => 'required',
+                'telpNumber' => 'required',
+            ]);
+    
+            $data = RequestUser::create([
+                'companyName' => $attributes['companyName'],
+                'permitNumber' => $attributes['permitNumber'],
+                'email' => $attributes['email'],
+                'telpNumber' => $attributes['telpNumber'],
+                'address' => $attributes['address'],
+                'status' => "Butuh di Approve",
+            ]);
+    
+            return redirect('/login')->with('success', 'Registrasi berhasil!, Tunggu sesaat untuk mendapatkan email dari Admin.');
     
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Jika validasi gagal, tampilkan semua error

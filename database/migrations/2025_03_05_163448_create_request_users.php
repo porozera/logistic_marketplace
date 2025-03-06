@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('request_users', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('companyName');
+            $table->string('permitNumber')->unique();
+            $table->string('email')->unique();
+            $table->string('telpNumber');
+            $table->text('address');
+            $table->string('status');
         });
     }
 
