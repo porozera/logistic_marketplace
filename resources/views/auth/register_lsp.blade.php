@@ -27,7 +27,13 @@
   <!-- [Template CSS Files] -->
   <link rel="stylesheet" href="{{ asset('template/mantis/dist/assets/css/style.css') }}" id="main-style-link">
   <link rel="stylesheet" href="{{ asset('template/mantis/dist/assets/css/style-preset.css') }}">
-
+  <style>
+    .auth-main {
+        background-image: url('{{ asset("template/waterboat/images/hero-1.jpg") }}');
+        background-size: cover;
+        background-position: center;
+    }
+  </style>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -45,7 +51,7 @@
     <div class="auth-wrapper v3">
       <div class="auth-form">
         <div class="auth-header">
-          <a href="#"><img src="{{ asset('template/mantis/dist/assets/images/logo-dark.svg') }}" alt="img"></a>
+          <a href="/login"><img src="{{ asset('template/mantis/dist/assets/images/logo-dark.svg') }}" alt="img"></a>
         </div>
         <div class="card my-5">
           <div class="card-body">
@@ -88,14 +94,14 @@
                     <button type="submit" class="btn btn-primary">Buat Akun</button>
                 </div>   
                 @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
             </form>       
           </div>

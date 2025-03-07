@@ -22,6 +22,7 @@ Route::get('/register-lsp', [RegisterController::class, 'create_lsp'])->middlewa
 Route::post('/register-lsp', [RegisterController::class, 'store_lsp'])->middleware('guest')->name('register-lsp.perform');
 Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 // Route::get('/reset-password', [ResetPassword::class, 'show'])->middleware('guest')->name('reset-password');
 // Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 // Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
