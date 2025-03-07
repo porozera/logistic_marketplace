@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +27,17 @@ Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->n
 // Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 // Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 // Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
+
+
+
+Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
+    Route::get('/admin/dashboard', [DashboardController::class, 'index_admin']);
+});
+
+Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
+    Route::get('/lsp/dashboard', [DashboardController::class, 'index']);
+});
+
+Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function () {
+    Route::get('/customer/dashboard', [DashboardController::class, 'index_admin']);
+});
