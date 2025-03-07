@@ -27,14 +27,16 @@
           </li>
           @endif
 
+          --}}
+
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">
-              <a href="{{ route('customer.dashboard') }}" class="pc-link">
+              <a href="{{ route('customer.request-route') }}" class="pc-link">
                   <span class="pc-micon"><i class="ti ti-shopping-cart"></i></span>
-                  <span class="pc-mtext">Customer Dashboard</span>
+                  <span class="pc-mtext">Request Route</span>
               </a>
           </li>
-          @endif --}}
+          @endif 
   
           <li class="pc-item pc-caption">
             <label>UI Components</label>

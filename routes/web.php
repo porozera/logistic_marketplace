@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RequestRouteController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -41,4 +42,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
 
 Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function () {
     Route::get('/customer/dashboard', [DashboardController::class, 'index_admin']);
+
+    //REQUEST ROUTES
+    Route::get('/customer/request-routes', [RequestRouteController::class, 'index'])->name('customer.request-route');
 });
