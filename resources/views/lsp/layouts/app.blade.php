@@ -31,10 +31,11 @@
     <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="{{ asset('template/mantis/dist/assets/css/style.css') }}" id="main-style-link">
     <link rel="stylesheet" href="{{ asset('template/mantis/dist/assets/css/style-preset.css') }}">
+
 </head>
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
     @include('lsp.layouts.navbars.sidenav')
-    @include('lsp.layouts.navbars.topnav')
+    {{-- @include('lsp.layouts.navbars.topnav') --}}
     @yield('content')
     {{-- @guest
         @yield('content')

@@ -8,6 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('offers', function (Blueprint $table) {
+            $table->id();
             $table->string('noOffer')->unique();
             $table->string('lspName');
             $table->string('origin');
@@ -23,7 +24,6 @@ return new class extends Migration {
             $table->integer('remainingVolume')->nullable();
             $table->string('commodities')->nullable();
             $table->enum('status', ['active', 'deactive']);
-            $table->integer('size');
             $table->decimal('price', 10, 2);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->dateTime('timestamp');
