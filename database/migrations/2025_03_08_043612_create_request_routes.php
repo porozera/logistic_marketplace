@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('shipmentType');
             $table->string('shipmentMode');
             $table->date('shippingDate');
+            $table->date('deadline');
             $table->integer('weight');
             $table->integer('volume');
             $table->string('commodities');

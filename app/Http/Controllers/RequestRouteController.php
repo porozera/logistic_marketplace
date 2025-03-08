@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\RequestRoute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class RequestRouteController extends Controller
 {
@@ -41,8 +42,10 @@ class RequestRouteController extends Controller
             "status" => "Open",
             "user_id" => Auth::id(),
             "username" => Auth::user()->username,
+            "deadline" => Carbon::now()->addDays(7)->toDateString()
         ]);
-        return redirect("/customer/request-routes/success")->with('success', 'Permintaan rute berhasil dikrimkan!');
+        $deadline = Carbon::now()->addDays(7)->toDateString();
+        return redirect("/customer/request-routes/success?deadline=$deadline")->with('success', 'Permintaan rute berhasil dikrimkan!');
     }
 
     public function success()

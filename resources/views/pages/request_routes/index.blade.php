@@ -36,7 +36,7 @@
               <h4 class="mb-2">Detail Pengiriman</h4>
 
               <br>
-                <form action="/customer/request-routes/perform" method="POST">
+                <form action="/customer/request-routes/perform" method="POST" id="requestRouteAddForm">
                     @csrf
                     <div class="row">
                         <div class="col-md-4">
@@ -140,7 +140,7 @@
                             
                         </div> 
                         <div class="col-md-10 text-end">
-                            <button type="submit" class="btn btn-primary">Kirim Permintaan</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Kirim Permintaan</button>
                         </div> 
                     </div>
                 </form>
@@ -151,4 +151,30 @@
     </div>
   </div>
   <!-- [ Main Content ] end -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah anda yakin menambah data ini?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="submitFormButton">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+            document.getElementById('submitFormButton').addEventListener('click', function () {
+                // Submit the form
+                document.getElementById('requestRouteAddForm').submit();
+            });
+        </script>
 @endsection
