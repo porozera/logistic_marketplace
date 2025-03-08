@@ -30,5 +30,10 @@ class DatabaseSeeder extends Seeder
             'companyName' => 'PT xyz',
             'bannerPicture' => null,
         ]);
+
+        $this->call([
+            CustomerSeeder::class,
+        ]);
     }
+ 
 }

@@ -41,8 +41,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function () {
-    Route::get('/customer/dashboard', [DashboardController::class, 'index_admin']);
+    Route::get('/customer/dashboard', [DashboardController::class, 'index_customer']);
 
     //REQUEST ROUTES
     Route::get('/customer/request-routes', [RequestRouteController::class, 'index'])->name('customer.request-route');
+    Route::post('/customer/request-routes/perform', [RequestRouteController::class, 'store'])->name('customer.request-route.perform');
+    Route::get('/customer/request-routes/success', [RequestRouteController::class, 'success'])->name('customer.request-success');
 });

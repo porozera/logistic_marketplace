@@ -11,6 +11,11 @@
             <div class="col-md-12">
               <div class="page-header-title">
                 <h5 class="m-b-10">Permintaan Pengiriman</h5>
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
               </div>
                 {{-- <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
@@ -29,8 +34,9 @@
           <div class="card">
             <div class="card-body">
               <h4 class="mb-2">Detail Pengiriman</h4>
+
               <br>
-                <form action="" method="POST">
+                <form action="/customer/request-routes/perform" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-4">
@@ -72,7 +78,7 @@
                             <select class="form-control" name="shipmentMode" id="shipmentMode">
                                 <option value="Laut">Laut</option>
                                 <option value="Darat">Darat</option>
-                            </select>
+                            </select>                            
                             @error('shipmentMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
@@ -120,6 +126,13 @@
                                 </select>
                                 @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Deskripsi</label>
+                            <textarea class="form-control" name="description" rows="4" placeholder="Deskripsi">{{ old('description') }}</textarea>
+                            @error('description') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                         </div>
                     </div>
                     <div class="row">
