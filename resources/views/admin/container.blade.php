@@ -70,10 +70,11 @@
                             </a>
                           </li>
                           <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
-                            <a href="#" class="avtar avtar-xs btn-link-danger" onclick="confirmDelete({{ $item->id }})">
+                            <a href="javascript:void(0);" class="avtar avtar-xs btn-link-danger" onclick="confirmDelete({{ $item->id }})">
                                 <i class="ti ti-trash f-18"></i>
                             </a>
                           </li>
+                        
                         
                         </ul>
                       </td>
@@ -114,6 +115,25 @@
       </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                showConfirmButton: true, // Menampilkan tombol "OK"
+                confirmButtonText: "OK", // Label tombol
+                confirmButtonColor: "#3085d6", // Warna tombol OK
+            });
+        @endif
+    });
+</script>
+
+
 <script>
   function confirmDelete(id) {
       let form = document.getElementById('deleteForm');

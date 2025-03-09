@@ -27,7 +27,7 @@ class ContainerController extends Controller
         ]);
 
         $container = Container::create($request->all());
-        return redirect('kontainer');
+        return redirect('kontainer')->with('success', 'Data Kontainer berhasil ditambahkan!');
     }
 
     public function edit($id) {
