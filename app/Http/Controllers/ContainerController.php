@@ -29,4 +29,33 @@ class ContainerController extends Controller
         $container = Container::create($request->all());
         return redirect('kontainer');
     }
+
+    public function edit($id) {
+        $container = Container::findOrFail($id);
+        return view('admin.container-edit', compact('container'));
+    }
+    
+    public function update(Request $request, $id) {
+        $validated = $request->validate([
+            'code' => 'required|max:255|unique:containers,code,'.$id,
+            'name' => 'required|max:255',
+            'weight' => 'required|numeric',
+            'volume' => 'required|numeric',
+            'description' => 'required'
+        ]);
+    
+        $container = Container::findOrFail($id);
+        $container->update($request->all());
+    
+        return redirect('kontainer')->with('success', 'Data berhasil diperbarui');
+    }
+
+    public function destroy($id) {
+        $container = Container::findOrFail($id);
+        $container->delete();
+
+        return redirect('/kontainer')->with('success', 'Data Kontainer berhasil dihapus');
+    }
+
+    
 }

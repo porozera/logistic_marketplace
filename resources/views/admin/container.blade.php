@@ -64,17 +64,17 @@
                       <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">{{ $item->description }}</td>
                       <td class="text-center">
                         <ul class="list-inline me-auto mb-0">
-                          <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Edit">
-                            <a href="#" class="avtar avtar-xs btn-link-primary" data-bs-toggle="modal"
-                              data-bs-target="#user-edit_add-modal">
+                          <li class="list-inline-item align-bottom">
+                            <a href="{{ url('kontainer/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
                               <i class="ti ti-edit-circle f-18"></i>
                             </a>
                           </li>
                           <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
-                            <a href="#" class="avtar avtar-xs btn-link-danger">
-                              <i class="ti ti-trash f-18"></i>
+                            <a href="#" class="avtar avtar-xs btn-link-danger" onclick="confirmDelete({{ $item->id }})">
+                                <i class="ti ti-trash f-18"></i>
                             </a>
                           </li>
+                        
                         </ul>
                       </td>
                     </tr>
@@ -92,4 +92,36 @@
       <!-- [ Main Content ] end -->
     
 </div>
+<!-- Modal Konfirmasi Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              Apakah Anda yakin ingin menghapus data ini?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+              <form id="deleteForm" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+<script>
+  function confirmDelete(id) {
+      let form = document.getElementById('deleteForm');
+      form.action = "/kontainer/" + id; // Mengatur action form delete
+      let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+      deleteModal.show(); // Menampilkan modal
+  }
+</script>
+
+
 @endsection

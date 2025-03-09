@@ -67,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="description">Deskripsi</label>
-                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Masukkan deskripsi kontainer" value="{{ old('desription') }}"></textarea>
+                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi kontainer" value="{{ old('desription') }}"></textarea>
             </div>
 
             <div class="card-footer text-end">

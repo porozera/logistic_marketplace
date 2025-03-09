@@ -24,3 +24,6 @@ Route::get('/landing-page', function () {
 Route::get('kontainer', [ContainerController::class,'index']);
 Route::get('kontainer-add', [ContainerController::class,'add']);
 Route::post('kontainer-add', [ContainerController::class,'store']);
+Route::get('kontainer/{id}/edit', [ContainerController::class, 'edit']);
+Route::put('kontainer/{id}', [ContainerController::class, 'update']);
+Route::delete('kontainer/{id}', [ContainerController::class, 'destroy'])->name('kontainer.destroy');
