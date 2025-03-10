@@ -27,11 +27,15 @@ class offersModel extends Model
         'remainingVolume',
         'commodities',
         'status',
-        'size',
         'price',
         'user_id',
         'timestamp',
         'is_for_lsp',
         'is_for_customer',
+    ];
+
+    protected $attributes = [
+        'user_id' => 1, // Contoh user_id sementara
+
     ];
 }
