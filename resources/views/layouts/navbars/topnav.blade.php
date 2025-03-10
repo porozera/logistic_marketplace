@@ -142,7 +142,10 @@
                 <h6 class="mb-1">Stebin Ben</h6>
                 <span>UI/UX Designer</span>
               </div>
-              <a href="#!" class="pc-head-link bg-transparent"><i class="ti ti-power text-danger"></i></a>
+              <a href="#" class="pc-head-link bg-transparent" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="ti ti-power text-danger"></i></a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
             </div>
           </div>
           <ul class="nav drp-tabs nav-fill nav-tabs" id="mydrpTab" role="tablist">
