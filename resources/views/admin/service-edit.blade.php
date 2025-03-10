@@ -12,7 +12,7 @@
             <div class="col-md-12">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript: void(0)">Kontainer</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan</a></li>
                 <li class="breadcrumb-item" aria-current="page">Edit Data</li>
               </ul>
             </div>
