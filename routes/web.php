@@ -31,16 +31,6 @@ Route::get('/landing-page', function () {
 //     return view('admin.kontainer-add');
 // });
 
-// ContaninerController
-Route::get('kontainer', [ContainerController::class,'index']);
-Route::get('kontainer-add', [ContainerController::class,'add']);
-Route::post('kontainer-add', [ContainerController::class,'store']);
-Route::get('kontainer/{id}/edit', [ContainerController::class, 'edit']);
-Route::put('kontainer/{id}', [ContainerController::class, 'update']);
-Route::delete('kontainer/{id}', [ContainerController::class, 'destroy'])->name('kontainer.destroy');
-
-
-
 Route::get('/register-customer', [RegisterController::class, 'create_customer'])->middleware('guest')->name('register-customer');
 Route::post('/register-customer', [RegisterController::class, 'store_customer'])->middleware('guest')->name('register-customer.perform');
 Route::get('/register-lsp', [RegisterController::class, 'create_lsp'])->middleware('guest')->name('register-lsp');
@@ -54,8 +44,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 // Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 // Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
-
-
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index_admin']);
     // Service
@@ -65,6 +53,14 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/service/{id}/edit', [ServiceController::class, 'edit']);
     Route::put('/service/{id}', [ServiceController::class, 'update']);
     Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
+
+    // ContaninerController
+    Route::get('/kontainer', [ContainerController::class,'index']);
+    Route::get('/kontainer-add', [ContainerController::class,'add']);
+    Route::post('/kontainer-add', [ContainerController::class,'store']);
+    Route::get('/kontainer/{id}/edit', [ContainerController::class, 'edit']);
+    Route::put('/kontainer/{id}', [ContainerController::class, 'update']);
+    Route::delete('/kontainer/{id}', [ContainerController::class, 'destroy'])->name('kontainer.destroy');
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {

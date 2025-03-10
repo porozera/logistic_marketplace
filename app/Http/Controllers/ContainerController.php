@@ -9,11 +9,11 @@ class ContainerController extends Controller
 {
     public function index() {
         $containers = Container::all();
-        return view('admin.container', ['containers' => $containers]);
+        return view('pages.admin.containers.container', ['containers' => $containers]);
     } 
 
     public function add() {
-        return view('admin.container-add');
+        return view('pages.admin.containers.container-add');
     }
 
     public function store(Request $request) {
