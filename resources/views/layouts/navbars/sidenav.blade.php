@@ -16,18 +16,90 @@
                   <span class="pc-mtext">Admin Dashboard</span>
               </a>
           </li>
-          @endif
+          @endif --}}
 
           @if(Auth::user()->role === 'lsp')
           <li class="pc-item">
-              <a href="{{ route('lsp.dashboard') }}" class="pc-link">
-                  <span class="pc-micon"><i class="ti ti-certificate"></i></span>
-                  <span class="pc-mtext">LSP Dashboard</span>
-              </a>
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Dashboard</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Profile</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Order Management</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Kotak Pesan</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Chat</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Permintaan Pengiriman</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Open Container</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Tracking Order</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Rent Warehouse</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Kelola Warehouse</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="/offers" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Kelola Rute</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Pengaturan</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <span class="pc-mtext">Logout</span>
+            </a>
           </li>
           @endif
 
-          --}}
+
 
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">
@@ -36,8 +108,8 @@
                   <span class="pc-mtext">Request Route</span>
               </a>
           </li>
-          @endif 
-  
+          @endif
+
           <li class="pc-item pc-caption">
             <label>UI Components</label>
             <i class="ti ti-dashboard"></i>
