@@ -94,7 +94,7 @@ class offerController extends Controller
 
         offersModel::create($request->all());
 
-        return redirect()->route('offers.create')->with('success', 'Offer successfully created!');
+        return redirect()->route('offers.index')->with('success', 'Offer successfully created!');
     }
 
     public function show($id)
