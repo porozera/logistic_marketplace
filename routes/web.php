@@ -26,16 +26,7 @@ Route::get('/landing-page', function () {
 
 
 
-Route::prefix('offers')->group(function(){
-    Route::get('/', [OfferController::class, 'index'])->name('offers.index');
-    Route::get('search', [OfferController::class, 'search'])->name('offers.search');
-    Route::get('create', [OfferController::class, 'create'])->name('offers.create');
-    Route::post('store', [OfferController::class, 'store'])->name('offers.store');
-    Route::get('/{id}', [OfferController::class, 'show'])->name('offers.show');
-    Route::get('/{id}/edit', [OfferController::class, 'edit'])->name('offers.edit');
-    Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
-    Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
-});
+
 
 
 
@@ -80,7 +71,17 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
-    Route::get('/lsp/dashboard', [DashboardController::class, 'index']);
+    Route::get('/lsp/dashboard', [OfferController::class, 'index']);
+    Route::prefix('offers')->group(function(){
+        Route::get('/', [OfferController::class, 'index'])->name('offers.index');
+        Route::get('search', [OfferController::class, 'search'])->name('offers.search');
+        Route::get('create', [OfferController::class, 'create'])->name('offers.create');
+        Route::post('store', [OfferController::class, 'store'])->name('offers.store');
+        Route::get('/{id}', [OfferController::class, 'show'])->name('offers.show');
+        Route::get('/{id}/edit', [OfferController::class, 'edit'])->name('offers.edit');
+        Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
+        Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
+    });
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function () {

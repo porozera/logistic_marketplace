@@ -33,10 +33,10 @@ class offerController extends Controller
         // return view('lsp.kelola-rute', compact('offers', 'origins', 'destinations'));
 
         if ($request->ajax()) {
-            return view('lsp.kelola-rute.index', compact('offers'))->render();
+            return view('pages.lsp.kelola-rute.index', compact('offers'))->render();
         }
 
-        return view('lsp.kelola-rute.index', compact('offers', 'origins', 'destinations'));
+        return view('pages.lsp.kelola-rute.index', compact('offers', 'origins', 'destinations'));
     }
 
     public function search(Request $request)
@@ -69,7 +69,7 @@ class offerController extends Controller
 
         public function create()
     {
-        return view('lsp.kelola-rute.create');
+        return view('pages.lsp.kelola-rute.create');
     }
 
     public function store(Request $request)
@@ -100,13 +100,13 @@ class offerController extends Controller
     public function show($id)
     {
     $offer = offersModel::findOrFail($id);
-    return view('lsp.kelola-rute.show-details', compact('offer'));
+    return view('pages.lsp.kelola-rute.show-details', compact('offer'));
     }
 
     public function edit($id)
     {
         $offer = offersModel::findOrFail($id);
-        return view('lsp.kelola-rute.edit', compact('offer'));
+        return view('pages.lsp.kelola-rute.edit', compact('offer'));
     }
 
     public function update(Request $request, $id)
