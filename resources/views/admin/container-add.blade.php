@@ -72,7 +72,7 @@
 
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>
-                <button class="btn btn-secondary">Cancel</button>
+                <a href="/kontainer" class="btn btn-secondary">Cancel</a>
             </div>
 
           </form>
