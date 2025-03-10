@@ -31,6 +31,14 @@ class DatabaseSeeder extends Seeder
             'bannerPicture' => null,
         ]);
 
+
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        $this->call(OffersSeeder::class);
+
         $this->call([
             CustomerSeeder::class,
         ]);

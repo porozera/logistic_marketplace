@@ -8,9 +8,11 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RequestRouteController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\offerController;
 use App\Http\Controllers\ServiceController;
 use App\Models\Service;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 
 
 Route::get('/', function () {
@@ -21,6 +23,20 @@ Route::get('/', function () {
 Route::get('/landing-page', function () {
     return view('landing-page');
 });
+
+
+
+Route::prefix('offers')->group(function(){
+    Route::get('/', [OfferController::class, 'index'])->name('offers.index');
+    Route::get('search', [OfferController::class, 'search'])->name('offers.search');
+    Route::get('create', [OfferController::class, 'create'])->name('offers.create');
+    Route::post('store', [OfferController::class, 'store'])->name('offers.store');
+    Route::get('/{id}', [OfferController::class, 'show'])->name('offers.show');
+    Route::get('/{id}/edit', [OfferController::class, 'edit'])->name('offers.edit');
+    Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
+    Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
+});
+
 
 
 // Route::get('/kontainer', function () {
@@ -75,4 +91,5 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::post('/request-routes/perform', [RequestRouteController::class, 'store'])->name('request-route.perform');
     Route::get('/request-routes/success', [RequestRouteController::class, 'success'])->name('request-success');
 });
+
 
