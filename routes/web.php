@@ -6,7 +6,10 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RequestRouteController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ServiceController;
+use App\Models\Service;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,6 +19,15 @@ Route::get('/', function () {
 Route::get('/landing-page', function () {
     return view('landing-page');
 });
+
+
+// Service
+Route::get('service', [ServiceController::class,'index']);
+Route::get('service-add', [ServiceController::class,'add']);
+Route::post('service-add', [ServiceController::class,'store']);
+Route::get('service/{id}/edit', [ServiceController::class, 'edit']);
+Route::put('service/{id}', [ServiceController::class, 'update']);
+Route::delete('service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
 
 Route::get('/register-customer', [RegisterController::class, 'create_customer'])->middleware('guest')->name('register-customer');
 Route::post('/register-customer', [RegisterController::class, 'store_customer'])->middleware('guest')->name('register-customer.perform');
@@ -48,3 +60,4 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::post('/customer/request-routes/perform', [RequestRouteController::class, 'store'])->name('customer.request-route.perform');
     Route::get('/customer/request-routes/success', [RequestRouteController::class, 'success'])->name('customer.request-success');
 });
+
