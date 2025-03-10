@@ -1,4 +1,4 @@
-@extends('lsp.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Edit Rute')
 
