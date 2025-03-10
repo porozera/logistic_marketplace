@@ -36,7 +36,7 @@
               <h4 class="mb-2">Detail Pengiriman</h4>
 
               <br>
-                <form action="/customer/request-routes/perform" method="POST" id="requestRouteAddForm">
+                <form action="/request-routes/perform" method="POST" id="requestRouteAddForm">
                     @csrf
                     <div class="row">
                         <div class="col-md-4">

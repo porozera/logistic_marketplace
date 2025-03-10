@@ -10,7 +10,7 @@ class RequestRouteController extends Controller
 {
     public function index()
     {
-        return view('pages.request_routes.index');
+        return view('pages.customer.request_routes.index');
     }
 
     public function store(Request $request)
@@ -45,11 +45,11 @@ class RequestRouteController extends Controller
             "deadline" => Carbon::now()->addDays(7)->toDateString()
         ]);
         $deadline = Carbon::now()->addDays(7)->toDateString();
-        return redirect("/customer/request-routes/success?deadline=$deadline")->with('success', 'Permintaan rute berhasil dikrimkan!');
+        return redirect("/request-routes/success?deadline=$deadline")->with('success', 'Permintaan rute berhasil dikrimkan!');
     }
 
     public function success()
     {
-        return view('pages.request_routes.success');
+        return view('pages.customer.request_routes.success');
     }
 }

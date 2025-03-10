@@ -9,11 +9,11 @@ class ServiceController extends Controller
 {
     public function index() {
         $services = Service::all();
-        return view('admin.service', ['services' => $services]);
+        return view('pages.admin.services.service', ['services' => $services]);
     } 
 
     public function add() {
-        return view('admin.service-add');
+        return view('pages.admin.services.service-add');
     }
 
     public function store(Request $request) {
