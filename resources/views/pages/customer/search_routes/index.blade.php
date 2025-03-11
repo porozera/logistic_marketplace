@@ -124,18 +124,39 @@
 {{-- Card Offer --}}
         <div class="col-9">
             <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-8 d-flex align-items-center">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 d-flex align-items-center">
                             <div class="me-2">
-                                <img src="{{ asset('template/mantis/dist/assets/images/user/avatar-2.jpg') }}" alt="profile-lsp" class="user-avtar wid-35 rounded-circle">
+                                <img src="{{ asset('template/mantis/dist/assets/images/user/avatar-2.jpg') }}" 
+                                     alt="profile-lsp" 
+                                     class="user-avtar wid-35 rounded-circle">
                             </div>
-                            <h5 class="mb-0">Pos Logistik Indonesia</h5>
+                            
+                            <div class="d-flex align-items-center gap-2">
+                                <h5 class="mb-0 fw-bold">Pos Logistik Indonesia</h5>
+                                <i class="fas fa-star text-warning"></i>
+                                <h5 class="mb-0 fw-bold">5.0</h5>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <!-- Konten tambahan -->
+                    
+                        <div class="col-md-4 d-flex justify-content-center gap-2">
+                            <!-- Card untuk Info Shipment -->
+                            <button type="button" class="btn btn-outline-primary d-inline-flex rounded-pill"><i class="ti ti-box me-1"></i> 20'ST</button>
+                            <!-- Card untuk Durasi -->
+                            <button type="button" class="btn btn-outline-primary d-inline-flex rounded-pill"><i class="ti ti-alarm me-1"></i> 7 Hari</button>                                                  
                         </div>
-                    </div>
+                    
+                        <div class="col-md-2 text-end">
+                            <button type="button" class="btn btn-icon btn-light-primary"><i class="ti ti-copy"></i></button>
+                        </div>
+                    </div> 
+                    <br>
+                    <div class="row align-items-center">  
+                        <div class="col-md-6 d-flex align-items-center">
+                            <h3><a href="#"><span class="icon-room mr-1 text-primary"></span> Bandung &mdash; Jakarta</a></h3>
+                        </div>
+                    </div>                                   
                 </div>
             </div>            
         </div>
