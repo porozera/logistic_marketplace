@@ -34,8 +34,13 @@ class offersModel extends Model
         'is_for_customer',
     ];
 
-    protected $attributes = [
-        'user_id' => 1, // Contoh user_id sementara
+    // protected $attributes = [
+    //     'user_id' => 1, // Contoh user_id sementara
 
-    ];
+    // ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

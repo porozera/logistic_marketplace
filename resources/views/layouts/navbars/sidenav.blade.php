@@ -103,9 +103,15 @@
 
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">
+            <a href="{{ route('search-route') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-shopping-cart"></i></span>
+                <span class="pc-mtext">Cari Rute</span>
+            </a>
+          </li>
+          <li class="pc-item">
               <a href="{{ route('request-route') }}" class="pc-link">
                   <span class="pc-micon"><i class="ti ti-shopping-cart"></i></span>
-                  <span class="pc-mtext">Request Route</span>
+                  <span class="pc-mtext">Permintaan Rute</span>
               </a>
           </li>
           @endif

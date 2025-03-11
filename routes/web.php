@@ -9,6 +9,7 @@ use App\Http\Controllers\RequestRouteController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\offerController;
+use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ServiceController;
 use App\Models\Service;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -91,6 +92,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/request-routes', [RequestRouteController::class, 'index'])->name('request-route');
     Route::post('/request-routes/perform', [RequestRouteController::class, 'store'])->name('request-route.perform');
     Route::get('/request-routes/success', [RequestRouteController::class, 'success'])->name('request-success');
+
+    //SEARCH ROUTES
+    Route::get('/search-routes', [SearchRouteController::class, 'index'])->name('search-route');
 });
 
 
