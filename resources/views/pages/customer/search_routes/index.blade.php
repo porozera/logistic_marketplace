@@ -132,33 +132,59 @@
                                      alt="profile-lsp" 
                                      class="user-avtar wid-35 rounded-circle">
                             </div>
-                            
                             <div class="d-flex align-items-center gap-2">
                                 <h5 class="mb-0 fw-bold">Pos Logistik Indonesia</h5>
                                 <i class="fas fa-star text-warning"></i>
                                 <h5 class="mb-0 fw-bold">5.0</h5>
                             </div>
                         </div>
-                    
+            
                         <div class="col-md-4 d-flex justify-content-center gap-2">
-                            <!-- Card untuk Info Shipment -->
-                            <button type="button" class="btn btn-outline-primary d-inline-flex rounded-pill"><i class="ti ti-box me-1"></i> 20'ST</button>
-                            <!-- Card untuk Durasi -->
-                            <button type="button" class="btn btn-outline-primary d-inline-flex rounded-pill"><i class="ti ti-alarm me-1"></i> 7 Hari</button>                                                  
+                            <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                <i class="ti ti-box me-1"></i> 20'ST
+                            </button>
+                            <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                <i class="ti ti-alarm me-1"></i> 7 Hari
+                            </button>                                                  
                         </div>
-                    
+            
                         <div class="col-md-2 text-end">
-                            <button type="button" class="btn btn-icon btn-light-primary"><i class="ti ti-copy"></i></button>
+                            <button type="button" class="btn btn-icon btn-light-primary">
+                                <i class="ti ti-copy"></i>
+                            </button>
                         </div>
                     </div> 
+
                     <br>
-                    <div class="row align-items-center">  
-                        <div class="col-md-6 d-flex align-items-center">
-                            <h3><a href="#"><span class="icon-room mr-1 text-primary"></span> Bandung &mdash; Jakarta</a></h3>
+
+                    <div class="row align-items-center">
+                        <div class="col-md-12 text-end mt-2">
+                            <h3 class="text-primary fw-bold">Rp 3.000.000</h3>
                         </div>
-                    </div>                                   
+                    </div>
+            
+                    <div class="row align-items-center">
+                        <div class="col-md-10 d-flex align-items-center justify-content-start mt-2">
+                            <h4><b>Jakarta</b></h4>                      
+                            <div class="d-flex align-items-center mx-4">
+                                <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-2" style="width: 96px; height: 4px;"></div>
+                                <h5 class="mb-0 fw-bold text-primary">5 Hari</h5>
+                                <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center ms-2" style="width: 16px; height: 16px;">
+                                    <i class="fas fa-ship text-white" style="font-size: 10px;"></i>
+                                </div>
+                                <div class="bg-primary mx-2" style="width: 96px; height: 4px;"></div>
+                                <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div>
+                            </div>
+                            <h4><b>Padang</b></h4> 
+                        </div>
+                        <div class="col-md-2 text-end mt-2">
+                            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addModal">Lihat Detail</button>
+                        </div>
+                    </div>                        
                 </div>
-            </div>            
+            </div>
+                 
         </div>
 {{-- End Card Offer --}}
       </div>
