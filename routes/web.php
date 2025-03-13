@@ -1,16 +1,18 @@
 <?php
 
 
-use App\Http\Controllers\ContainerController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\RequestRouteController;
-use App\Http\Middleware\RoleMiddleware;
+use App\Models\Service;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\offerController;
 use App\Http\Controllers\ServiceController;
-use App\Models\Service;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ContainerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RequestRouteController;
+use App\Models\Category;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -70,13 +72,21 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::put('/service/{id}', [ServiceController::class, 'update']);
     Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
 
-    // ContaninerController
+    // Contaniner
     Route::get('/kontainer', [ContainerController::class,'index']);
     Route::get('/kontainer-add', [ContainerController::class,'add']);
     Route::post('/kontainer-add', [ContainerController::class,'store']);
     Route::get('/kontainer/{id}/edit', [ContainerController::class, 'edit']);
     Route::put('/kontainer/{id}', [ContainerController::class, 'update']);
     Route::delete('/kontainer/{id}', [ContainerController::class, 'destroy'])->name('kontainer.destroy');
+
+    // Category
+    Route::get('/category', [CategoryController::class, 'index']);
+    Route::get('/category-add', [CategoryController::class, 'add']);
+    Route::post('/category-add', [CategoryController::class, 'store']);
+    Route::get('/category/{id}/edit', [CategoryController::class, 'edit']);
+    Route::put('/category/{id}', [CategoryController::class, 'update']);
+    Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
@@ -91,5 +101,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::post('/request-routes/perform', [RequestRouteController::class, 'store'])->name('request-route.perform');
     Route::get('/request-routes/success', [RequestRouteController::class, 'success'])->name('request-success');
 });
+
+
+
 
 

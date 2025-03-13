@@ -12,12 +12,12 @@
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
                 <li class="breadcrumb-item"><a href="javascript: void(0)">Profile</a></li>
-                <li class="breadcrumb-item" aria-current="page">Service List</li>
+                <li class="breadcrumb-item" aria-current="page">Category List</li>
               </ul>
             </div>
             <div class="col-md-12">
               <div class="page-header-title">
-                <h2 class="mb-0">Data Layanan</h2>
+                <h2 class="mb-0">Data Kategori Barang</h2>
               </div>
             </div>
           </div>
@@ -32,7 +32,7 @@
           <div class="card table-card">
             <div class="card-body">
               <div class="text-end p-4 pb-0">
-                <a href="service-add" class="btn btn-primary d-inline-flex align-item-center">
+                <a href="category-add" class="btn btn-primary d-inline-flex align-item-center">
                   <i class="ti ti-plus f-18 me-2"></i> Tambah Data
                 </a>
               </div>
@@ -42,14 +42,14 @@
                     <tr>
                       <th></th>
                       <th>Kode</th>
-                      <th>Nama Layanan</th>
+                      <th>Nama Barang</th>
+                      <th>Tipe</th>
                       <th>Deskripsi</th>
-                      <th>Harga</th>
                       <th class="text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($services as $item)
+                    @foreach ($categories as $item)
                     <tr>
                       <td>
                         <div class="form-check">
@@ -57,13 +57,13 @@
                         </div>
                       </td>
                       <td>{{ $item->code }}</td>
-                      <td>{{ $item->serviceName }}</td>
+                      <td>{{ $item->name }}</td>
+                      <td>{{ $item->type }}</td>
                       <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">{{ $item->description }}</td>
-                      <td>{{ $item->price }}</td>
                       <td class="text-center">
                         <ul class="list-inline me-auto mb-0">
                           <li class="list-inline-item align-bottom">
-                            <a href="{{ url('service/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
+                            <a href="{{ url('category/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
                               <i class="ti ti-edit-circle f-18"></i>
                             </a>
                           </li>
@@ -135,7 +135,7 @@
 <script>
   function confirmDelete(id) {
       let form = document.getElementById('deleteForm');
-      form.action = "/service/" + id; // Mengatur action form delete
+      form.action = "/category/" + id; // Mengatur action form delete
       let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
       deleteModal.show(); // Menampilkan modal
   }

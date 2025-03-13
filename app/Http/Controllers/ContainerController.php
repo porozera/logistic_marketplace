@@ -32,7 +32,7 @@ class ContainerController extends Controller
 
     public function edit($id) {
         $container = Container::findOrFail($id);
-        return view('admin.container-edit', compact('container'));
+        return view('pages.admin.containers.container-edit', compact('container'));
     }
     
     public function update(Request $request, $id) {
