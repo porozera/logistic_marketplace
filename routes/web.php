@@ -11,6 +11,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\RequestRouteController;
 use App\Models\Category;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -87,6 +88,15 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/category/{id}/edit', [CategoryController::class, 'edit']);
     Route::put('/category/{id}', [CategoryController::class, 'update']);
     Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+    // FAQs
+    Route::get('/faq', [FaqController::class, 'index']);
+    Route::get('/faq-add', [FaqController::class, 'add']);
+    Route::post('faq-add', [FaqController::class, 'store']);
+    Route::get('faq/{id}/edit', [FaqController::class, 'edit']);
+    Route::put('faq/{id}', [FaqController::class, 'update']);
+    Route::delete('faq/{id}', [FaqController::class, 'destroy'])->name('faq.destroy');
+
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {

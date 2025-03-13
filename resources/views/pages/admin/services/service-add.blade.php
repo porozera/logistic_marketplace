@@ -43,20 +43,20 @@
             <div>
                 <div class="form-group">
                     <label for="serviceName" class="form-label">Nama Layanan</label>
-                    <input type="text" class="form-control" name="serviceName" id="serviceName" placeholder="Masukkan nama layanan" value="{{ old('name') }}" required>
+                    <input type="text" class="form-control" name="serviceName" id="serviceName" placeholder="Masukkan nama layanan" value="{{ old('serviceName') }}" required>
                     <small class="form-text text-muted">Contoh : Inspeksi Sebelum Pengiriman</small>
                 </div>
             </div>
             <div>
                 <div class="form-group">
                     <label for="price" class="form-label">Harga</label>
-                    <input type="number" class="form-control" name="price" id="price" placeholder="Masukkan harga layanan" value="{{ old('weight') }}" required>
+                    <input type="number" class="form-control" name="price" id="price" placeholder="Masukkan harga layanan" value="{{ old('price') }}" required>
                     {{-- <small class="form-text text-muted">Please enter your Password</small> --}}
                 </div>
             </div>
             <div class="form-group">
                 <label class="form-label" for="description">Deskripsi</label>
-                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi layanan" value="{{ old('desription') }}" required></textarea>
+                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi layanan" value="{{ old('description') }}" required></textarea>
             </div>
 
             <div class="card-footer text-end">

@@ -37,14 +37,14 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="name" class="form-label">Nama Kontainer:</label>
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama kontainer" value="{{ old('code') }}" required>
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama kontainer" value="{{ old('name') }}" required>
                   <small class="form-text text-muted">Contoh : 20' Standard</small>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="code" class="form-label">Kode:</label>
-                  <input type="text" class="form-control" name="code" id="code" placeholder="Masukkan kode kontainer" value="{{ old('name') }}" required>
+                  <input type="text" class="form-control" name="code" id="code" placeholder="Masukkan kode kontainer" value="{{ old('code') }}" required>
                   <small class="form-text text-muted">Contoh : CT-20STD</small>
                 </div>
               </div>
@@ -67,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label class="form-label" for="description">Deskripsi</label>
-                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi kontainer" value="{{ old('desription') }}" required></textarea>
+                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi kontainer" value="{{ old('description') }}" required></textarea>
             </div>
 
             <div class="card-footer text-end">
