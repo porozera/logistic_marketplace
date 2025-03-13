@@ -113,7 +113,7 @@
                     <input type="date" name="origin" class="form-control" placeholder="Rp." value="{{ old('origin') }}">
                     <hr>
 
-                    <div class="row">
+                    <div class="row ">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Filter</button>
                     </div>
                 </div>
@@ -141,11 +141,14 @@
             
                         <div class="col-md-4 d-flex justify-content-center gap-2">
                             <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                <i class="ti ti-box me-1"></i> 20'ST
-                            </button>
+                                <i class="ti ti-sailboat me-1"></i> Laut
+                            </button>   
                             <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                <i class="ti ti-alarm me-1"></i> 7 Hari
-                            </button>                                                  
+                                <i class="ti ti-truck me-1"></i> LCL
+                            </button> 
+                            <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                <i class="ti ti-box me-1"></i> 20'ST
+                            </button>                                               
                         </div>
             
                         <div class="col-md-2 text-end">
@@ -155,36 +158,37 @@
                         </div>
                     </div> 
 
-                    <br>
-
-                    <div class="row align-items-center">
-                        <div class="col-md-12 text-end mt-2">
-                            <h3 class="text-primary fw-bold">Rp 3.000.000</h3>
-                        </div>
-                    </div>
+                    <br>            
             
                     <div class="row align-items-center">
-                        <div class="col-md-10 d-flex align-items-center justify-content-start mt-2">
-                            <h4><b>Jakarta</b></h4>                      
+                        <div class="col-md-8 d-flex align-items-center justify-content-start mt-2">
+                            <h5 class="mb-0 fw-bold">Jakarta</h5>                      
                             <div class="d-flex align-items-center mx-4">
-                                <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-2" style="width: 96px; height: 4px;"></div>
-                                <h5 class="mb-0 fw-bold text-primary">5 Hari</h5>
-                                <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center ms-2" style="width: 16px; height: 16px;">
-                                    <i class="fas fa-ship text-white" style="font-size: 10px;"></i>
-                                </div>
-                                <div class="bg-primary mx-2" style="width: 96px; height: 4px;"></div>
-                                <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div>
+                                <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-2" style="width: 120px; height: 1px;"></div>
+                                {{-- <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div> --}}
+                                <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">5 Hari</h5> 
+                                {{-- <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div>     --}}
+                                <div class="bg-primary mx-2" style="width: 120px; height: 1px;"></div>
+                                <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                             </div>
-                            <h4><b>Padang</b></h4> 
+                            <h5 class="mb-0 fw-bold">Padang</h5>
                         </div>
-                        <div class="col-md-2 text-end mt-2">
-                            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addModal">Lihat Detail</button>
+
+                        <div class="col-md-4 text-end mt-2">
+                            <div class="d-flex align-items-center justify-content-end mb-2">
+                                <h3 class="text-danger fw-bold mb-0">Rp 3.000.000</h3>
+                                <h5 class="mb-0 ms-2">/CBM</h5>
+                            </div>
+                            {{-- <div class="d-flex align-items-center justify-content-end mb-2">
+                                <h5 class="mb-0 ms-2 text-primary">50</h5>
+                                <h5 class="mb-0 ms-2">/100</h5>
+                            </div> --}}
+                            <button type="button" class="btn btn-primary w-50" data-bs-toggle="modal" data-bs-target="#addModal">Pilih</button>
                         </div>
-                    </div>                        
+                    </div>                      
                 </div>
-            </div>
-                 
+            </div>            
         </div>
 {{-- End Card Offer --}}
       </div>
