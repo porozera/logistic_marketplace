@@ -39,7 +39,7 @@
                     <select class="form-select" id="type" name="type" required>
                         <option selected>Pilih Tipe</option>
                         <option>General</option>
-                        <option>Alat</option>
+                        <option>Peralatan</option>
                         <option>Harga & Pembayaran</option>
                         <option>Pengiriman</option>
                     </select>

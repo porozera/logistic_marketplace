@@ -32,7 +32,7 @@
           <div class="card table-card">
             <div class="card-body">
               <div class="text-end p-4 pb-0">
-                <a href="kontainer-add" class="btn btn-primary d-inline-flex align-item-center">
+                <a href="container-add" class="btn btn-primary d-inline-flex align-item-center">
                   <i class="ti ti-plus f-18 me-2"></i> Tambah Data
                 </a>
               </div>
@@ -65,7 +65,7 @@
                       <td class="text-center">
                         <ul class="list-inline me-auto mb-0">
                           <li class="list-inline-item align-bottom">
-                            <a href="{{ url('kontainer/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
+                            <a href="{{ url('container/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
                               <i class="ti ti-edit-circle f-18"></i>
                             </a>
                           </li>
@@ -137,7 +137,7 @@
 <script>
   function confirmDelete(id) {
       let form = document.getElementById('deleteForm');
-      form.action = "/kontainer/" + id; // Mengatur action form delete
+      form.action = "/container/" + id; // Mengatur action form delete
       let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
       deleteModal.show(); // Menampilkan modal
   }

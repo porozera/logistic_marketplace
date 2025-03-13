@@ -8,26 +8,96 @@
         </a>
       </div>
       <div class="navbar-content">
+        
         <ul class="pc-navbar">
-          {{-- @if(Auth::user()->role === 'admin')
+          @if(Auth::user()->role === 'admin')
           <li class="pc-item">
               <a href="{{ route('admin.dashboard') }}" class="pc-link">
-                  <span class="pc-micon"><i class="ti ti-settings"></i></span>
+                  <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
                   <span class="pc-mtext">Admin Dashboard</span>
               </a>
           </li>
+          <li class="pc-item">
+              <a href="{{ route('admin.dashboard') }}" class="pc-link">
+                  <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+                  <span class="pc-mtext">Approval LSP</span>
+              </a>
+          </li>
+  
+          <li class="pc-item pc-caption">
+            <label>Master Data</label>
+            <i class="ti ti-dashboard"></i>
+          </li>
+          <li class="pc-item">
+            <a href="container" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-typography"></i></span>
+              <span class="pc-mtext">Container</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="service" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
+              <span class="pc-mtext">Layanan</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="category" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-plant-2"></i></span>
+              <span class="pc-mtext">Kategori Barang</span>
+            </a>
+          </li>
+  
+          <li class="pc-item pc-caption">
+            <label>Laporan</label>
+            <i class="ti ti-news"></i>
+          </li>
+          <li class="pc-item">
+            <a href="../pages/login-v3.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-lock"></i></span>
+              <span class="pc-mtext">Pengguna</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../pages/register-v3.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-user-plus"></i></span>
+              <span class="pc-mtext">Pengiriman</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../pages/register-v3.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-user-plus"></i></span>
+              <span class="pc-mtext">Keuangan</span>
+            </a>
+          </li>
+
+          <li class="pc-item pc-caption">
+            <label>CMS</label>
+            <i class="ti ti-news"></i>
+          </li>
+          <li class="pc-item">
+            <a href="{{ route('admin.dashboard') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+                <span class="pc-mtext">Manajemen Komplain</span>
+            </a>
+        </li>
+        <li class="pc-item">
+            <a href="faq" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+                <span class="pc-mtext">Frequently Asked Question (FAQ)</span>
+            </a>
+        </li>
           @endif
 
-          @if(Auth::user()->role === 'lsp')
+          {{-- @if(Auth::user()->role === 'lsp')
           <li class="pc-item">
               <a href="{{ route('lsp.dashboard') }}" class="pc-link">
                   <span class="pc-micon"><i class="ti ti-certificate"></i></span>
                   <span class="pc-mtext">LSP Dashboard</span>
               </a>
           </li>
-          @endif
+          @endif --}}
 
-          --}}
+         
 
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">

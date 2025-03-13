@@ -64,7 +64,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 // Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'index_admin']);
+    Route::get('/admin/dashboard', [DashboardController::class, 'index_admin'])->name('admin.dashboard');
     // Service
     Route::get('/service', [ServiceController::class,'index']);
     Route::get('/service-add', [ServiceController::class,'add']);
@@ -74,12 +74,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
 
     // Contaniner
-    Route::get('/kontainer', [ContainerController::class,'index']);
-    Route::get('/kontainer-add', [ContainerController::class,'add']);
-    Route::post('/kontainer-add', [ContainerController::class,'store']);
-    Route::get('/kontainer/{id}/edit', [ContainerController::class, 'edit']);
-    Route::put('/kontainer/{id}', [ContainerController::class, 'update']);
-    Route::delete('/kontainer/{id}', [ContainerController::class, 'destroy'])->name('kontainer.destroy');
+    Route::get('/container', [ContainerController::class,'index']);
+    Route::get('/container-add', [ContainerController::class,'add']);
+    Route::post('/container-add', [ContainerController::class,'store']);
+    Route::get('/container/{id}/edit', [ContainerController::class, 'edit']);
+    Route::put('/container/{id}', [ContainerController::class, 'update']);
+    Route::delete('/container/{id}', [ContainerController::class, 'destroy'])->name('container.destroy');
 
     // Category
     Route::get('/category', [CategoryController::class, 'index']);

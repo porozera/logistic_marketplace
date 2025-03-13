@@ -27,7 +27,7 @@ class ContainerController extends Controller
         ]);
 
         $container = Container::create($request->all());
-        return redirect('kontainer')->with('success', 'Data Kontainer berhasil ditambahkan!');
+        return redirect('container')->with('success', 'Data Kontainer berhasil ditambahkan!');
     }
 
     public function edit($id) {
@@ -47,14 +47,14 @@ class ContainerController extends Controller
         $container = Container::findOrFail($id);
         $container->update($request->all());
     
-        return redirect('kontainer')->with('success', 'Data berhasil diperbarui');
+        return redirect('container')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id) {
         $container = Container::findOrFail($id);
         $container->delete();
 
-        return redirect('/kontainer')->with('success', 'Data Kontainer berhasil dihapus');
+        return redirect('/container')->with('success', 'Data Kontainer berhasil dihapus');
     }
 
     

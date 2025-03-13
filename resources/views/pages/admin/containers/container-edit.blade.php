@@ -31,7 +31,7 @@
           <h5>Form Edit Data Jenis Kontainer</h5>
         </div>
         <div class="card-body">
-            <form action="{{ url('kontainer/'.$container->id) }}" method="POST">
+            <form action="{{ url('container/'.$container->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -76,7 +76,7 @@
 
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ url('kontainer') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ url('container') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>
