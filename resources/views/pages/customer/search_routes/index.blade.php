@@ -141,15 +141,27 @@
                         </div>
             
                         <div class="col-md-4 d-flex justify-content-center gap-2">
-                            <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                <i class="ti ti-sailboat me-1"></i> Laut
-                            </button>   
-                            <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                <i class="ti ti-truck me-1"></i> LCL
-                            </button> 
-                            <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                <i class="ti ti-box me-1"></i> 20'ST
-                            </button>                                               
+                            @if ($item['shipmentMode'] == 'laut')
+                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-sailboat me-1"></i> Laut
+                                </button>   
+                            @else
+                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-truck-delivery me-1"></i> Darat
+                                </button>
+                            @endif
+
+                            @if ($item['shipmentType'] == 'LCL')
+                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-box me-1"></i> LCL
+                                </button> 
+                            @else
+                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-box me-1"></i> FCL
+                                </button> 
+                            @endif
+                        
+                                                                    
                         </div>
             
                         <div class="col-md-2 text-end">
@@ -166,11 +178,11 @@
                             <h5 class="mb-0 fw-bold">{{ $item['origin']}}</h5>                      
                             <div class="d-flex align-items-center mx-4">
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-2" style="width: 120px; height: 1px;"></div>
+                                <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
                                 {{-- <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div> --}}
-                                <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">{{ $item['estimationDate']}}</h5> 
+                                <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">{{ $item['estimated_days']}} Hari</h5> 
                                 {{-- <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div>     --}}
-                                <div class="bg-primary mx-2" style="width: 120px; height: 1px;"></div>
+                                <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                             </div>
                             <h5 class="mb-0 fw-bold">{{ $item['destination']}}</h5>

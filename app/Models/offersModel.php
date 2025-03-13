@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 
 class offersModel extends Model
 {
@@ -38,6 +39,13 @@ class offersModel extends Model
     //     'user_id' => 1, // Contoh user_id sementara
 
     // ];
+
+    public function getEstimatedDaysAttribute()
+    {
+        $shippingDate = Carbon::parse($this->shippingDate);
+        $estimationDate = Carbon::parse($this->estimationDate);
+        return $shippingDate->diffInDays($estimationDate);
+    }
 
     public function user()
     {
