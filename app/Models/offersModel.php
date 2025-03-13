@@ -10,7 +10,7 @@ class offersModel extends Model
     use HasFactory;
 
     protected $table = 'offers';
-
+    public $timestamps = true;
     protected $fillable = [
         'noOffer',
         'lspName',
@@ -29,9 +29,9 @@ class offersModel extends Model
         'status',
         'price',
         'user_id',
-        'timestamp',
         'is_for_lsp',
         'is_for_customer',
+        'timestamp',
     ];
 
     // protected $attributes = [

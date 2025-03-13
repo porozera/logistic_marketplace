@@ -123,6 +123,7 @@
 
 {{-- Card Offer --}}
         <div class="col-9">
+            @foreach ($offers as $item )
             <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -133,7 +134,7 @@
                                      class="user-avtar wid-35 rounded-circle">
                             </div>
                             <div class="d-flex align-items-center gap-2">
-                                <h5 class="mb-0 fw-bold">Pos Logistik Indonesia</h5>
+                                <h5 class="mb-0 fw-bold">{{ $item['lspName']}}</h5>
                                 <i class="fas fa-star text-warning"></i>
                                 <h5 class="mb-0 fw-bold">5.0</h5>
                             </div>
@@ -162,22 +163,22 @@
             
                     <div class="row align-items-center">
                         <div class="col-md-8 d-flex align-items-center justify-content-start mt-2">
-                            <h5 class="mb-0 fw-bold">Jakarta</h5>                      
+                            <h5 class="mb-0 fw-bold">{{ $item['origin']}}</h5>                      
                             <div class="d-flex align-items-center mx-4">
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                                 <div class="bg-primary mx-2" style="width: 120px; height: 1px;"></div>
                                 {{-- <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div> --}}
-                                <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">5 Hari</h5> 
+                                <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">{{ $item['estimationDate']}}</h5> 
                                 {{-- <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div>     --}}
                                 <div class="bg-primary mx-2" style="width: 120px; height: 1px;"></div>
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                             </div>
-                            <h5 class="mb-0 fw-bold">Padang</h5>
+                            <h5 class="mb-0 fw-bold">{{ $item['destination']}}</h5>
                         </div>
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
-                                <h3 class="text-danger fw-bold mb-0">Rp 3.000.000</h3>
+                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
                                 <h5 class="mb-0 ms-2">/CBM</h5>
                             </div>
                             {{-- <div class="d-flex align-items-center justify-content-end mb-2">
@@ -188,7 +189,8 @@
                         </div>
                     </div>                      
                 </div>
-            </div>            
+            </div> 
+            @endforeach           
         </div>
 {{-- End Card Offer --}}
       </div>
