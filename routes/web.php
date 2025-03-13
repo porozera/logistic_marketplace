@@ -10,6 +10,7 @@ use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\offerController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Service;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -81,6 +82,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::get('/{id}/edit', [OfferController::class, 'edit'])->name('offers.edit');
         Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
         Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
+    });
+    Route::prefix('profile')->group(function(){
+        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+
     });
 });
 
