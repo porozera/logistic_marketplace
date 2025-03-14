@@ -85,6 +85,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
     });
     Route::prefix('profile')->group(function(){
         Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
 
     });
 });
