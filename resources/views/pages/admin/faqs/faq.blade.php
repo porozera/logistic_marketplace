@@ -56,9 +56,8 @@
                         </div>
                       </td>
                       <td>{{ $item->type }}</td>
-                      <td>{{ $item->header }}</td>
-                      <td>{{ $item->description }}</td>
-                      <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">{{ $item->description }}</td>
+                      <td style="max-width: 200px;">{{ $item->header }}</td>
+                      <td style="max-width: 400px; word-wrap: break-word; white-space: normal;">{{ $item->description }}</td>
                       <td class="text-center">
                         <ul class="list-inline me-auto mb-0">
                           <li class="list-inline-item align-bottom">

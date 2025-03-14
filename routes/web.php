@@ -27,6 +27,9 @@ Route::get('/landing-page', function () {
     return view('landing-page');
 });
 
+Route::get('/landing-faq', [DashboardController::class, 'faq_category']);
+Route::get('/landing-faq/faq-general', [DashboardController::class, 'show_faq_general']);
+
 
 
 Route::prefix('offers')->group(function(){

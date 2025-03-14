@@ -18,8 +18,8 @@
               </a>
           </li>
           <li class="pc-item">
-              <a href="{{ route('admin.dashboard') }}" class="pc-link">
-                  <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+              <a href="" class="pc-link">
+                  <span class="pc-micon"><i class="ti ti-checkbox"></i></span>
                   <span class="pc-mtext">Approval LSP</span>
               </a>
           </li>
@@ -30,8 +30,8 @@
           </li>
           <li class="pc-item">
             <a href="container" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-typography"></i></span>
-              <span class="pc-mtext">Container</span>
+              <span class="pc-micon"><i class="ti ti-caravan"></i></span>
+              <span class="pc-mtext">Kontainer</span>
             </a>
           </li>
           <li class="pc-item">
@@ -42,7 +42,7 @@
           </li>
           <li class="pc-item">
             <a href="category" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-plant-2"></i></span>
+              <span class="pc-micon"><i class="ti ti-box"></i></span>
               <span class="pc-mtext">Kategori Barang</span>
             </a>
           </li>
@@ -53,29 +53,29 @@
           </li>
           <li class="pc-item">
             <a href="../pages/login-v3.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-lock"></i></span>
+              <span class="pc-micon"><i class="ti ti-users"></i></span>
               <span class="pc-mtext">Pengguna</span>
             </a>
           </li>
           <li class="pc-item">
             <a href="../pages/register-v3.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-user-plus"></i></span>
+              <span class="pc-micon"><i class="ti ti-truck-delivery"></i></span>
               <span class="pc-mtext">Pengiriman</span>
             </a>
           </li>
           <li class="pc-item">
             <a href="../pages/register-v3.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-user-plus"></i></span>
+              <span class="pc-micon"><i class="ti ti-file-invoice"></i></span>
               <span class="pc-mtext">Keuangan</span>
             </a>
           </li>
 
           <li class="pc-item pc-caption">
-            <label>CMS</label>
+            <label>Lainnya</label>
             <i class="ti ti-news"></i>
           </li>
           <li class="pc-item">
-            <a href="{{ route('admin.dashboard') }}" class="pc-link">
+            <a href="" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
                 <span class="pc-mtext">Manajemen Komplain</span>
             </a>
@@ -83,7 +83,7 @@
         <li class="pc-item">
             <a href="faq" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-                <span class="pc-mtext">Frequently Asked Question (FAQ)</span>
+                <span class="pc-mtext">FAQs</span>
             </a>
         </li>
           @endif
