@@ -47,6 +47,21 @@ class offersModel extends Model
         return $shippingDate->diffInDays($estimationDate);
     }
 
+    public function getLoadingDateFormattedAttribute()
+    {
+        return Carbon::parse($this->loadingDate)->translatedFormat('d F Y');
+    }
+
+    public function getShippingDateFormattedAttribute()
+    {
+        return Carbon::parse($this->shippingDate)->translatedFormat('d F Y');
+    }
+
+    public function getEstimationDateFormattedAttribute()
+    {
+        return Carbon::parse($this->estimationDate)->translatedFormat('d F Y');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

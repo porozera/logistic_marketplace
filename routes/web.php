@@ -95,6 +95,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //SEARCH ROUTES
     Route::get('/search-routes', [SearchRouteController::class, 'index'])->name('search-route');
+    Route::get('/search-routes/{id}', [SearchRouteController::class, 'detail'])->name('search-route.detail');
 });
 
 

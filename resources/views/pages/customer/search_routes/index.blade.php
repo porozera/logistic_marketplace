@@ -124,7 +124,7 @@
 {{-- Card Offer --}}
         <div class="col-9">
             @foreach ($offers as $item )
-            <div class="card">
+            <div class="card card-hover">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-md-6 d-flex align-items-center">
@@ -197,7 +197,7 @@
                                 <h5 class="mb-0 ms-2 text-primary">50</h5>
                                 <h5 class="mb-0 ms-2">/100</h5>
                             </div> --}}
-                            <button type="button" class="btn btn-primary w-50" data-bs-toggle="modal" data-bs-target="#addModal">Pilih</button>
+                            <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50">Pilih</a>
                         </div>
                     </div>                      
                 </div>
