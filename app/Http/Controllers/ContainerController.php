@@ -56,6 +56,4 @@ class ContainerController extends Controller
 
         return redirect('/container')->with('success', 'Data Kontainer berhasil dihapus');
     }
-
-    
 }

@@ -36,14 +36,14 @@
             <div>
                 <div class="form-group">
                     <label for="name" class="form-label">Nama Provinsi</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama layanan" value="{{ old('name') }}" required>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama provinsi" value="{{ old('name') }}" required>
                     <small class="form-text text-muted">Contoh : Jawa Barat</small>
                 </div>
             </div>
             <div>
                 <div class="form-group">
                     <label for="postalCode" class="form-label">Kode Wilayah Administrasi</label>
-                    <input type="number" class="form-control" name="postalCode" id="postalCode" placeholder="Masukkan kode wilayah" value="{{ old('postalCode') }}" required>
+                    <input type="number" class="form-control" name="postalCode" id="postalCode" placeholder="Masukkan kode wilayah administrasi" value="{{ old('postalCode') }}" required>
                     <small class="form-text text-muted">Contoh : 32</small>
                 </div>
             </div>

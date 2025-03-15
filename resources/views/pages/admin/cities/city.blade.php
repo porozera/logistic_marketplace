@@ -32,7 +32,7 @@
           <div class="card table-card">
             <div class="card-body">
               <div class="text-end p-4 pb-0">
-                <a href="service-add" class="btn btn-primary d-inline-flex align-item-center">
+                <a href="city-add" class="btn btn-primary d-inline-flex align-item-center">
                   <i class="ti ti-plus f-18 me-2"></i> Tambah Data
                 </a>
               </div>
@@ -55,13 +55,13 @@
                           <input class="form-check-input" type="checkbox">
                         </div>
                       </td>
-                      <td>{{ $item->id_province }}</td>
+                      <td>{{ $item->province->name }}</td>
                       <td>{{ $item->name }}</td>
                       <td>{{ $item->postalCode }}</td>
                       <td class="text-center">
                         <ul class="list-inline me-auto mb-0">
                           <li class="list-inline-item align-bottom">
-                            <a href="{{ url('service/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
+                            <a href="{{ url('city/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
                               <i class="ti ti-edit-circle f-18"></i>
                             </a>
                           </li>
@@ -131,7 +131,7 @@
 <script>
   function confirmDelete(id) {
       let form = document.getElementById('deleteForm');
-      form.action = "/service/" + id; // Mengatur action form delete
+      form.action = "/city/" + id; // Mengatur action form delete
       let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
       deleteModal.show(); // Menampilkan modal
   }

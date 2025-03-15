@@ -10,4 +10,8 @@ class Province extends Model
         'name',
         'postalCode'
     ];
+    public function cities()
+    {
+        return $this->hasMany(City::class, 'id_province');
+    }
 }

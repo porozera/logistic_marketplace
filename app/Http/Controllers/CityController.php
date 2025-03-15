@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Province;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -13,18 +14,45 @@ class CityController extends Controller
     } 
 
     public function add() {
-        return view('pages.admin.cities.city-add');
+        $provinces = Province::all(); // Ambil semua data provinsi
+        return view('pages.admin.cities.city-add', compact('provinces'));
     }
 
     public function store(Request $request) {
         // dd($request->all());
         $validated = $request->validate([
-            'id_province' => 'required|numeric',
+            'id_province' => 'required|exists:provinces,id', // Validasi harus ada di tabel provinces
             'name' => 'required|max:255',
-            'code' => 'required|max:255'
+            'postalCode' => 'required|max:255'
         ]);
 
-        $city = City::create($request->all());
+        City::create($validated);
         return redirect('city')->with('success', 'Data Kota berhasil ditambahkan!');
+    }
+
+    public function edit($id) {
+        $city = City::findOrFail($id);
+        $provinces = Province::all(); // Ambil semua data provinsi
+        return view('pages.admin.cities.city-edit', compact('city', 'provinces'));
+    }
+    
+    public function update(Request $request, $id) {
+        $validated = $request->validate([
+            'id_province' => 'required|exists:provinces,id', // Validasi harus ada di tabel provinces
+            'name' => 'required|max:255',
+            'postalCode' => 'required|max:255'
+        ]);
+    
+        $city = City::findOrFail($id);
+        $city->update($validated);
+    
+        return redirect('city')->with('success', 'Data berhasil diperbarui');
+    }
+
+    public function destroy($id) {
+        $city = City::findOrFail($id);
+        $city->delete();
+
+        return redirect('/city')->with('success', 'Data Kota berhasil dihapus');
     }
 }

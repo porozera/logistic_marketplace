@@ -112,6 +112,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/province/{id}/edit', [ProvinceController::class, 'edit']);
     Route::put('/province/{id}', [ProvinceController::class, 'update']);
     Route::delete('/province/{id}', [ProvinceController::class, 'destroy'])->name('province.destroy');
+    
     //City
     Route::get('/city', [CityController::class, 'index']);
     Route::get('/city-add', [CityController::class, 'add']);
