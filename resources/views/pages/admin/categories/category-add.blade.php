@@ -30,7 +30,6 @@
           <h5>Form Tambah Data Kategori Barang</h5>
         </div>
         <div class="card-body">
-
           <form action="category-add" method="post">
             @csrf
             <div>
@@ -63,12 +62,10 @@
                 <label class="form-label" for="description" required>Deskripsi</label>
                 <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi" value="{{ old('description') }}"></textarea>
             </div>
-
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>
-                <a href="/kontainer" class="btn btn-secondary">Cancel</a>
+                <a href="/category" class="btn btn-secondary">Cancel</a>
             </div>
-
           </form>
         </div>
       </div>
