@@ -10,6 +10,7 @@ class Service extends Model
         'code',
         'serviceName',
         'description',
-        'price'
+        'price',
+        'icon'
     ];
 }

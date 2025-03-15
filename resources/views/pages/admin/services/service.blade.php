@@ -45,6 +45,7 @@
                       <th>Nama Layanan</th>
                       <th>Deskripsi</th>
                       <th>Harga</th>
+                      <th>Icon</th>
                       <th class="text-center">Actions</th>
                     </tr>
                   </thead>
@@ -60,6 +61,7 @@
                       <td>{{ $item->serviceName }}</td>
                       <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">{{ $item->description }}</td>
                       <td>{{ $item->price }}</td>
+                      <td><i class="{{ $item->icon }}"></i></td>
                       <td class="text-center">
                         <ul class="list-inline me-auto mb-0">
                           <li class="list-inline-item align-bottom">

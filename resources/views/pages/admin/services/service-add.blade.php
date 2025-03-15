@@ -54,6 +54,13 @@
                     {{-- <small class="form-text text-muted">Please enter your Password</small> --}}
                 </div>
             </div>
+            <div>
+                <div class="form-group">
+                    <label for="icon" class="form-label">Icon</label>
+                    <input type="text" class="form-control" name="icon" id="icon" placeholder="Masukkan class icon" value="{{ old('icon') }}" required>
+                    {{-- <small class="form-text text-muted">Please enter your Password</small> --}}
+                </div>
+            </div>
             <div class="form-group">
                 <label class="form-label" for="description">Deskripsi</label>
                 <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi layanan" value="{{ old('description') }}" required></textarea>

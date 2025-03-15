@@ -53,6 +53,12 @@
                         <input type="number" name="price" id="price" class="form-control" value="{{ $service->price }}" required>
                     </div>
                 </div>
+                <div>
+                    <div class="form-group">
+                        <label for="icon" class="form-label">Icon</label>
+                        <input type="text" name="icon" id="icon" class="form-control" value="{{ $service->icon }}" required>
+                    </div>
+                </div>
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="description" class="form-label">Deskripsi</label>
