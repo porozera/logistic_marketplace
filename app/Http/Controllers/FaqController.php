@@ -24,7 +24,7 @@ class FaqController extends Controller
             'description' => 'required'
         ]);
 
-        $faqs = Faq::create($request->all());
+        $faq = Faq::create($request->all());
         return redirect('faq')->with('success', 'Data Layanan berhasil ditambahkan!');
     }
 

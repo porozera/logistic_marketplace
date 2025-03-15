@@ -2,18 +2,19 @@
 
 
 use App\Models\Service;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FaqController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\offerController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FaqController;
 use App\Http\Controllers\RequestRouteController;
-use App\Models\Category;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -102,6 +103,14 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('faq/{id}/edit', [FaqController::class, 'edit']);
     Route::put('faq/{id}', [FaqController::class, 'update']);
     Route::delete('faq/{id}', [FaqController::class, 'destroy'])->name('faq.destroy');
+
+    // Province
+    Route::get('/province', [ProvinceController::class, 'index']);
+    Route::get('/province-add', [ProvinceController::class, 'add']);
+    Route::post('/province-add', [ProvinceController::class, 'store']);
+    Route::get('/province/{id}/edit', [ProvinceController::class, 'edit']);
+    Route::put('/province/{id}', [ProvinceController::class, 'update']);
+    Route::delete('/province/{id}', [ProvinceController::class, 'destroy'])->name('province.destroy');
 
 });
 

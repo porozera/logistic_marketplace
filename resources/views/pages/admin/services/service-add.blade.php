@@ -61,7 +61,7 @@
 
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>
-                <a href="/kontainer" class="btn btn-secondary">Cancel</a>
+                <a href="/service" class="btn btn-secondary">Cancel</a>
             </div>
 
           </form>
