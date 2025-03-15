@@ -104,14 +104,6 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::put('faq/{id}', [FaqController::class, 'update']);
     Route::delete('faq/{id}', [FaqController::class, 'destroy'])->name('faq.destroy');
 
-    // Province
-    Route::get('/province', [ProvinceController::class, 'index']);
-    Route::get('/province-add', [ProvinceController::class, 'add']);
-    Route::post('/province-add', [ProvinceController::class, 'store']);
-    Route::get('/province/{id}/edit', [ProvinceController::class, 'edit']);
-    Route::put('/province/{id}', [ProvinceController::class, 'update']);
-    Route::delete('/province/{id}', [ProvinceController::class, 'destroy'])->name('province.destroy');
-
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
