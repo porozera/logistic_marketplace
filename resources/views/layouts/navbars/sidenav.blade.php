@@ -46,6 +46,18 @@
               <span class="pc-mtext">Kategori Barang</span>
             </a>
           </li>
+          <li class="pc-item">
+            <a href="category" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-building-skyscraper"></i></span>
+              <span class="pc-mtext">Provinsi</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="category" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-building"></i></span>
+              <span class="pc-mtext">Kota</span>
+            </a>
+          </li>
   
           <li class="pc-item pc-caption">
             <label>Laporan</label>
