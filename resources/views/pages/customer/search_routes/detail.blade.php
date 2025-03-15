@@ -97,7 +97,7 @@
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
                                 <h5 class="mb-0 ms-2">/CBM</h5>
                             </div>
-                            <a href="/search-routes/{{$offer['id']}}" class="btn btn-primary w-50">Pesan Sekarang</a>
+                            <a href="/payment/{{$offer['id']}}" class="btn btn-primary w-50">Pesan Sekarang</a>
                         </div>
                     </div>                      
                 </div>
