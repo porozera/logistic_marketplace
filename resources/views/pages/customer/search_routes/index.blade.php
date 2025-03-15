@@ -138,9 +138,10 @@
             @elseif ($offers->isEmpty())
                 <div class="card text-center p-4">
                     <div class="card-body">
-                        <img src="{{ asset('template/mantis/dist/assets/images/search_icon.png') }}" alt="Search Icon" class="mb-3" style="max-width: 100px;">
-                        <h3 class="mb-2">Hasil tidak ditemukan</h3>
-                        <p class="text-muted">Lakukan Request route</p>
+                        <img src="{{ asset('template/mantis/dist/assets/images/unavailable_icon.png') }}" alt="Search Icon" class="mb-3" style="max-width: 100px;">
+                        <h3 class="mb-2">Rute tidak tersedia</h3>
+                        <p class="text-muted">Buat permintaan rute pengiriman baru</p>
+                        <a href="/request-routes" class="btn btn-primary w-50">Buat Permintaan</a>
                     </div>
                 </div> 
             @else

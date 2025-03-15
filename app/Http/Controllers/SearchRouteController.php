@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\offersModel;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -76,8 +77,9 @@ class SearchRouteController extends Controller
         }
     
         $offers = $query->get();
+        $cities = City::pluck('name')->toArray(); 
     
-        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed'));
+        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed','cities'));
     }
     
     public function detail($id)

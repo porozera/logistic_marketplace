@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\offerController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ServiceController;
+use App\Models\City;
 use App\Models\Service;
+use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -25,10 +27,12 @@ Route::get('/landing-page', function () {
     return view('landing-page');
 });
 
-
-
-
-
+Route::get('/search-cities', function (Request $request) {
+    $search = $request->input('search');
+    $cities = City::where('name', 'LIKE', "%{$search}%")->get();
+    
+    return response()->json($cities);
+})->name('cities.search');
 
 
 // Route::get('/kontainer', function () {
