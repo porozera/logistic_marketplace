@@ -10,7 +10,7 @@
           <div class="row align-items-center">
             <div class="col-md-12">
               <div class="page-header-title">
-                <h4 class="m-b-10">Permintaan Pengiriman</h4>
+                <h4 class="m-b-10">Permintaan Rute</h4>
                 @if(session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
