@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('serviceName');
             $table->string('description');
             $table->integer('price');
+            $table->string('icon');
             $table->timestamps();
         });
     }

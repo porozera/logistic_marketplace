@@ -4,6 +4,7 @@
 use App\Models\Service;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\offerController;
 use App\Http\Controllers\ServiceController;
@@ -102,6 +103,22 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('faq/{id}/edit', [FaqController::class, 'edit']);
     Route::put('faq/{id}', [FaqController::class, 'update']);
     Route::delete('faq/{id}', [FaqController::class, 'destroy'])->name('faq.destroy');
+
+    // Province
+    Route::get('/province', [ProvinceController::class, 'index']);
+    Route::get('/province-add', [ProvinceController::class, 'add']);
+    Route::post('/province-add', [ProvinceController::class, 'store']);
+    Route::get('/province/{id}/edit', [ProvinceController::class, 'edit']);
+    Route::put('/province/{id}', [ProvinceController::class, 'update']);
+    Route::delete('/province/{id}', [ProvinceController::class, 'destroy'])->name('province.destroy');
+
+    //City
+    Route::get('/city', [CityController::class, 'index']);
+    Route::get('/city-add', [CityController::class, 'add']);
+    Route::post('/city-add', [CityController::class, 'store']);
+    Route::get('/city/{id}/edit', [CityController::class, 'edit']);
+    Route::put('/city/{id}', [CityController::class, 'update']);
+    Route::delete('/city/{id}', [CityController::class, 'destroy'])->name('city.destroy');
 
 });
 
