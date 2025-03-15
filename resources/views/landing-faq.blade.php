@@ -62,13 +62,13 @@
     </div>
 
     <div class="container" style="max-width: 750px; padding-top: 100px;">
-        <h2 class="text-center mb-4">Help Center</h2>
+        <h2 class="text-center text-black mb-4">Help Center</h2>
     
         <!-- Search Bar -->
         <div class="input-group mb-4">
             <input type="text" class="form-control" placeholder="Search help articles...">
             <button class="btn btn-primary">
-                <i class="ti ti-search"></i>
+                <i class="bi bi-search"></i>
             </button>
         </div>
     
@@ -79,64 +79,48 @@
                     <div class="pc-component">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">General</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                card's
-                                content.</p>
-                                <a href="#!" class="card-link">Card link</a>
-                                <a href="#!" class="card-link">Another link</a>
+                                <i class="bi bi-box-fill text-black" style="font-size: 2rem;"></i>
+                                <h3 class="card-title text-black pt-3">General</h3>
+                                <p class="card-text text-black">Membantu menjawab pertanyaan umum yang sering diajukan oleh pengguna.</p>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-md-6 mb-4">
-                <a href="#" class="text-decoration-none">
+                <a href="landing-faq/faq-peralatan" class="text-decoration-none">
                     <div class="pc-component">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Peralatan</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                card's
-                                content.</p>
-                                <a href="#!" class="card-link">Card link</a>
-                                <a href="#!" class="card-link">Another link</a>
+                                <i class="bi bi-tools text-black" style="font-size: 2rem;"></i>
+                                <h3 class="card-title text-black pt-3">Peralatan</h3>
+                                <p class="card-text text-black">Masalah umum yang mungkin terjadi pada peralatan yang digunakan dalam layanan atau produk tertentu.</p>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-md-6 mb-4">
-                <a href="#" class="text-decoration-none">
+                <a href="landing-faq/faq-harga" class="text-decoration-none">
                     <div class="pc-component">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Harga & Pembayaran</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                card's
-                                content.</p>
-                                <a href="#!" class="card-link">Card link</a>
-                                <a href="#!" class="card-link">Another link</a>
+                                <i class="bi bi-credit-card-2-back-fill text-black" style="font-size: 2rem;"></i>
+                                <h3 class="card-title text-black pt-3">Pembayaran</h3>
+                                <p class="card-text text-black">Informasi terkait biaya, metode pembayaran, serta pertanyaan lain terkait dengan transaksi.</p>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-md-6 mb-4">
-                <a href="#" class="text-decoration-none">
+                <a href="landing-faq/faq-pengiriman" class="text-decoration-none">
                     <div class="pc-component">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Pengiriman</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                card's
-                                content.</p>
-                                <a href="#!" class="card-link">Card link</a>
-                                <a href="#!" class="card-link">Another link</a>
+                                <i class="bi bi-truck text-black" style="font-size: 2rem;"></i>
+                                <h3 class="card-title text-black pt-3">Pengiriman</h3>
+                                <p class="card-text text-black">Informasi mengenai proses serta kendala yang mungkin terjadi selama pengiriman.</p>
                             </div>
                         </div>
                     </div>
@@ -159,22 +143,58 @@
 
     
     {{-- footer --}}
-    <footer class="pc-footer">
-        <div class="footer-wrapper container-fluid">
+    <div class="footer bg-light mt-5">
+        <div class="container">
           <div class="row">
-            <div class="col-sm my-1">
-              <p class="m-0"
-                >Mantis &#9829; crafted by Team <a href="https://themeforest.net/user/codedthemes" target="_blank">Codedthemes</a> Distributed by <a href="https://themewagon.com/">ThemeWagon</a>.</p
-              >
+            <div class="col-lg-3">
+              <p class="mb-4"><img src="{{ asset('template/waterboat/images/logo.png') }}" alt="Image" class="img-fluid"></p>
+              <p style="text-align: justify; margin-right: 10px;">Platform digital yang menghubungkan pengirim dan penyedia jasa logistik untuk mendapatkan penawaran terbaik dalam pengiriman barang.</p>  
+              <p><a href="#">Learn More</a></p>
             </div>
-            <div class="col-auto my-1">
-              <ul class="list-inline footer-link mb-0">
-                <li class="list-inline-item"><a href="../index.html">Home</a></li>
+            <div class="col-lg-3">
+              <h3 class="footer-heading"><span>Our Company</span></h3>
+              <ul class="list-unstyled">
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">News</a></li>
+                  <li><a href="#">Services</a></li>
+                  <li><a href="#">Our Team</a></li>
+                  <li><a href="#">Careers</a></li>
+                  <li><a href="#">Projects</a></li>
               </ul>
+            </div>
+            <div class="col-lg-3">
+                <h3 class="footer-heading"><span>Our Services</span></h3>
+                <ul class="list-unstyled">
+                    <li><a href="#">Industrial</a></li>
+                    <li><a href="#">Construction</a></li>
+                    <li><a href="#">Remodeling</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <h3 class="footer-heading"><span>Contact</span></h3>
+                <ul class="list-unstyled">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Support Community</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Our Partners</a></li>
+                </ul>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-12">
+              <div class="copyright">
+                  <p>
+                      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                      Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+                      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                      </p>
+              </div>
             </div>
           </div>
         </div>
-      </footer>
+      </div>
 
 
     <!-- loader -->

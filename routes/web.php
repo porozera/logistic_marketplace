@@ -29,6 +29,9 @@ Route::get('/landing-page', function () {
 
 Route::get('/landing-faq', [DashboardController::class, 'faq_category']);
 Route::get('/landing-faq/faq-general', [DashboardController::class, 'show_faq_general']);
+Route::get('/landing-faq/faq-peralatan', [DashboardController::class, 'show_faq_peralatan']);
+Route::get('/landing-faq/faq-harga', [DashboardController::class, 'show_faq_harga']);
+Route::get('/landing-faq/faq-pengiriman', [DashboardController::class, 'show_faq_pengiriman']);
 
 
 

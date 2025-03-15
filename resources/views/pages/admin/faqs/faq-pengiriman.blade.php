@@ -92,7 +92,7 @@
                 <div class="col-md-12">
                   <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../dashboard/index.html">FAQs</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0)">General FAQs</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0)">FAQs Pengiriman</a></li>
                   </ul>
                 </div>
               </div>
@@ -101,11 +101,8 @@
           <!-- [ breadcrumb ] end -->
           <div class="row">
             <div class="mb-4">
-              <a href="#" class="d-inline-flex align-items-center d-xl-none btn btn-dark mb-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_component"
-                ><i class="ti ti-menu-2 me-2"></i> Explore Components
-              </a>
-              <h1>General FAQs</h1>
-              <p class="text-muted">General FAQs adalah bagian yang dirancang untuk memberikan jawaban atas pertanyaan umum yang sering diajukan oleh pengguna.</p>
+              <h1>FAQs Pengiriman</h1>
+              <p class="text-muted">FAQ Pengiriman mencakup informasi mengenai proses pengiriman, estimasi waktu sampai, pelacakan paket, kebijakan pengembalian, serta kendala yang mungkin terjadi selama pengiriman.</p>
             </div>
             <!-- [ Search Form ] start -->
             <div class="d-flex justify-content-center mb-4">

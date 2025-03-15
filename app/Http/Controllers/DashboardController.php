@@ -27,4 +27,25 @@ class DashboardController extends Controller
         $faqs = Faq::where('type', 'General')->get();
         return view('pages.admin.faqs.faq-general', compact('faqs'));
     }
+
+    public function show_faq_peralatan() {
+        $faqs = Faq::all(); // Ambil semua FAQ dari database
+        // dd($faqs);
+        $faqs = Faq::where('type', 'Peralatan')->get();
+        return view('pages.admin.faqs.faq-peralatan', compact('faqs'));
+    }
+
+    public function show_faq_harga() {
+        $faqs = Faq::all(); // Ambil semua FAQ dari database
+        // dd($faqs);
+        $faqs = Faq::where('type', 'Harga & Pembayaran')->get();
+        return view('pages.admin.faqs.faq-harga', compact('faqs'));
+    }
+
+    public function show_faq_pengiriman() {
+        $faqs = Faq::all(); // Ambil semua FAQ dari database
+        // dd($faqs);
+        $faqs = Faq::where('type', 'Pengiriman')->get();
+        return view('pages.admin.faqs.faq-pengiriman', compact('faqs'));
+    }
 }
