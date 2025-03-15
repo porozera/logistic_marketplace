@@ -30,29 +30,34 @@ class ProfileController extends Controller
         return view('pages.lsp.profile.edit', compact('user'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $user = $request->user();
+        $user = User::findOrFail($id);
 
+        // Validasi input
         $request->validate([
             'description' => 'nullable|string',
-            'profilePicture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'bannerPicture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'profilePicture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'bannerPicture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        if ($request->hasFile('profilePicture')) {
-            $profilePicturePath = $request->file('profilePicture')->store('profile_pictures', 'public');
-            $user->profilePicture = $profilePicturePath;
-        }
-
-        if ($request->hasFile('bannerPicture')) {
-            $bannerPicturePath = $request->file('bannerPicture')->store('banner_pictures', 'public');
-            $user->bannerPicture = $bannerPicturePath;
-        }
-
+        // Update deskripsi
         $user->description = $request->description;
+
+        // Upload dan simpan banner picture
+        if ($request->hasFile('bannerPicture')) {
+            $bannerPath = $request->file('bannerPicture')->store('banners', 'public');
+            $user->bannerPicture = $bannerPath;
+        }
+
+        // Upload dan simpan profile picture
+        if ($request->hasFile('profilePicture')) {
+            $profilePath = $request->file('profilePicture')->store('profiles', 'public');
+            $user->profilePicture = $profilePath;
+        }
+
         $user->save();
 
-        return redirect()->route('profile.index')->with('success', 'Profil berhasil diperbarui!');
+        return redirect()->route('profile.index')->with('success', 'Profil berhasil diperbarui.');
     }
 }
