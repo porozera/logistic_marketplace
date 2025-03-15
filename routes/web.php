@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\offerController;
 use App\Http\Controllers\ServiceController;
@@ -111,6 +112,13 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/province/{id}/edit', [ProvinceController::class, 'edit']);
     Route::put('/province/{id}', [ProvinceController::class, 'update']);
     Route::delete('/province/{id}', [ProvinceController::class, 'destroy'])->name('province.destroy');
+    //City
+    Route::get('/city', [CityController::class, 'index']);
+    Route::get('/city-add', [CityController::class, 'add']);
+    Route::post('/city-add', [CityController::class, 'store']);
+    Route::get('/city/{id}/edit', [CityController::class, 'edit']);
+    Route::put('/city/{id}', [CityController::class, 'update']);
+    Route::delete('/city/{id}', [CityController::class, 'destroy'])->name('city.destroy');
 
 });
 
