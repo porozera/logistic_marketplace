@@ -6,12 +6,14 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RequestRouteController;
+use App\Http\Controllers\RequestRouteLspController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\offerController;
 use App\Http\Controllers\ServiceController;
 use App\Models\Service;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 
 
 
@@ -81,6 +83,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::get('/{id}/edit', [OfferController::class, 'edit'])->name('offers.edit');
         Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
         Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
+    });
+    Route::prefix('permintaan-pengiriman')->group(function(){
+        Route::get('/', [RequestRouteLspController::class, 'index'])->name('permintaan.pengiriman');
+        Route::get('/{id}', [RequestRouteLspController::class, 'show']);
+
     });
 });
 
