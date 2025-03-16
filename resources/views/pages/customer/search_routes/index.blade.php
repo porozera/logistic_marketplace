@@ -63,7 +63,7 @@
       <div class="row">
         
         {{-- Kotak filter --}}
-        <div class="col-3">
+        <div class="col-3" style="position: sticky; top: 80px; height: fit-content;">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -224,7 +224,7 @@
                         </div>                      
                     </div>
                 </div> 
-                @endforeach            
+                @endforeach               
             @endif
 
         </div>
