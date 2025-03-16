@@ -30,7 +30,7 @@
           <h5>Form Tambah Data Kategori Barang</h5>
         </div>
         <div class="card-body">
-          <form action="category-add" method="post">
+          <form action="/admin/category-add" method="post">
             @csrf
             <div>
                 <div class="form-group">
@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <label class="form-label" for="type">Tipe</label>
                     <select class="form-select" id="type" name="type" required>
-                        <option selected>Pilih Tipe</option>
+                        <option selected>-- Pilih Tipe --</option>
                         <option>General Cargo</option>
                         <option>Special Cargo</option>
                         <option>Irregularity Cargo</option>
@@ -64,7 +64,7 @@
             </div>
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>
-                <a href="/category" class="btn btn-secondary">Cancel</a>
+                <a href="/admin/category" class="btn btn-secondary">Cancel</a>
             </div>
           </form>
         </div>

@@ -25,7 +25,7 @@ class FaqController extends Controller
         ]);
 
         $faq = Faq::create($request->all());
-        return redirect('faq')->with('success', 'Data Layanan berhasil ditambahkan!');
+        return redirect('/admin/faq')->with('success', 'Data Layanan berhasil ditambahkan!');
     }
 
     public function edit($id) {
@@ -43,13 +43,13 @@ class FaqController extends Controller
         $faq = Faq::findOrFail($id);
         $faq->update($request->all());
     
-        return redirect('faq')->with('success', 'Data berhasil diperbarui');
+        return redirect('/admin/faq')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id) {
         $faq = Faq::findOrFail($id);
         $faq->delete();
 
-        return redirect('/faq')->with('success', 'Data berhasil dihapus');
+        return redirect('/admin/faq')->with('success', 'Data berhasil dihapus');
     }
 }

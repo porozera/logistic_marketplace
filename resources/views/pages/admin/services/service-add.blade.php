@@ -11,7 +11,7 @@
             <div class="col-md-12">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan Pengiriman</a></li>
                 <li class="breadcrumb-item" aria-current="page">Tambah Data</li>
               </ul>
             </div>
@@ -68,7 +68,7 @@
 
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>
-                <a href="/service" class="btn btn-secondary">Cancel</a>
+                <a href="/admin/service" class="btn btn-secondary">Cancel</a>
             </div>
 
           </form>

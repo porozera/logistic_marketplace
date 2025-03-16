@@ -31,7 +31,7 @@
           <h5>Form Edit Data Kota</h5>
         </div>
         <div class="card-body">
-            <form action="{{ url('city/'.$city->id) }}" method="POST">
+            <form action="{{ url('/admin/city/'.$city->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 
@@ -50,7 +50,7 @@
                 </div>
                 <div>
                     <div class="form-group">
-                        <label for="name" class="form-label">Nama Layanan</label>
+                        <label for="name" class="form-label">Kota</label>
                         <input type="text" name="name" id="name" class="form-control" value="{{ $city->name }}" required>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ url('city') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ url('/admin/city') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>

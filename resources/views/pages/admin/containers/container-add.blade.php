@@ -31,7 +31,7 @@
         </div>
         <div class="card-body">
 
-          <form action="container-add" method="post">
+          <form action="/admin/container-add" method="post">
             @csrf
             <div class="row">
               <div class="col-lg-6">
@@ -72,7 +72,7 @@
 
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>
-                <a href="/container" class="btn btn-secondary">Cancel</a>
+                <a href="/admin/container" class="btn btn-secondary">Cancel</a>
             </div>
 
           </form>

@@ -26,7 +26,7 @@ class CategoryController extends Controller
         ]);
 
         $categories = Category::create($request->all());
-        return redirect('category')->with('success', 'Data Layanan berhasil ditambahkan!');
+        return redirect('/admin/category')->with('success', 'Data Layanan berhasil ditambahkan!');
     }
 
     public function edit($id) {
@@ -45,13 +45,13 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->update($request->all());
     
-        return redirect('category')->with('success', 'Data berhasil diperbarui');
+        return redirect('/admin/category')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id) {
         $service = Category::findOrFail($id);
         $service->delete();
 
-        return redirect('/service')->with('success', 'Data kategori barang berhasil dihapus');
+        return redirect('/admin/category')->with('success', 'Data kategori barang berhasil dihapus');
     }
 }

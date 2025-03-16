@@ -12,7 +12,7 @@
             <div class="col-md-12">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript: void(0)">Kontainer</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan Pengiriman</a></li>
                 <li class="breadcrumb-item" aria-current="page">Edit Data</li>
               </ul>
             </div>
@@ -31,7 +31,7 @@
           <h5>Form Edit Data Jenis Layanan</h5>
         </div>
         <div class="card-body">
-            <form action="{{ url('service/'.$service->id) }}" method="POST">
+            <form action="{{ url('admin/service/'.$service->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -67,7 +67,7 @@
                 </div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ url('service') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ url('admin/service') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>

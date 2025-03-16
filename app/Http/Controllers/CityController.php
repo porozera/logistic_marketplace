@@ -27,7 +27,7 @@ class CityController extends Controller
         ]);
 
         City::create($validated);
-        return redirect('city')->with('success', 'Data Kota berhasil ditambahkan!');
+        return redirect('/admin/city')->with('success', 'Data Kota berhasil ditambahkan!');
     }
 
     public function edit($id) {
@@ -46,13 +46,13 @@ class CityController extends Controller
         $city = City::findOrFail($id);
         $city->update($validated);
     
-        return redirect('city')->with('success', 'Data berhasil diperbarui');
+        return redirect('/admin/city')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id) {
         $city = City::findOrFail($id);
         $city->delete();
 
-        return redirect('/city')->with('success', 'Data Kota berhasil dihapus');
+        return redirect('/admin/city')->with('success', 'Data Kota berhasil dihapus');
     }
 }

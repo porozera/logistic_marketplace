@@ -14,7 +14,7 @@
           <li class="pc-item">
               <a href="{{ route('admin.dashboard') }}" class="pc-link">
                   <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-                  <span class="pc-mtext">Admin Dashboard</span>
+                  <span class="pc-mtext">Dashboard</span>
               </a>
           </li>
           <li class="pc-item">
@@ -28,31 +28,31 @@
             <label>Master Data</label>
             <i class="ti ti-dashboard"></i>
           </li>
-          <li class="pc-item">
+          <li class="pc-item {{ Request::is('admin/container*') ? 'active' : '' }}">
             <a href="container" class="pc-link">
               <span class="pc-micon"><i class="ti ti-caravan"></i></span>
               <span class="pc-mtext">Kontainer</span>
             </a>
           </li>
-          <li class="pc-item">
+          <li class="pc-item {{ Request::is('admin/service*') ? 'active' : '' }}">
             <a href="service" class="pc-link">
               <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
-              <span class="pc-mtext">Layanan</span>
+              <span class="pc-mtext">Layanan Pengiriman</span>
             </a>
           </li>
-          <li class="pc-item">
+          <li class="pc-item {{ Request::is('admin/category*') ? 'active' : '' }}">
             <a href="category" class="pc-link">
               <span class="pc-micon"><i class="ti ti-box"></i></span>
               <span class="pc-mtext">Kategori Barang</span>
             </a>
           </li>
-          <li class="pc-item">
+          <li class="pc-item {{ Request::is('admin/province*') ? 'active' : '' }}">
             <a href="province" class="pc-link">
               <span class="pc-micon"><i class="ti ti-building-skyscraper"></i></span>
               <span class="pc-mtext">Provinsi</span>
             </a>
           </li>
-          <li class="pc-item">
+          <li class="pc-item {{ Request::is('admin/city*') ? 'active' : '' }}">
             <a href="city" class="pc-link">
               <span class="pc-micon"><i class="ti ti-building"></i></span>
               <span class="pc-mtext">Kota</span>
@@ -64,13 +64,13 @@
             <i class="ti ti-news"></i>
           </li>
           <li class="pc-item">
-            <a href="../pages/login-v3.html" class="pc-link">
+            <a href="report-user" class="pc-link">
               <span class="pc-micon"><i class="ti ti-users"></i></span>
               <span class="pc-mtext">Pengguna</span>
             </a>
           </li>
           <li class="pc-item">
-            <a href="../pages/register-v3.html" class="pc-link">
+            <a href="report-shipment" class="pc-link">
               <span class="pc-micon"><i class="ti ti-truck-delivery"></i></span>
               <span class="pc-mtext">Pengiriman</span>
             </a>
@@ -88,14 +88,14 @@
           </li>
           <li class="pc-item">
             <a href="" class="pc-link">
-                <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+                <span class="pc-micon"><i class="ti ti-file-symlink"></i></span>
                 <span class="pc-mtext">Manajemen Komplain</span>
             </a>
         </li>
-        <li class="pc-item">
+        <li class="pc-item {{ Request::is('admin/faq*') ? 'active' : '' }}">
             <a href="faq" class="pc-link">
-                <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-                <span class="pc-mtext">FAQs</span>
+                <span class="pc-micon"><i class="ti ti-zoom-question"></i></span>
+                <span class="pc-mtext">FAQs Data</span>
             </a>
         </li>
           @endif

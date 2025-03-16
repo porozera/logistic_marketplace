@@ -11,7 +11,7 @@
             <div class="col-md-12">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Provisi</a></li>
                 <li class="breadcrumb-item" aria-current="page">Tambah Data</li>
               </ul>
             </div>
@@ -31,7 +31,7 @@
         </div>
         <div class="card-body">
 
-          <form action="province-add" method="post">
+          <form action="/admin/province-add" method="post">
             @csrf
             <div>
                 <div class="form-group">
@@ -49,7 +49,7 @@
             </div>
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>
-                <a href="/province" class="btn btn-secondary">Cancel</a>
+                <a href="/admin/province" class="btn btn-secondary">Cancel</a>
             </div>
 
           </form>

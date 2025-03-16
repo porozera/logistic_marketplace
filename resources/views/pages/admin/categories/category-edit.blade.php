@@ -31,7 +31,7 @@
           <h5>Form Edit Data Kategori Barang</h5>
         </div>
         <div class="card-body">
-            <form action="{{ url('category/'.$category->id) }}" method="POST">
+            <form action="{{ url('/admin/category/'.$category->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -66,7 +66,7 @@
                 </div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ url('category') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ url('/admin/category') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>

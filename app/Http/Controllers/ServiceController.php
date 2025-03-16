@@ -29,7 +29,7 @@ class ServiceController extends Controller
         // dd($validated);
 
         $service = Service::create($request->all());
-        return redirect('service')->with('success', 'Data Layanan berhasil ditambahkan!');
+        return redirect('/admin/service')->with('success', 'Data Layanan berhasil ditambahkan!');
     }
 
     public function edit($id) {
@@ -49,13 +49,13 @@ class ServiceController extends Controller
         $service = Service::findOrFail($id);
         $service->update($request->all());
     
-        return redirect('service')->with('success', 'Data berhasil diperbarui');
+        return redirect('/admin/service')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id) {
         $service = Service::findOrFail($id);
         $service->delete();
 
-        return redirect('/service')->with('success', 'Data Layanan berhasil dihapus');
+        return redirect('/admin/service')->with('success', 'Data Layanan berhasil dihapus');
     }
 }

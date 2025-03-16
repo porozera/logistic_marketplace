@@ -24,7 +24,7 @@ class ProvinceController extends Controller
         ]);
 
         $province = Province::create($request->all());
-        return redirect('province')->with('success', 'Data Layanan berhasil ditambahkan!');
+        return redirect('/admin/province')->with('success', 'Data Layanan berhasil ditambahkan!');
     }
 
     public function edit($id) {
@@ -41,13 +41,13 @@ class ProvinceController extends Controller
         $province = Province::findOrFail($id);
         $province->update($request->all());
     
-        return redirect('province')->with('success', 'Data berhasil diperbarui');
+        return redirect('/admin/province')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id) {
         $province = Province::findOrFail($id);
         $province->delete();
 
-        return redirect('/province')->with('success', 'Data Layanan berhasil dihapus');
+        return redirect('/admin/province')->with('success', 'Data Layanan berhasil dihapus');
     }
 }

@@ -11,13 +11,12 @@
             <div class="col-md-12">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript: void(0)">Profile</a></li>
-                <li class="breadcrumb-item" aria-current="page">Service List</li>
+                <li class="breadcrumb-item" aria-current="page">Layanan Pengiriman</li>
               </ul>
             </div>
             <div class="col-md-12">
               <div class="page-header-title">
-                <h2 class="mb-0">Data Layanan</h2>
+                <h2 class="mb-0">Data Layanan Pengiriman</h2>
               </div>
             </div>
           </div>
@@ -65,7 +64,7 @@
                       <td class="text-center">
                         <ul class="list-inline me-auto mb-0">
                           <li class="list-inline-item align-bottom">
-                            <a href="{{ url('service/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
+                            <a href="{{ url('admin/service/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
                               <i class="ti ti-edit-circle f-18"></i>
                             </a>
                           </li>
@@ -137,7 +136,7 @@
 <script>
   function confirmDelete(id) {
       let form = document.getElementById('deleteForm');
-      form.action = "/service/" + id; // Mengatur action form delete
+      form.action = "/admin/service/" + id; // Mengatur action form delete
       let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
       deleteModal.show(); // Menampilkan modal
   }

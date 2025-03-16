@@ -31,7 +31,7 @@
           <h5>Form Edit Data Provinsi</h5>
         </div>
         <div class="card-body">
-            <form action="{{ url('province/'.$province->id) }}" method="POST">
+            <form action="{{ url('/admin/province/'.$province->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -50,7 +50,7 @@
                 <div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ url('province') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ url('/admin/province') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>
