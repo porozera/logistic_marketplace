@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('weight');
             $table->integer('volume');
             $table->string('commodities');
+            $table->text('services')->nullable();
         });
     }
 

@@ -96,7 +96,7 @@
         </div>
 
 
-      <form action="" method="POST">
+      <form action="/payment/ordered" method="POST">
         @csrf
         <div class="row">
             <!-- Detail Penawaran -->
@@ -149,7 +149,8 @@
                         </div>
                       </div> --}}
 
-                      <div id="priceCard"></div> 
+                      <div id="cbmPriceCard"></div> 
+                      <div id="servicePriceList"></div>
 
                       <hr>
 
@@ -201,12 +202,12 @@
                     <div class="col-6">
                       <div class="form-group mb-3">
                         <label class="form-label">Tipe Barang</label>
-                        <select class="form-control" name="shipmentMode" id="shipmentMode">
+                        <select class="form-control" name="commodities" id="commodities">
                             <option value=""></option>
                             <option value="Laut">Parfum</option>
                             <option value="Darat">Binatang</option>
                         </select>                            
-                        @error('shipmentMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                        @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                         </div>
                     </div>
                   </div>
@@ -222,21 +223,24 @@
                     <div class="col">
                       <label class="form-label">Daftar Layanan</label>
                       @foreach ($services as $item)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{ $item['serviceName'] }}" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    {{ $item['serviceName'] }}
-                                </label>
-                            </div>
-                        @endforeach
+                          <div class="form-check">
+                              <input class="form-check-input service-checkbox" type="checkbox" 
+                                     value="{{ $item['serviceName'] }}" 
+                                     data-price="{{ $item['price'] }}"
+                                     onclick="updateServices()">
+                              <label class="form-check-label">
+                                  {{ $item['serviceName'] }}
+                              </label>
+                          </div>
+                      @endforeach
                     </div>
                   </div>
                   <br>
                   <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">No Telepon</label>
-                      <input type="text" name="telpNumber" class="form-control" placeholder="+62" value="{{ old('origin') }}">
-                      @error('origin') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                      <input type="text" name="telpNumber" class="form-control" placeholder="+62" value="{{ old('telpNumber') }}">
+                      @error('telpNumber') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
                   <div class="row">
@@ -246,9 +250,50 @@
                       @error('description') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
+
+                  <!-- Input Hidden-->
+                  <div class="row">
+                    <input type="text" name="noOffer" class="form-control" value="{{ $offer['noOffer'] }}" hidden>
+                    <input type="text" name="lspName" class="form-control" value="{{ $offer['lspName'] }}" hidden>
+                    <input type="text" name="origin" class="form-control" value="{{ $offer['origin'] }}" hidden>
+                    <input type="text" name="destination" class="form-control" value="{{ $offer['destination'] }}" hidden>
+                    <input type="text" name="shipmentMode" class="form-control" value="{{ $offer['shipmentMode'] }}" hidden>
+                    <input type="text" name="shipmentType" class="form-control" value="{{ $offer['shipmentType'] }}" hidden>
+                    <input type="date" name="loadingDate" class="form-control" 
+                    value="{{ \Carbon\Carbon::parse($offer['loadingDate'])->format('Y-m-d') }}" >
+             
+                    <input type="date" name="estimationDate" class="form-control" 
+                            value="{{ \Carbon\Carbon::parse($offer['estimationDate'])->format('Y-m-d') }}" >
+                    
+                    <input type="date" name="shippingDate" class="form-control" 
+                            value="{{ \Carbon\Carbon::parse($offer['shippingDate'])->format('Y-m-d') }}" >
+             
+                    <input type="number" name="maxWeight" class="form-control" value="{{ $offer['maxWeight'] }}" hidden>
+                    <input type="number" name="maxVolume" class="form-control" value="{{ $offer['maxVolume'] }}" hidden>
+                    <input type="text" name="commodities" class="form-control" value="{{ $offer['commodities'] }}" hidden>
+                    <input type="number" name="price" class="form-control" value="{{ $offer['price'] }}" hidden>
+                    <input type="number" name="remainingWeight" class="form-control" value="{{ $offer['remainingWeight'] }}" hidden>
+                    <input type="number" name="remainingVolume" class="form-control" value="{{ $offer['remainingVolume'] }}" hidden>
+                    <input type="number" id="cbmInput" name="total_cbm" value="{{}}">
+                    <input type="number" id="totalPriceInput" name="total_price" value="{{}}">
+                    <!-- Input text untuk menyimpan layanan yang dipilih -->
+                    <input type="text" id="selectedServicesInput" name="selected_services" class="form-control" hidden>
+
+                  </div>
+                  <div class="row">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                  </div>
                   <div class="row">
                     <div class="col-12">
-                      <a href="/payment/{{$offer['id']}}" class="btn btn-primary w-100">Bayar Sekarang</a> 
+                      <button class="btn btn-primary w-100" type="submit">Bayar Sekarang</button>
                     </div>
                   </div>
                 </div>
@@ -294,55 +339,127 @@
               let height = parseFloat(document.getElementById("height").value) || 0;
               let weight = parseFloat(document.getElementById("weight").value) || 0;
 
-              // Konversi ke meter
               let lengthM = length / 100;
               let widthM = width / 100;
               let heightM = height / 100;
-
-              // Hitung CBM berdasarkan volume
               let cbm = lengthM * widthM * heightM;
               let cbmRounded = Math.ceil(cbm * 1000) / 1000;
 
-              // Maksimum ukuran untuk 1 CBM (100m × 100m × 100m)
-              let extraCBM = 0;
-              if (lengthM > 100 || widthM > 100 || heightM > 100) {
-                  extraCBM = 1;
-              }
-
-              // Maksimum berat per CBM
               let maxWeightPerCBM = 600;
-
-              // Hitung CBM berdasarkan volume, dimensi, dan berat
-              let cbmByVolume = Math.ceil(cbmRounded) + extraCBM; // Tambahkan CBM jika ada dimensi melebihi 100m
+              let cbmByVolume = Math.ceil(cbmRounded);
               let cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
 
-              // Ambil nilai terbesar
-              let cbmToBuy = Math.max(cbmByVolume, cbmByWeight);
+              // Peraturan tambahan: jika panjang, lebar, atau tinggi lebih dari 100m, tambahkan 1 CBM ekstra
+              let extraCBM = 0;
+              if (length > 100) extraCBM++;
+              if (width > 100) extraCBM++;
+              if (height > 100) extraCBM++;
+
+              let cbmToBuy = Math.max(cbmByVolume, cbmByWeight) + extraCBM;
 
               // Harga per CBM
-              let pricePerCBM = {{ $offer['price'] }};
-              let totalPrice = cbmToBuy * pricePerCBM;
+              let cbmPrice = 1500000;
+              let totalCBMPrice = cbmToBuy * cbmPrice;
 
-              // Format harga ke Rupiah
-              let formattedPrice = totalPrice.toLocaleString("id-ID");
-
-              // Update tampilan
+              // Update tampilan hasil CBM
               document.getElementById("cbmResult").innerText = cbmRounded.toFixed(3);
               document.getElementById("cbmToBuy").innerText = cbmToBuy;
-              document.getElementById("priceCard").innerHTML = `
+
+              // Tampilkan card CBM di HTML
+              let cbmPriceCard = document.getElementById("cbmPriceCard");
+              cbmPriceCard.innerHTML = `
                   <div class="card bg-light-primary mb-1">
                       <div class="card-body p-3">
                           <div class="row">
                               <div class="col-6">
-                                  <h5 class="mb-0">Total ${cbmToBuy} CBM</h5>
+                                  <h5 class="mb-0">Total CBM: ${cbmToBuy}</h5>
                               </div>
                               <div class="col-6 text-end">
-                                  <h5 class="mb-0">Rp. ${formattedPrice}</h5>
+                                  <h5 class="mb-0">Rp. ${totalCBMPrice.toLocaleString("id-ID")}</h5>
                               </div>
                           </div>
                       </div>
                   </div>
               `;
+
+              // Update total harga
+              updateTotalPrice();
           }
+
+          function updateTotalPrice() {
+            let totalPrice = 0;
+
+            // Ambil harga CBM dari hasil perhitungan CBM
+            let cbmToBuy = parseInt(document.getElementById("cbmToBuy").innerText) || 0;
+            let cbmPrice = 1500000; // Harga per CBM
+            totalPrice += cbmToBuy * cbmPrice;
+
+            // Ambil harga layanan yang dicentang
+            let selectedServices = document.querySelectorAll(".service-checkbox:checked");
+            selectedServices.forEach(service => {
+                let servicePrice = parseFloat(service.getAttribute("data-price"));
+                totalPrice += servicePrice;
+            });
+
+            // Update tampilan total harga
+            document.getElementById("totalPrice").innerText = `Rp. ${totalPrice.toLocaleString("id-ID")}`;
+
+            // Simpan nilai ke dalam input hidden
+            document.getElementById("cbmInput").value = cbmToBuy;
+            document.getElementById("totalPriceInput").value = totalPrice;
+        }
+
+          // Pastikan layanan yang dicentang akan menampilkan harga
+          function updateServices() {
+            let selectedServices = document.querySelectorAll(".service-checkbox:checked");
+            let servicePriceList = document.getElementById("servicePriceList");
+            let selectedServicesInput = document.getElementById("selectedServicesInput");
+            let totalPriceElement = document.getElementById("totalPrice"); // Total harga layanan
+            let totalServicePrice = 0;
+
+            servicePriceList.innerHTML = ""; // Bersihkan daftar layanan
+
+            let selectedServiceNames = []; // Array untuk layanan yang dipilih
+
+            selectedServices.forEach(service => {
+                let serviceName = service.value;
+                let servicePrice = parseFloat(service.getAttribute("data-price"));
+
+                selectedServiceNames.push(serviceName); // Simpan layanan ke array
+                totalServicePrice += servicePrice; // Hitung total harga
+
+                let formattedPrice = servicePrice.toLocaleString("id-ID");
+
+                // Tambahkan card untuk setiap layanan yang dipilih
+                servicePriceList.innerHTML += `
+                    <div class="card bg-light-primary mb-1">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="mb-0">${serviceName}</h5>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <h5 class="mb-0">Rp. ${formattedPrice}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Update input text dengan layanan yang dipilih
+            selectedServicesInput.value = selectedServiceNames.join(", ");
+
+            // Update total harga
+            totalPriceElement.innerText = `Rp. ${totalServicePrice.toLocaleString("id-ID")}`;
+        }
+
+
+          // Pastikan setiap perubahan layanan juga mempengaruhi total harga
+          document.querySelectorAll(".service-checkbox").forEach(checkbox => {
+              checkbox.addEventListener("change", updateServices);
+          });
+
+
         </script>
 @endsection

@@ -25,6 +25,7 @@ class UserOrder extends Model
         'weight',
         'volume',
         'commodities',
+        'services',
     ];
 
     /**

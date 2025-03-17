@@ -97,6 +97,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //PAYMENTS
     Route::get('/payment/{id}', [PaymentController::class, 'index'])->name('payments');
+    Route::post('/payment/ordered', [PaymentController::class, 'order'])->name('order');
 });
 
 
