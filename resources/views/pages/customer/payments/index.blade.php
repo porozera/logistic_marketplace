@@ -150,7 +150,7 @@
                       </div> --}}
 
                       <div id="priceCard"></div> 
-                      
+
                       <hr>
 
                       <div class="text-end">
@@ -223,7 +223,7 @@
                       <label class="form-label">Daftar Layanan</label>
                       @foreach ($services as $item)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{ $item['serviceName'] }}" id="flexCheckDefault" checked>
+                                <input class="form-check-input" type="checkbox" value="{{ $item['serviceName'] }}" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     {{ $item['serviceName'] }}
                                 </label>
@@ -289,59 +289,60 @@
             });
 
             function calculateCBM() {
-                    // Ambil nilai input
-                    let length = parseFloat(document.getElementById("length").value) || 0;
-                    let width = parseFloat(document.getElementById("width").value) || 0;
-                    let height = parseFloat(document.getElementById("height").value) || 0;
-                    let weight = parseFloat(document.getElementById("weight").value) || 0;
+              let length = parseFloat(document.getElementById("length").value) || 0;
+              let width = parseFloat(document.getElementById("width").value) || 0;
+              let height = parseFloat(document.getElementById("height").value) || 0;
+              let weight = parseFloat(document.getElementById("weight").value) || 0;
 
-                    // Konversi cm ke meter
-                    let lengthM = length / 100;
-                    let widthM = width / 100;
-                    let heightM = height / 100;
+              // Konversi ke meter
+              let lengthM = length / 100;
+              let widthM = width / 100;
+              let heightM = height / 100;
 
-                    // Hitung CBM
-                    let cbm = lengthM * widthM * heightM;
-                    let cbmRounded = Math.ceil(cbm * 1000) / 1000; // Dibulatkan ke atas pada 3 angka desimal
+              // Hitung CBM berdasarkan volume
+              let cbm = lengthM * widthM * heightM;
+              let cbmRounded = Math.ceil(cbm * 1000) / 1000;
 
-                    // Maksimum berat per CBM
-                    let maxWeightPerCBM = 600;
+              // Maksimum ukuran untuk 1 CBM (100m × 100m × 100m)
+              let extraCBM = 0;
+              if (lengthM > 100 || widthM > 100 || heightM > 100) {
+                  extraCBM = 1;
+              }
 
-                    // Hitung CBM yang harus dibeli
-                    let cbmByVolume = Math.ceil(cbmRounded); // Minimal CBM berdasar volume
-                    let cbmByWeight = Math.ceil(weight / maxWeightPerCBM); // Minimal CBM berdasar berat
+              // Maksimum berat per CBM
+              let maxWeightPerCBM = 600;
 
-                    // Ambil CBM terbesar antara keduanya
-                    let cbmToBuy = Math.max(cbmByVolume, cbmByWeight);
+              // Hitung CBM berdasarkan volume, dimensi, dan berat
+              let cbmByVolume = Math.ceil(cbmRounded) + extraCBM; // Tambahkan CBM jika ada dimensi melebihi 100m
+              let cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
 
-                    // Tampilkan hasil
-                    document.getElementById("cbmResult").innerText = cbmRounded.toFixed(3);
-                    document.getElementById("cbmToBuy").innerText = cbmToBuy;
+              // Ambil nilai terbesar
+              let cbmToBuy = Math.max(cbmByVolume, cbmByWeight);
 
-                    // Ambil harga per CBM dari backend
-                    let pricePerCBM = {{ $offer['price'] }};
+              // Harga per CBM
+              let pricePerCBM = {{ $offer['price'] }};
+              let totalPrice = cbmToBuy * pricePerCBM;
 
-                    // Hitung total harga
-                    let totalPrice = cbmToBuy * pricePerCBM;
+              // Format harga ke Rupiah
+              let formattedPrice = totalPrice.toLocaleString("id-ID");
 
-                    // Format harga ke Rupiah
-                    let formattedPrice = totalPrice.toLocaleString("id-ID");
-
-                    // Update tampilan card harga
-                    document.getElementById("priceCard").innerHTML = `
-                        <div class="card bg-light-primary mb-1">
-                            <div class="card-body p-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h5 class="mb-0">Total ${cbmToBuy} CBM</h5>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <h5 class="mb-0">Rp. ${formattedPrice}</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
+              // Update tampilan
+              document.getElementById("cbmResult").innerText = cbmRounded.toFixed(3);
+              document.getElementById("cbmToBuy").innerText = cbmToBuy;
+              document.getElementById("priceCard").innerHTML = `
+                  <div class="card bg-light-primary mb-1">
+                      <div class="card-body p-3">
+                          <div class="row">
+                              <div class="col-6">
+                                  <h5 class="mb-0">Total ${cbmToBuy} CBM</h5>
+                              </div>
+                              <div class="col-6 text-end">
+                                  <h5 class="mb-0">Rp. ${formattedPrice}</h5>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              `;
+          }
         </script>
 @endsection
