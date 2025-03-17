@@ -22,9 +22,9 @@
                                 <span>ID : {{ $request->id }}</span>
                             </div>
                             <hr style="border-top: 1px solid #0484C4; margin-left: -16px; margin-right: -16px; width: calc(100% + 32px); opacity:1;">
-                            <p><strong>Jenis Transportasi:</strong> {{ $request->shipmentMode }}</p>
-                            <p><strong>Asal:</strong> {{ $request->origin }}</p>
-                            <p><strong>Tujuan:</strong> {{ $request->destination }}</p>
+                            <p style="display:flex;justify-content:space-between"><strong>Jenis Transportasi:</strong> {{ $request->shipmentMode }}</p>
+                            <p><strong>Asal : </strong> {{ $request->origin }}</p>
+                            <p><strong>Tujuan : </strong> {{ $request->destination }}</p>
                             <hr style="border-top: 1px solid #0484C4; margin-left: -16px; margin-right: -16px; width: calc(100% + 32px); opacity:1;">
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-primary lihat-detail"
@@ -38,6 +38,7 @@
                                         data-volume="{{ $request->volume }}"
                                         data-commodities="{{ $request->commodities }}"
                                         data-status="{{ $request->status }}"
+                                        data-description="{{ $request->description}}"
                                         style="border-radius: 10px; width: 250px">
                                     Lihat Detail
                                 </button>
@@ -49,19 +50,23 @@
                 <!-- Bagian Kanan (Detail Permintaan) -->
                 <div class="col-md-4">
                     <h4>Detail Permintaan</h4>
-                    <div id="detail-container" class="card p-3" style="display: none; border: solid; border-color: #0484C4; border-radius: 10px">
+                    <div id="detail-container" class="card p-3" style="display: none; border: 1px solid; border-color: #0484C4; border-radius: 10px">
                         <h3>Pengaju: <span id="detail-user"></span></h3>
                         <br>
-                        <p style="display:flex;justify-content:space-between"><strong>Jenis Transportasi:</strong> <span id="detail-mode"></span></p>
-                        <p style="display:flex;justify-content:space-between"><strong>Lokasi Asal:</strong> <span id="detail-origin"></span></p>
-                        <p style="display:flex;justify-content:space-between"><strong>Lokasi Tujuan:</strong> <span id="detail-destination"></span></p>
-                        <p style="display:flex;justify-content:space-between"><strong>Tanggal Pengiriman:</strong> <span id="detail-date"></span></p>
-                        <hr>
+                        <p style="display:flex;justify-content:space-between"><strong>Jenis Transportasi :</strong> <span id="detail-mode"></span></p>
+                        <p style="display:flex;justify-content:space-between"><strong>Lokasi Asal :</strong> <span id="detail-origin"></span></p>
+                        <p style="display:flex;justify-content:space-between"><strong>Lokasi Tujuan :</strong> <span id="detail-destination"></span></p>
+                        <p style="display:flex;justify-content:space-between"><strong>Tanggal Pengiriman :</strong> <span id="detail-date"></span></p>
+                        <hr style="border-top: 1px solid #0484C4; opacity:1">
                         <h5 style="margin-bottom: 20px">Detail Muatan</h5>
-                        <p style="display:flex;justify-content:space-between"><strong>Berat:</strong> <span id="detail-weight"></span></p>
-                        <p style="display:flex;justify-content:space-between"><strong>Volume:</strong> <span id="detail-volume"></span></p>
-                        <p style="display:flex;justify-content:space-between"><strong>Komoditas:</strong> <span id="detail-commodities"></span></p>
-                        <p style="display:flex;justify-content:space-between"><strong>Status:</strong> <span id="detail-status"></span></p>
+                        <p style="display:flex;justify-content:space-between"><strong>Berat :</strong> <span id="detail-weight"></span></p>
+                        <p style="display:flex;justify-content:space-between"><strong>Volume :</strong> <span id="detail-volume"></span></p>
+                        <p style="display:flex;justify-content:space-between"><strong>Komoditas :</strong> <span id="detail-commodities"></span></p>
+                        <p style="display:flex;justify-content:space-between"><strong>Status :</strong> <span id="detail-status"></span></p>
+                        <p style="display:grid"><strong>Deskripsi</strong> <span id="detail-description"></span></p>
+                        <div style="display:flex; justify-content:end">
+                            <a href="#" class="btn btn-primary mt-5" style="border-radius:10px">Ajukan Penawaran</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,6 +89,7 @@
             document.getElementById("detail-volume").textContent = this.getAttribute("data-volume")+" CBM";
             document.getElementById("detail-commodities").textContent = this.getAttribute("data-commodities");
             document.getElementById("detail-status").textContent = this.getAttribute("data-status");
+            document.getElementById("detail-description").textContent = this.getAttribute("data-description");
 
             detailContainer.style.display = "block";
         });
