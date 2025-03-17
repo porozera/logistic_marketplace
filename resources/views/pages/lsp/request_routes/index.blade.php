@@ -1,6 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+#container-detail {
+    position: fixed;
+    /* top: 50px; Sesuaikan dengan navbar/header jika ada */
+    right: 20px; /* Jarak dari kanan */
+    width: 29%; /* Atur ukuran yang sesuai */
+    max-height: 90vh; /* Batas tinggi agar tidak melebihi layar */
+    overflow-y: auto; /* Tambahkan scroll jika kontennya panjang */
+    /* background: white; */
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+</style>
 
 <div class="pc-container">
     <div class="pc-content">
@@ -18,7 +32,14 @@
                     @foreach ($requests as $request)
                         <div class="card mb-3 p-3 border-primary" style="border-radius: 10px">
                             <div class="d-flex justify-content-between">
-                                <h5><i class="bi bi-building"></i> {{ $request->userName }}</h5>
+                                <div style="display: flex; align-items:center">
+                                    {{-- {{ asset('storage/' . $user->profilePicture) }} --}}
+                                    {{-- @foreach ($user as $user ) --}}
+                                    {{-- {{dd($request->user->profilePicture);}} --}}
+                                    <img src="{{ asset('storage/'.$request->user->profilePicture) }}" alt="Profile Picture" class="rounded-circle border border-white" style="width: 43px; height: 43px; object-fit: cover;">
+                                    {{-- @endforeach --}}
+                                    <h4 style="margin-left: 10px; text-align:center"><i class="bi bi-building"></i> {{ $request->userName }}</h4>
+                                </div>
                                 <span>ID : {{ $request->id }}</span>
                             </div>
                             <hr style="border-top: 1px solid #0484C4; margin-left: -16px; margin-right: -16px; width: calc(100% + 32px); opacity:1;">
@@ -48,10 +69,10 @@
                 </div>
 
                 <!-- Bagian Kanan (Detail Permintaan) -->
-                <div class="col-md-4">
-                    <h4>Detail Permintaan</h4>
+                <div class="col-md-4" id="container-detail">
+                    <h3>Detail Permintaan</h3>
                     <div id="detail-container" class="card p-3" style="display: none; border: 1px solid; border-color: #0484C4; border-radius: 10px">
-                        <h3>Pengaju: <span id="detail-user"></span></h3>
+                        <h3>Pengaju : <span id="detail-user"></span></h3>
                         <br>
                         <p style="display:flex;justify-content:space-between"><strong>Jenis Transportasi :</strong> <span id="detail-mode"></span></p>
                         <p style="display:flex;justify-content:space-between"><strong>Lokasi Asal :</strong> <span id="detail-origin"></span></p>
