@@ -133,18 +133,30 @@
                           </div>
                         </div>
                       </div>
-                       
 
-                        <hr>
-                        <div class="card">
-                          test
-                        </div>
-                        <hr>
+                      <hr>
 
-                        <div class="text-end">
-                          <h5 class="mb-3 text-gray-500">Total</h5>
-                          <h4 class="mb-3 text-danger">angka total</h4>
+                      {{-- <div class="card bg-light-primary mb-1" style="height: auto;">
+                        <div class="card-body p-3"> <!-- Mengurangi padding -->
+                          <div class="row">
+                            <div class="col-6">
+                              <h5 class="mb-0">Kontainer 3 CBM</h5> <!-- Gunakan h6 agar lebih kecil -->
+                            </div>
+                            <div class="col-6 text-end">
+                              <h5 class="mb-0">Rp. 400.000</h5> <!-- Gunakan h6 agar lebih kecil -->
+                            </div>
+                          </div>
                         </div>
+                      </div> --}}
+
+                      <div id="priceCard"></div> 
+                      
+                      <hr>
+
+                      <div class="text-end">
+                        <h5 class="mb-3 text-gray-500">Total</h5>
+                        <h4 class="mb-3 text-danger" id="totalPrice">Rp. 0</h4>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -156,32 +168,33 @@
                   <h4 class="mb-3">Form Pemesanan</h4>
                   <div class="row">
                     <div class="col-4">
-                      <div class="form-group mb-3">
-                        <label class="form-label">Panjang</label>
-                        <input type="number" name="length" class="form-control" placeholder="cm" value="{{ old('length') }}">
-                        @error('length') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                      </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Panjang (cm)</label>
+                            <input type="number" id="length" name="length" class="form-control" placeholder="cm" value="{{ old('length') }}" oninput="calculateCBM()">
+                            @error('length') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                        </div>
                     </div>
                     <div class="col-4">
-                      <div class="form-group mb-3">
-                        <label class="form-label">Lebar</label>
-                        <input type="number" name="width" class="form-control" placeholder="cm" value="{{ old('width') }}">
-                        @error('width') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                      </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Lebar (cm)</label>
+                            <input type="number" id="width" name="width" class="form-control" placeholder="cm" value="{{ old('width') }}" oninput="calculateCBM()">
+                            @error('width') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                        </div>
                     </div>
                     <div class="col-4">
-                      <div class="form-group mb-3">
-                        <label class="form-label">Tinggi</label>
-                        <input type="number" name="height" class="form-control" placeholder="cm" value="{{ old('height') }}">
-                        @error('height') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                      </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Tinggi (cm)</label>
+                            <input type="number" id="height" name="height" class="form-control" placeholder="cm" value="{{ old('height') }}" oninput="calculateCBM()">
+                            @error('height') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                        </div>
                     </div>
-                  </div>
+                </div>
+                
                   <div class="row">
                     <div class="col-6">
                       <div class="form-group mb-3">
-                        <label class="form-label">Berat</label>
-                        <input type="text" name="weight" class="form-control" placeholder="kg" value="{{ old('weight') }}">
+                        <label class="form-label">Berat (kg)</label>
+                        <input type="number" id="weight" name="weight" class="form-control" placeholder="kg" value="{{ old('weight') }}" oninput="calculateCBM()">
                         @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                       </div>
                     </div>
@@ -197,6 +210,14 @@
                         </div>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                        <p class="fw-bold">Volume: <span id="cbmResult">0</span> CBM</p>
+                        <p class="fw-bold">CBM yang Harus Dibeli: <span id="cbmToBuy">0</span> CBM</p>
+                    </div>
+                </div>
+
                   <div class="row">
                     <div class="col">
                       <label class="form-label">Daftar Layanan</label>
@@ -266,5 +287,61 @@
                 // Submit the form
                 document.getElementById('requestRouteAddForm').submit();
             });
+
+            function calculateCBM() {
+                    // Ambil nilai input
+                    let length = parseFloat(document.getElementById("length").value) || 0;
+                    let width = parseFloat(document.getElementById("width").value) || 0;
+                    let height = parseFloat(document.getElementById("height").value) || 0;
+                    let weight = parseFloat(document.getElementById("weight").value) || 0;
+
+                    // Konversi cm ke meter
+                    let lengthM = length / 100;
+                    let widthM = width / 100;
+                    let heightM = height / 100;
+
+                    // Hitung CBM
+                    let cbm = lengthM * widthM * heightM;
+                    let cbmRounded = Math.ceil(cbm * 1000) / 1000; // Dibulatkan ke atas pada 3 angka desimal
+
+                    // Maksimum berat per CBM
+                    let maxWeightPerCBM = 600;
+
+                    // Hitung CBM yang harus dibeli
+                    let cbmByVolume = Math.ceil(cbmRounded); // Minimal CBM berdasar volume
+                    let cbmByWeight = Math.ceil(weight / maxWeightPerCBM); // Minimal CBM berdasar berat
+
+                    // Ambil CBM terbesar antara keduanya
+                    let cbmToBuy = Math.max(cbmByVolume, cbmByWeight);
+
+                    // Tampilkan hasil
+                    document.getElementById("cbmResult").innerText = cbmRounded.toFixed(3);
+                    document.getElementById("cbmToBuy").innerText = cbmToBuy;
+
+                    // Ambil harga per CBM dari backend
+                    let pricePerCBM = {{ $offer['price'] }};
+
+                    // Hitung total harga
+                    let totalPrice = cbmToBuy * pricePerCBM;
+
+                    // Format harga ke Rupiah
+                    let formattedPrice = totalPrice.toLocaleString("id-ID");
+
+                    // Update tampilan card harga
+                    document.getElementById("priceCard").innerHTML = `
+                        <div class="card bg-light-primary mb-1">
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5 class="mb-0">Total ${cbmToBuy} CBM</h5>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <h5 class="mb-0">Rp. ${formattedPrice}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
         </script>
 @endsection
