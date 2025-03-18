@@ -204,8 +204,8 @@
                         <label class="form-label">Tipe Barang</label>
                         <select class="form-control" name="commodities" id="commodities">
                             <option value=""></option>
-                            <option value="Laut">Parfum</option>
-                            <option value="Darat">Binatang</option>
+                            <option value="Parfum">Parfum</option>
+                            <option value="Binatang">Binatang</option>
                         </select>                            
                         @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                         </div>
@@ -260,22 +260,21 @@
                     <input type="text" name="shipmentMode" class="form-control" value="{{ $offer['shipmentMode'] }}" hidden>
                     <input type="text" name="shipmentType" class="form-control" value="{{ $offer['shipmentType'] }}" hidden>
                     <input type="date" name="loadingDate" class="form-control" 
-                    value="{{ \Carbon\Carbon::parse($offer['loadingDate'])->format('Y-m-d') }}" >
+                    value="{{ \Carbon\Carbon::parse($offer['loadingDate'])->format('Y-m-d') }}" hidden>
              
                     <input type="date" name="estimationDate" class="form-control" 
-                            value="{{ \Carbon\Carbon::parse($offer['estimationDate'])->format('Y-m-d') }}" >
+                            value="{{ \Carbon\Carbon::parse($offer['estimationDate'])->format('Y-m-d') }}" hidden>
                     
                     <input type="date" name="shippingDate" class="form-control" 
-                            value="{{ \Carbon\Carbon::parse($offer['shippingDate'])->format('Y-m-d') }}" >
+                            value="{{ \Carbon\Carbon::parse($offer['shippingDate'])->format('Y-m-d') }}" hidden>
              
                     <input type="number" name="maxWeight" class="form-control" value="{{ $offer['maxWeight'] }}" hidden>
                     <input type="number" name="maxVolume" class="form-control" value="{{ $offer['maxVolume'] }}" hidden>
-                    <input type="text" name="commodities" class="form-control" value="{{ $offer['commodities'] }}" hidden>
                     <input type="number" name="price" class="form-control" value="{{ $offer['price'] }}" hidden>
                     <input type="number" name="remainingWeight" class="form-control" value="{{ $offer['remainingWeight'] }}" hidden>
                     <input type="number" name="remainingVolume" class="form-control" value="{{ $offer['remainingVolume'] }}" hidden>
-                    <input type="number" id="cbmInput" name="total_cbm">
-                    <input type="number" id="totalPriceInput" name="total_price">
+                    <input type="number" id="cbmInput" name="total_cbm" hidden>
+                    <input type="number" id="totalPriceInput" name="total_price" hidden>
                     <input type="text" id="selectedServicesInput" name="selected_services" class="form-control" hidden>
                     <input type="number" id="user_id" name="user_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
                     <input type="text" id="is_for_lsp" name="is_for_lsp" class="form-control"  value="{{ $offer['is_for_lsp'] }}" hidden>

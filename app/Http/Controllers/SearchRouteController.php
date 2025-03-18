@@ -11,7 +11,6 @@ class SearchRouteController extends Controller
 {
     public function index(Request $request)
     {
-        // Buat query tanpa get() terlebih dahulu
         $query = offersModel::where('is_for_customer', true)
             ->where('status', "active");
     
@@ -70,8 +69,7 @@ class SearchRouteController extends Controller
             }
             $searchPerformed = true;
         }
-    
-        // Baru panggil get() setelah semua filter selesai
+
         $offers = $query->get();
         $cities = City::pluck('name')->toArray();
     

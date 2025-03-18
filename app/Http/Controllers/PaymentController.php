@@ -52,9 +52,11 @@ class PaymentController extends Controller
             'status' => 'required',
         ]);
 
+        // Cek apakah order sudah ada berdasarkan noOffer
         $order = Order::where('noOffer', $attributes['noOffer'])->first();
 
         if (!$order) {
+            // Jika belum ada, buat order baru
             $order = Order::create([
                 "noOffer" => $attributes['noOffer'],
                 "lspName" => $attributes['lspName'],
@@ -80,16 +82,30 @@ class PaymentController extends Controller
         } else {
             $remainingWeight = $order->remainingWeight - $attributes['weight'];
             $remainingVolume = $order->remainingVolume - $attributes['total_cbm'];
-
+        
+            // Pastikan tidak null sebelum explode
+            $existingCommodities = $order->commodities ? array_map('trim', explode(', ', $order->commodities)) : [];
+            $newCommodities = $attributes['commodities'] ? array_map('trim', explode(', ', $attributes['commodities'])) : [];
+        
+            // Filter commodities baru yang belum ada
+            $filteredCommodities = array_diff($newCommodities, $existingCommodities);
+        
+            // Jika ada commodities baru, tambahkan ke list, jika tidak, pakai yang lama
+            $updatedCommodities = !empty($filteredCommodities) 
+                ? implode(', ', array_merge($existingCommodities, $filteredCommodities)) 
+                : $order->commodities;
+        
             $order->update([
-                "remainingWeight" => $remainingWeight,
-                "remainingVolume" => $remainingVolume,
+                "remainingWeight" => max(0, $remainingWeight),
+                "remainingVolume" => max(0, $remainingVolume),
                 "totalAmount" => $order->totalAmount + $attributes['total_price'],
                 "remainingAmount" => $order->remainingAmount + $attributes['total_price'],
-                "commodities" => $order->commodities . ", " . $attributes['commodities'], // Gabungkan commodities
+                "commodities" => $updatedCommodities,
             ]);
         }
+        
 
+        // Simpan data ke tabel UserOrder
         UserOrder::create([
             "user_id" => Auth::id(),
             "order_id" => $order->id,
@@ -104,23 +120,47 @@ class PaymentController extends Controller
             "services" => $attributes['selected_services'],
         ]);
 
+        // Update data di tabel offersModel
         $offer = offersModel::where('noOffer', $attributes['noOffer'])->first();
 
         if ($offer) {
             $remainingWeight = $offer->remainingWeight - $attributes['weight'];
             $remainingVolume = $offer->remainingVolume - $attributes['total_cbm'];
+            $status = $offer->status; // Ambil status saat ini
+            
+            // Jika order pertama kali dengan shipmentType FCL, ubah status menjadi Deactive
+            if ($attributes['shipmentType'] === "FCL") {
+                $status = "Deactive";
+            }
+        
+            // Jika kapasitas penuh, ubah status menjadi Deactive
+            if ($remainingWeight <= 0 || $remainingVolume <= 0) {
+                $status = "Deactive";
+            }
+        
+            // Pecah commodities yang sudah ada ke dalam array
+            $existingCommodities = array_map('trim', explode(', ', $offer->commodities));
+            $newCommodities = array_map('trim', explode(', ', $attributes['commodities']));
 
-            $status = ($attributes['shipmentType'] === "FCL" || $remainingWeight <= 0 || $remainingVolume <= 0) ? "Deactive" : $offer->status;
+            // Filter commodities baru yang belum ada
+            $filteredCommodities = array_diff($newCommodities, $existingCommodities);
+
+            // Jika ada commodities baru, tambahkan ke list, jika tidak, pakai yang lama
+            if (!empty($filteredCommodities)) {
+                $updatedCommodities = implode(', ', array_merge($existingCommodities, $filteredCommodities));
+            } else {
+                $updatedCommodities = $offer->commodities; // Gunakan nilai lama jika tidak ada perubahan
+            }
 
             $offer->update([
                 "remainingWeight" => max(0, $remainingWeight), 
                 "remainingVolume" => max(0, $remainingVolume), 
-                "commodities" => trim($offer->commodities . ", " . $attributes['commodities'], ", "), 
+                "commodities" => $updatedCommodities, // Pastikan kolom ini selalu diupdate
                 "price" => $attributes['price'],
                 "status" => $status,
             ]);
-        }
 
+        }
         
 
         return redirect('/search-routes')->with('success', 'Order Berhasil');
