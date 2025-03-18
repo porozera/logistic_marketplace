@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('telpNumber');
             $table->text('description');
-            $table->decimal('totalPrice',10, 2);
+            $table->decimal('totalPrice',15, 2);
             $table->string('paymentStatus');
             $table->integer('weight');
             $table->integer('volume');

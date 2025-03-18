@@ -274,11 +274,13 @@
                     <input type="number" name="price" class="form-control" value="{{ $offer['price'] }}" hidden>
                     <input type="number" name="remainingWeight" class="form-control" value="{{ $offer['remainingWeight'] }}" hidden>
                     <input type="number" name="remainingVolume" class="form-control" value="{{ $offer['remainingVolume'] }}" hidden>
-                    <input type="number" id="cbmInput" name="total_cbm" value="{{}}">
-                    <input type="number" id="totalPriceInput" name="total_price" value="{{}}">
-                    <!-- Input text untuk menyimpan layanan yang dipilih -->
+                    <input type="number" id="cbmInput" name="total_cbm">
+                    <input type="number" id="totalPriceInput" name="total_price">
                     <input type="text" id="selectedServicesInput" name="selected_services" class="form-control" hidden>
-
+                    <input type="number" id="user_id" name="user_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
+                    <input type="text" id="is_for_lsp" name="is_for_lsp" class="form-control"  value="{{ $offer['is_for_lsp'] }}" hidden>
+                    <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="{{ $offer['is_for_customer'] }}" hidden>
+                    <input type="text" id="status" name="status" class="form-control"  value="{{ $offer['status'] }}" hidden>
                   </div>
                   <div class="row">
                     @if ($errors->any())
@@ -414,11 +416,8 @@
             let selectedServices = document.querySelectorAll(".service-checkbox:checked");
             let servicePriceList = document.getElementById("servicePriceList");
             let selectedServicesInput = document.getElementById("selectedServicesInput");
-            let totalPriceElement = document.getElementById("totalPrice"); // Total harga layanan
-            let totalServicePrice = 0;
 
             servicePriceList.innerHTML = ""; // Bersihkan daftar layanan
-
             let selectedServiceNames = []; // Array untuk layanan yang dipilih
 
             selectedServices.forEach(service => {
@@ -426,7 +425,6 @@
                 let servicePrice = parseFloat(service.getAttribute("data-price"));
 
                 selectedServiceNames.push(serviceName); // Simpan layanan ke array
-                totalServicePrice += servicePrice; // Hitung total harga
 
                 let formattedPrice = servicePrice.toLocaleString("id-ID");
 
@@ -450,8 +448,8 @@
             // Update input text dengan layanan yang dipilih
             selectedServicesInput.value = selectedServiceNames.join(", ");
 
-            // Update total harga
-            totalPriceElement.innerText = `Rp. ${totalServicePrice.toLocaleString("id-ID")}`;
+            // **Tambahkan ini untuk update total harga setelah memilih layanan**
+            updateTotalPrice();
         }
 
 

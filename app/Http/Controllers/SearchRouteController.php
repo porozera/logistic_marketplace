@@ -11,9 +11,10 @@ class SearchRouteController extends Controller
 {
     public function index(Request $request)
     {
-        $query = offersModel::where('is_for_customer', true);
+        // Buat query tanpa get() terlebih dahulu
+        $query = offersModel::where('is_for_customer', true)
+            ->where('status', "active");
     
-        // Cek apakah ada input pencarian
         $searchPerformed = false;
     
         if ($request->has('origin') && $request->origin != '') {
@@ -26,25 +27,21 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
     
-        // Filter berdasarkan tanggal pengiriman
         if ($request->has('shippingDate') && $request->shippingDate != '') {
             $query->whereDate('shippingDate', $request->shippingDate);
             $searchPerformed = true;
         }
     
-        // Filter berdasarkan jenis pengiriman (FCL/LCL)
         if ($request->has('shipmentType') && in_array($request->shipmentType, ['FCL', 'LCL'])) {
             $query->where('shipmentType', $request->shipmentType);
             $searchPerformed = true;
         }
     
-        // Filter berdasarkan harga maksimal
         if ($request->has('maxPrice') && $request->maxPrice != '') {
             $query->where('price', '<=', $request->maxPrice);
             $searchPerformed = true;
         }
     
-        // Filter berdasarkan layanan tambahan
         if ($request->has('insurance')) {
             $query->where('commodities', 'LIKE', '%Asuransi%');
             $searchPerformed = true;
@@ -60,13 +57,11 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
     
-        // Filter berdasarkan waktu maksimal (estimasi waktu)
         if ($request->has('maxTime') && $request->maxTime != '') {
             $query->whereRaw("DATEDIFF(estimationDate, shippingDate) <= ?", [$request->maxTime]);
             $searchPerformed = true;
         }
     
-        // Filter berdasarkan pilihan (Murah atau Cepat)
         if ($request->has('btn_radio1')) {
             if ($request->btn_radio1 == 'Murah') {
                 $query->orderBy('price', 'asc');
@@ -76,10 +71,11 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
     
+        // Baru panggil get() setelah semua filter selesai
         $offers = $query->get();
-        $cities = City::pluck('name')->toArray(); 
+        $cities = City::pluck('name')->toArray();
     
-        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed','cities'));
+        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed', 'cities'));
     }
     
     public function detail($id)

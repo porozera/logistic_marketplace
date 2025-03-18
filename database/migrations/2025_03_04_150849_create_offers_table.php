@@ -22,9 +22,9 @@ return new class extends Migration {
             $table->integer('maxVolume');
             $table->integer('remainingWeight')->nullable();
             $table->integer('remainingVolume')->nullable();
-            $table->string('commodities')->nullable();
+            $table->text('commodities')->nullable();
             $table->enum('status', ['active', 'deactive']);
-            $table->decimal('price', 10, 2);
+            $table->decimal('price', 15, 2);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->dateTime('timestamp');
             $table->boolean('is_for_lsp')->default(true);

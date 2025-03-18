@@ -27,12 +27,12 @@ return new class extends Migration
             $table->integer('maxVolume');
             $table->integer('remainingWeight')->nullable();
             $table->integer('remainingVolume')->nullable();
-            $table->string('commodities')->nullable();
+            $table->text('commodities')->nullable();
             $table->string('status')->nullable();
-            $table->decimal('price', 10, 2);
-            $table->decimal('totalAmount', 10, 2);
-            $table->decimal('remainingAmount', 10, 2);
-            $table->decimal('paidAmount', 10, 2);
+            $table->decimal('price', 15, 2);
+            $table->decimal('totalAmount', 15, 2);
+            $table->decimal('remainingAmount', 15, 2);
+            $table->decimal('paidAmount', 15, 2);
             $table->string('paymentStatus');
         });
     }
