@@ -9,6 +9,7 @@ use App\Http\Controllers\RequestRouteController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\offerController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ServiceController;
@@ -95,9 +96,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/search-routes', [SearchRouteController::class, 'index'])->name('search-route');
     Route::get('/search-routes/{id}', [SearchRouteController::class, 'detail'])->name('search-route.detail');
 
+    //ORDERS
+    Route::get('/order/{id}', [OrderController::class, 'index'])->name('order');
+    Route::post('/order/perform', [OrderController::class, 'order'])->name('order.perform');
+
     //PAYMENTS
-    Route::get('/payment/{id}', [PaymentController::class, 'index'])->name('payments');
-    Route::post('/payment/ordered', [PaymentController::class, 'order'])->name('order');
+    Route::get('/payment/{id}', [PaymentController::class, 'index'])->name('payment');
 });
 
 

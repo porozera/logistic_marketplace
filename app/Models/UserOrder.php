@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Order;
+use Carbon\Carbon;
 
 class UserOrder extends Model
 {
@@ -26,6 +27,7 @@ class UserOrder extends Model
         'volume',
         'commodities',
         'services',
+        'snap_token'
     ];
 
     /**
@@ -51,4 +53,26 @@ class UserOrder extends Model
     {
         return "Rp " . number_format($this->totalPrice, 2, ',', '.');
     }
+
+    public function getEstimatedDaysAttribute()
+    {
+        $shippingDate = Carbon::parse($this->shippingDate);
+        $estimationDate = Carbon::parse($this->estimationDate);
+        return $shippingDate->diffInDays($estimationDate);
+    }
+
+    public function getLoadingDateFormattedAttribute()
+    {
+        return Carbon::parse($this->loadingDate)->startOfDay()->translatedFormat('d F Y');
+    }
+    
+    public function getShippingDateFormattedAttribute()
+    {
+        return Carbon::parse($this->shippingDate)->startOfDay()->translatedFormat('d F Y');
+    }
+    
+    public function getEstimationDateFormattedAttribute()
+    {
+        return Carbon::parse($this->estimationDate)->startOfDay()->translatedFormat('d F Y');
+    }    
 }

@@ -46,8 +46,8 @@
                         </div>
                         <div class="col-md-2">
                             <select class="form-control" name="shipmentType" id="shipmentType">
-                                <option value="FCL" {{ request('shipmentType') == 'FCL' ? 'selected' : '' }}>FCL</option>
-                                <option value="LCL" {{ request('shipmentType') == 'LCL' ? 'selected' : '' }}>LCL</option>
+                                <option value="FCL" {{ request('shipmentType') == 'FCL' ? 'selected' : '' }}>Full Container Load</option>
+                                <option value="LCL" {{ request('shipmentType') == 'LCL' ? 'selected' : '' }}>Less Container Load</option>
                             </select>
                         </div>
                         <div class="col-md-1">

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('volume');
             $table->string('commodities');
             $table->text('services')->nullable();
+            $table->string('snap_token')->nullable();
         });
     }
 

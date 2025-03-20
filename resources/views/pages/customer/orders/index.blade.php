@@ -96,7 +96,7 @@
         </div>
 
 
-      <form action="/payment/ordered" method="POST">
+      <form action="/order/perform" method="POST">
         @csrf
         <div class="row">
             <!-- Detail Penawaran -->
