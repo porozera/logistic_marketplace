@@ -78,7 +78,15 @@
             </div>
               <div class="form-group mb-3">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password">
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="ti ti-lock"></i></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="">
+                    <span class="input-group-text">
+                      <i class="ti ti-eye-off" id="togglePassword" 
+                     style="cursor: pointer"></i>
+                     </span>
+                  </div>
+                @error('password') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
               </div>
               <div class="d-flex mt-1 justify-content-between">
                 <div class="form-check">
@@ -109,7 +117,20 @@
     </div>
   </div>
   <!-- [ Main Content ] end -->
-  
+  <script>
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+
+    togglePassword.addEventListener("click", function () {
+    
+    // toggle the type attribute
+    const type = password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    // toggle the eye icon
+    this.classList.toggle('ti-eye-off');
+    this.classList.toggle('ti-eye');
+    });
+  </script>
   <!-- Required Js -->
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/popper.min.js') }}"></script>
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/simplebar.min.js') }}"></script>
