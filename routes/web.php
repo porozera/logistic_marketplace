@@ -10,6 +10,7 @@ use App\Http\Controllers\RequestRouteLspController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\offerController;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\ServiceController;
 use App\Models\Service;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -87,7 +88,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
     Route::prefix('permintaan-pengiriman')->group(function(){
         Route::get('/', [RequestRouteLspController::class, 'index'])->name('permintaan.pengiriman');
         Route::get('/{id}', [RequestRouteLspController::class, 'show']);
-
+    });
+    Route::prefix('bids')->group(function(){
+        Route::post('store', [BidController::class, 'store'])->name('bids.store');
+        Route::get('create/{id}', [BidController::class, 'create'])->name('bids.create');
     });
 });
 
