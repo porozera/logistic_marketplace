@@ -105,5 +105,7 @@
 
 
   <script>font_change("Public-Sans");</script>
+
+  @yield('scripts')
 </body>
 </html>
