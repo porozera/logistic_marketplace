@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\offerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ServiceController;
 use App\Models\City;
@@ -103,6 +104,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     //PAYMENTS
     Route::get('/payment/{id}', [PaymentController::class, 'index'])->name('payment');
     Route::get('/payment/success/{token}', [PaymentController::class, 'success'])->name('payment.success');
+
+    //PROFILE CUSTOMER
+    Route::get('/profile', [ProfileCustomerController::class, 'index'])->name('profile-customer');
+    Route::get('/profile/edit', [ProfileCustomerController::class, 'edit'])->name('profile-customer.edit');
+    Route::put('/profile/edit/perform', [ProfileCustomerController::class, 'update'])->name('profile-customer.update');
 });
 
 

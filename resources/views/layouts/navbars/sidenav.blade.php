@@ -109,7 +109,7 @@
             </a>
           </li>
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="{{ route('profile-customer') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-user"></i></span>
               <span class="pc-mtext">Profile</span>
             </a>
