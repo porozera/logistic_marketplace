@@ -102,7 +102,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //PAYMENTS
     Route::get('/payment/{id}', [PaymentController::class, 'index'])->name('payment');
-    Route::get('/payment/success/{id}', [PaymentController::class, 'success'])->name('payment.success');
+    Route::get('/payment/success/{token}', [PaymentController::class, 'success'])->name('payment.success');
 });
 
 

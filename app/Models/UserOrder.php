@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Order;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class UserOrder extends Model
 {
     use HasFactory;
+    
 
     protected $table = 'user_orders';
     public $timestamps = true;
@@ -27,7 +29,8 @@ class UserOrder extends Model
         'volume',
         'commodities',
         'services',
-        'snap_token'
+        'snap_token',
+        'payment_token'
     ];
 
     /**

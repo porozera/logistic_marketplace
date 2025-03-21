@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\UserOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -15,26 +16,34 @@ class PaymentController extends Controller
         return view('pages.customer.orders.payment', compact('userOrder','order'));
     }
 
-    public function success($id)
+    public function success($token)
     {
-        $userOrder = UserOrder::find($id);
-        
-        if (!$userOrder) {
-            return redirect()->back()->with('error', 'Pesanan tidak ditemukan');
+        $userOrder = UserOrder::where('payment_token', $token)->first();
+    
+        if (!$userOrder || $userOrder->user_id !== Auth::id()) {
+            return redirect()->route('home')->with('error', 'Akses tidak sah!');
         }
     
         $userOrder->paymentStatus = 'Lunas';
         $userOrder->save();
     
         $order = Order::find($userOrder->order_id);
-        
+    
         if ($order) {
             $order->remainingAmount -= $userOrder->totalPrice;
             $order->paidAmount += $userOrder->totalPrice;
+    
+            if ($order->remainingAmount == 0 || $order->paidAmount == $order->totalAmount){
+                $order->paymentStatus = 'Lunas'; 
+            }
+    
             $order->save();
         }
-    
-        return view('pages.customer.orders.success');
+
+        $userOrderItem = UserOrder::where('payment_token', $token)->first();
+        $orderItem = Order::find($userOrder->order_id);
+        return view('pages.customer.orders.success',compact('userOrderItem','orderItem'));
     }
+    
     
 }

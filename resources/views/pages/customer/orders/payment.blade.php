@@ -134,7 +134,7 @@
           snap.pay('{{$userOrder->snap_token}}', {
             // Optional
             onSuccess: function(result){
-              window.location.href = '{{ route('payment.success', ['id'=> $userOrder->id]) }}';
+              window.location.href = '{{ route('payment.success', ['token'=> $userOrder->payment_token]) }}';
             },
             // Optional
             onPending: function(result){

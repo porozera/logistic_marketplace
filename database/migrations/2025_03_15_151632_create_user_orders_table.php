@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('commodities');
             $table->text('services')->nullable();
             $table->string('snap_token')->nullable();
+            $table->uuid('payment_token')->unique()->nullable();
         });
     }
 

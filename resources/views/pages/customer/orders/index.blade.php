@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-
+@section('title', 'Pemesanan')
 @section('content')
  <!-- [ Main Content ] start -->
  <div class="pc-container">
@@ -96,7 +96,7 @@
         </div>
 
 
-      <form action="/order/perform" method="POST">
+      <form action="/order/perform" method="POST" id="orderForm">
         @csrf
         <div class="row">
             <!-- Detail Penawaran -->
@@ -294,7 +294,7 @@
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Bayar Sekarang</button>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Pesan Sekarang</button>
                     </div>
                   </div>
                 </div>
@@ -318,11 +318,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Apakah anda yakin menambah data ini?
+                        Apakah anda yakin memesan penawaran ini?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="submitFormButton">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary" id="submitFormButton">Pesan</button>
                     </div>
                 </div>
             </div>
@@ -331,7 +331,7 @@
         <script>
             document.getElementById('submitFormButton').addEventListener('click', function () {
                 // Submit the form
-                document.getElementById('requestRouteAddForm').submit();
+                document.getElementById('orderForm').submit();
             });
 
             function calculateCBM() {

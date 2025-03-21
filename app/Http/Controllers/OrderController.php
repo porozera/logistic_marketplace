@@ -9,6 +9,7 @@ use App\Models\UserOrder;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -112,6 +113,7 @@ class OrderController extends Controller
             "volume" => $attributes['total_cbm'],
             "commodities" => $attributes['commodities'],
             "services" => $attributes['selected_services'] ?? "",
+            "payment_token" => Str::uuid(),
         ]);
 
         // Set your Merchant Server Key
@@ -127,11 +129,12 @@ class OrderController extends Controller
 
         $params = array(
             'transaction_details' => array(
-                'order_id' => rand(),
+                // 'order_id' => rand(),
+                'order_id' => $userOrder->id,
                 'gross_amount' => $attributes['total_price'],
             ),
             'customer_details' => array(
-                'username' => Auth::user()->username,
+                'name' => Auth::user()->username,
                 'email' => Auth::user()->email,
             )
         );
