@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileCustomerController extends Controller
 {
@@ -28,7 +29,7 @@ class ProfileCustomerController extends Controller
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
             'telpNumber' => 'nullable|string|max:20',
-            'profilePicture' => 'nullable|string',
+            'profilePicture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'description' => 'nullable|string',
             'rating' => 'nullable|numeric|min:0|max:5',
             'address' => 'nullable|string',
@@ -46,7 +47,6 @@ class ProfileCustomerController extends Controller
             'firstName' => $request->firstName,
             'lastName' => $request->lastName,
             'telpNumber' => $request->telpNumber,
-            'profilePicture' => $request->profilePicture,
             'description' => $request->description,
             'rating' => $request->rating,
             'address' => $request->address,
@@ -61,6 +61,16 @@ class ProfileCustomerController extends Controller
                 'password' => Hash::make($request->password),
             ]);
         }
+
+        if ($request->hasFile('profilePicture')) {
+            if ($user->profilePicture) {
+                Storage::delete('public/' . $user->profilePicture);
+            }
+            $path = $request->file('profilePicture')->store('profile_pictures', 'public');
+            $user->profilePicture = $path;
+        }
+    
+        $user->save();
 
         return redirect()->route('profile-customer')->with('success', 'Profil berhasil diperbarui!');
     }

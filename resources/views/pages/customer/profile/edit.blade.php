@@ -26,12 +26,26 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-8">
+                <form action="/profile/edit/perform" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="text-center">
+                                <img src="{{ $user->profilePicture ? asset('storage/' . $user->profilePicture) : asset('default-profile.jpg') }}" alt="profile_picture" width="150" class="img-thumbnail">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="form-label">Gambar Profile</label>
+                            <input type="file" name="profilePicture" class="form-control" placeholder="Gambar Profile" value="{{ $user->profilePicture }}">
+                             @error('profilePicture') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                        </div>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                       <br>
-                      <form action="/profile/edit/perform" method="POST">
-                        @csrf
-                        @method('PUT')
                         <div class="row">
                             <div class="col-md-6">
                               <div class="form-group mb-3">

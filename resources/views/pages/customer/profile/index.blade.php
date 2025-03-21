@@ -33,6 +33,11 @@
                           <a href="/profile/edit" class="btn btn-primary"><i class="ti ti-edit"></i><span class="ms-2">Edit</span></a>
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="text-center">
+                          <img src="{{ $user->profilePicture ? asset('storage/' . $user->profilePicture) : asset('default-profile.jpg') }}" alt="profile_picture" width="150" class="img-thumbnail">
+                        </div>
+                      </div>
                       <br>
                       <div class="row">
                           <div class="col-md-6">
