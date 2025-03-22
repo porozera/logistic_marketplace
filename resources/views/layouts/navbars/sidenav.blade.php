@@ -150,6 +150,12 @@
                 <span class="pc-mtext">Chat</span>
             </a>
           </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-info-circle"></i></span>
+                <span class="pc-mtext">FAQ</span>
+            </a>
+          </li>
           @endif
 
           {{-- <li class="pc-item pc-caption">

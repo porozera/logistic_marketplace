@@ -80,12 +80,10 @@ class RegisterController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()->withErrors($e->errors())->withInput();
         } catch (\Illuminate\Database\QueryException $e) {
-            // Periksa apakah error disebabkan oleh duplikat entry (kode SQLSTATE 23000)
             if ($e->errorInfo[1] == 1062) {
                 return back()->withErrors(['permitNumber' => 'Nomor izin sudah terdaftar.'])->withInput();
             }
     
-            // Jika kesalahan lainnya terjadi
             return back()->withErrors(['error' => 'Terjadi kesalahan, silakan coba lagi.'])->withInput();
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
