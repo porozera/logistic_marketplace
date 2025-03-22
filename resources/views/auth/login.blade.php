@@ -81,7 +81,7 @@
                       <i class="ti ti-eye-off" id="togglePassword" 
                      style="cursor: pointer"></i>
                      </span>
-                  </div>
+                </div>
                 @error('password') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
               </div>
               <div class="d-flex mt-1 justify-content-between">

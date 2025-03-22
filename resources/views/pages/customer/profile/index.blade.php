@@ -8,24 +8,24 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h4 class="m-b-10">Profile</h4>
+                            
                             @if(session('success'))
                                 <div class="alert alert-success">
                                     {{ session('success') }}
                                 </div>
                             @endif
                         </div>
-                        {{-- <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Home</li>
-                        </ul> --}}
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Profil Pengguna</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-8">
+              <h3 class="m-b-10">Profil Pengguna</h3>
                 <div class="card">
                     <div class="card-body">
                       <div class="row">

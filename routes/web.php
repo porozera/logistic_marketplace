@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FAQCustomerController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RequestRouteController;
@@ -111,6 +112,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/profile', [ProfileCustomerController::class, 'index'])->name('profile-customer');
     Route::get('/profile/edit', [ProfileCustomerController::class, 'edit'])->name('profile-customer.edit');
     Route::put('/profile/edit/perform', [ProfileCustomerController::class, 'update'])->name('profile-customer.update');
+
+    //FAQ
+    Route::get('/FAQ-customer', [FAQCustomerController::class, 'index'])->name('FAQ-customer');
 });
 
 

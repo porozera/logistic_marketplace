@@ -10,18 +10,16 @@
           <div class="row align-items-center">
             <div class="col-md-12">
               <div class="page-header-title">
-                <h4 class="m-b-10">Permintaan Rute</h4>
                 @if(session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                 @endif
               </div>
-                {{-- <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>
-                    <li class="breadcrumb-item" aria-current="page">Home</li>
-                </ul> --}}
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                    <li class="breadcrumb-item" aria-current="page">Permintaan Rute</li>
+                </ul>
             </div>
           </div>
         </div>
@@ -31,6 +29,7 @@
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-12 col-xl-12">
+            <h3 class="m-b-10">Permintaan Rute</h3>
           <div class="card">
             <div class="card-body">
               <h4 class="mb-2">Detail Pengiriman</h4>
@@ -146,6 +145,51 @@
                 </form>
             </div>
           </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mb-2">List Permintaan Rute</h4>
+                <table class="table table-hover" id="pc-dt-simple">
+                    <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Asal</th>
+                          <th>Tujuan</th>
+                          <th>Tipe Pengiriman</th>
+                          <th>Moda Pengiriman</th>
+                          <th>Tangal Pengiriman</th>
+                          <th>Deadline</th>
+                          <th>Status</th>
+                          {{-- <th class="text-center">Actions</th> --}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                           $no = 1  
+                        @endphp
+                        @foreach ( $list_request as $item)
+                        <tr>
+                            <td>{{$no++}}</td>
+                            <td>{{$item['origin']}}</td>
+                            <td>{{$item['destination']}}</td>
+                            <td>{{$item['shipmentType']}}</td>
+                            <td>{{$item['shipmentMode']}}</td>
+                            <td>{{$item['shippingDate']}}</td>
+                            <td>{{$item['deadline']}}</td>
+                            
+                            <td>
+                                @if ($item['status'] == "Open")
+                                <span class="badge rounded-pill text-bg-warning">In Bidding</span>
+                                @else
+                                <span class="badge rounded-pill text-bg-danger">Close</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
         </div>
       </div>
     </div>
@@ -161,11 +205,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Apakah anda yakin menambah data ini?
+                        Apakah Anda yakin melakukan permintaan rute ini?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="submitFormButton">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary" id="submitFormButton">Kirim</button>
                     </div>
                 </div>
             </div>
