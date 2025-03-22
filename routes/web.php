@@ -46,6 +46,8 @@ Route::post('/register-lsp', [RegisterController::class, 'store_lsp'])->middlewa
 Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('/terms-of-service/lsp', function () {return view('auth.terms_of_service_lsp');});
+Route::get('/terms-of-service/customer', function () {return view('auth.terms_of_service_customer');});
 // Route::get('/reset-password', [ResetPassword::class, 'show'])->middleware('guest')->name('reset-password');
 // Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 // Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
