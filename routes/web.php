@@ -103,6 +103,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     //ORDERS
     Route::get('/order/{id}', [OrderController::class, 'index'])->name('order');
     Route::post('/order/perform', [OrderController::class, 'order'])->name('order.perform');
+    Route::get('/list-order', [OrderController::class, 'list_order'])->name('list-order');
 
     //PAYMENTS
     Route::get('/payment/{id}', [PaymentController::class, 'index'])->name('payment');

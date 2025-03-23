@@ -179,5 +179,13 @@ class OrderController extends Controller
         return redirect('/payment/' . $userOrder->id);
     }
 
-
+    public function list_order(){
+        $userOrders = UserOrder::where('user_id', Auth::id())
+                        ->with('order')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(10);
+        return view('pages.customer.orders.list-order', compact('userOrders'));
+    }
+    
+      
 }

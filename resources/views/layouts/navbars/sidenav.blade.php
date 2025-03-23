@@ -131,10 +131,15 @@
                 <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
                 <span class="pc-mtext">Daftar Penawaran</span>
             </a>
+          </li><li class="pc-item">
+            <a href="{{ route('list-order') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-shopping-cart"></i></span>
+                <span class="pc-mtext">Daftar Pemesanan</span>
+            </a>
           </li>
           <li class="pc-item">
             <a href="../dashboard/index.html" class="pc-link">
-                <span class="pc-micon"><i class="ti ti-compass"></i></span>
+                <span class="pc-micon"><i class="ti ti-map-2"></i></span>
                 <span class="pc-mtext">Tracking Order</span>
             </a>
           </li>
