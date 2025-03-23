@@ -114,6 +114,10 @@
               <span class="pc-mtext">Profile</span>
             </a>
           </li>
+          <li class="pc-item pc-caption">
+            <label>Penawaran</label>
+            <i class="ti ti-news"></i>
+          </li>
           <li class="pc-item">
             <a href="{{ route('search-route') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-world"></i></span>
@@ -143,6 +147,10 @@
                 <span class="pc-mtext">Tracking Order</span>
             </a>
           </li>
+          <li class="pc-item pc-caption">
+            <label>Pesan</label>
+            <i class="ti ti-news"></i>
+          </li>
           <li class="pc-item">
             <a href="../dashboard/index.html" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-mail"></i></span>
@@ -151,14 +159,24 @@
           </li>
           <li class="pc-item">
             <a href="../dashboard/index.html" class="pc-link">
-                <span class="pc-micon"><i class="ti ti-brand-hipchat"></i></span>
+                <span class="pc-micon"><i class="ti ti-message-circle"></i></span>
                 <span class="pc-mtext">Chat</span>
             </a>
+          </li>
+          <li class="pc-item pc-caption">
+            <label>Bantuan</label>
+            <i class="ti ti-news"></i>
           </li>
           <li class="pc-item">
             <a href="{{ route('FAQ-customer') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-info-circle"></i></span>
                 <span class="pc-mtext">FAQ</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="{{ route('FAQ-customer') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-mailbox"></i></span>
+                <span class="pc-mtext">Complain</span>
             </a>
           </li>
           @endif

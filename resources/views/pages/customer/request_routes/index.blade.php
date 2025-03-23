@@ -155,8 +155,11 @@
                           <th>No</th>
                           <th>Asal</th>
                           <th>Tujuan</th>
-                          <th>Tipe Pengiriman</th>
-                          <th>Moda Pengiriman</th>
+                          <th>Tipe</th>
+                          <th>Moda</th>
+                          <th>Berat</th>
+                          <th>Volume</th> 
+                          <th>Jenis Barang</th> 
                           <th>Tangal Pengiriman</th>
                           <th>Deadline</th>
                           <th>Status</th>
@@ -165,7 +168,7 @@
                     </thead>
                     <tbody>
                         @php
-                           $no = 1  
+                            $no = ($list_request->currentPage() - 1) * $list_request->perPage() + 1
                         @endphp
                         @foreach ( $list_request as $item)
                         <tr>
@@ -174,6 +177,9 @@
                             <td>{{$item['destination']}}</td>
                             <td>{{$item['shipmentType']}}</td>
                             <td>{{$item['shipmentMode']}}</td>
+                            <td>{{$item['weight']}}</td>
+                            <td>{{$item['volume']}}</td>
+                            <td>{{$item['commodities']}}</td>
                             <td>{{$item['shippingDate']}}</td>
                             <td>{{$item['deadline']}}</td>
                             
@@ -188,6 +194,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $list_request->links('pagination::bootstrap-4') }}
+                </div> 
             </div>
         </div>
         </div>

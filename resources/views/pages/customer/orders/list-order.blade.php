@@ -28,18 +28,18 @@
               <h3 class="m-b-10">Daftar Pemesanan</h3>
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-hover" id="pc-dt-simple">
+                        <table class="table table-bordered nowrap table-hover" id="pc-dt-simple">
                             <thead>
                                 <tr>
                                   <th>No</th>
                                   <th>Asal</th>
                                   <th>Tujuan</th>
-                                  <th>Tipe Pengiriman</th>
-                                  <th>Moda Pengiriman</th>
-                                  <th>Tanggal Pengiriman</th>
+                                  <th>Tipe</th>
+                                  <th>Moda</th>
                                   <th>Jenis Barang</th>
                                   <th>Berat</th>
                                   <th>Volume</th>
+                                  <th>Tanggal Pengiriman</th>
                                   <th>Total Harga</th>
                                   <th>Status</th>
                                   <th>Actions</th>
@@ -56,10 +56,10 @@
                                     <td>{{ $userOrder->order->destination }}</td>
                                     <td>{{ $userOrder->order->shipmentType }}</td>
                                     <td>{{ $userOrder->order->shipmentMode }}</td>
-                                    <td>{{ $userOrder->order->shippingDate }}</td>
                                     <td>{{ $userOrder->commodities }}</td>
                                     <td>{{ $userOrder->weight }} kg</td>
                                     <td>{{ $userOrder->volume }} CBM</td>
+                                    <td>{{ $userOrder->order->shippingDate }}</td>
                                     <td>Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</td>
                                     
                                     <td>
