@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Bid;
 use App\Models\RequestRoute;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class BidController extends Controller
@@ -89,6 +90,18 @@ class BidController extends Controller
         'status' => 'active',
         'lspName' => auth()->user()->companyName,
         'user_id' => auth()->id(),
+    ]);
+
+
+    // Ambil user pembuat permintaan
+    $requestRoute = RequestRoute::findOrFail($request->requestOffer_id);
+    $requestUser = $requestRoute->user_id; // User ID pembuat permintaan
+
+    // Simpan notifikasi untuk user terkait
+    Notification::create([
+        'user_id' => $requestUser,
+        'header' => 'Penawaran Baru Diterima!',
+        'description' => 'LSP ' . auth()->user()->companyName . ' telah mengajukan penawaran untuk permintaan pengiriman Anda.',
     ]);
 
     return redirect()->route('permintaan.pengiriman')->with('success', 'Penawaran berhasil diajukan!');
