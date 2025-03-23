@@ -45,5 +45,11 @@ class PaymentController extends Controller
         return view('pages.customer.orders.success',compact('userOrderItem','orderItem'));
     }
     
-    
+    public function list_payment(){
+        $userOrders = UserOrder::where('user_id', Auth::id())
+                        ->with('order')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(10);
+        return view('pages.customer.orders.list-payment', compact('userOrders'));
+    }
 }

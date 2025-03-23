@@ -36,7 +36,7 @@
 
               <hr>
               <div class="row">
-                <a href="/list-order" class="btn btn-primary">Kembali</a>
+                <a href="/list-payment" class="btn btn-primary">Kembali</a>
               </div>
             <div class="col-md-4 text-center col-xl-4">
 

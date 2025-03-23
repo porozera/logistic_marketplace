@@ -135,10 +135,14 @@
                 <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
                 <span class="pc-mtext">Daftar Penawaran</span>
             </a>
+          <li class="pc-item pc-caption">
+            <label>Pemesanan</label>
+            <i class="ti ti-news"></i>
+          </li>
           </li><li class="pc-item">
-            <a href="{{ route('list-order') }}" class="pc-link">
-                <span class="pc-micon"><i class="ti ti-shopping-cart"></i></span>
-                <span class="pc-mtext">Daftar Pemesanan</span>
+            <a href="{{ route('list-payment') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-cash"></i></span>
+                <span class="pc-mtext">Daftar Pembayaran</span>
             </a>
           </li>
           <li class="pc-item">
@@ -174,7 +178,7 @@
             </a>
           </li>
           <li class="pc-item">
-            <a href="{{ route('FAQ-customer') }}" class="pc-link">
+            <a href="" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-mailbox"></i></span>
                 <span class="pc-mtext">Complain</span>
             </a>

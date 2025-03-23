@@ -88,21 +88,21 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label class="form-label">Panjang</label>
+                                <label class="form-label">Panjang (cm)</label>
                                 <input type="number" name="length" class="form-control" placeholder="cm" value="{{ old('length') }}">
                                 @error('length') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label class="form-label">Lebar</label>
+                                <label class="form-label">Lebar (cm)</label>
                                 <input type="number" name="width" class="form-control" placeholder="cm" value="{{ old('width') }}">
                                 @error('width') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label class="form-label">Tinggi</label>
+                                <label class="form-label">Tinggi (cm)</label>
                                 <input type="number" name="height" class="form-control" placeholder="cm" value="{{ old('height') }}">
                                 @error('height') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
@@ -111,7 +111,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label class="form-label">Berat</label>
+                                <label class="form-label">Berat (kg)</label>
                                 <input type="number" name="weight" class="form-control" placeholder="kg" value="{{ old('weight') }}">
                                 @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
