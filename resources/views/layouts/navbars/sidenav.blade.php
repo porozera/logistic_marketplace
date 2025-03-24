@@ -26,7 +26,7 @@
             </a>
           </li>
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="/profile" class="pc-link">
               <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
               <span class="pc-mtext">Profile</span>
             </a>
@@ -103,14 +103,89 @@
 
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-chart-bar"></i></span>
+              <span class="pc-mtext">Dashboard</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="{{ route('profile-customer') }}" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-user"></i></span>
+              <span class="pc-mtext">Profile</span>
+            </a>
+          </li>
+          <li class="pc-item pc-caption">
+            <label>Penawaran</label>
+            <i class="ti ti-news"></i>
+          </li>
+          <li class="pc-item">
+            <a href="{{ route('search-route') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-world"></i></span>
+                <span class="pc-mtext">Cari Rute</span>
+            </a>
+          </li>
+          <li class="pc-item">
               <a href="{{ route('request-route') }}" class="pc-link">
-                  <span class="pc-micon"><i class="ti ti-shopping-cart"></i></span>
-                  <span class="pc-mtext">Request Route</span>
+                  <span class="pc-micon"><i class="ti ti-location"></i></span>
+                  <span class="pc-mtext">Permintaan Rute</span>
               </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
+                <span class="pc-mtext">Daftar Penawaran</span>
+            </a>
+          <li class="pc-item pc-caption">
+            <label>Pemesanan</label>
+            <i class="ti ti-news"></i>
+          </li>
+          </li><li class="pc-item">
+            <a href="{{ route('list-payment') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-cash"></i></span>
+                <span class="pc-mtext">Daftar Pembayaran</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-map-2"></i></span>
+                <span class="pc-mtext">Tracking Order</span>
+            </a>
+          </li>
+          <li class="pc-item pc-caption">
+            <label>Pesan</label>
+            <i class="ti ti-news"></i>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-mail"></i></span>
+                <span class="pc-mtext">Kotak Pesan</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="../dashboard/index.html" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-message-circle"></i></span>
+                <span class="pc-mtext">Chat</span>
+            </a>
+          </li>
+          <li class="pc-item pc-caption">
+            <label>Bantuan</label>
+            <i class="ti ti-news"></i>
+          </li>
+          <li class="pc-item">
+            <a href="{{ route('FAQ-customer') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-info-circle"></i></span>
+                <span class="pc-mtext">FAQ</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-mailbox"></i></span>
+                <span class="pc-mtext">Complain</span>
+            </a>
           </li>
           @endif
 
-          <li class="pc-item pc-caption">
+          {{-- <li class="pc-item pc-caption">
             <label>UI Components</label>
             <i class="ti ti-dashboard"></i>
           </li>
@@ -204,7 +279,7 @@
             <a href="https://codedthemes.com/item/berry-bootstrap-5-admin-template/" target="_blank"
             class="btn btn-success">Buy Now</a>
           </div>
-        </div>
+        </div> --}}
       </div>
     </div>
   </nav>

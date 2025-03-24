@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Ini adalah akun LSP.',
             'rating' => 5.0,
             'address' => 'Jl. LSP No. 1, Jakarta',
-            'companyName' => 'PT xyz',
+            'companyName' => 'PT Indah Jaya Logistik',
             'bannerPicture' => null,
         ]);
 

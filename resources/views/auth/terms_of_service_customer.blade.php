@@ -3,7 +3,7 @@
 <!-- [Head] start -->
 
 <head>
-  <title>Registrasi LSP</title>
+  <title>Kebijakan Layanan Customer</title>
   <!-- [Meta] -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -33,6 +33,10 @@
         background-size: cover;
         background-position: center;
     }
+
+    .text-justify {
+    text-align: justify;
+  }
   </style>
 </head>
 <!-- [Head] end -->
@@ -47,79 +51,34 @@
   </div>
   <!-- [ Pre-loader ] End -->
 
-
-  
   <div class="auth-main">
     <div class="auth-wrapper v3">
       <div class="auth-form">
         <div class="auth-header">
           <a href="/login"><img src="{{ asset('template/mantis/dist/assets/images/logo-dark.svg') }}" alt="img"></a>
         </div>
-        <div class="card my-5">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-end mb-4">
-              <h4 class="mb-0"><b>Buat Akun LSP</b></h4>
-              <a href="/login" class="link-primary">Sudah punya akun?</a>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="text-primary">Syarat dan Ketentuan Pengguna (Customer)</h4>
+                <hr>
+                <p class="text-justify">
+                   1. Dengan mendaftar sebagai pengguna di platform kami, Anda setuju untuk mematuhi syarat dan ketentuan yang berlaku. Anda bertanggung jawab untuk menggunakan layanan platform dengan itikad baik dan tidak melanggar peraturan perundang-undangan yang berlaku. Semua informasi yang Anda berikan, termasuk data pribadi dan detail transaksi, harus akurat dan terbaru.
+                </p>
+                <p class="text-justify">
+                   2. Platform kami berfungsi sebagai perantara antara Anda dan penyedia jasa logistik. Kami tidak bertanggung jawab atas kualitas, kinerja, atau penyelesaian layanan yang diberikan oleh penyedia jasa. Setiap perselisihan terkait layanan yang Anda terima harus diselesaikan langsung dengan penyedia jasa. Namun, kami menyediakan mekanisme untuk melaporkan masalah atau keluhan yang dapat kami tindaklanjuti sesuai dengan kebijakan kami.
+                </p>
+                <p class="text-justify">
+                   3. Anda diharapkan untuk memahami dan menyetujui harga serta ketentuan layanan sebelum melakukan transaksi. Kami tidak bertanggung jawab atas perubahan harga atau layanan yang tidak diinformasikan oleh penyedia jasa. Selain itu, Anda setuju untuk tidak menggunakan platform kami untuk aktivitas yang melanggar hukum, penipuan, atau aktivitas berbahaya lainnya.
+                </p>
+                <p class="text-justify">
+                   4. Kami berhak untuk menangguhkan atau menghentikan akun Anda jika ditemukan pelanggaran terhadap syarat dan ketentuan ini atau jika Anda terlibat dalam aktivitas yang merugikan platform atau pengguna lain. Kami tidak bertanggung jawab atas kerugian yang diakibatkan oleh penangguhan atau penghentian tersebut.
+                </p>
+                <p>
+                  5. Dengan mendaftar dan menggunakan platform, Anda menyatakan telah membaca, memahami, dan menyetujui seluruh ketentuan yang ada.
+                </p>
+                <hr>
+                <a href="javascript:history.back()" class="btn btn-primary w-100">Kembali</a>
             </div>
-            <div class="row">
-              <div class="btn-group" role="group">
-                <input type="radio" class="btn-check" id="btnrdo1" name="btn_radio1" data-url="/register-customer"> 
-                <label class="btn btn-outline-primary" for="btnrdo1">Customer</label>
-            
-                <input type="radio" class="btn-check" id="btnrdo3" name="btn_radio1" checked> 
-                <label class="btn btn-outline-primary" for="btnrdo3">LSP</label>
-              </div>
-            </div>
-            <br>
-            <form action="/register-lsp" method="POST">
-                @csrf
-                <div class="form-group mb-3">
-                    <label class="form-label">Nama Perusahaan</label>
-                    <input type="text" name="companyName" class="form-control" placeholder="Nama Perusahaan" value="{{ old('companyName') }}">
-                    @error('username') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                </div>
-                <div class="form-group mb-3">
-                  <label class="form-label">Nomor Izin Penyelenggara</label>
-                  <input type="text" name="permitNumber" class="form-control" placeholder="Nomor Izin Penyelenggara" value="{{ old('permitNumber') }}">
-                  @error('permitNumber') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-              </div>
-                <div class="form-group mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
-                    @error('email') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label class="form-label">Nomor Telepon</label>
-                    <input type="text" name="telpNumber" class="form-control" placeholder="Nomor Telepon" value="{{ old('telpNumber') }}">
-                    @error('telpNumber') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label class="form-label">Alamat</label>
-                    <textarea class="form-control" name="address" rows="3" placeholder="Alamat">{{ old('address') }}</textarea>
-                    @error('address') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                </div>
-                <div class="form-group mb-3">
-                    <input type="hidden" name="role" class="form-control" placeholder="role" value="customer">
-                </div>
-                  <input class="form-check-input" type="checkbox" name="terms" id="terms">
-                  <label class="form-check-label" for="terms">
-                    <span class="mt-4 text-sm text-muted ms-2">Dengan Mendaftar, Anda menyetujui <a href="/terms-of-service/lsp" class="text-primary"> Kebijakan Layanan </a> kami.</span>
-                  </label>
-                  @error('terms') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                  <div class="d-grid mt-3">
-                    <button type="submit" class="btn btn-primary">Buat Akun</button>
-                  </div>   
-                {{-- @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif --}}
-            </form>       
-          </div>
         </div>
         <div class="auth-footer row">
           <!-- <div class=""> -->
@@ -151,9 +110,6 @@
       });
     });
   </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/popper.min.js') }}"></script>
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/simplebar.min.js') }}"></script>
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/bootstrap.min.js') }}"></script>

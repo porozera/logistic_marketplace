@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\offersModel;
+use Illuminate\Support\Facades\Auth;
 
 class offerController extends Controller
 {
@@ -74,7 +75,7 @@ class offerController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $attributes = $request->validate([
             'noOffer' => 'required|unique:offers,noOffer',
             'origin' => 'required|string',
             'destination' => 'required|string',
@@ -89,10 +90,31 @@ class offerController extends Controller
             'shippingDate' => 'required|date',
             'estimationDate' => 'required|date',
             'remainingWeight' => 'nullable|integer',
-            'remainingVolume' => 'nullable|integer',
         ]);
 
-        offersModel::create($request->all());
+        // offersModel::create($request->all());
+        $offer = offersModel::create([
+            'noOffer' => $attributes['noOffer'],
+            'lspName' => Auth::user()->username,
+            'origin' => $attributes['origin'],
+            'destination' => $attributes['destination'],
+            'shipmentMode' => $attributes['shipmentMode'],
+            'shipmentType' => $attributes['shipmentType'],
+            'loadingDate' => $attributes['loadingDate'],
+            'shippingDate' => $attributes['shippingDate'],
+            'estimationDate' => $attributes['estimationDate'],
+            'maxWeight' => $attributes['maxWeight'],
+            'maxVolume' => $attributes['maxVolume'],
+            'remainingWeight' => $attributes['maxWeight'],
+            'remainingVolume' => $attributes['maxVolume'],
+            'commodities' => $attributes['commodities'],
+            'status' => $attributes['status'],
+            'price' => $attributes['price'],
+            'user_id' =>Auth::id(),
+            'is_for_lsp' => false,
+            'is_for_customer' => true,
+            'timestamp' => now(),
+        ]);
 
         return redirect()->route('offers.index')->with('success', 'Offer successfully created!');
     }

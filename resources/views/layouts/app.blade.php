@@ -31,6 +31,19 @@
     <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="{{ asset('template/mantis/dist/assets/css/style.css') }}" id="main-style-link">
     <link rel="stylesheet" href="{{ asset('template/mantis/dist/assets/css/style-preset.css') }}">
+
+    <style>
+      .card-hover {
+    transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border: 1px solid #dee2e6; /* Warna border default */
+      }
+
+      .card-hover:hover {
+          border-color: #0d6efd; /* Warna primary Bootstrap */
+          box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Efek bayangan saat hover */
+      }
+
+    </style>
 </head>
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
     @include('../layouts.navbars.sidenav')
@@ -92,5 +105,7 @@
 
 
   <script>font_change("Public-Sans");</script>
+
+  @yield('scripts')
 </body>
 </html>

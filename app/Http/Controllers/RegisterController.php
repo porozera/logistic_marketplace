@@ -30,7 +30,8 @@ class RegisterController extends Controller
                 'lastName' => 'required',
                 'telpNumber' => 'required',
                 'address' => 'required',
-                'role' => 'required'
+                'role' => 'required',
+                'terms' => 'required',
             ]);
     
             $data = User::create([
@@ -47,10 +48,8 @@ class RegisterController extends Controller
             return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
     
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Jika validasi gagal, tampilkan semua error
             return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
-            // Jika ada error lain, tampilkan pesan error
             return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
         }
     }    
@@ -64,6 +63,7 @@ class RegisterController extends Controller
                 'email' => 'required',
                 'address' => 'required',
                 'telpNumber' => 'required',
+                'terms' => 'required',
             ]);
     
             $data = RequestUser::create([
@@ -75,13 +75,17 @@ class RegisterController extends Controller
                 'status' => "Butuh di Approve",
             ]);
     
-            return redirect('/login')->with('success', 'Registrasi berhasil!, Tunggu sesaat untuk mendapatkan email dari Admin.');
+            return redirect('/login')->with('success', 'Registrasi berhasil! Tunggu sesaat untuk mendapatkan email dari Admin.');
     
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Jika validasi gagal, tampilkan semua error
             return back()->withErrors($e->errors())->withInput();
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->errorInfo[1] == 1062) {
+                return back()->withErrors(['permitNumber' => 'Nomor izin sudah terdaftar.'])->withInput();
+            }
+    
+            return back()->withErrors(['error' => 'Terjadi kesalahan, silakan coba lagi.'])->withInput();
         } catch (\Exception $e) {
-            // Jika ada error lain, tampilkan pesan error
             return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
         }
     }    

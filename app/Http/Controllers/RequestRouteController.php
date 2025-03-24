@@ -10,7 +10,8 @@ class RequestRouteController extends Controller
 {
     public function index()
     {
-        return view('pages.customer.request_routes.index');
+        $list_request = RequestRoute::where('user_id',Auth::id())->paginate(10);
+        return view('pages.customer.request_routes.index',compact('list_request'));
     }
 
     public function store(Request $request)
