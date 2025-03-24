@@ -27,6 +27,8 @@ return new class extends Migration
             $table->text('address');
             $table->string('companyName')->nullable();
             $table->string('bannerPicture')->nullable();
+            $table->string('accountNumber')->nullable();
+            $table->string('accountName')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

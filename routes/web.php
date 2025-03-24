@@ -3,6 +3,14 @@
 
 use App\Models\Service;
 use App\Models\Category;
+use App\Http\Controllers\ContainerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FAQCustomerController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RequestRouteController;
+use App\Http\Controllers\RequestRouteLspController;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
 use App\Http\Middleware\RoleMiddleware;
@@ -17,7 +25,18 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RequestRouteController;
+use App\Http\Controllers\BidController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileCustomerController;
+use App\Http\Controllers\SearchRouteController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ProfileController;
+use App\Models\City;
+use App\Models\Service;
+use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 
 
 
@@ -37,20 +56,6 @@ Route::get('/landing-faq/faq-harga', [DashboardController::class, 'show_faq_harg
 Route::get('/landing-faq/faq-pengiriman', [DashboardController::class, 'show_faq_pengiriman']);
 
 
-
-Route::prefix('offers')->group(function(){
-    Route::get('/', [OfferController::class, 'index'])->name('offers.index');
-    Route::get('search', [OfferController::class, 'search'])->name('offers.search');
-    Route::get('create', [OfferController::class, 'create'])->name('offers.create');
-    Route::post('store', [OfferController::class, 'store'])->name('offers.store');
-    Route::get('/{id}', [OfferController::class, 'show'])->name('offers.show');
-    Route::get('/{id}/edit', [OfferController::class, 'edit'])->name('offers.edit');
-    Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
-    Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
-});
-
-
-
 // Route::get('/kontainer', function () {
 //     return view('admin.kontainer');
 // });
@@ -66,6 +71,8 @@ Route::post('/register-lsp', [RegisterController::class, 'store_lsp'])->middlewa
 Route::get('/login', [LoginController::class, 'show'])->middleware('guest')->name('login');
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.perform');
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('/terms-of-service/lsp', function () {return view('auth.terms_of_service_lsp');});
+Route::get('/terms-of-service/customer', function () {return view('auth.terms_of_service_customer');});
 // Route::get('/reset-password', [ResetPassword::class, 'show'])->middleware('guest')->name('reset-password');
 // Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 // Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
@@ -130,7 +137,31 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
-    Route::get('/lsp/dashboard', [DashboardController::class, 'index']);
+    Route::get('/lsp/dashboard', [OfferController::class, 'index']);
+    Route::prefix('offers')->group(function(){
+        Route::get('/', [OfferController::class, 'index'])->name('offers.index');
+        Route::get('search', [OfferController::class, 'search'])->name('offers.search');
+        Route::get('create', [OfferController::class, 'create'])->name('offers.create');
+        Route::post('store', [OfferController::class, 'store'])->name('offers.store');
+        Route::get('/{id}', [OfferController::class, 'show'])->name('offers.show');
+        Route::get('/{id}/edit', [OfferController::class, 'edit'])->name('offers.edit');
+        Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
+        Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
+    });
+    Route::prefix('permintaan-pengiriman')->group(function(){
+        Route::get('/', [RequestRouteLspController::class, 'index'])->name('permintaan.pengiriman');
+        Route::get('/{id}', [RequestRouteLspController::class, 'show']);
+    });
+    Route::prefix('bids')->group(function(){
+        Route::post('store', [BidController::class, 'store'])->name('bids.store');
+        Route::get('create/{id}', [BidController::class, 'create'])->name('bids.create');
+    });
+    Route::prefix('profile')->group(function(){
+        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        // Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::put('/{id}', [ProfileController::class, 'update'])->name('profile.update');
+    });
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function () {
@@ -140,6 +171,27 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/request-routes', [RequestRouteController::class, 'index'])->name('request-route');
     Route::post('/request-routes/perform', [RequestRouteController::class, 'store'])->name('request-route.perform');
     Route::get('/request-routes/success', [RequestRouteController::class, 'success'])->name('request-success');
+
+    //SEARCH ROUTES
+    Route::get('/search-routes', [SearchRouteController::class, 'index'])->name('search-route');
+    Route::get('/search-routes/{id}', [SearchRouteController::class, 'detail'])->name('search-route.detail');
+
+    //ORDERS
+    Route::get('/order/{id}', [OrderController::class, 'index'])->name('order');
+    Route::post('/order/perform', [OrderController::class, 'order'])->name('order.perform');
+
+    //PAYMENTS
+    Route::get('/payment/{id}', [PaymentController::class, 'index'])->name('payment');
+    Route::get('/payment/success/{token}', [PaymentController::class, 'success'])->name('payment.success');
+    Route::get('/list-payment', [PaymentController::class, 'list_payment'])->name('list-payment');
+
+    //PROFILE CUSTOMER
+    Route::get('/profile', [ProfileCustomerController::class, 'index'])->name('profile-customer');
+    Route::get('/profile/edit', [ProfileCustomerController::class, 'edit'])->name('profile-customer.edit');
+    Route::put('/profile/edit/perform', [ProfileCustomerController::class, 'update'])->name('profile-customer.update');
+
+    //FAQ
+    Route::get('/FAQ-customer', [FAQCustomerController::class, 'index'])->name('FAQ-customer');
 });
 
 

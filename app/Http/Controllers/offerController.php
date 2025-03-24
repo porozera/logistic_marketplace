@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\offersModel;
+use Illuminate\Support\Facades\Auth;
 
 class offerController extends Controller
 {
@@ -33,10 +34,10 @@ class offerController extends Controller
         // return view('lsp.kelola-rute', compact('offers', 'origins', 'destinations'));
 
         if ($request->ajax()) {
-            return view('lsp.kelola-rute.index', compact('offers'))->render();
+            return view('pages.lsp.kelola-rute.index', compact('offers'))->render();
         }
 
-        return view('lsp.kelola-rute.index', compact('offers', 'origins', 'destinations'));
+        return view('pages.lsp.kelola-rute.index', compact('offers', 'origins', 'destinations'));
     }
 
     public function search(Request $request)
@@ -69,12 +70,12 @@ class offerController extends Controller
 
         public function create()
     {
-        return view('lsp.kelola-rute.create');
+        return view('pages.lsp.kelola-rute.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $attributes = $request->validate([
             'noOffer' => 'required|unique:offers,noOffer',
             'origin' => 'required|string',
             'destination' => 'required|string',
@@ -89,10 +90,31 @@ class offerController extends Controller
             'shippingDate' => 'required|date',
             'estimationDate' => 'required|date',
             'remainingWeight' => 'nullable|integer',
-            'remainingVolume' => 'nullable|integer',
         ]);
 
-        offersModel::create($request->all());
+        // offersModel::create($request->all());
+        $offer = offersModel::create([
+            'noOffer' => $attributes['noOffer'],
+            'lspName' => Auth::user()->username,
+            'origin' => $attributes['origin'],
+            'destination' => $attributes['destination'],
+            'shipmentMode' => $attributes['shipmentMode'],
+            'shipmentType' => $attributes['shipmentType'],
+            'loadingDate' => $attributes['loadingDate'],
+            'shippingDate' => $attributes['shippingDate'],
+            'estimationDate' => $attributes['estimationDate'],
+            'maxWeight' => $attributes['maxWeight'],
+            'maxVolume' => $attributes['maxVolume'],
+            'remainingWeight' => $attributes['maxWeight'],
+            'remainingVolume' => $attributes['maxVolume'],
+            'commodities' => $attributes['commodities'],
+            'status' => $attributes['status'],
+            'price' => $attributes['price'],
+            'user_id' =>Auth::id(),
+            'is_for_lsp' => false,
+            'is_for_customer' => true,
+            'timestamp' => now(),
+        ]);
 
         return redirect()->route('offers.index')->with('success', 'Offer successfully created!');
     }
@@ -100,13 +122,13 @@ class offerController extends Controller
     public function show($id)
     {
     $offer = offersModel::findOrFail($id);
-    return view('lsp.kelola-rute.show-details', compact('offer'));
+    return view('pages.lsp.kelola-rute.show-details', compact('offer'));
     }
 
     public function edit($id)
     {
         $offer = offersModel::findOrFail($id);
-        return view('lsp.kelola-rute.edit', compact('offer'));
+        return view('pages.lsp.kelola-rute.edit', compact('offer'));
     }
 
     public function update(Request $request, $id)

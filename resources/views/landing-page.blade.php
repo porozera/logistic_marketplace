@@ -121,7 +121,7 @@
                                     <a href="blog.html" class="nav-link text-left">Contact</a>
                                 </li>
                                 <li>
-                                    <a href="/login" class="nav-link text-left">Masuk</a>
+                                  <a href="{{ route('login') }}" class="nav-link text-left">Masuk</a>
                                 </li>
                             </ul>
                         </nav>

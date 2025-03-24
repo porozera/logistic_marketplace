@@ -31,6 +31,23 @@ class DatabaseSeeder extends Seeder
             'bannerPicture' => null,
         ]);
 
+        User::create([
+            'username' => 'lsp',
+            'email' => 'lsp@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('123'),
+            'firstName' => 'Lsp',
+            'lastName' => 'User',
+            'role' => 'lsp',
+            'telpNumber' => '08123456789',
+            'profilePicture' => null,
+            'description' => 'Ini adalah akun LSP.',
+            'rating' => 5.0,
+            'address' => 'Jl. LSP No. 1, Jakarta',
+            'companyName' => 'PT Indah Jaya Logistik',
+            'bannerPicture' => null,
+        ]);
+
 
         // User::factory()->create([
         //     'name' => 'Test User',
@@ -43,5 +60,5 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
         ]);
     }
- 
+
 }

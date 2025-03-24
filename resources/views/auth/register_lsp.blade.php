@@ -3,7 +3,7 @@
 <!-- [Head] start -->
 
 <head>
-  <title>Sign up | Mantis Bootstrap 5 Admin Template</title>
+  <title>Registrasi LSP</title>
   <!-- [Meta] -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -47,6 +47,8 @@
   </div>
   <!-- [ Pre-loader ] End -->
 
+
+  
   <div class="auth-main">
     <div class="auth-wrapper v3">
       <div class="auth-form">
@@ -56,9 +58,19 @@
         <div class="card my-5">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-end mb-4">
-              <h3 class="mb-0"><b>Buat Akun LSP</b></h3>
+              <h4 class="mb-0"><b>Buat Akun LSP</b></h4>
               <a href="/login" class="link-primary">Sudah punya akun?</a>
             </div>
+            <div class="row">
+              <div class="btn-group" role="group">
+                <input type="radio" class="btn-check" id="btnrdo1" name="btn_radio1" data-url="/register-customer"> 
+                <label class="btn btn-outline-primary" for="btnrdo1">Customer</label>
+            
+                <input type="radio" class="btn-check" id="btnrdo3" name="btn_radio1" checked> 
+                <label class="btn btn-outline-primary" for="btnrdo3">LSP</label>
+              </div>
+            </div>
+            <br>
             <form action="/register-lsp" method="POST">
                 @csrf
                 <div class="form-group mb-3">
@@ -89,11 +101,15 @@
                 <div class="form-group mb-3">
                     <input type="hidden" name="role" class="form-control" placeholder="role" value="customer">
                 </div>
-                  <p class="mt-4 text-sm text-muted">By Signing up, you agree to our <a href="#" class="text-primary"> Terms of Service </a> and <a href="#" class="text-primary"> Privacy Policy</a></p>
+                  <input class="form-check-input" type="checkbox" name="terms" id="terms">
+                  <label class="form-check-label" for="terms">
+                    <span class="mt-4 text-sm text-muted ms-2">Dengan Mendaftar, Anda menyetujui <a href="/terms-of-service/lsp" class="text-primary"> Kebijakan Layanan </a> kami.</span>
+                  </label>
+                  @error('terms') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                   <div class="d-grid mt-3">
                     <button type="submit" class="btn btn-primary">Buat Akun</button>
-                </div>   
-                @if ($errors->any())
+                  </div>   
+                {{-- @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -101,8 +117,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
-
+                @endif --}}
             </form>       
           </div>
         </div>
@@ -125,6 +140,20 @@
   </div>
   <!-- [ Main Content ] end -->
   <!-- Required Js -->
+
+  <script>
+    // Menambahkan event listener untuk radio buttons
+    document.querySelectorAll('input[name="btn_radio1"]').forEach((radio) => {
+      radio.addEventListener('change', function() {
+        if (this.checked && this.dataset.url) {
+          window.location.href = this.dataset.url;
+        }
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/popper.min.js') }}"></script>
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/simplebar.min.js') }}"></script>
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/bootstrap.min.js') }}"></script>
