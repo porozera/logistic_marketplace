@@ -37,7 +37,7 @@
           <li class="pc-item {{ Request::is('admin/service*') ? 'active' : '' }}">
             <a href="service" class="pc-link">
               <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
-              <span class="pc-mtext">Layanan Pengiriman</span>
+              <span class="pc-mtext">Layanan</span>
             </a>
           </li>
           <li class="pc-item {{ Request::is('admin/category*') ? 'active' : '' }}">
