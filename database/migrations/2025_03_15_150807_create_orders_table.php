@@ -4,11 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('offers', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
             $table->string('noOffer')->unique();
             $table->string('lspName');
             $table->string('origin');
@@ -23,18 +28,20 @@ return new class extends Migration {
             $table->integer('remainingWeight')->nullable();
             $table->integer('remainingVolume')->nullable();
             $table->text('commodities')->nullable();
-            $table->enum('status', ['active', 'deactive']);
+            $table->string('status')->nullable();
             $table->decimal('price', 15, 2);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->dateTime('timestamp');
-            $table->boolean('is_for_lsp')->default(true);
-            $table->boolean('is_for_customer')->default(true);
-            $table->timestamps();
+            $table->decimal('totalAmount', 15, 2);
+            $table->decimal('remainingAmount', 15, 2);
+            $table->decimal('paidAmount', 15, 2);
+            $table->string('paymentStatus');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('offers');
+        Schema::dropIfExists('orders');
     }
 };

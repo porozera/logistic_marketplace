@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-@section('title', 'Success')
+@section('title','Failed')
 @section('content')
  <!-- [ Main Content ] start -->
  <div class="pc-container">
@@ -28,21 +28,16 @@
         <div class="col-md-4 text-center col-xl-4">
           <div class="card text-center">
             <div class="card-body">
-              <img src="{{ asset('template/mantis/dist/assets/images/success-img.svg') }}">
+              <img src="{{ asset('template/mantis/dist/assets/images/warning.png') }}">
               <br>
               <br>  
-              <h4 class="mb-2">Permintaan Berhasil Dikirim!</h4>
-              <h7>Tunggu Penawaran sampai tanggal <b>{{ request('deadline') }}</b></h7>
-              <h7>Silakan cek kotak pesan secara berkala</h7>
-              <br>
-              <br>
-              <div class="row">
-                <div class="col-md-4 text-center col-xl-4">
+              <h4 class="mb-2">Pembayaran Gagal</h4>
+              <h7>Mohon untuk melakukan pembayaran ulang!</h7>
 
+              <hr>
+              <div class="row">
+                <a href="/list-payment" class="btn btn-primary">Kembali</a>
               </div>
-              <div class="col-md-4 text-center col-xl-4">
-                <a href="/request-routes" class="btn btn-primary">Kembali</a>
-            </div>
             <div class="col-md-4 text-center col-xl-4">
 
             </div>
