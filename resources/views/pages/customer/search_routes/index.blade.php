@@ -215,10 +215,16 @@
                                     <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
                                     <h5 class="mb-0 ms-2">/CBM</h5>
                                 </div>
-                                {{-- <div class="d-flex align-items-center justify-content-end mb-2">
-                                    <h5 class="mb-0 ms-2 text-primary">50</h5>
-                                    <h5 class="mb-0 ms-2">/100</h5>
-                                </div> --}}
+                                {{-- @if ($item['shipmentType'=='LCL'])
+                                <div class="d-flex align-items-center justify-content-end mb-2">
+                                    <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
+                                    <h5 class="mb-0 ms-2">/CBM</h5>
+                                </div>
+                                @else
+                                <div class="d-flex align-items-center justify-content-end mb-2">
+                                    <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
+                                </div>
+                                @endif --}}
                                 <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50">Pilih</a>
                             </div>
                         </div>                      
