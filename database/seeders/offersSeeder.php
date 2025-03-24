@@ -40,7 +40,7 @@ class OffersSeeder extends Seeder
                 'origin' => 'Bandung',
                 'destination' => 'Medan',
                 'shipmentMode' => 'darat',
-                'shipmentType' => 'LCL',
+                'shipmentType' => 'FCL',
                 'loadingDate' => Carbon::now(),
                 'shippingDate' => Carbon::now()->addDays(3),
                 'estimationDate' => Carbon::now()->addDays(6),

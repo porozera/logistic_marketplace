@@ -137,19 +137,6 @@
 
                       <hr>
 
-                      {{-- <div class="card bg-light-primary mb-1" style="height: auto;">
-                        <div class="card-body p-3"> <!-- Mengurangi padding -->
-                          <div class="row">
-                            <div class="col-6">
-                              <h5 class="mb-0">Kontainer 3 CBM</h5> <!-- Gunakan h6 agar lebih kecil -->
-                            </div>
-                            <div class="col-6 text-end">
-                              <h5 class="mb-0">Rp. 400.000</h5> <!-- Gunakan h6 agar lebih kecil -->
-                            </div>
-                          </div>
-                        </div>
-                      </div> --}}
-
                       <div id="cbmPriceCard"></div> 
                       <div id="servicePriceList"></div>
 
@@ -168,6 +155,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="mb-3">Form Pemesanan</h4>
+                  @if ($offer['shipmentType'] == 'LCL')
                   <div class="row">
                     <div class="col-4">
                         <div class="form-group mb-3">
@@ -190,8 +178,7 @@
                             @error('height') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                         </div>
                     </div>
-                </div>
-                
+                  </div>
                   <div class="row">
                     <div class="col-6">
                       <div class="form-group mb-3">
@@ -200,6 +187,22 @@
                         @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                       </div>
                     </div>
+                  @else
+                  <div class="form-group mb-3">
+                    <label class="form-label">Volume (CBM)</label>
+                    <input type="number" id="volume" name="volume" class="form-control" placeholder="CBM" value="{{ $offer['maxVolume'] }}" oninput="calculateCBM()" readonly>
+                    @error('volume') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="form-group mb-3">
+                        <label class="form-label">Berat (kg)</label>
+                        <input type="number" id="weight" name="weight" class="form-control" placeholder="kg" value="{{ $offer['maxWeight'] }}" oninput="calculateCBM()" readonly>
+                        @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                      </div>
+                    </div>
+                  @endif
+
                     <div class="col-6">
                       <div class="form-group mb-3">
                         <label class="form-label">Tipe Barang</label>
@@ -330,44 +333,54 @@
         </div>
     
         <script>
+              window.onload = function() {
+                calculateCBM();
+            };
             document.getElementById('submitFormButton').addEventListener('click', function () {
-                // Submit the form
                 document.getElementById('orderForm').submit();
             });
 
             function calculateCBM() {
-              let length = parseFloat(document.getElementById("length").value) || 0;
-              let width = parseFloat(document.getElementById("width").value) || 0;
-              let height = parseFloat(document.getElementById("height").value) || 0;
-              let weight = parseFloat(document.getElementById("weight").value) || 0;
+              let length = parseFloat(document.getElementById("length")?.value) || 0;
+              let width = parseFloat(document.getElementById("width")?.value) || 0;
+              let height = parseFloat(document.getElementById("height")?.value) || 0;
+              let weight = parseFloat(document.getElementById("weight")?.value) || 0;
+              let volume = parseFloat(document.getElementById("volume")?.value) || 0;
 
               let lengthM = length / 100;
               let widthM = width / 100;
               let heightM = height / 100;
-              let cbm = lengthM * widthM * heightM;
-              let cbmRounded = Math.ceil(cbm * 1000) / 1000;
 
+              let cbm, cbmRounded, cbmByWeight, cbmByVolume;
               let maxWeightPerCBM = 600;
-              let cbmByVolume = Math.ceil(cbmRounded);
-              let cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
+              
+              let shipmentType = "{{ $offer['shipmentType'] }}";
+              let maxVolume = parseFloat("{{ $offer['maxVolume'] }}") || 0;
+              let maxWeight = parseFloat("{{ $offer['maxWeight'] }}") || 0;
+              let cbmPrice = parseFloat("{{ $offer['price'] }}") || 0;
 
-              // Peraturan tambahan: jika panjang, lebar, atau tinggi lebih dari 100m, tambahkan 1 CBM ekstra
-              let extraCBM = 0;
-              if (length > 100) extraCBM++;
-              if (width > 100) extraCBM++;
-              if (height > 100) extraCBM++;
+              if (shipmentType === 'LCL') {
+                  cbm = lengthM * widthM * heightM;
+                  cbmRounded = Math.ceil(cbm * 1000) / 1000;
+                  cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
+                  cbmByVolume = Math.ceil(cbmRounded);
+                  extraCBM = 0;
+                  if (length > 100) extraCBM++;
+                  if (width > 100) extraCBM++;
+                  if (height > 100) extraCBM++;
+                  cbmToBuy = Math.max(cbmByVolume, cbmByWeight) + extraCBM;
+              } else {
+                  cbmRounded = maxVolume;
+                  cbmByWeight = maxWeight;
+                  cbmByVolume = Math.ceil(cbmRounded);
+                  cbmToBuy = maxVolume;
+              }
 
-              let cbmToBuy = Math.max(cbmByVolume, cbmByWeight) + extraCBM;
-
-              // Harga per CBM
-              let cbmPrice = 1500000;
               let totalCBMPrice = cbmToBuy * cbmPrice;
 
-              // Update tampilan hasil CBM
               document.getElementById("cbmResult").innerText = cbmRounded.toFixed(3);
               document.getElementById("cbmToBuy").innerText = cbmToBuy;
 
-              // Tampilkan card CBM di HTML
               let cbmPriceCard = document.getElementById("cbmPriceCard");
               cbmPriceCard.innerHTML = `
                   <div class="card bg-light-primary mb-1">
@@ -384,51 +397,34 @@
                   </div>
               `;
 
-              // Update total harga
               updateTotalPrice();
           }
-
           function updateTotalPrice() {
             let totalPrice = 0;
-
-            // Ambil harga CBM dari hasil perhitungan CBM
             let cbmToBuy = parseInt(document.getElementById("cbmToBuy").innerText) || 0;
-            let cbmPrice = 1500000; // Harga per CBM
+            let cbmPrice = {{$offer['price']}};
             totalPrice += cbmToBuy * cbmPrice;
-
-            // Ambil harga layanan yang dicentang
             let selectedServices = document.querySelectorAll(".service-checkbox:checked");
             selectedServices.forEach(service => {
                 let servicePrice = parseFloat(service.getAttribute("data-price"));
                 totalPrice += servicePrice;
             });
-
-            // Update tampilan total harga
             document.getElementById("totalPrice").innerText = `Rp. ${totalPrice.toLocaleString("id-ID")}`;
-
-            // Simpan nilai ke dalam input hidden
             document.getElementById("cbmInput").value = cbmToBuy;
             document.getElementById("totalPriceInput").value = totalPrice;
         }
-
-          // Pastikan layanan yang dicentang akan menampilkan harga
           function updateServices() {
             let selectedServices = document.querySelectorAll(".service-checkbox:checked");
             let servicePriceList = document.getElementById("servicePriceList");
             let selectedServicesInput = document.getElementById("selectedServicesInput");
-
-            servicePriceList.innerHTML = ""; // Bersihkan daftar layanan
-            let selectedServiceNames = []; // Array untuk layanan yang dipilih
+            servicePriceList.innerHTML = ""; 
+            let selectedServiceNames = []; 
 
             selectedServices.forEach(service => {
                 let serviceName = service.value;
                 let servicePrice = parseFloat(service.getAttribute("data-price"));
-
-                selectedServiceNames.push(serviceName); // Simpan layanan ke array
-
+                selectedServiceNames.push(serviceName); 
                 let formattedPrice = servicePrice.toLocaleString("id-ID");
-
-                // Tambahkan card untuk setiap layanan yang dipilih
                 servicePriceList.innerHTML += `
                     <div class="card bg-light-primary mb-1">
                         <div class="card-body p-3">
@@ -444,16 +440,9 @@
                     </div>
                 `;
             });
-
-            // Update input text dengan layanan yang dipilih
             selectedServicesInput.value = selectedServiceNames.join(", ");
-
-            // **Tambahkan ini untuk update total harga setelah memilih layanan**
             updateTotalPrice();
         }
-
-
-          // Pastikan setiap perubahan layanan juga mempengaruhi total harga
           document.querySelectorAll(".service-checkbox").forEach(checkbox => {
               checkbox.addEventListener("change", updateServices);
           });
