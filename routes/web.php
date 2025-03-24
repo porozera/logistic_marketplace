@@ -15,6 +15,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ProfileController;
 use App\Models\City;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -85,6 +86,13 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::get('/{id}/edit', [OfferController::class, 'edit'])->name('offers.edit');
         Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
         Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
+    });
+    Route::prefix('profile')->group(function(){
+        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        // Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::put('/{id}', [ProfileController::class, 'update'])->name('profile.update');
+
     });
 });
 
