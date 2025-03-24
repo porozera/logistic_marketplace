@@ -11,12 +11,12 @@
             <div class="col-md-12">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item" aria-current="page">Layanan</li>
+                <li class="breadcrumb-item" aria-current="page">Kota</li>
               </ul>
             </div>
             <div class="col-md-12">
               <div class="page-header-title">
-                <h2 class="mb-0">Data Layanan</h2>
+                <h2 class="mb-0">Data Kota</h2>
               </div>
             </div>
           </div>
@@ -31,7 +31,7 @@
           <div class="card table-card">
             <div class="card-body">
               <div class="text-end p-4 pb-0">
-                <a href="service-add" class="btn btn-primary d-inline-flex align-item-center">
+                <a href="/admin/city-add" class="btn btn-primary d-inline-flex align-item-center">
                   <i class="ti ti-plus f-18 me-2"></i> Tambah Data
                 </a>
               </div>
@@ -40,31 +40,27 @@
                   <thead>
                     <tr>
                       <th></th>
-                      <th>Kode</th>
-                      <th>Nama Layanan</th>
-                      <th>Deskripsi</th>
-                      <th>Harga</th>
-                      <th>Icon</th>
+                      <th>Provinsi</th>
+                      <th>Kota</th>
+                      <th>Kode Pos</th>
                       <th class="text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($services as $item)
+                    @foreach ($cities as $item)
                     <tr>
                       <td>
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox">
                         </div>
                       </td>
-                      <td>{{ $item->code }}</td>
-                      <td>{{ $item->serviceName }}</td>
-                      <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">{{ $item->description }}</td>
-                      <td>{{ $item->price }}</td>
-                      <td><i class="{{ $item->icon }}"></i></td>
+                      <td>{{ $item->province->name }}</td>
+                      <td>{{ $item->name }}</td>
+                      <td>{{ $item->postalCode }}</td>
                       <td class="text-center">
                         <ul class="list-inline me-auto mb-0">
                           <li class="list-inline-item align-bottom">
-                            <a href="{{ url('admin/service/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
+                            <a href="{{ url('/admin/city/'.$item->id.'/edit') }}" class="avtar avtar-xs btn-link-primary">
                               <i class="ti ti-edit-circle f-18"></i>
                             </a>
                           </li>
@@ -73,8 +69,6 @@
                                 <i class="ti ti-trash f-18"></i>
                             </a>
                           </li>
-                        
-                        
                         </ul>
                       </td>
                     </tr>
@@ -136,7 +130,7 @@
 <script>
   function confirmDelete(id) {
       let form = document.getElementById('deleteForm');
-      form.action = "/admin/service/" + id; // Mengatur action form delete
+      form.action = "/admin/city/" + id; // Mengatur action form delete
       let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
       deleteModal.show(); // Menampilkan modal
   }

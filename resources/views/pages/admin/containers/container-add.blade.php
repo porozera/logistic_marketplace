@@ -31,20 +31,20 @@
         </div>
         <div class="card-body">
 
-          <form action="kontainer-add" method="post">
+          <form action="/admin/container-add" method="post">
             @csrf
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="name" class="form-label">Nama Kontainer:</label>
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama kontainer" value="{{ old('code') }}">
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama kontainer" value="{{ old('name') }}" required>
                   <small class="form-text text-muted">Contoh : 20' Standard</small>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="code" class="form-label">Kode:</label>
-                  <input type="text" class="form-control" name="code" id="code" placeholder="Masukkan kode kontainer" value="{{ old('name') }}">
+                  <input type="text" class="form-control" name="code" id="code" placeholder="Masukkan kode kontainer" value="{{ old('code') }}" required>
                   <small class="form-text text-muted">Contoh : CT-20STD</small>
                 </div>
               </div>
@@ -53,26 +53,26 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="weight" class="form-label">Berat Maksimal (kg)</label>
-                  <input type="number" class="form-control" name="weight" id="weight" placeholder="Masukkan berat maksimal dalam satuan kilogram" value="{{ old('weight') }}">
+                  <input type="number" class="form-control" name="weight" id="weight" placeholder="Masukkan berat maksimal dalam satuan kilogram" value="{{ old('weight') }}" required>
                   {{-- <small class="form-text text-muted">Please enter your Password</small> --}}
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="volume" class="form-label">Volume (CBM):</label>
-                    <input type="number" class="form-control" name="volume" id="volume" placeholder="Masukkan volume" value="{{ old('volume') }}">
+                    <input type="number" class="form-control" name="volume" id="volume" placeholder="Masukkan volume" value="{{ old('volume') }}" required>
                   {{-- <small class="form-text text-muted">Please enter your Profile URL</small> --}}
                 </div>
               </div>
             </div>
             <div class="form-group">
                 <label class="form-label" for="description">Deskripsi</label>
-                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi kontainer" value="{{ old('desription') }}"></textarea>
+                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi kontainer" value="{{ old('description') }}" required></textarea>
             </div>
 
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>
-                <a href="/kontainer" class="btn btn-secondary">Cancel</a>
+                <a href="/admin/container" class="btn btn-secondary">Cancel</a>
             </div>
 
           </form>

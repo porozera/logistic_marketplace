@@ -27,12 +27,12 @@ class ContainerController extends Controller
         ]);
 
         $container = Container::create($request->all());
-        return redirect('kontainer')->with('success', 'Data Kontainer berhasil ditambahkan!');
+        return redirect('/admin/container')->with('success', 'Data Kontainer berhasil ditambahkan!');
     }
 
     public function edit($id) {
         $container = Container::findOrFail($id);
-        return view('admin.container-edit', compact('container'));
+        return view('pages.admin.containers.container-edit', compact('container'));
     }
     
     public function update(Request $request, $id) {
@@ -47,15 +47,13 @@ class ContainerController extends Controller
         $container = Container::findOrFail($id);
         $container->update($request->all());
     
-        return redirect('kontainer')->with('success', 'Data berhasil diperbarui');
+        return redirect('/admin/container')->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id) {
         $container = Container::findOrFail($id);
         $container->delete();
 
-        return redirect('/kontainer')->with('success', 'Data Kontainer berhasil dihapus');
+        return redirect('/admin/container')->with('success', 'Data Kontainer berhasil dihapus');
     }
-
-    
 }

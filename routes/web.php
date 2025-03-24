@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Models\Service;
+use App\Models\Category;
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FAQCustomerController;
@@ -10,7 +12,19 @@ use App\Http\Controllers\RequestRouteController;
 use App\Http\Controllers\RequestRouteLspController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FaqController;
+use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\offerController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ContainerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RequestRouteController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
@@ -34,6 +48,12 @@ Route::get('/', function () {
 Route::get('/landing-page', function () {
     return view('landing-page');
 });
+
+Route::get('/landing-faq', [DashboardController::class, 'faq_category']);
+Route::get('/landing-faq/faq-general', [DashboardController::class, 'show_faq_general']);
+Route::get('/landing-faq/faq-peralatan', [DashboardController::class, 'show_faq_peralatan']);
+Route::get('/landing-faq/faq-harga', [DashboardController::class, 'show_faq_harga']);
+Route::get('/landing-faq/faq-pengiriman', [DashboardController::class, 'show_faq_pengiriman']);
 
 
 // Route::get('/kontainer', function () {
@@ -60,22 +80,60 @@ Route::get('/terms-of-service/customer', function () {return view('auth.terms_of
 // Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'index_admin']);
-    // Service
-    Route::get('/service', [ServiceController::class,'index']);
-    Route::get('/service-add', [ServiceController::class,'add']);
-    Route::post('/service-add', [ServiceController::class,'store']);
-    Route::get('/service/{id}/edit', [ServiceController::class, 'edit']);
-    Route::put('/service/{id}', [ServiceController::class, 'update']);
-    Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
+    Route::get('/admin/dashboard', [DashboardController::class, 'index_admin'])->name('admin.dashboard');
 
-    // ContaninerController
-    Route::get('/kontainer', [ContainerController::class,'index']);
-    Route::get('/kontainer-add', [ContainerController::class,'add']);
-    Route::post('/kontainer-add', [ContainerController::class,'store']);
-    Route::get('/kontainer/{id}/edit', [ContainerController::class, 'edit']);
-    Route::put('/kontainer/{id}', [ContainerController::class, 'update']);
-    Route::delete('/kontainer/{id}', [ContainerController::class, 'destroy'])->name('kontainer.destroy');
+    // Contaniner
+    Route::get('/admin/container', [ContainerController::class,'index']);
+    Route::get('/admin/container-add', [ContainerController::class,'add']);
+    Route::post('/admin/container-add', [ContainerController::class,'store']);
+    Route::get('/admin/container/{id}/edit', [ContainerController::class, 'edit']);
+    Route::put('/admin/container/{id}', [ContainerController::class, 'update']);
+    Route::delete('/admin/container/{id}', [ContainerController::class, 'destroy'])->name('container.destroy');
+
+    // Service
+    Route::get('/admin/service', [ServiceController::class,'index']);
+    Route::get('/admin/service-add', [ServiceController::class,'add']);
+    Route::post('/admin/service-add', [ServiceController::class,'store']);
+    Route::get('/admin/service/{id}/edit', [ServiceController::class, 'edit']);
+    Route::put('/admin/service/{id}', [ServiceController::class, 'update']);
+    Route::delete('/admin/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
+
+    // Category
+    Route::get('/admin/category', [CategoryController::class, 'index']);
+    Route::get('/admin/category-add', [CategoryController::class, 'add']);
+    Route::post('/admin/category-add', [CategoryController::class, 'store']);
+    Route::get('/admin/category/{id}/edit', [CategoryController::class, 'edit']);
+    Route::put('/admin/category/{id}', [CategoryController::class, 'update']);
+    Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+    // Province
+    Route::get('/admin/province', [ProvinceController::class, 'index']);
+    Route::get('/admin/province-add', [ProvinceController::class, 'add']);
+    Route::post('/admin/province-add', [ProvinceController::class, 'store']);
+    Route::get('/admin/province/{id}/edit', [ProvinceController::class, 'edit']);
+    Route::put('/admin/province/{id}', [ProvinceController::class, 'update']);
+    Route::delete('/admin/province/{id}', [ProvinceController::class, 'destroy'])->name('province.destroy');
+    
+    //City
+    Route::get('/admin/city', [CityController::class, 'index']);
+    Route::get('/admin/city-add', [CityController::class, 'add']);
+    Route::post('/admin/city-add', [CityController::class, 'store']);
+    Route::get('/admin/city/{id}/edit', [CityController::class, 'edit']);
+    Route::put('/admin/city/{id}', [CityController::class, 'update']);
+    Route::delete('/admin/city/{id}', [CityController::class, 'destroy'])->name('city.destroy');
+
+    // FAQs
+    Route::get('/admin/faq', [FaqController::class, 'index']);
+    Route::get('/admin/faq-add', [FaqController::class, 'add']);
+    Route::post('/admin/faq-add', [FaqController::class, 'store']);
+    Route::get('/admin/faq/{id}/edit', [FaqController::class, 'edit']);
+    Route::put('/admin/faq/{id}', [FaqController::class, 'update']);
+    Route::delete('/admin/faq/{id}', [FaqController::class, 'destroy'])->name('faq.destroy');
+
+
+    //Laporan
+    Route::get('/admin/report-user', [LaporanController::class, 'index_user']);
+    Route::get('/admin/report-shipment', [LaporanController::class, 'index_shipment']);
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
@@ -135,5 +193,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     //FAQ
     Route::get('/FAQ-customer', [FAQCustomerController::class, 'index'])->name('FAQ-customer');
 });
+
+
+
 
 

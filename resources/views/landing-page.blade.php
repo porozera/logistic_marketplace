@@ -109,13 +109,13 @@
                                     <a href="#" class="nav-link text-left">Home</a>
                                 </li>
                                 <li>
-                                    <a href="about.html" class="nav-link text-left">About Us</a>
+                                    <a href="about.html" class="nav-link text-left">Price Calculator</a>
                                 </li>
                                 <li>
                                     <a href="services.html" class="nav-link text-left">Services</a>
                                 </li>
                                 <li>
-                                    <a href="testimonials.html" class="nav-link text-left">Price Calculator</a>
+                                    <a href="landing-faq" class="nav-link text-left">Faq</a>
                                 </li>
                                 <li>
                                     <a href="blog.html" class="nav-link text-left">Contact</a>

@@ -12,13 +12,13 @@
             <div class="col-md-12">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan Pengiriman</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Kategori Barang</a></li>
                 <li class="breadcrumb-item" aria-current="page">Edit Data</li>
               </ul>
             </div>
             <div class="col-md-12">
               <div class="page-header-title">
-                <h2 class="mb-0">Edit Jenis Layanan</h2>
+                <h2 class="mb-0">Edit Kategori Barang</h2>
               </div>
             </div>
           </div>
@@ -28,46 +28,45 @@
 
     <div class="card">
         <div class="card-header">
-          <h5>Form Edit Data Jenis Layanan</h5>
+          <h5>Form Edit Data Kategori Barang</h5>
         </div>
         <div class="card-body">
-            <form action="{{ url('admin/service/'.$service->id) }}" method="POST">
+            <form action="{{ url('/admin/category/'.$category->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div>
                     <div class="form-group">
                         <label for="code" class="form-label">Kode</label>
-                        <input type="text" name="code" id="code" class="form-control" value="{{ $service->code }}" required>
+                        <input type="text" name="code" id="code" class="form-control" value="{{ $category->code }}" required>
                     </div>
                 </div>
                 <div>
                     <div class="form-group">
-                        <label for="serviceName" class="form-label">Nama Layanan</label>
-                        <input type="text" name="serviceName" id="serviceName" class="form-control" value="{{ $service->serviceName }}" required>
+                        <label for="name" class="form-label">Nama Barang</label>
+                        <input type="text" name="name" id="name" class="form-control" value="{{ $category->name }}" required>
                     </div>
                 </div>
                 <div>
                     <div class="form-group">
-                        <label for="price" class="form-label">Harga</label>
-                        <input type="number" name="price" id="price" class="form-control" value="{{ $service->price }}" required>
-                    </div>
-                </div>
-                <div>
-                    <div class="form-group">
-                        <label for="icon" class="form-label">Icon</label>
-                        <input type="text" name="icon" id="icon" class="form-control" value="{{ $service->icon }}" required>
+                        <label class="form-label" for="type">Tipe</label>
+                        <select class="form-select" id="type" name="type">
+                            <option value="General Cargo" {{ old('type', $category->type) == 'General Cargo' ? 'selected' : '' }}>General Cargo</option>
+                            <option value="Special Cargo" {{ old('type', $category->type) == 'Special Cargo' ? 'selected' : '' }}>Special Cargo</option>
+                            <option value="Irregularity Cargo" {{ old('type', $category->type) == 'Irregularity Cargo' ? 'selected' : '' }}>Irregularity Cargo</option>
+                            <option value="Dangerous Cargo" {{ old('type', $category->type) == 'Dangerous Cargo' ? 'selected' : '' }}>Dangerous Cargo</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="description" class="form-label">Deskripsi</label>
-                        <textarea name="description" id="description" class="form-control" rows="5" required>{{ $service->description }}</textarea>
+                        <textarea name="description" id="description" class="form-control" rows="5" required>{{ $category->description }}</textarea>
                     </div>
                 </div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ url('admin/service') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ url('/admin/category') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>
