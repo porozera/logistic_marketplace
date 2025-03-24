@@ -60,11 +60,7 @@
               <h3 class="mb-0"><b>Login</b></h3>
               <a href="/register-customer" class="link-primary">Tidak punya akun?</a>
             </div>
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            
          <form action="/login" method="POST">
               @csrf
               <div class="form-group mb-3">
@@ -78,7 +74,15 @@
             </div>
               <div class="form-group mb-3">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Password">
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="ti ti-lock"></i></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="">
+                    <span class="input-group-text">
+                      <i class="ti ti-eye-off" id="togglePassword" 
+                     style="cursor: pointer"></i>
+                     </span>
+                </div>
+                @error('password') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
               </div>
               <div class="d-flex mt-1 justify-content-between">
                 <div class="form-check">
@@ -91,6 +95,19 @@
                 <button type="submit" class="btn btn-primary">Login</button>
               </div>
             </form>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            @if(session('success'))
+            <script>
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+            @endif
+
           </div>
         </div>
         <div class="auth-footer row">
@@ -109,8 +126,21 @@
     </div>
   </div>
   <!-- [ Main Content ] end -->
-  
+  <script>
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+
+    togglePassword.addEventListener("click", function () {
+    
+    const type = password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    this.classList.toggle('ti-eye-off');
+    this.classList.toggle('ti-eye');
+    });
+  </script>
   <!-- Required Js -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/popper.min.js') }}"></script>
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/simplebar.min.js') }}"></script>
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/bootstrap.min.js') }}"></script>

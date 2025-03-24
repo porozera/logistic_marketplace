@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 
 class offersModel extends Model
 {
     use HasFactory;
 
     protected $table = 'offers';
-
+    public $timestamps = true;
     protected $fillable = [
         'noOffer',
         'lspName',
@@ -29,13 +30,40 @@ class offersModel extends Model
         'status',
         'price',
         'user_id',
-        'timestamp',
         'is_for_lsp',
         'is_for_customer',
+        'timestamp',
     ];
 
-    protected $attributes = [
-        'user_id' => 1, // Contoh user_id sementara
+    // protected $attributes = [
+    //     'user_id' => 1, // Contoh user_id sementara
 
-    ];
+    // ];
+
+    public function getEstimatedDaysAttribute()
+    {
+        $shippingDate = Carbon::parse($this->shippingDate);
+        $estimationDate = Carbon::parse($this->estimationDate);
+        return $shippingDate->diffInDays($estimationDate);
+    }
+
+    public function getLoadingDateFormattedAttribute()
+    {
+        return Carbon::parse($this->loadingDate)->translatedFormat('d F Y');
+    }
+
+    public function getShippingDateFormattedAttribute()
+    {
+        return Carbon::parse($this->shippingDate)->translatedFormat('d F Y');
+    }
+
+    public function getEstimationDateFormattedAttribute()
+    {
+        return Carbon::parse($this->estimationDate)->translatedFormat('d F Y');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
