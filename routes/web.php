@@ -7,9 +7,11 @@ use App\Http\Controllers\FAQCustomerController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RequestRouteController;
+use App\Http\Controllers\RequestRouteLspController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\offerController;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileCustomerController;
@@ -20,6 +22,7 @@ use App\Models\City;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 
 
 
@@ -87,12 +90,19 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
         Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
     });
+    Route::prefix('permintaan-pengiriman')->group(function(){
+        Route::get('/', [RequestRouteLspController::class, 'index'])->name('permintaan.pengiriman');
+        Route::get('/{id}', [RequestRouteLspController::class, 'show']);
+    });
+    Route::prefix('bids')->group(function(){
+        Route::post('store', [BidController::class, 'store'])->name('bids.store');
+        Route::get('create/{id}', [BidController::class, 'create'])->name('bids.create');
+    });
     Route::prefix('profile')->group(function(){
         Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         // Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::put('/{id}', [ProfileController::class, 'update'])->name('profile.update');
-
     });
 });
 
