@@ -178,7 +178,7 @@ class OrderController extends Controller
 
         }     
 
-        return redirect('/payment/' . $userOrder->id);
+        return redirect('/payment/' . $userOrder->payment_token);
     }    
       
 }

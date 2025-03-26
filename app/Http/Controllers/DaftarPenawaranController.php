@@ -191,6 +191,6 @@ class DaftarPenawaranController extends Controller
             "status" => 'deactive',
         ]);  
 
-        return redirect('/payment/' . $userOrder->id);
+        return redirect('/payment/' . $userOrder->payment_token);
     }    
 }

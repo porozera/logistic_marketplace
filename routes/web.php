@@ -174,7 +174,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::post('/order/perform', [OrderController::class, 'order'])->name('order.perform');
 
     //PAYMENTS
-    Route::get('/payment/{id}', [PaymentController::class, 'index'])->name('payment');
+    Route::get('/payment/{token}', [PaymentController::class, 'index'])->name('payment');
     Route::get('/payment/success/{token}', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('/list-payment', [PaymentController::class, 'list_payment'])->name('list-payment');
 

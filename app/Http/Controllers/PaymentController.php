@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
-    public function index($id)
+    public function index($token)
     {
-        $userOrder = UserOrder::find($id);
+        $userOrder = UserOrder::where('payment_token', $token)->firstOrFail();
         $order = Order::find($userOrder->order_id);
-        return view('pages.customer.orders.payment', compact('userOrder','order'));
+        return view('pages.customer.orders.payment', compact('userOrder', 'order'));
     }
 
     public function success($token)
