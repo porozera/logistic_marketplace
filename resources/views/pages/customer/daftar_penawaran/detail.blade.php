@@ -18,7 +18,7 @@
               </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0)">Cari Rute</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0)">Daftar Penawaran</a></li>
                     <li class="breadcrumb-item" aria-current="page">Detail Rute</li>
                 </ul>
             </div>
@@ -97,7 +97,7 @@
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
                                 <h5 class="mb-0 ms-2">/CBM</h5>
                             </div>
-                            <a href="/order/{{$offer['id']}}" class="btn btn-primary w-50">Pesan Sekarang</a>
+                            <a href="/list-offer/order/{{$offer['id']}}" class="btn btn-primary w-50">Pesan Sekarang</a>
                         </div>
                     </div>                      
                 </div>

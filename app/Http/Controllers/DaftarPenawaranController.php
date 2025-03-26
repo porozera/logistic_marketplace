@@ -2,24 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bid;
 use App\Models\Category;
 use App\Models\offersModel;
 use App\Models\Order;
 use App\Models\Service;
 use App\Models\UserOrder;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class OrderController extends Controller
+class DaftarPenawaranController extends Controller
 {
-    public function index($id)
+    public function index()
     {
-        $offer = offersModel::find($id);
+        $query = Bid::where('status', "active");
+        $bids = $query->get();
+        return view('pages.customer.daftar_penawaran.index',compact('bids'));
+    }
+
+    public function detail($id)
+    {
+        $offer = Bid::find($id);
+        $services = Service::all();
+        return view('pages.customer.daftar_penawaran.detail', compact('offer','services'));
+    }
+
+    public function order_form($id)
+    {
+        $offer = Bid::find($id);
         $services = Service::all();
         $categories = Category::all();
-        return view('pages.customer.orders.index', compact('offer','services','categories'));
+        return view('pages.customer.daftar_penawaran.order', compact('offer','services','categories'));
     }
 
     public function order(Request $request)
@@ -102,7 +116,6 @@ class OrderController extends Controller
             ]);
         }
         
-
         $userOrder = UserOrder::create([
             "user_id" => Auth::id(),
             "order_id" => $order->id,
@@ -127,8 +140,6 @@ class OrderController extends Controller
         // Set 3DS transaction for credit card to true
         \Midtrans\Config::$is3ds = true;
 
-        $offer = offersModel::where('noOffer', $attributes['noOffer'])->first();
-
         $params = array(
             'transaction_details' => array(
                 // 'order_id' => rand(),
@@ -145,40 +156,41 @@ class OrderController extends Controller
         $userOrder->snap_token = $snapToken;
         $userOrder->save();
 
-        if ($offer) {
-            $remainingWeight = $offer->remainingWeight - $attributes['weight'];
-            $remainingVolume = $offer->remainingVolume - $attributes['total_cbm'];
-            $status = $offer->status; 
-            
-            if ($attributes['shipmentType'] === "FCL") {
-                $status = "Deactive";
-            }
-        
-            if ($remainingWeight <= 0 || $remainingVolume <= 0) {
-                $status = "Deactive";
-            }
-        
-            $existingCommodities = array_map('trim', explode(', ', $offer->commodities));
-            $newCommodities = array_map('trim', explode(', ', $attributes['commodities']));
-            $filteredCommodities = array_diff($newCommodities, $existingCommodities);
+        if($attributes['shipmentType']=="LCL"){
+            $status = 'active';
+        } else {
+            $status = 'deactive';
+        }
 
-            if (!empty($filteredCommodities)) {
-                $updatedCommodities = implode(', ', array_merge($existingCommodities, $filteredCommodities));
-            } else {
-                $updatedCommodities = $offer->commodities;
-            }
+        $user_id = Bid::where('noOffer', $attributes['noOffer'])->first()->user_id;
+        $offer = offersModel::create([
+            "noOffer" => $attributes['noOffer'],
+            "lspName" => $attributes['lspName'],
+            "origin" => $attributes['origin'],
+            "destination" => $attributes['destination'],
+            "shipmentMode" => $attributes['shipmentMode'],
+            "shipmentType" => $attributes['shipmentType'],
+            "loadingDate" => $attributes['loadingDate'],
+            "shippingDate" => $attributes['shippingDate'],
+            "estimationDate" => $attributes['estimationDate'],
+            "maxWeight" => $attributes['maxWeight'],
+            "maxVolume" => $attributes['maxVolume'],
+            "remainingWeight" => $attributes['maxWeight'] - $attributes['weight'],
+            "remainingVolume" => $attributes['maxVolume'] - $attributes['total_cbm'],
+            "commodities" => $attributes['commodities'],
+            "status" => $status,
+            "price" => $attributes['price'],
+            "user_id" => $user_id,
+            "is_for_lsp" => $attributes['is_for_lsp'],
+            "is_for_customer" => $attributes['is_for_customer'],
+            "timestamp" => now(),
+        ]);
 
-            $offer->update([
-                "remainingWeight" => max(0, $remainingWeight), 
-                "remainingVolume" => max(0, $remainingVolume), 
-                "commodities" => $updatedCommodities, 
-                "price" => $attributes['price'],
-                "status" => $status,
-            ]);
-
-        }     
+        $bid = Bid::where('noOffer', $attributes['noOffer'])->first();
+        $bid->update([
+            "status" => 'deactive',
+        ]);  
 
         return redirect('/payment/' . $userOrder->id);
     }    
-      
 }

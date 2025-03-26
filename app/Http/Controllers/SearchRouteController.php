@@ -71,9 +71,10 @@ class SearchRouteController extends Controller
         }
 
         $offers = $query->get();
+        $services = Service::all();
         $cities = City::pluck('name')->toArray();
     
-        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed', 'cities'));
+        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed', 'cities','services'));
     }
     
     public function detail($id)

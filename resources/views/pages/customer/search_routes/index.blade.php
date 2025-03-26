@@ -88,24 +88,33 @@
                 </div>
                 <div class="card-body">
                     <h5>Layanan</h5>
+                    @foreach ($services as $service)
                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="insurance" id="insurance" {{ request('insurance') ? 'checked' : '' }}>
+                        <i class="{{$service->icon}} me-1"></i>
+                        <label class="form-check-label" for="insurance">
+                          {{$service->serviceName}}
+                        </label>
+                    </div>
+                    @endforeach
+                    {{-- <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="insurance" id="insurance" {{ request('insurance') ? 'checked' : '' }}>
                         <label class="form-check-label" for="insurance">
                           Asuransi
                         </label>
-                      </div>
+                    </div>
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="storage" id="storage" {{ request('storage') ? 'checked' : '' }}>
                         <label class="form-check-label" for="storage">
                           Tempat penyimpanan
                         </label>
-                      </div>
+                    </div>
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="fragile" id="fragile" {{ request('fragile') ? 'checked' : '' }}>
                         <label class="form-check-label" for="fragile">
                           Barang pecah belah
                         </label>
-                    </div>
+                    </div> --}}
                     <hr>
 
                     <h5>Harga Maksimal</h5>
@@ -151,7 +160,7 @@
                         <div class="row align-items-center">
                             <div class="col-md-6 d-flex align-items-center">
                                 <div class="me-2">
-                                    <img src="{{ asset('template/mantis/dist/assets/images/user/avatar-2.jpg') }}" 
+                                    <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
                                         alt="profile-lsp" 
                                         class="user-avtar wid-35 rounded-circle">
                                 </div>

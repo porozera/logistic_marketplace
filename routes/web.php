@@ -20,6 +20,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\BidController;
+use App\Http\Controllers\DaftarPenawaranController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileCustomerController;
@@ -184,6 +185,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //FAQ
     Route::get('/FAQ-customer', [FAQCustomerController::class, 'index'])->name('FAQ-customer');
+
+    //DAFTAR PENAWARAN
+    Route::get('/list-offer', [DaftarPenawaranController::class, 'index'])->name('list-offer');
+    Route::get('/list-offer/{id}', [DaftarPenawaranController::class, 'detail'])->name('list-offer.detail');
+    Route::get('/list-offer/order/{id}', [DaftarPenawaranController::class, 'order_form'])->name('list-offer.order_form');
+    Route::post('/list-offer/order/perform', [DaftarPenawaranController::class, 'order'])->name('list-offer.order.perform');
 });
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,5 +43,28 @@ class Bid extends Model
     {
         return $this->belongsTo(RequestRoute::class, 'requestOffer_id');
     }
+
+    public function getEstimatedDaysAttribute()
+    {
+        $shippingDate = Carbon::parse($this->shippingDate);
+        $estimationDate = Carbon::parse($this->estimationDate);
+        return $shippingDate->diffInDays($estimationDate);
+    }
+
+    public function getLoadingDateFormattedAttribute()
+    {
+        return Carbon::parse($this->loadingDate)->translatedFormat('d F Y');
+    }
+
+    public function getShippingDateFormattedAttribute()
+    {
+        return Carbon::parse($this->shippingDate)->translatedFormat('d F Y');
+    }
+
+    public function getEstimationDateFormattedAttribute()
+    {
+        return Carbon::parse($this->estimationDate)->translatedFormat('d F Y');
+    }
+
 }
 

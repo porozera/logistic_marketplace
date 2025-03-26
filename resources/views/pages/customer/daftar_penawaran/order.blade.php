@@ -97,7 +97,7 @@
         </div>
 
 
-      <form action="/order/perform" method="POST" id="orderForm">
+      <form action="/list-offer/order/perform" method="POST" id="orderForm">
         @csrf
         <div class="row">
             <!-- Detail Penawaran -->
@@ -290,8 +290,8 @@
                     <input type="number" id="totalPriceInput" name="total_price" hidden>
                     <input type="text" id="selectedServicesInput" name="selected_services" class="form-control" hidden>
                     <input type="number" id="user_id" name="user_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
-                    <input type="text" id="is_for_lsp" name="is_for_lsp" class="form-control"  value="{{ $offer['is_for_lsp'] }}" hidden>
-                    <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="{{ $offer['is_for_customer'] }}" hidden>
+                    <input type="text" id="is_for_lsp" name="is_for_lsp" class="form-control"  value="1" hidden>
+                    <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="1" hidden>
                     <input type="text" id="status" name="status" class="form-control"  value="{{ $offer['status'] }}" hidden>
                   </div>
                   <div class="row">
