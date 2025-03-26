@@ -18,7 +18,7 @@
               </div>
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                  <li class="breadcrumb-item"><a href="javascript: void(0)">Cari Rute</a></li>
+                  <li class="breadcrumb-item"><a href="javascript: void(0)">Daftar Penawaran</a></li>
                   <li class="breadcrumb-item"><a href="javascript: void(0)">Detail Rute</a></li>
                   <li class="breadcrumb-item" aria-current="page">Detail Pemesanan</li>
                 </ul>

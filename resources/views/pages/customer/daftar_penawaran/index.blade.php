@@ -25,6 +25,18 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-12">
+                @if ($bids->isEmpty())
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <div class="card text-center p-4 w-50">
+                        <div class="card-body">
+                            <img src="{{ asset('template/mantis/dist/assets/images/search_icon.png') }}" alt="Search Icon" class="mb-3" style="max-width: 100px;">
+                            <h3 class="mb-2">Tidak Ada Penawaran</h3>
+                            <p class="text-muted">Buat permintaan rute pengiriman baru</p>
+                            <a href="/request-routes" class="btn btn-primary w-50">Buat Permintaan</a>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 @foreach ($bids as $item )
                 <div class="card card-hover">
                     <div class="card-body">

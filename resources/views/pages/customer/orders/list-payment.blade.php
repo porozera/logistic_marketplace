@@ -28,7 +28,7 @@
               <h3 class="m-b-10">Daftar Pembayaran</h3>
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-bordered nowrap table-hover" id="pc-dt-simple">
+                        <table class="table table-hover" id="pc-dt-simple">
                             <thead>
                                 <tr>
                                   <th>No</th>
@@ -72,7 +72,7 @@
                                     <td>
                                         @if ($userOrder['paymentStatus'] == "Belum Lunas")
                                         {{-- <a href="" class="btn btn-icon btn-light-warning"><i class="ti ti-cash"></i></a> --}}
-                                        <a href="/payment/{{$userOrder->id}}">Bayar</a>
+                                        <a href="/payment/{{$userOrder->payment_token}}">Bayar</a>
                                         @else
                                         {{-- <a href="" class="btn btn-icon btn-light-primary"><i class="ti ti-compass"></i></a> --}}
                                         <a href="">Track</a>

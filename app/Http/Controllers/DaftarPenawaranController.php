@@ -6,6 +6,7 @@ use App\Models\Bid;
 use App\Models\Category;
 use App\Models\offersModel;
 use App\Models\Order;
+use App\Models\RequestRoute;
 use App\Models\Service;
 use App\Models\UserOrder;
 use Illuminate\Http\Request;
@@ -190,6 +191,11 @@ class DaftarPenawaranController extends Controller
         $bid->update([
             "status" => 'deactive',
         ]);  
+
+        $requestOffer = RequestRoute::where('id',$bid->requestOffer_id)->first();
+        $requestOffer->update([
+            "status" => "deactive"
+        ]);
 
         return redirect('/payment/' . $userOrder->payment_token);
     }    

@@ -163,7 +163,7 @@
                           <th>Tangal Pengiriman</th>
                           <th>Deadline</th>
                           <th>Status</th>
-                          {{-- <th class="text-center">Actions</th> --}}
+                          <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -184,11 +184,14 @@
                             <td>{{$item['deadline']}}</td>
                             
                             <td>
-                                @if ($item['status'] == "Open")
+                                @if ($item['status'] == "active")
                                 <span class="badge rounded-pill text-bg-warning">In Bidding</span>
                                 @else
-                                <span class="badge rounded-pill text-bg-danger">Close</span>
+                                <span class="badge rounded-pill text-bg-success">Close</span>
                                 @endif
+                            </td>
+                            <td class="text-center">
+                                <a href="/list-offer">Lihat Penawaran</a>
                             </td>
                         </tr>
                         @endforeach
