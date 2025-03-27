@@ -105,7 +105,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/admin/province/{id}/edit', [ProvinceController::class, 'edit']);
     Route::put('/admin/province/{id}', [ProvinceController::class, 'update']);
     Route::delete('/admin/province/{id}', [ProvinceController::class, 'destroy'])->name('province.destroy');
-    
+
     //City
     Route::get('/admin/city', [CityController::class, 'index']);
     Route::get('/admin/city-add', [CityController::class, 'add']);
@@ -148,7 +148,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::post('store', [BidController::class, 'store'])->name('bids.store');
         Route::get('create/{id}', [BidController::class, 'create'])->name('bids.create');
     });
-    Route::prefix('profile')->group(function(){
+    Route::prefix('profiles')->group(function(){
         Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         // Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');

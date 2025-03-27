@@ -8,7 +8,7 @@
         </a>
       </div>
       <div class="navbar-content">
-        
+
         <ul class="pc-navbar">
           @if(Auth::user()->role === 'admin')
           <li class="pc-item">
@@ -24,7 +24,7 @@
                   <span class="pc-mtext">Approval LSP</span>
               </a>
           </li>
-  
+
           <li class="pc-item pc-caption">
             <label>Master Data</label>
             <i class="ti ti-dashboard"></i>
@@ -59,7 +59,7 @@
               <span class="pc-mtext">Kota</span>
             </a>
           </li>
-  
+
           <li class="pc-item pc-caption">
             <label>Laporan</label>
             <i class="ti ti-news"></i>
@@ -100,8 +100,8 @@
             </a>
         </li>
           @endif
-          
-          {{-- @if(Auth::user()->role === 'lsp')
+
+          @if(Auth::user()->role === 'lsp')
           <li class="pc-item">
             <a href="../dashboard/index.html" class="pc-link">
               <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
@@ -109,7 +109,7 @@
             </a>
           </li>
           <li class="pc-item">
-            <a href="/profile" class="pc-link">
+            <a href="/profiles" class="pc-link">
               <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
               <span class="pc-mtext">Profile</span>
             </a>
@@ -180,7 +180,7 @@
               <span class="pc-mtext">Logout</span>
             </a>
           </li>
-          @endif --}}
+          @endif
 
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">
