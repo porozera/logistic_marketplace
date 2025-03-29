@@ -9,14 +9,18 @@ return new class extends Migration {
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // ID user penerima notifikasi
+            $table->unsignedBigInteger('sender_id'); // ID user pembuat notifikasi
+            $table->unsignedBigInteger('receiver_id'); // ID user penerima notifikasi
             $table->string('header');
             $table->text('description');
+            $table->string('status');
             $table->timestamps();
 
             // Relasi ke tabel users
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade');
         });
+
     }
 
     public function down(): void

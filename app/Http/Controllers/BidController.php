@@ -99,7 +99,8 @@ class BidController extends Controller
 
     // Simpan notifikasi untuk user terkait
     Notification::create([
-        'user_id' => $requestUser,
+        'sender_id' => auth()->id(),
+        'receiver_id' => $requestUser,
         'header' => 'Penawaran Baru Diterima!',
         'description' => 'LSP ' . auth()->user()->companyName . ' telah mengajukan penawaran untuk permintaan pengiriman Anda.',
     ]);

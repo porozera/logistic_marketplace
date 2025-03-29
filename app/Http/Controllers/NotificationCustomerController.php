@@ -9,7 +9,9 @@ class NotificationCustomerController extends Controller
 {
     public function index()
     {
-        $notifications = Notification::all();
+        $notifications = Notification::where('receiver_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc')->get();
+            // ->paginate(10);
         return view('pages.customer.notifications.index',compact('notifications'));
     }
 }

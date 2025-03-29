@@ -43,7 +43,7 @@ class RequestRouteController extends Controller
             "weight" => $attributes['weight'],
             "volume" => $attributes['length'] * $attributes['width'] * $attributes['height'],
             "commodities" => $attributes['commodities'],
-            "status" => "Open",
+            "status" => "active",
             "user_id" => Auth::id(),
             "username" => Auth::user()->username,
             "deadline" => Carbon::now()->addDays(7)->toDateString()

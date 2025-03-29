@@ -75,7 +75,7 @@
                                         <a href="/payment/{{$userOrder->payment_token}}">Bayar</a>
                                         @else
                                         {{-- <a href="" class="btn btn-icon btn-light-primary"><i class="ti ti-compass"></i></a> --}}
-                                        <a href="">Track</a>
+                                        <a href="">Invoice</a>
                                         @endif
                                     </td>
                                 </tr>

@@ -61,6 +61,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(ServiceSeeder::class);
+        $this->call(CategoriesSeeder::class);
     }
 
 }

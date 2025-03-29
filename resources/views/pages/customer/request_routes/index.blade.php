@@ -65,8 +65,8 @@
                             <div class="form-group mb-3">
                                 <label class="form-label">Tipe Pengiriman</label>
                                 <select class="form-control" name="shipmentType" id="shipmentType">
-                                    <option value="FCL">FCL</option>
-                                    <option value="LCL">LCL</option>
+                                    <option value="FCL">Full Container Load (FCL)</option>
+                                    <option value="LCL">Less Container Load (LCL)</option>
                                 </select>
                                 @error('shipmentType') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
@@ -179,8 +179,8 @@
                             <td>{{$item['destination']}}</td>
                             <td>{{$item['shipmentType']}}</td>
                             <td>{{$item['shipmentMode']}}</td>
-                            <td>{{$item['weight']}}</td>
-                            <td>{{$item['volume']}}</td>
+                            <td>{{$item['weight']}} kg</td>
+                            <td>{{$item['volume']}} CBM</td>
                             <td>{{$item['commodities']}}</td>
                             <td>{{$item['shippingDate']}}</td>
                             <td>{{$item['deadline']}}</td>
