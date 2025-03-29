@@ -120,8 +120,9 @@
                             <div class="form-group mb-3">
                                 <label class="form-label">Kategori</label>
                                 <select class="form-control" name="commodities" id="commodities">
-                                    <option value="General Cargo">General Cargo</option>
-                                    <option value="Special Cargo">Special Cargo</option>
+                                    @foreach ($categories as $item)
+                                        <option value="{{ $item->name }}">{{ $item->code }} - {{ $item->name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
@@ -146,29 +147,30 @@
             </div>
           </div>
 
-        <div class="card">
+            <div class="card">
             <div class="card-body">
-                <h4 class="mb-2">List Permintaan Rute</h4>
+            <h4 class="mb-2">List Permintaan Rute</h4>
+            <div class="table-responsive" style="overflow-x: auto;">
                 <table class="table table-hover" id="pc-dt-simple">
                     <thead>
                         <tr>
-                          <th>No</th>
-                          <th>Asal</th>
-                          <th>Tujuan</th>
-                          <th>Tipe</th>
-                          <th>Moda</th>
-                          <th>Berat</th>
-                          <th>Volume</th> 
-                          <th>Jenis Barang</th> 
-                          <th>Tangal Pengiriman</th>
-                          <th>Deadline</th>
-                          <th>Status</th>
-                          <th class="text-center">Actions</th>
+                            <th>No</th>
+                            <th>Asal</th>
+                            <th>Tujuan</th>
+                            <th>Tipe</th>
+                            <th>Moda</th>
+                            <th>Berat</th>
+                            <th>Volume</th> 
+                            <th>Jenis Barang</th> 
+                            <th>Tangal Pengiriman</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
-                            $no = ($list_request->currentPage() - 1) * $list_request->perPage() + 1
+                        $no = ($list_request->currentPage() - 1) * $list_request->perPage() + 1
                         @endphp
                         @foreach ( $list_request as $item)
                         <tr>
@@ -182,27 +184,29 @@
                             <td>{{$item['commodities']}}</td>
                             <td>{{$item['shippingDate']}}</td>
                             <td>{{$item['deadline']}}</td>
-                            
+                    
                             <td>
-                                @if ($item['status'] == "active")
-                                <span class="badge rounded-pill text-bg-warning">In Bidding</span>
-                                @else
-                                <span class="badge rounded-pill text-bg-success">Close</span>
-                                @endif
+                            @if ($item['status'] == "active")
+                            <span class="badge rounded-pill text-bg-warning">In Bidding</span>
+                            @else
+                            <span class="badge rounded-pill text-bg-success">Close</span>
+                            @endif
                             </td>
                             <td class="text-center">
-                                <a href="/list-offer">Lihat Penawaran</a>
+                            <a href="/list-offer">Lihat Penawaran</a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                </div>
                 <div class="d-flex justify-content-center mt-4">
-                    {{ $list_request->links('pagination::bootstrap-4') }}
+                {{ $list_request->links('pagination::bootstrap-4') }}
                 </div> 
+                </div>
+                </div>
             </div>
-        </div>
-        </div>
+
       </div>
     </div>
   </div>

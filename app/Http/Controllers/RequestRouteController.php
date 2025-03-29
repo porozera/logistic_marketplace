@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Category;
 use App\Models\RequestRoute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +13,8 @@ class RequestRouteController extends Controller
     public function index()
     {
         $list_request = RequestRoute::where('user_id',Auth::id())->paginate(10);
-        return view('pages.customer.request_routes.index',compact('list_request'));
+        $categories = Category::all();
+        return view('pages.customer.request_routes.index',compact('list_request','categories'));
     }
 
     public function store(Request $request)

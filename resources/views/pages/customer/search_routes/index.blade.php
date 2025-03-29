@@ -8,7 +8,7 @@
       <div class="page-header">
         <div class="page-block">
           <div class="row align-items-center">
-            <div class="col-md-12">
+            <div class="col-sm-12 col-md-12 col-xl-12">
               <div class="page-header-title">
                 
                 @if(session('success'))
@@ -29,28 +29,28 @@
       <!-- [ Main Content ] start -->
       <div class="row">
         <!-- [ sample-page ] start -->
-        <div class="col-md-12 col-xl-12">
+        <div class="col-sm-12 col-md-12 col-xl-12">
         <h3 class="m-b-10">Cari Rute</h2>
           <div class="card">
             <div class="card-body">
                 <form action="{{ route('search-route') }}">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-sm-12 col-md-3">
                             <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ request('origin') }}">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-sm-12 col-md-3">
                             <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ request('destination') }}">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-sm-12 col-md-3">
                             <input type="date" name="shippingDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ request('shippingDate') }}">
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-sm-12 col-md-2">
                             <select class="form-control" name="shipmentType" id="shipmentType">
                                 <option value="FCL" {{ request('shipmentType') == 'FCL' ? 'selected' : '' }}>Full Container Load</option>
                                 <option value="LCL" {{ request('shipmentType') == 'LCL' ? 'selected' : '' }}>Less Container Load</option>
                             </select>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-sm-12 col-md-1">
                             <button type="submit" class="btn btn-primary">Cari</button>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
       <div class="row">
         
         {{-- Kotak filter --}}
-        <div class="col-3" style="position: sticky; top: 80px; height: fit-content;">
+        <div class="col-sm-12 col-md-3 col-xl-3" style="position: sticky; top: 80px; height: fit-content;">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -135,7 +135,7 @@
 {{-- End Kotak filter --}}
 
 {{-- Card Offer --}}
-        <div class="col-9">
+        <div class="col-sm-12 col-md-9 col-xl-9">
             @if(!$searchPerformed)
                 <div class="card text-center p-4">
                     <div class="card-body">
@@ -155,10 +155,10 @@
                 </div> 
             @else
                 @foreach ($offers as $item )
-                <div class="card card-hover">
+                <div class="card card-hover mb-3">
                     <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-md-6 d-flex align-items-center">
+                        <div class="row align-items-center text-center text-md-start">
+                            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start">
                                 <div class="me-2">
                                     <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
                                         alt="profile-lsp" 
@@ -167,11 +167,11 @@
                                 <div class="d-flex align-items-center gap-2">
                                     <h5 class="mb-0 fw-bold">{{ $item['lspName']}}</h5>
                                     <i class="fas fa-star text-warning"></i>
-                                    <h5 class="mb-0 fw-bold">5.0</h5>
+                                    <h5 class="mb-0 fw-bold">{{$item->user->rating}}</h5>
                                 </div>
                             </div>
                 
-                            <div class="col-md-4 d-flex justify-content-center gap-2">
+                            <div class="col-12 col-md-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
                                 @if ($item['shipmentMode'] == 'laut')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                         <i class="ti ti-sailboat me-1"></i> Laut
@@ -181,7 +181,7 @@
                                         <i class="ti ti-truck-delivery me-1"></i> Darat
                                     </button>
                                 @endif
-
+                            
                                 @if ($item['shipmentType'] == 'LCL')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                         <i class="ti ti-box me-1"></i> LCL
@@ -191,54 +191,51 @@
                                         <i class="ti ti-box me-1"></i> FCL
                                     </button> 
                                 @endif
-                            
-                                                                        
                             </div>
-                
-                            <div class="col-md-2 text-end">
+                            
+                            <div class="col-12 col-md-2 d-none d-md-block text-center text-md-end mt-2 mt-md-0">
                                 <button type="button" class="btn btn-icon btn-light-primary">
                                     <i class="ti ti-copy"></i>
                                 </button>
-                            </div>
-                        </div> 
-
+                            </div>                            
+                        </div>
+                
                         <br>            
                 
-                        <div class="row align-items-center">
-                            <div class="col-md-8 d-flex align-items-center justify-content-start mt-2">
+                        <div class="row align-items-center text-center text-md-start">
+                            <div class="col-12 col-md-8 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start mt-2">
                                 <h5 class="mb-0 fw-bold">{{ $item['origin']}}</h5>                      
-                                <div class="d-flex align-items-center mx-4">
+                                
+                                <!-- Garis dan ikon hanya muncul di layar medium ke atas -->
+                                <div class="d-none d-md-flex align-items-center mx-4">
                                     <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                                     <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
-                                    {{-- <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div> --}}
-                                    <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">{{ $item['estimated_days']}} Hari</h5> 
-                                    {{-- <div class="rounded-circle border border-2 border-primary" style="width: 16px; height: 16px;"></div>     --}}
+                                    <i class="ti ti-clock mx text-primary"></i> 
+                                    <h5 class="mb-0 mx-2 text-primary">{{ $item['estimated_days']}} Hari</h5> 
                                     <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
                                     <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                                 </div>
+                        
+                                <!-- Estimasi tetap terlihat di layar kecil tanpa garis -->
+                                <div class="d-block d-md-none mt-1">
+                                    <i class="ti ti-clock text-primary"></i> 
+                                    <h5 class="mb-0 text-primary">{{ $item['estimated_days']}} Hari</h5> 
+                                </div>
+                        
                                 <h5 class="mb-0 fw-bold">{{ $item['destination']}}</h5>
                             </div>
-
-                            <div class="col-md-4 text-end mt-2">
-                                <div class="d-flex align-items-center justify-content-end mb-2">
+                        
+                            <div class="col-12 col-md-4 text-center text-md-end mt-2">
+                                <div class="d-flex align-items-center justify-content-center justify-content-md-end mb-2">
                                     <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
                                     <h5 class="mb-0 ms-2">/CBM</h5>
                                 </div>
-                                {{-- @if ($item['shipmentType'=='LCL'])
-                                <div class="d-flex align-items-center justify-content-end mb-2">
-                                    <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
-                                    <h5 class="mb-0 ms-2">/CBM</h5>
-                                </div>
-                                @else
-                                <div class="d-flex align-items-center justify-content-end mb-2">
-                                    <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
-                                </div>
-                                @endif --}}
-                                <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50">Pilih</a>
+                                <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-75 w-md-50">Pilih</a>
                             </div>
-                        </div>                      
+                        </div> 
+                                             
                     </div>
-                </div> 
+                </div>                 
                 @endforeach               
             @endif
 
