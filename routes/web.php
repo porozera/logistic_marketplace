@@ -25,6 +25,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OpenContainerController;
 use App\Models\City;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -154,6 +155,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         // Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::put('/{id}', [ProfileController::class, 'update'])->name('profile.update');
     });
+    Route::prefix('opencontainer')->group(function () {
+        Route::get('/', [OpenContainerController::class, 'index'])->name('opencontainer.index');
+        Route::get('/search', [OpenContainerController::class, 'search'])->name('opencontainer.search');
+    });
+
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function () {
