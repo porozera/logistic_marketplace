@@ -26,6 +26,7 @@ use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OpenContainerController;
+use App\Http\Controllers\TruckController;
 use App\Models\City;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -158,6 +159,15 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
     Route::prefix('opencontainer')->group(function () {
         Route::get('/', [OpenContainerController::class, 'index'])->name('opencontainer.index');
         Route::get('/search', [OpenContainerController::class, 'search'])->name('opencontainer.search');
+    });
+
+    Route::prefix('trucks')->group(function () {
+        Route::get('/', [TruckController::class, 'index'])->name('trucks.index');
+        Route::get('/create', [TruckController::class, 'create'])->name('trucks.create');
+        Route::post('/', [TruckController::class, 'store'])->name('trucks.store');
+        Route::get('/{truck}/edit', [TruckController::class, 'edit'])->name('trucks.edit');
+        Route::put('/{truck}', [TruckController::class, 'update'])->name('trucks.update');
+        Route::delete('/{truck}', [TruckController::class, 'destroy'])->name('trucks.destroy');
     });
 
 });

@@ -32,6 +32,7 @@ class offersModel extends Model
         'user_id',
         'is_for_lsp',
         'is_for_customer',
+        'truck_id',
         'timestamp',
     ];
 

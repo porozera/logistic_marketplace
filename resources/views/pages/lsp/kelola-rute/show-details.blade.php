@@ -76,6 +76,10 @@
                         <th>Remaining Volume</th>
                         <td>{{ $offer->remainingVolume }}</td>
                     </tr>
+                    <tr>
+                        <th>Truck ID</th>
+                        <td>{{ $offer->truck_id }}</td>
+                    </tr>
                 </table>
 
                 <div class="mt-3">

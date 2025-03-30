@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\offersModel;
+use App\Models\Truck;
 use Illuminate\Support\Facades\Auth;
 
 class offerController extends Controller
@@ -70,7 +71,8 @@ class offerController extends Controller
 
         public function create()
     {
-        return view('pages.lsp.kelola-rute.create');
+        $trucks = Truck::all(); // Ambil semua data truck
+        return view('pages.lsp.kelola-rute.create', compact('trucks'));
     }
 
     public function store(Request $request)
@@ -90,7 +92,10 @@ class offerController extends Controller
             'shippingDate' => 'required|date',
             'estimationDate' => 'required|date',
             'remainingWeight' => 'nullable|integer',
+            'remainingVolume' => 'nullable|integer',
+            'truck_id' => 'required|exists:trucks,id',
         ]);
+        dd($attributes);
 
         // offersModel::create($request->all());
         $offer = offersModel::create([
@@ -105,17 +110,16 @@ class offerController extends Controller
             'estimationDate' => $attributes['estimationDate'],
             'maxWeight' => $attributes['maxWeight'],
             'maxVolume' => $attributes['maxVolume'],
-            'remainingWeight' => $attributes['maxWeight'],
-            'remainingVolume' => $attributes['maxVolume'],
+            'remainingWeight' => $attributes['remainingWeight'],
+            'remainingVolume' => $attributes['remainingVolume'],
             'commodities' => $attributes['commodities'],
             'status' => $attributes['status'],
             'price' => $attributes['price'],
             'user_id' =>Auth::id(),
             'is_for_lsp' => false,
             'is_for_customer' => true,
-            'timestamp' => now(),
+            'truck_id' => $attributes['truck_id'],
         ]);
-
         return redirect()->route('offers.index')->with('success', 'Offer successfully created!');
     }
 
