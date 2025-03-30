@@ -238,8 +238,21 @@
           </li>
           <li class="pc-item">
             <a href="{{ route('notification-customer') }}" class="pc-link">
-                <span class="pc-micon"><i class="ti ti-mail"></i></span>
-                <span class="pc-mtext">Kotak Pesan</span>
+              <span class="pc-micon position-relative">
+              <i class="ti ti-mail"></i>
+              @php
+                $unreadNotifications = \App\Models\Notification::where('receiver_id', Auth::id())
+                ->where('is_read', 0)
+                ->count();
+              @endphp
+              @if($unreadNotifications > 0)
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
+                {{ $unreadNotifications }}
+                <span class="visually-hidden">unread messages</span>
+                </span>
+              @endif
+              </span>
+              <span class="pc-mtext">Kotak Pesan</span>
             </a>
           </li>
           <li class="pc-item">
