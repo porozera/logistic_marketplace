@@ -194,7 +194,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::post('/list-offer/order/perform', [DaftarPenawaranController::class, 'order'])->name('list-offer.order.perform');
 
     //NOTIFICATION
-    Route::get('/notification', [NotificationCustomerController::class, 'index'])->name('notification-customer');
+    Route::get('/notification-customer', [NotificationCustomerController::class, 'index'])->name('notification-customer');
+    Route::put('/notification-customer/update/{id}', [NotificationCustomerController::class, 'update_status'])->name('notification-customer.markAsRead');
+    Route::put('/notification-customer/markallasread', [NotificationCustomerController::class, 'markAllAsRead'])->name('notification-customer.markAllAsRead');
+    Route::delete('/notification-customer/delete/{id}', [NotificationCustomerController::class, 'destroy'])->name('notification-customer.delete');
 });
 
 
