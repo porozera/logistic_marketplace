@@ -34,7 +34,7 @@
           <div class="card">
             <div class="card-body">
                 <form action="{{ route('search-route') }}">
-                    <div class="row">
+                    <div class="row mb-0 mt-0">
                         <div class="col-sm-12 col-md-3">
                             <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ request('origin') }}">
                         </div>
@@ -159,14 +159,14 @@
                     <div class="card-body">
                         <div class="row align-items-center text-center text-md-start">
                             <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start">
-                                <div class="me-2">
+                                <div class="me-4">
                                     <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
                                         alt="profile-lsp" 
                                         class="user-avtar wid-35 rounded-circle">
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
                                     <h5 class="mb-0 fw-bold">{{ $item['lspName']}}</h5>
-                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning ms-2"></i>
                                     <h5 class="mb-0 fw-bold">{{$item->user->rating}}</h5>
                                 </div>
                             </div>

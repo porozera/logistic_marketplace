@@ -223,11 +223,11 @@
           </li><li class="pc-item">
             <a href="{{ route('list-payment') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-cash"></i></span>
-                <span class="pc-mtext">Daftar Pembayaran</span>
+                <span class="pc-mtext">Payment History</span>
             </a>
           </li>
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="{{ route('tracking-customer') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-map-2"></i></span>
                 <span class="pc-mtext">Tracking Order</span>
             </a>

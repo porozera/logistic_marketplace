@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-@section('title', 'Daftar Pembayaran')
+@section('title', 'Payment History')
 @section('content')
 <div class="pc-container">
     <div class="pc-content">
@@ -17,7 +17,7 @@
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Daftar Pembayaran</li>
+                            <li class="breadcrumb-item" aria-current="page">Payment History</li>
                         </ul>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-12">
-              <h3 class="m-b-10">Daftar Pembayaran</h3>
+              <h3 class="m-b-10">Payment History</h3>
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-hover" id="pc-dt-simple">
