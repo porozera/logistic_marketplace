@@ -15,9 +15,9 @@ return new class extends Migration {
             $table->string('destination');
             $table->enum('shipmentMode', ['laut', 'darat']);
             $table->enum('shipmentType', ['FCL', 'LCL']);
-            $table->date('loadingDate');
-            $table->date('shippingDate');
-            $table->date('estimationDate');
+            $table->dateTime('loadingDate');
+            $table->dateTime('shippingDate');
+            $table->dateTime('estimationDate');
             $table->integer('maxWeight');
             $table->integer('maxVolume');
             $table->integer('remainingWeight')->nullable();

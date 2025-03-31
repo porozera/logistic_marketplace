@@ -24,7 +24,7 @@
       <!-- [ Main Content ] start -->
       <div class="row">
         <!-- [ sample-page ] start -->
-        <div class="col-sm-12 col-md-6 col-xl-6">
+        <div class="col-sm-12 col-md-7 col-xl-7">
             {{-- <div class="input-group mb-3">
                 <span class="input-group-text"><i class="ti ti-search"></i></span>
                 <input type="text" name="origin" class="form-control" placeholder="Cari nomor pelacakan..." value=""> 
@@ -70,12 +70,18 @@
                         </div>
                         <div class="col-1">
                             <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
-                            <div class="bg-primary mx-auto" style="width: 1px; height: 30px;"></div>
+                            <div class="bg-primary mx-auto" style="width: 1px; height: 40px;"></div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <p><b>{{$item->order->origin}}</b></p>
                         </div>
-                        <div class="col-6 d-flex align-items-start justify-content-end">
+                        <div class="col-2">
+                            Tanggal Pengiriman
+                        </div>
+                        <div class="col-3">
+                            <h6 class="text-primary">{{$item->order->loading_date_formatted}}</h6>
+                        </div>
+                        <div class="col-3 d-flex align-items-start justify-content-end ">
                             <button type="button" class="btn btn-success rounded-pill">
                                 {{ $item->order->shipmentType == 'LCL' ? 'Less Container Load' : 'Full Container Load' }}
                             </button>
@@ -88,22 +94,16 @@
                         <div class="col-1">
                             <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <p><b>{{$item->order->destination}}</b></p>
                         </div>
-                        <div class="col-6 d-flex align-items-start justify-content-end">
-                            
+                        <div class="col-2">
+                            Estimasi Tiba
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-1 d-flex align-items-center justify-content-start">
-                            Etimasi
+                        <div class="col-3">
+                            <h6 class="text-primary">{{$item->order->estimation_date_formatted}}</h6>
                         </div>
-                        <div class="col-1"></div>
-                        <div class="col-4 d-flex align-items-center justify-content-start">
-                            <p class="text-primary">{{$item->order->estimation_date_formatted}}</p>
-                        </div>
-                        <div class="col-6 d-flex align-items-start justify-content-end">
+                        <div class="col-3 d-flex align-items-start justify-content-end">
                             <button type="button" class="btn btn-primary d-inline-flex">Lihat detail <i class="ti ti-chevron-right ms-1"></i></button>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
             </div>  
             @endforeach  
         </div>
-        <div class="col-sm-12 col-md-6 col-xl-6">
+        <div class="col-sm-12 col-md-5 col-xl-5">
             <div class="card">
                 <div class="card-body">
                     <h4>Live Track</h4>
