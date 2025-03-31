@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\offersModel;
 use App\Models\Truck;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class offerController extends Controller
 {
@@ -78,7 +80,7 @@ class offerController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->validate([
-            'noOffer' => 'required|unique:offers,noOffer',
+            // 'noOffer' => 'required|unique:offers,noOffer',
             'origin' => 'required|string',
             'destination' => 'required|string',
             'shipmentMode' => 'required|in:laut,darat',
@@ -95,11 +97,13 @@ class offerController extends Controller
             'remainingVolume' => 'nullable|integer',
             'truck_id' => 'required|exists:trucks,id',
         ]);
-        dd($attributes);
+        // dd($attributes);
+        $noOffer = 'OFR-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
 
         // offersModel::create($request->all());
         $offer = offersModel::create([
-            'noOffer' => $attributes['noOffer'],
+            // 'noOffer' => $attributes['noOffer'],
+            'noOffer' => $noOffer,
             'lspName' => Auth::user()->username,
             'origin' => $attributes['origin'],
             'destination' => $attributes['destination'],
@@ -119,6 +123,7 @@ class offerController extends Controller
             'is_for_lsp' => false,
             'is_for_customer' => true,
             'truck_id' => $attributes['truck_id'],
+            'timestamp' => now(),
         ]);
         return redirect()->route('offers.index')->with('success', 'Offer successfully created!');
     }
