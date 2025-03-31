@@ -236,7 +236,7 @@
                                              
                     </div>
                 </div>                  --}}
-                <div class="card mb-2">
+                <div class="card card-hover mb-2">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4 d-flex align-items-center">
@@ -262,17 +262,23 @@
                                     </button>
                                 @endif
                                 @if ($item['shipmentType'] == 'LCL')
-                                    <button type="button" class="btn btn-success d-flex align-items-center rounded-pill">
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                         <i class="ti ti-box me-1"></i> LCL
                                     </button> 
                                 @else
-                                    <button type="button" class="btn btn-success d-flex align-items-center rounded-pill">
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                         <i class="ti ti-box me-1"></i> FCL
                                     </button> 
                                 @endif
                             </div>
                             <div class="col-4 d-flex align-items-center justify-content-end">
-                                
+                                @if ($item->remainingVolume > ($item->maxVolume * 0.5))
+                                    <button type="button" class="btn btn-success d-inline-flex rounded-pill"><span class="me-2 fw-bold"> {{ $item->remainingVolume }}</span>CBM tersedia</button>
+                                @elseif ($item->remainingVolume <= ($item->maxVolume * 0.5 && $item->remainingVolume > ($item->maxVolume * 0.2)))
+                                    <button type="button" class="btn btn-warning rounded-pill"><span class="me-2 fw-bold"> {{ $item->remainingVolume }}</span>CBM tersedia</button>
+                                @elseif ($item->remainingVolume <= ($item->maxVolume * 0.2))
+                                    <button type="button" class="btn btn-danger rounded-pill"><span class="me-2 fw-bold"> {{ $item->remainingVolume }}</span>CBM tersedia</button>
+                                @endif
                             </div>
                         </div>
                         <div class="row mt-3">
