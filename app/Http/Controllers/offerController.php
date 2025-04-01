@@ -137,7 +137,8 @@ class offerController extends Controller
     public function edit($id)
     {
         $offer = offersModel::findOrFail($id);
-        return view('pages.lsp.kelola-rute.edit', compact('offer'));
+        $trucks = Truck::all();
+        return view('pages.lsp.kelola-rute.edit', compact('offer', 'trucks'));
     }
 
     public function update(Request $request, $id)
@@ -152,6 +153,7 @@ class offerController extends Controller
             'maxWeight' => 'required|integer',
             'maxVolume' => 'required|integer',
             'price' => 'required|numeric',
+            'truck_id' => 'required|exists:trucks,id',
         ]);
 
         // Cari offer berdasarkan ID
@@ -167,6 +169,7 @@ class offerController extends Controller
             'maxWeight' => $request->maxWeight,
             'maxVolume' => $request->maxVolume,
             'price' => $request->price,
+            'truck_id' => $request['truck_id'],
         ]);
 
         // Redirect dengan pesan sukses

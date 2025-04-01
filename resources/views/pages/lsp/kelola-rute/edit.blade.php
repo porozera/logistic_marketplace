@@ -60,6 +60,15 @@
                             <input type="text" class="form-control" id="price" name="price" value="{{ $offer->price }}" required>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="truck_id" class="form-label">Jenis Truk</label>
+                            <select class="form-select" name="truck_id" id="truck_id" required>
+                                @foreach($trucks as $truck)
+                                    <option value="{{ $truck->id }}" {{ $offer->truck_id == $truck->id ? 'selected' : '' }}>{{ $truck->type }} - {{$truck->brand}} - {{ $truck->plateNumber }} ({{$truck->driverName}}) </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Update Offer</button>
                     </form>
                 </div>
