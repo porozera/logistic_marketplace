@@ -13,6 +13,19 @@
         display: flex;
         justify-content: space-between;
     }
+    .form-control {
+    min-width: 220px;
+    }
+    .btn-group .btn {
+        min-width: 100px;
+    }
+    .btn.active {
+        background-color: #007bff;
+        color: white;
+    }
+    #result-container img {
+        opacity: 0.6;
+    }
 </style>
 
 <div class="pc-container">
@@ -64,17 +77,43 @@ document.getElementById('search-btn').addEventListener('click', function() {
         .then(response => response.json())
         .then(data => {
             let resultContainer = document.getElementById('result-container');
+            resultContainer.innerHTML = ''; // Kosongkan hasil pencarian sebelumnya
+
             if (data.length) {
-                resultContainer.innerHTML = data.map(offer => `
-                    <div class="offer-item">
-                        <p>${offer.origin} ➝ ${offer.destination} (${offer.shipmentMode})</p>
-                    </div>
-                `).join('');
+                data.forEach(offer => {
+                    let card = `
+                        <div class="card mb-3 shadow-sm p-3 rounded" style="border-left: 5px solid #007bff;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-1"><strong>${offer.lspName}</strong></h5>
+                                    <span class="text-muted">${offer.origin} ➝ ${offer.destination}</span>
+                                </div>
+                                <span class="badge bg-primary">${offer.shipmentMode.toUpperCase()}</span>
+                            </div>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small class="text-muted">Estimasi Tiba</small>
+                                    <p class="mb-0">${offer.estimationDate}</p>
+                                </div>
+                                <div class="text-end">
+                                    <small class="text-muted">Harga</small>
+                                    <h5 class="text-primary">Rp. ${offer.price.toLocaleString()}</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-2">
+                                <a href="/open-container/detail/${offer.id}" class="btn btn-sm btn-primary">Lihat Detail</a>
+                            </div>
+                        </div>
+                    `;
+                    resultContainer.innerHTML += card;
+                });
             } else {
                 resultContainer.innerHTML = `<p class="text-muted">Tidak ada hasil ditemukan</p>`;
             }
         });
 });
+
 
 // Toggle Filter Laut & Darat
 document.getElementById('filter-sea').addEventListener('click', function() {
@@ -86,22 +125,5 @@ document.getElementById('filter-land').addEventListener('click', function() {
     document.getElementById('filter-sea').classList.remove('active');
 });
 </script>
-
-<style>
-/* Styling sesuai gambar */
-.form-control {
-    min-width: 220px;
-}
-.btn-group .btn {
-    min-width: 100px;
-}
-.btn.active {
-    background-color: #007bff;
-    color: white;
-}
-#result-container img {
-    opacity: 0.6;
-}
-</style>
 
 @endsection
