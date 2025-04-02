@@ -252,13 +252,21 @@
                                 </div>
                             </div>
                             <div class="col-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
-                                @if ($item['shipmentMode'] == 'laut')
+                                @if ($item->shipmentMode == 'D2D')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-sailboat me-1"></i> Laut
+                                        <i class="ti ti-truck-delivery me-1"></i> Door to Door
                                     </button>   
-                                @else
+                                @elseif( $item->shipmentMode == 'D2P')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Darat
+                                        <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                                    </button>
+                                @elseif( $item->shipmentMode == 'P2P')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-sailboat me-1"></i> Port to Port
+                                    </button>
+                                @elseif( $item->shipmentMode == 'P2D')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-truck-delivery me-1"></i> Port to Door
                                     </button>
                                 @endif
                                 @if ($item['shipmentType'] == 'LCL')
@@ -270,6 +278,9 @@
                                         <i class="ti ti-box me-1"></i> FCL
                                     </button> 
                                 @endif
+                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-box me-1"></i> 20' Container
+                                </button> 
                             </div>
                             <div class="col-4 d-flex align-items-center justify-content-end">
                                 @if ($item->remainingVolume > ($item->maxVolume * 0.5))

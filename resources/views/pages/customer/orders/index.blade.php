@@ -47,15 +47,23 @@
                         </div>
             
                         <div class="col-md-4 d-flex justify-content-center gap-2">
-                            @if ($offer['shipmentMode'] == 'laut')
-                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-sailboat me-1"></i> Laut
-                                </button>   
-                            @else
-                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-truck-delivery me-1"></i> Darat
-                                </button>
-                            @endif
+                          @if ($offer->shipmentMode == 'D2D')
+                              <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                  <i class="ti ti-truck-delivery me-1"></i> Door to Door
+                              </button>   
+                          @elseif( $offer->shipmentMode == 'D2P')
+                              <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                  <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                              </button>
+                          @elseif( $offer->shipmentMode == 'P2P')
+                              <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                  <i class="ti ti-sailboat me-1"></i> Port to Port
+                              </button>
+                          @elseif( $offer->shipmentMode == 'P2D')
+                              <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                  <i class="ti ti-truck-delivery me-1"></i> Port to Door
+                              </button>
+                          @endif
 
                             <button type="button" class="btn btn-success rounded-pill">
                               {{ $offer['shipmentType'] == 'LCL' ? 'Less Container Load' : 'Full Container Load' }}
@@ -133,6 +141,10 @@
                             <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
                           </div>
                         </div>
+                      </div>
+                      <div class="row">
+                        <h5>Alamat Tujuan:</h5> 
+                            <h5 class="text-primary">{{ optional($order)->address ?? '-' }}</h5>
                       </div>
 
                       <hr>
@@ -257,6 +269,15 @@
                     </div>
                   </div>
                   <div class="row">
+                    @if (optional($order)->address == null)
+                    <div class="form-group mb-3">
+                      <label class="form-label">Alamat Tujuan</label>
+                      <textarea class="form-control" name="address" rows="4" placeholder="Alamat Tujuan">{{ old('address') }}</textarea>
+                      @error('address') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                    </div>
+                    @endif
+                  </div>
+                  <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">Deskripsi</label>
                       <textarea class="form-control" name="description" rows="4" placeholder="Deskripsi">{{ old('description') }}</textarea>
@@ -293,6 +314,7 @@
                     <input type="text" id="is_for_lsp" name="is_for_lsp" class="form-control"  value="{{ $offer['is_for_lsp'] }}" hidden>
                     <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="{{ $offer['is_for_customer'] }}" hidden>
                     <input type="text" id="status" name="status" class="form-control"  value="{{ $offer['status'] }}" hidden>
+                    <input type="text" id="lsp_id" name="lsp_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
                   </div>
                   <div class="row">
                     @if ($errors->any())

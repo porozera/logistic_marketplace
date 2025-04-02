@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->string('header');
             $table->text('description');
             $table->string('status');
+            $table->boolean('is_read')->default(false);
             $table->timestamps();
 
             // Relasi ke tabel users

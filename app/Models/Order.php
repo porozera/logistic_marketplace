@@ -33,6 +33,8 @@ class Order extends Model
         'remainingAmount',
         'paidAmount',
         'paymentStatus',
+        'lsp_id',
+        'address',
     ];
 
     /**

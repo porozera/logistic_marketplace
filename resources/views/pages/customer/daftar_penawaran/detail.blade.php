@@ -126,7 +126,16 @@
                             <div class="col">Mode Pengiriman</div>
                             <div class="col text-end">
                                 <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i>
-                                {{ $offer['shipmentMode'] == 'laut' ? 'Laut' : 'Darat' }}
+                                @if ($offer['shipmentMode'] == 'D2D')
+                                    Door to Door    
+                                @elseif ($offer['shipmentMode'] == 'D2P')
+                                    Door to Port
+                                @elseif ($offer['shipmentMode'] == 'P2D')
+                                    Port to Door   
+                                @elseif ($offer['shipmentMode'] == 'P2P')
+                                    Port to Port
+                                @endif
+                                {{-- {{ $offer['shipmentMode'] == 'laut' ? 'Laut' : 'Darat' }} --}}
                             </div>
                         </div>
         

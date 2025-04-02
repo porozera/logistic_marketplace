@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('commodities');
             $table->string('status');
             $table->text('description')->nullable();
+            $table->text('address');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('userName');
         });

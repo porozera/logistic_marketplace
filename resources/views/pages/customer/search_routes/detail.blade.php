@@ -125,8 +125,16 @@
                         <div class="row mb-2">
                             <div class="col">Mode Pengiriman</div>
                             <div class="col text-end">
-                                <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i>
-                                {{ $offer['shipmentMode'] == 'laut' ? 'Laut' : 'Darat' }}
+                                {{-- <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i> --}}
+                                @if ($offer['shipmentMode'] == 'D2D')
+                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Door    
+                                @elseif ($offer['shipmentMode'] == 'D2P')
+                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Port
+                                @elseif ($offer['shipmentMode'] == 'P2D')
+                                <i class="ti ti-truck-delivery text-primary me-1"></i> Port to Door   
+                                @elseif ($offer['shipmentMode'] == 'P2P')
+                                <i class="ti ti-sailboat text-primary me-1"></i> Port to Port
+                                @endif
                             </div>
                         </div>
         
@@ -137,6 +145,10 @@
                                     {{ $offer['shipmentType'] == 'LCL' ? 'Less Container Load' : 'Full Container Load' }}
                                 </button>
                             </div>
+                        </div>
+                        <div class="row">
+                            <strong>Alamat Tujuan:</strong> 
+                            <span class="text-primary">{{ optional($order)->address ?? '-' }}</span>
                         </div>
         
                         <hr>

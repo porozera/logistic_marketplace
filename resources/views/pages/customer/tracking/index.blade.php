@@ -36,7 +36,7 @@
                 </span>
             </div>
             @foreach ( $userOrder as $item)
-            <div class="card">
+            <div class="card card-hover">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4 d-flex align-items-center">

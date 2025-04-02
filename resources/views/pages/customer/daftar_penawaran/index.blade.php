@@ -110,7 +110,7 @@
                         </div>                      
                     </div>
                 </div>  --}}
-                <div class="card mb-2">
+                <div class="card card-hover mb-2">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4 d-flex align-items-center">

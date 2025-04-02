@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\offersModel;
+use App\Models\Order;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
@@ -81,6 +82,10 @@ class SearchRouteController extends Controller
     {
         $offer = offersModel::find($id);
         $services = Service::all();
-        return view('pages.customer.search_routes.detail', compact('offer','services'));
+        $order = null;
+        if ($offer && isset($offer->noOffer)) { 
+            $order = Order::where('noOffer', $offer->noOffer)->first() ?? null;
+        }
+        return view('pages.customer.search_routes.detail', compact('offer','services','order'));
     }
 }

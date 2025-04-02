@@ -19,7 +19,11 @@ class OrderController extends Controller
         $offer = offersModel::find($id);
         $services = Service::all();
         $categories = Category::all();
-        return view('pages.customer.orders.index', compact('offer','services','categories'));
+        $order = null;
+        if ($offer && isset($offer->noOffer)) { 
+            $order = Order::where('noOffer', $offer->noOffer)->first() ?? null;
+        }
+        return view('pages.customer.orders.index', compact('offer','services','categories','order'));
     }
 
     public function order(Request $request)
@@ -53,6 +57,8 @@ class OrderController extends Controller
             'is_for_customer' => 'required',
             'is_for_lsp' => 'required',
             'status' => 'required',
+            'address' => 'required',
+            'lsp_id' => 'required',
         ]);
 
         $order = Order::where('noOffer', $attributes['noOffer'])->first();
@@ -78,6 +84,9 @@ class OrderController extends Controller
                 "totalAmount" => $attributes['total_price'],
                 "paidAmount" => 0,
                 "remainingAmount" => $attributes['total_price'],
+                "remainingAmount" => $attributes['total_price'],
+                "address" => $attributes['address'],
+                "lsp_id" => $attributes['lsp_id'],
                 "paymentStatus" => "Belum Lunas"
             ]);
         } else {
@@ -132,7 +141,7 @@ class OrderController extends Controller
         $params = array(
             'transaction_details' => array(
                 // 'order_id' => rand(),
-                'order_id' => $userOrder->id,
+                'order_id' => $userOrder->id. '-' . time(),
                 'gross_amount' => $attributes['total_price'],
             ),
             'customer_details' => array(
