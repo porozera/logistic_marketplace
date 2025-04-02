@@ -13,7 +13,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('receiver_id'); // ID user penerima notifikasi
             $table->string('header');
             $table->text('description');
-            $table->string('status');
             $table->boolean('is_read')->default(false);
             $table->timestamps();
 

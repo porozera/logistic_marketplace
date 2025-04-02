@@ -40,15 +40,15 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label class="form-label">Lokasi Asal</label>
-                                <input type="text" name="origin" class="form-control" placeholder="Lokasi Asal" value="{{ old('origin') }}">
+                                <label class="form-label">Kota Asal</label>
+                                <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ old('origin') }}">
                                 @error('origin') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label class="form-label">Lokasi Tujuan</label>
-                                <input type="text" name="destination" class="form-control" placeholder="Lokasi Tujuan" value="{{ old('destination') }}">
+                                <label class="form-label">Kota Tujuan</label>
+                                <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ old('destination') }}">
                                 @error('destination') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
@@ -64,10 +64,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label class="form-label">Tipe Pengiriman</label>
-                                <select class="form-control" name="shipmentType" id="shipmentType">
-                                    <option value="FCL">Full Container Load (FCL)</option>
-                                    <option value="LCL">Less Container Load (LCL)</option>
-                                </select>
+                                <input type="text" class="form-control" name="shipmentType" id="shipmentType" value="FCL" readonly>
                                 @error('shipmentType') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
@@ -75,11 +72,20 @@
                             <div class="form-group mb-3">
                             <label class="form-label">Mode Pengiriman</label>
                             <select class="form-control" name="shipmentMode" id="shipmentMode">
-                                <option value="Laut">Laut</option>
-                                <option value="Darat">Darat</option>
+                                <option value="D2D">Door to Door</option>
+                                <option value="D2P">Door to Port</option>
+                                <option value="P2P">Port to Port</option>
+                                <option value="P2D">Port to Door</option>
                             </select>                            
                             @error('shipmentMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Alamat Tujuan Pengiriman</label>
+                            <textarea class="form-control" name="address" rows="4" placeholder="Alamat Tujuan Pengiriman">{{ old('address') }}</textarea>
+                            @error('address') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                         </div>
                     </div>
                     <br>
@@ -157,6 +163,7 @@
                             <th>No</th>
                             <th>Asal</th>
                             <th>Tujuan</th>
+                            <th>Alamat Tujuan</th>
                             <th>Tipe</th>
                             <th>Moda</th>
                             <th>Berat</th>
@@ -177,6 +184,7 @@
                             <td>{{$no++}}</td>
                             <td>{{$item['origin']}}</td>
                             <td>{{$item['destination']}}</td>
+                            <td>{{ Str::limit($item['address'], 25, '...') }}</td>
                             <td>{{$item['shipmentType']}}</td>
                             <td>{{$item['shipmentMode']}}</td>
                             <td>{{$item['weight']}} kg</td>

@@ -31,6 +31,7 @@ class RequestRouteController extends Controller
             'width' => 'required',
             'height' => 'required',
             'commodities' => 'required',
+            'address' => 'required',
         ]);
 
         $requestRoute = RequestRoute::create([
@@ -41,8 +42,9 @@ class RequestRouteController extends Controller
             "shipmentType" => $attributes['shipmentType'],
             "description" => $attributes['description'],
             "weight" => $attributes['weight'],
-            "volume" => $attributes['length'] * $attributes['width'] * $attributes['height'],
+            "volume" => ($attributes['length']/100) * ($attributes['width']/100) * ($attributes['height']/100),
             "commodities" => $attributes['commodities'],
+            "address" => $attributes['address'],
             "status" => "active",
             "user_id" => Auth::id(),
             "username" => Auth::user()->username,
