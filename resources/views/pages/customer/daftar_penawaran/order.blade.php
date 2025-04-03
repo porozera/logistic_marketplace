@@ -134,6 +134,10 @@
                           </div>
                         </div>
                       </div>
+                      <div class="row">
+                        <h5>Alamat Tujuan:</h5> 
+                            <h5 class="text-primary">{{ optional($offer)->requestRoute->address ?? '-' }}</h5>
+                      </div>
 
                       <hr>
 
@@ -258,8 +262,8 @@
                   </div>
                   <div class="row">
                     <div class="form-group mb-3">
-                      <label class="form-label">Deskripsi</label>
-                      <textarea class="form-control" name="description" rows="4" placeholder="Deskripsi">{{ old('description') }}</textarea>
+                      <label class="form-label">Informasi Tambahan</label>
+                      <textarea class="form-control" name="description" rows="4" placeholder="Informasi Tambahan">{{ old('description') }}</textarea>
                       @error('description') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
@@ -293,6 +297,8 @@
                     <input type="text" id="is_for_lsp" name="is_for_lsp" class="form-control"  value="1" hidden>
                     <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="1" hidden>
                     <input type="text" id="status" name="status" class="form-control"  value="{{ $offer['status'] }}" hidden>
+                    <input type="text" id="lsp_id" name="lsp_id" class="form-control"  value="{{ $offer['user_id'] }}" >
+                    <input type="text" id="address" name="address" class="form-control"  value="{{ $offer->requestRoute->address }}" hidden>
                   </div>
                   <div class="row">
                     @if ($errors->any())

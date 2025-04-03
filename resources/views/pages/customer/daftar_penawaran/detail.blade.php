@@ -139,7 +139,7 @@
                             </div>
                         </div>
         
-                        <div class="row mb-3">
+                        <div class="row">
                             <div class="col">Tipe Pengiriman</div>
                             <div class="col text-end">
                                 <button type="button" class="btn btn-success rounded-pill">

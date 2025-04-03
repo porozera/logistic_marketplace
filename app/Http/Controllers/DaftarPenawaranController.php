@@ -26,7 +26,11 @@ class DaftarPenawaranController extends Controller
     {
         $offer = Bid::find($id);
         $services = Service::all();
-        return view('pages.customer.daftar_penawaran.detail', compact('offer','services'));
+        $order = null;
+        if ($offer && isset($offer->noOffer)) { 
+            $order = Order::where('noOffer', $offer->noOffer)->first() ?? null;
+        }
+        return view('pages.customer.daftar_penawaran.detail', compact('offer','services','order'));
     }
 
     public function order_form($id)
@@ -68,6 +72,8 @@ class DaftarPenawaranController extends Controller
             'is_for_customer' => 'required',
             'is_for_lsp' => 'required',
             'status' => 'required',
+            'lsp_id' => 'required',
+            'address' => 'required',
         ]);
 
         $order = Order::where('noOffer', $attributes['noOffer'])->first();
@@ -93,6 +99,8 @@ class DaftarPenawaranController extends Controller
                 "totalAmount" => $attributes['total_price'],
                 "paidAmount" => 0,
                 "remainingAmount" => $attributes['total_price'],
+                "address" => $attributes['address'],
+                "lsp_id" => $attributes['lsp_id'],
                 "paymentStatus" => "Belum Lunas"
             ]);
         } else {
@@ -144,7 +152,7 @@ class DaftarPenawaranController extends Controller
         $params = array(
             'transaction_details' => array(
                 // 'order_id' => rand(),
-                'order_id' => $userOrder->id,
+                'order_id' => $userOrder->id. '-' . time(),
                 'gross_amount' => $attributes['total_price'],
             ),
             'customer_details' => array(

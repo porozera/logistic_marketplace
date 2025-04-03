@@ -1,5 +1,37 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 @section('title', 'Pemesanan')
+@section('style')
+<style>
+  .container {
+      display: grid;
+      grid-template-columns: repeat(11, 30px); /* 11 kolom per baris */
+      gap: 5px;
+      margin: 20px;
+  }
+  .box {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 5px;
+  }
+  .available {
+      background-color: green;
+      color: white;
+  }
+  .booked {
+      background-color: red;
+      color: white;
+  }
+  .square-box {
+      width: 40px; 
+      height: 40px; 
+  }
+
+</style>
 @section('content')
  <!-- [ Main Content ] start -->
  <div class="pc-container">
@@ -94,8 +126,13 @@
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2">/CBM</h5>
+                              @if ($offer['shipmentType'] == 'FCL')
+                              <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
+                              <h5 class="mb-0 ms-2">/Container</h5>
+                              @else
+                              <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
+                              <h5 class="mb-0 ms-2">/CBM</h5>
+                              @endif
                             </div>
                         </div>
                     </div>                    
@@ -105,41 +142,46 @@
         </div>
 
 
+      
+      
+      
+        
+
       <form action="/order/perform" method="POST" id="orderForm">
         @csrf
         <div class="row">
             <!-- Detail Penawaran -->
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-6">
-                          <h5 class="mb-3">Tanggal Muat Barang</h5>
-                        </div>
-                        <div class="col-6 text-end">
-                          <h4 class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</h4>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-6">
-                          <h5 class="mb-3">Sisa Volume :</h5>
-                        </div>
-                        <div class="col-6 text-end">
-                          <div class="d-flex justify-content-end align-items-center">
-                            <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</h5>
-                            <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxVolume'] }} CBM</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-6">
-                          <h5 class="mb-3">Sisa Berat :</h5>
-                        </div>
-                        <div class="col-6 text-end">
-                          <div class="d-flex justify-content-end align-items-center">
-                            <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</h5>
-                            <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
-                          </div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                  <div class="col-6">
+                    <h5 class="mb-3">Tanggal Muat Barang</h5>
+                  </div>
+                  <div class="col-6 text-end">
+                    <h4 class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</h4>
+                  </div>
+                  </div>
+                  <div class="row">
+                  <div class="col-6">
+                    <h5 class="mb-3">Sisa Volume :</h5>
+                  </div>
+                  <div class="col-6 text-end">
+                    <div class="d-flex justify-content-end align-items-center">
+                    <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</h5>
+                    <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxVolume'] }} CBM</p>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="row">
+                  <div class="col-6">
+                    <h5 class="mb-3">Sisa Berat :</h5>
+                  </div>
+                  <div class="col-6 text-end">
+                    <div class="d-flex justify-content-end align-items-center">
+                    <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</h5>
+                    <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
+                    </div>
                         </div>
                       </div>
                       <div class="row">
@@ -160,6 +202,29 @@
                       </div>
                     </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                      <h5 class="mb-0">Container Availability</h5>
+                    </div>
+                    <div class="card-body d-flex justify-content-center align-items-center">
+                      <div class="col-2"></div>
+                      <div class="col-9 d-flex justify-content-center">
+                        <div class="card">
+                          <div class="container" id="container"></div>
+                        </div>
+                      </div>
+                      <div class="col-1"></div>
+                    </div>
+                    <div class="card-footer text-center">
+                  <span class="badge bg-success me-2"><i class="ti ti-check"></i> Available</span>
+                  <span class="badge bg-danger"><i class="ti ti-x"></i> Booked</span>
+                    </div>
+                </div>
+                  </div>
+              </div>
             </div>
 
             <!-- Form input -->
@@ -279,8 +344,8 @@
                   </div>
                   <div class="row">
                     <div class="form-group mb-3">
-                      <label class="form-label">Deskripsi</label>
-                      <textarea class="form-control" name="description" rows="4" placeholder="Deskripsi">{{ old('description') }}</textarea>
+                      <label class="form-label">Informasi Tambahan</label>
+                      <textarea class="form-control" name="description" rows="4" placeholder="Informasi Tambahan">{{ old('description') }}</textarea>
                       @error('description') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
@@ -340,6 +405,7 @@
       </form>
     </div>
     </div>
+    
 
 
 
@@ -409,7 +475,7 @@
 
               let totalCBMPrice = cbmToBuy * cbmPrice;
 
-              document.getElementById("cbmResult").innerText = cbmRounded.toFixed(3);
+              document.getElementById("cbmResult").innerText = cbmRounded.toFixed();
               document.getElementById("cbmToBuy").innerText = cbmToBuy;
 
               let cbmPriceCard = document.getElementById("cbmPriceCard");
@@ -480,4 +546,34 @@
 
 
         </script>
+        <script>
+          let totalCBM = parseInt("{{ $offer['maxVolume'] }}");
+          let bookedCBM = parseInt("{{ $offer['maxVolume'] - $offer['remainingVolume'] }}");
+      
+          function renderContainer() {
+              const container = document.getElementById("container");
+              container.innerHTML = "";
+      
+              for (let i = 0; i < totalCBM; i++) {
+                  const box = document.createElement("div");
+                  box.classList.add("box", "border", "d-flex", "justify-content-center", "align-items-center");
+      
+                  let icon = document.createElement("i");
+      
+                  if (i < bookedCBM) {
+                      box.classList.add("booked", "bg-danger");
+                      icon.classList.add("ti", "ti-x", "text-white");
+                  } else {
+                      box.classList.add("available", "bg-success");
+                      icon.classList.add("ti", "ti-check", "text-white");
+                  }
+      
+                  box.appendChild(icon);
+                  container.appendChild(box);
+              }
+          }
+      
+          document.addEventListener("DOMContentLoaded", renderContainer);
+      </script>
+    
 @endsection

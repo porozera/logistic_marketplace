@@ -94,8 +94,13 @@
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
+                                @if ($offer['shipmentType'] == 'FCL')
+                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
+                                <h5 class="mb-0 ms-2">/Container</h5>
+                                @else
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
                                 <h5 class="mb-0 ms-2">/CBM</h5>
+                                @endif
                             </div>
                             <a href="/order/{{$offer['id']}}" class="btn btn-primary w-50">Pesan Sekarang</a>
                         </div>
@@ -138,7 +143,7 @@
                             </div>
                         </div>
         
-                        <div class="row mb-3">
+                        <div class="row">
                             <div class="col">Tipe Pengiriman</div>
                             <div class="col text-end">
                                 <button type="button" class="btn btn-success rounded-pill">

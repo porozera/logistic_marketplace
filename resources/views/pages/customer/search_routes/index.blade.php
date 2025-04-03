@@ -271,16 +271,19 @@
                                 @endif
                                 @if ($item['shipmentType'] == 'LCL')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-box me-1"></i> LCL
+                                        <i class="ti ti-box me-1"></i> LCL 20' Container
                                     </button> 
                                 @else
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-box me-1"></i> FCL
+                                        <i class="ti ti-box me-1"></i> FCL 20' Container
                                     </button> 
                                 @endif
-                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                {{-- <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                     <i class="ti ti-box me-1"></i> 20' Container
-                                </button> 
+                                </button>  --}}
+                                {{-- <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-box me-1"></i> General Cargo
+                                </button>  --}}
                             </div>
                             <div class="col-4 d-flex align-items-center justify-content-end">
                                 @if ($item->remainingVolume > ($item->maxVolume * 0.5))
@@ -310,8 +313,13 @@
                                 <h5 class="text-primary fw-bold">{{$item->loading_date_formatted}}</h5>
                             </div>
                             <div class="col-3 d-flex align-items-start justify-content-end ">
+                                @if ($item['shipmentType'] == 'FCL')
+                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
+                                <h5 class="mb-0 ms-2">/Container</h5>
+                                @else
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
                                 <h5 class="mb-0 ms-2">/CBM</h5>
+                                @endif
                             </div>
                         </div>
                         <div class="row">

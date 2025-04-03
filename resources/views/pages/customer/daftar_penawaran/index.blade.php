@@ -127,7 +127,7 @@
                             </div>
                             <div class="col-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
                                 @if ($item->shipmentMode == 'D2D')
-                                    <button type="button" class="btn btn-primary d-flex align-items-center rounded-pill">
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                         <i class="ti ti-truck-delivery me-1"></i> Door to Door
                                     </button>   
                                 @elseif( $item->shipmentMode == 'D2P')
@@ -144,14 +144,17 @@
                                     </button>
                                 @endif
                                 @if ($item['shipmentType'] == 'LCL')
-                                    <button type="button" class="btn btn-primary d-flex align-items-center rounded-pill">
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                         <i class="ti ti-box me-1"></i> LCL
                                     </button> 
                                 @else
-                                    <button type="button" class="btn btn-primary d-flex align-items-center rounded-pill">
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                         <i class="ti ti-box me-1"></i> FCL
                                     </button> 
                                 @endif
+                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-box me-1"></i> 20' Container
+                                </button> 
                             </div>
                             <div class="col-4 d-flex align-items-center justify-content-end">
                                 
