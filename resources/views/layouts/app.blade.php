@@ -52,10 +52,7 @@
     
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
-    {{-- <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMyo3ERumLbyj3O6olK3ZSqe_VVjYMMqk&libraries=maps,marker"
-        defer
-    ></script> --}}
+
     @yield('style')
 </head>
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
