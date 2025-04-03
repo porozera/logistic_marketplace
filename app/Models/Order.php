@@ -70,4 +70,9 @@ class Order extends Model
     {
         return "Rp " . number_format($this->totalAmount, 2, ',', '.');
     }
+
+    public function lsp()
+    {
+        return $this->belongsTo(User::class, 'lsp_id');
+    }
 }

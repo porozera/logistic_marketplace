@@ -28,6 +28,7 @@ use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrackingController;
+use App\Http\Livewire\MapLocation;
 use App\Models\City;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -202,6 +203,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //TRACKING
     Route::get('/tracking', [TrackingController::class, 'index'])->name('tracking-customer');
+    Route::get('/tracking/detail/{id}', [TrackingController::class, 'detail'])->name('tracking-customer.detail');
 });
 
 
