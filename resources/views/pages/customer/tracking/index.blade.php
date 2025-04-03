@@ -35,6 +35,18 @@
                   <i class="ti ti-search" style="cursor: pointer; color: white;"></i>
                 </span>
             </div>
+            @if ($userOrder->isEmpty())
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <div class="card text-center p-4 w-100">
+                    <div class="card-body">
+                        <img src="{{ asset('template/mantis/dist/assets/images/search_icon.png') }}" alt="Search Icon" class="mb-3" style="max-width: 100px;">
+                        <h3 class="mb-2">Tidak Ada Order</h3>
+                        <p class="text-muted">Buat pemesanan rute</p>
+                        <a href="/search-routes" class="btn btn-primary w-50">Cari Rute</a>
+                    </div>
+                </div>
+            </div>
+            @else
             @foreach ( $userOrder as $item)
             <div class="card card-hover">
                 <div class="card-body">
@@ -104,20 +116,37 @@
                             <h6 class="text-primary">{{$item->order->estimation_date_formatted}}</h6>
                         </div>
                         <div class="col-3 d-flex align-items-start justify-content-end">
-                            <button type="button" class="btn btn-primary d-inline-flex">Lihat detail <i class="ti ti-chevron-right ms-1"></i></button>
+                            <a href="/tracking/detail/{{$item->id}}" class="btn btn-primary d-inline-flex">Lihat detail <i class="ti ti-chevron-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
             </div>  
             @endforeach  
+            @endif
         </div>
         <div class="col-sm-12 col-md-5 col-xl-5">
             <div class="card">
                 <div class="card-body">
-                    <h4>Live Track</h4>
-                    <i class="ti ti-map-pin text-danger"></i>
-                </div>
-                
+                    <div class="d-flex align-items-center">
+                        <h4>Map Interaktif</h4>
+                        <i class="ti ti-map-pin text-danger ms-2 mb-2"></i>
+                    </div>
+                    <div id='map' style='width: 100%; height: 800px;'></div>
+                    <script>
+                        mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';
+                        const map = new mapboxgl.Map({
+                            container: 'map', // container ID
+                            style: 'mapbox://styles/aufarnugratamaps/cm91i1s4m00al01s43z35bik2', // style URL
+                            center: [116.534, -0.032], // starting position [lng, lat]
+                            zoom: 2, // starting zoom
+                        });
+
+                        // Adjust map size when the window is resized
+                        window.addEventListener('resize', () => {
+                            map.resize();
+                        });
+                    </script>
+                </div>              
             </div>
         </div>
       </div>
@@ -143,6 +172,8 @@
                 </div>
             </div>
         </div>
+
+        
     
         <script>
             document.getElementById('submitFormButton').addEventListener('click', function () {
