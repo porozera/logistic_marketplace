@@ -27,21 +27,21 @@
             <div class="col-sm-12 col-md-12 col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        <div id='map' style='width: 100%; height: 800px;'></div>
+                        {{-- <div id='map' style='width: 100%; height: 600px;'></div>
                     <script>
                         mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';
                         const map = new mapboxgl.Map({
                             container: 'map', // container ID
                             style: 'mapbox://styles/aufarnugratamaps/cm91i1s4m00al01s43z35bik2', // style URL
                             center: [116.534, -0.032], // starting position [lng, lat]
-                            zoom: 2, // starting zoom
+                            zoom: 8, // starting zoom
                         });
 
                         // Adjust map size when the window is resized
                         window.addEventListener('resize', () => {
                             map.resize();
                         });
-                    </script>
+                    </script> --}}
                     </div>
                 </div>
             </div>    
@@ -128,82 +128,51 @@
                             <h4>Tracking Order</h4>
                             <i class="ti ti-map-pin text-danger ms-2 mb-2"></i>
                         </div>
+                        @php
+                            $maxCount = $tracking->count() - 1;
+                            $count = 0;
+                        @endphp
+                        @foreach ($tracking as $item)
                         <div class="row">
                             <div class="col-2">
-                                <p class="mb-1 text-primary">{{$tracking->created_at->format('d M Y H:i')}}</p>
+                                @if ($count != 0)
+                                <p class="mb-1 text-muted">{{$item->created_at->format('d M Y H:i')}}</p>
+                                @else
+                                <p class="mb-1 fw-medium text-primary">{{$item->created_at->format('d M Y H:i')}}</p>
+                                @endif
                             </div>
                             <div class="col-1">
+                                @if ($count != 0)
+                                <div class="rounded-circle bg-secondary mx-auto" style="width: 16px; height: 16px;"></div>
+                                @else
                                 <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-auto" style="width: 1px; height: 80px;"></div>
+                                @endif
+                                @if ($count != $maxCount)
+                                <div class="bg-secondary mx-auto" style="width: 1px; height: 80px;"></div>
+                                @endif
+                                
                             </div>
                             <div class="col-6">
-                                <p class="mb-1 text-primary">{{$tracking->description}}</p>
-                                <div>
-                                    <p class="mb-1 text-muted">{{$tracking->currentLocation}}</p>
-                                    <p class="mb-1 text-muted">{{$tracking->currentVehicle}}</p>
-                                </div>
+                                @if ($count != 0)
+                                <p class="mb-1 text-muted">{{$item->description}}</p>
+                                @else
+                                <p class="mb-1 fw-medium text-primary">{{$item->description}}</p>
+                                @endif
+
+                                @if ($count != 0)
+                                <p class="mb-1 text-muted">{{$item->currentLocation}} ({{$item->currentVehicle}})</p>
+                                @else
+                                <p class="mb-1  text-primary">{{$item->currentLocation}} ({{$item->currentVehicle}})</p>
+                                @endif
                             </div>                            
                             <div class="col-3 text-end text-muted">
-                                <span class="text-muted small">{{ $tracking->created_at->diffForHumans() }}</span>
+                                <span class="text-muted small">{{ $item->created_at->diffForHumans() }}</span>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-2">
-                                <p class="mb-1 text-primary">{{$tracking->created_at->format('d M Y H:i')}}</p>
-                            </div>
-                            <div class="col-1">
-                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-auto" style="width: 1px; height: 80px;"></div>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-1 text-primary">{{$tracking->description}}</p>
-                                <div>
-                                    <p class="mb-1 text-muted">{{$tracking->currentLocation}}</p>
-                                    <p class="mb-1 text-muted">{{$tracking->currentVehicle}}</p>
-                                </div>
-                            </div>                            
-                            <div class="col-3 text-end text-muted">
-                                <span class="text-muted small">{{ $tracking->created_at->diffForHumans() }}</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-2">
-                                <p class="mb-1 text-primary">{{$tracking->created_at->format('d M Y H:i')}}</p>
-                            </div>
-                            <div class="col-1">
-                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-auto" style="width: 1px; height: 80px;"></div>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-1 text-primary">{{$tracking->description}}</p>
-                                <div>
-                                    <p class="mb-1 text-muted">{{$tracking->currentLocation}}</p>
-                                    <p class="mb-1 text-muted">{{$tracking->currentVehicle}}</p>
-                                </div>
-                            </div>                            
-                            <div class="col-3 text-end text-muted">
-                                <span class="text-muted small">{{ $tracking->created_at->diffForHumans() }}</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-2">
-                                <p class="mb-1 text-primary">{{$tracking->created_at->format('d M Y H:i')}}</p>
-                            </div>
-                            <div class="col-1">
-                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-auto" style="width: 1px; height: 80px;"></div>
-                            </div>
-                            <div class="col-6">
-                                <p class="mb-1 text-primary">{{$tracking->description}}</p>
-                                <div>
-                                    <p class="mb-1 text-muted">{{$tracking->currentLocation}}</p>
-                                    <p class="mb-1 text-muted">{{$tracking->currentVehicle}}</p>
-                                </div>
-                            </div>                            
-                            <div class="col-3 text-end text-muted">
-                                <span class="text-muted small">{{ $tracking->created_at->diffForHumans() }}</span>
-                            </div>
-                        </div>
+                        @php
+                            $count++;
+                        @endphp 
+                        @endforeach
                     </div>
                 </div>
             </div>

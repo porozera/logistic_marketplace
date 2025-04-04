@@ -15,6 +15,7 @@ class TrackingController extends Controller
         $userOrder = UserOrder::with('order')
             ->where('user_id', Auth::id())
             ->where('paymentStatus','Lunas')
+            ->orderBy('created_at', 'desc')
             ->get();      
         return view('pages.customer.tracking.index', compact('userOrder'));        
     }
@@ -26,7 +27,8 @@ class TrackingController extends Controller
             ->where('paymentStatus','Lunas')
             ->findOrFail($id);
         $tracking = Tracking::where('order_id', $userOrder->order->id)
-            ->first();
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('pages.customer.tracking.detail', compact('userOrder', 'tracking'));
     }
 }
