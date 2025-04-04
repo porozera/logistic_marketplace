@@ -29,6 +29,9 @@ class TrackingController extends Controller
         $tracking = Tracking::where('order_id', $userOrder->order->id)
             ->orderBy('created_at', 'desc')
             ->get();
-        return view('pages.customer.tracking.detail', compact('userOrder', 'tracking'));
+            $location = Tracking::where('order_id', $userOrder->order->id)
+            ->orderBy('created_at', 'desc') // urutkan dari yang terbaru
+            ->first(); // ambil satu data paling atas        
+        return view('pages.customer.tracking.detail', compact('userOrder', 'tracking','location'));
     }
 }

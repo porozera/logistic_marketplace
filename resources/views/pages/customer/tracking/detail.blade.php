@@ -27,21 +27,32 @@
             <div class="col-sm-12 col-md-12 col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        {{-- <div id='map' style='width: 100%; height: 600px;'></div>
-                    <script>
-                        mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';
-                        const map = new mapboxgl.Map({
-                            container: 'map', // container ID
-                            style: 'mapbox://styles/aufarnugratamaps/cm91i1s4m00al01s43z35bik2', // style URL
-                            center: [116.534, -0.032], // starting position [lng, lat]
-                            zoom: 8, // starting zoom
-                        });
+                        <div id='map' style='width: 100%; height: 600px;'></div>
+                        @php
+                            $lng = $location->longitude ?? 0;
+                            $lat = $location->latitude ?? 0;
+                        @endphp
 
-                        // Adjust map size when the window is resized
-                        window.addEventListener('resize', () => {
-                            map.resize();
-                        });
-                    </script> --}}
+                        <script>
+                            mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';
+                        
+                            const map = new mapboxgl.Map({
+                                container: 'map',
+                                style: 'mapbox://styles/aufarnugratamaps/cm91i1s4m00al01s43z35bik2',
+                                center: [{{ $lng }}, {{ $lat }}], // pakai koordinat tracking
+                                zoom: 10
+                            });
+                        
+                            // Resize map responsively
+                            window.addEventListener('resize', () => map.resize());
+                        
+                            // Buat marker di posisi tracking
+                            new mapboxgl.Marker()
+                                .setLngLat([{{ $lng }}, {{ $lat }}])
+                                .setPopup(new mapboxgl.Popup().setHTML(`<strong>Location:</strong> {{ $location->currentLocation }}<br><strong>Vehicle:</strong> {{ $location->currentVehicle }}`))
+                                .addTo(map);
+                        </script>
+                        
                     </div>
                 </div>
             </div>    
