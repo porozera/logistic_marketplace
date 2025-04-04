@@ -69,6 +69,15 @@
                             </select>
                         </div>
 
+                        <hr>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status" required>
+                                <option value="active" {{ $offer->status == 'active' ? 'selected' : '' }}>Active</option>
+                                <option value="deactive" {{ $offer->status == 'deactive' ? 'selected' : '' }}>Deactive</option>
+                            </select>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Update Offer</button>
                     </form>
                 </div>

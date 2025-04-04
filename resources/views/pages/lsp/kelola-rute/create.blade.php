@@ -75,14 +75,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select name="status" class="form-control" required>
-                        <option value="active">Active</option>
-                        <option value="deactive">Deactive</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
                     <label for="price" class="form-label">Price</label>
                     <input type="number" name="price" class="form-control" step="0.01" required>
                 </div>
@@ -119,6 +111,15 @@
                         @foreach($trucks as $truck)
                             <option value="{{ $truck->id }}">{{ $truck->type }} - {{$truck->brand}} - {{ $truck->plateNumber }} ({{$truck->driverName}}) </option>
                         @endforeach
+                    </select>
+                </div>
+
+                <hr>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select name="status" class="form-control" required>
+                        <option value="active">Active</option>
+                        <option value="deactive">Deactive</option>
                     </select>
                 </div>
 

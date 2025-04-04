@@ -2,7 +2,9 @@
 
 @section('content')
 @section('title', 'Open Container')
-
+@php
+    \Carbon\Carbon::setLocale('id');
+@endphp
 <style>
     .search-container{
         background-color:white;
@@ -26,6 +28,9 @@
     #result-container img {
         opacity: 0.6;
         text-align: center;
+    }
+    .modal-header{
+        justify-content: center;
     }
 </style>
 
@@ -85,8 +90,8 @@
         @else
             {{-- Jika Ada Hasil Pencarian --}}
             @foreach ($offers as $item)
-            <div class="card card-hover mb-3">
-                <div class="card-body">
+            <div class="card card-hover mb-3" style="border-radius: 10px">
+                <div class="card-body" >
                     {{-- Bagian Header (LSP Info) --}}
                     <div class="row align-items-center">
                         <div class="col-md-6 d-flex align-items-center">
@@ -115,7 +120,7 @@
 
                         {{-- Copy Button --}}
                         <div class="col-md-2 d-flex align-items-center gap-2 text-end" style="justify-content: flex-end">
-                            <h5 class="mb-0">{{$item->id}}</h5>
+                            <h5 class="mb-0">ID : {{$item->id}}</h5>
                             <button type="button" class="btn btn-icon btn-light-primary">
                                 <i class="ti ti-copy"></i>
                             </button>
@@ -143,12 +148,85 @@
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item->price, 0, ',', '.') }}</h4>
                                 <h5 class="mb-0 ms-2">/CBM</h5>
                             </div>
-                            <a href="/search-routes/{{ $item->id }}" class="btn btn-primary w-50">Pilih</a>
+                            {{-- <a href="/search-routes/{{ $item->id }}" class="btn btn-primary w-50">Pilih</a> --}}
+                            <button type="button" class="btn btn-primary w-50" data-bs-toggle="modal" data-bs-target="#detailModal{{ $item->id }}">Pilih</button>
                         </div>
                     </div>
                     <div class="row align-items-center mt-3">
                         <div class="col-md-8 d-flex align-items-center justify-content-start">
-                            <h5 class="mb-0 fw-bold">Loading Date : {{ \Carbon\Carbon::parse($item->loadingDate)->format('d-m-y') }}</h5>
+                            <h5 class="mb-0 fw-bold">Loading Date : {{ \Carbon\Carbon::parse($item->loadingDate)->translatedFormat('l, d F Y')}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Detail -->
+            <div class="modal fade" id="detailModal{{ $item->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $item->id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel{{ $item->id }}">Detail Kontainer</h5>
+                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Penyedia Jasa :</strong> {{ $item->lspName }}</p>
+                            <p><strong>ID :</strong> {{ $item->id }}</p>
+                            <hr>
+                            <div>
+                                <p><strong>Kontainer Dibuka Untuk :</strong></p>
+                                <p>{{ $item->commodities }}</p>
+                            </div>
+                            <div style="display: flex; justify-content:space-between">
+                                <p><strong>Mode Pengiriman : </strong></p>
+                                <i class="ti {{ $item->shipmentMode == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1"> {{ ucfirst($item->shipmentMode) }}</i>
+                            </div>
+                            <div style="display: flex; justify-content:space-between">
+                                <p><strong>Tipe Pengiriman : </strong></p>
+                                <p> {{$item->shipmentType}} </p>
+                            </div>
+                            <p><strong>Asal Pengiriman :</strong></p>
+                            <p>{{ $item->origin }}</p>
+                            <p><strong>Tujuan Pengiriman :</strong></p>
+                            <p>{{ $item->destination }}</p>
+                            <hr>
+                            <div style="display: flex; justify-content:space-between">
+                                <p><strong>Tanggal Muat :</strong></p>
+                                <p>{{ \Carbon\Carbon::parse($item->loadingDate)->translatedFormat('l, d F Y')}}</p>
+                            </div>
+                            <div style="display: flex; justify-content:space-between">
+                                <p><strong>Tanggal Pengiriman :</strong></p>
+                                <p>{{ \Carbon\Carbon::parse($item->shippingDate)->translatedFormat('l, d F Y')}}</p>
+                            </div>
+                            <div style="display: flex; justify-content:space-between">
+                                <p><strong>Estimasi Pengiriman :</strong></p>
+                                <p>{{ \Carbon\Carbon::parse($item->shippingDate)->diffInDays(\Carbon\Carbon::parse($item->estimationDate)) }} Hari</p>
+                            </div>
+                            <hr>
+                            <div style="display: flex; justify-content:space-between; margin-bottom:0; ">
+                                <p><strong>Harga:</strong></p>
+                                <p>Rp. {{ number_format($item->price, 0, ',', '.') }} / CBM</p>
+                            </div>
+                            <hr>
+                            <h5 style="margin-bottom:20px">Detail Kargo</h5>
+                            <div style="display: flex; justify-content:space-between">
+                                <p>Berat Maksimal : </p>
+                                <p>{{$item->maxWeight}} Kg </p>
+                            </div>
+                            <div style="display: flex; justify-content:space-between; margin-bottom:0; ">
+                                <p>Volume Maksimal : </p>
+                                <p>{{$item->maxVolume}} CBM </p>
+                            </div>
+                            <div style="display: flex; justify-content:space-between; margin-bottom:0; ">
+                                <p>Berat Tersisa : </p>
+                                <p><span style="color:#007bff ;">{{$item->remainingWeight}} </span> / {{$item->maxWeight}} Kg</p>
+                            </div>
+                            <div style="display: flex; justify-content:space-between; margin-bottom:0; ">
+                                <p>Volume Tersisa : </p>
+                                <p><span style="color:#007bff ;">{{$item->remainingVolume}} </span> / {{$item->maxVolume}} CBM</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" type="button" class="btn btn-primary w-50" data-bs-dismiss="modal">Ajukan Penawaran</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         </div>
                     </div>
                 </div>

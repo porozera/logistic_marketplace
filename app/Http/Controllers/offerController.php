@@ -154,6 +154,7 @@ class offerController extends Controller
             'maxVolume' => 'required|integer',
             'price' => 'required|numeric',
             'truck_id' => 'required|exists:trucks,id',
+            'status' => 'required|in:active,deactive',
         ]);
 
         // Cari offer berdasarkan ID
@@ -170,6 +171,7 @@ class offerController extends Controller
             'maxVolume' => $request->maxVolume,
             'price' => $request->price,
             'truck_id' => $request['truck_id'],
+            'status' => $request->status,
         ]);
 
         // Redirect dengan pesan sukses
