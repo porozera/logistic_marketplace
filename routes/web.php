@@ -159,6 +159,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
     Route::prefix('opencontainer')->group(function () {
         Route::get('/', [OpenContainerController::class, 'index'])->name('opencontainer.index');
         Route::get('/search', [OpenContainerController::class, 'search'])->name('opencontainer.search');
+        Route::get('/{id}', [OpenContainerController::class, 'ajukanPenawaran'])->name('opencontainer.ajukan');
+        Route::post('/{id}', [OpenContainerController::class, 'storePenawaran'])->name('opencontainer.store');
     });
 
     Route::prefix('trucks')->group(function () {

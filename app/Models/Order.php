@@ -33,6 +33,10 @@ class Order extends Model
         'remainingAmount',
         'paidAmount',
         'paymentStatus',
+        'container_id',
+        'truck_first_id',
+        'truck_second_id',
+        'address',
     ];
 
     /**

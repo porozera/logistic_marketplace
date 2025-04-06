@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\offersModel;
+use App\Models\Order;
 
 class OpenContainerController extends Controller
 {
-    // public function index()
-    // {
-    //     return view('pages.lsp.opencontainer.index', [
-    //         'offers' => collect([]), // Set default sebagai koleksi kosong
-    //         'searchPerformed' => false // Menandakan belum ada pencarian dilakukan
-    //     ]);
-    // }
     public function index(Request $request)
 {
     $searchPerformed = false;
@@ -49,79 +43,51 @@ class OpenContainerController extends Controller
     return view('pages.lsp.opencontainer.index', compact('offers', 'searchPerformed'));
 }
 
-    // public function search(Request $request)
-    // {
-    //     $origin = $request->input('origin');
-    //     $destination = $request->input('destination');
+public function ajukanPenawaran($id)
+{
+    $offer = offersModel::findOrFail($id);
+    return view('pages.lsp.opencontainer.ajukan', compact('offer'));
+}
 
-    //     $offers = offersModel::where('is_for_lsp', true)
-    //         ->where('shipmentType', 'LCL')
-    //         ->where('status', 'active')
-    //         ->when($origin, function ($query, $origin) {
-    //             return $query->where('origin', 'like', "%$origin%");
-    //         })
-    //         ->when($destination, function ($query, $destination) {
-    //             return $query->where('destination', 'like', "%$destination%");
-    //         })
-    //         ->get();
+public function storePenawaran(Request $request, $id)
+{
+    $offer = OffersModel::findOrFail($id);
 
-    //     return response()->json($offers);
-    // }
+    // Validasi data kalau perlu
+    $request->validate([
+        'telp' => 'required',
+        'itemType' => 'required',
+        'paymentMethod' => 'required',
+    ]);
 
-    // search works pake javascript
-//     public function search(Request $request)
-// {
-//     $query = offersModel::where('is_for_lsp', true)
-//         ->where('shipmentType', 'LCL')
-//         ->where('status', 'active');
+    Order::create([
+        'noOffer' => $offer->noOffer,
+        'lspName' => $offer->lspName,
+        'origin' => $offer->origin,
+        'destination' => $offer->destination,
+        'shipmentMode' => $offer->shipmentMode,
+        'shipmentType' => $offer->shipmentType,
+        'loadingDate' => $offer->loadingDate,
+        'shippingDate' => $offer->shippingDate,
+        'estimationDate' => $offer->estimationDate,
+        'maxWeight' => $offer->maxWeight,
+        'maxVolume' => $offer->maxVolume,
+        'remainingWeight' => $offer->remainingWeight,
+        'remainingVolume' => $offer->remainingVolume,
+        'commodities' => $request->description,
+        'status' => 'waiting',
+        'price' => $offer->price,
+        'totalAmount' => $offer->price,
+        'remainingAmount' => $offer->price,
+        'paidAmount' => 0,
+        'paymentStatus' => $request->paymentMethod,
+        'container_id' => $offer->container_id,
+        'truck_first_id' => $offer->truck_first_id,
+        'truck_second_id' => $offer->truck_second_id,
+        'address' => null,
+        'timestamp' => now(),
+    ]);
 
-//     if ($request->has('origin') && !empty($request->origin)) {
-//         $query->where('origin', 'LIKE', "%{$request->origin}%");
-//     }
-//     if ($request->has('destination') && !empty($request->destination)) {
-//         $query->where('destination', 'LIKE', "%{$request->destination}%");
-//     }
-//     if ($request->has('shippingDate') && !empty($request->shippingDate)) {
-//         $query->whereDate('shippingDate', $request->shippingDate);
-//     }
-//     if ($request->has('shipmentMode') && !empty($request->shipmentMode)) {
-//         $query->where('shipmentMode', $request->shipmentMode);
-//     }
-
-//     return response()->json($query->get());
-// }
-
-// public function search(Request $request)
-// {
-//     $searchPerformed = true; // Menandakan bahwa pencarian telah dilakukan
-
-//     $query = offersModel::query()
-//         ->where('is_for_lsp', true)
-//         ->where('shipmentType', 'LCL')
-//         ->where('status', 'active');
-
-//     // Filter berdasarkan input pencarian
-//     if ($request->filled('origin')) {
-//         $query->where('origin', 'LIKE', '%' . $request->origin . '%');
-//     }
-
-//     if ($request->filled('destination')) {
-//         $query->where('destination', 'LIKE', '%' . $request->destination . '%');
-//     }
-
-//     if ($request->filled('shippingDate')) {
-//         $query->whereDate('shippingDate', $request->shippingDate);
-//     }
-
-//     if ($request->filled('shipmentMode')) {
-//         $query->where('shipmentMode', $request->shipmentMode);
-//     }
-
-//     // Ambil data dan join dengan tabel users untuk mendapatkan foto profil LSP
-//     $offers = $query->with('user:id,username,profilePicture,rating')->get();
-
-//     return view('pages.lsp.opencontainer.index', compact('offers', 'searchPerformed'));
-// }
-
-
+    return redirect()->route('opencontainer.index')->with('success', 'Penawaran berhasil diajukan.');
+}
 }
