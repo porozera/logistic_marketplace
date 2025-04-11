@@ -50,7 +50,6 @@
             <span class="ml-2">({{ $user->rating ?? '0' }} ulasan)</span>
             <p class="mt-3">{{ $user->description ?? 'Deskripsi perusahaan belum tersedia.' }}</p>
         </div>
-
         <!-- Company Stats -->
         <div class="d-flex justify-content-around mt-4">
             <div class="stat-card text-center">
