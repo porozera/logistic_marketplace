@@ -178,8 +178,8 @@
                                 <h5 class="text-primary fw-bold">{{$item->loading_date_formatted}}</h5>
                             </div>
                             <div class="col-3 d-flex align-items-start justify-content-end ">
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2">/CBM</h5>
+                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
+                                <h5 class="mb-0 ms-2 mt-1">/Container</h5>
                             </div>
                         </div>
                         <div class="row">

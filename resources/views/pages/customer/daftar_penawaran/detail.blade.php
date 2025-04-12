@@ -94,8 +94,8 @@
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2">/CBM</h5>
+                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
+                                <h5 class="mb-0 ms-2 mt-1">/Container</h5>
                             </div>
                             <a href="/list-offer/order/{{$offer['id']}}" class="btn btn-primary w-50">Pesan Sekarang</a>
                         </div>

@@ -86,8 +86,8 @@
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2">/CBM</h5>
+                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
+                                <h5 class="mb-0 ms-2 mt-1">/Container</h5>
                             </div>
                         </div>
                     </div>                    
@@ -297,19 +297,21 @@
                     <input type="text" id="is_for_lsp" name="is_for_lsp" class="form-control"  value="1" hidden>
                     <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="1" hidden>
                     <input type="text" id="status" name="status" class="form-control"  value="{{ $offer['status'] }}" hidden>
-                    <input type="text" id="lsp_id" name="lsp_id" class="form-control"  value="{{ $offer['user_id'] }}" >
+                    <input type="text" id="lsp_id" name="lsp_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
                     <input type="text" id="address" name="address" class="form-control"  value="{{ $offer->requestRoute->address }}" hidden>
                   </div>
                   <div class="row">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                    <div class="col">
+                      @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                      @endif
                     </div>
-                @endif
                   </div>
                   <div class="row">
                     <div class="col-12">

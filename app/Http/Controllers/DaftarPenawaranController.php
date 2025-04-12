@@ -12,6 +12,7 @@ use App\Models\UserOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class DaftarPenawaranController extends Controller
 {
@@ -76,6 +77,17 @@ class DaftarPenawaranController extends Controller
             'address' => 'required',
         ]);
 
+        if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
+            throw ValidationException::withMessages([
+                'total_cbm' => 'Total CBM yang harus dibeli melebihi sisa volume yang tersedia.',
+            ]);
+        }
+        
+        if ($attributes['weight'] > $attributes['remainingWeight']) {
+            throw ValidationException::withMessages([
+                'weight' => 'Berat melebihi sisa berat yang tersedia.',
+            ]);
+        }
         $order = Order::where('noOffer', $attributes['noOffer'])->first();
 
         if (!$order) {

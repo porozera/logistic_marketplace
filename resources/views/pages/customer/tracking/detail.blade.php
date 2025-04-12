@@ -35,23 +35,31 @@
 
                         <script>
                             mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';
-                        
+
                             const map = new mapboxgl.Map({
                                 container: 'map',
                                 style: 'mapbox://styles/aufarnugratamaps/cm91i1s4m00al01s43z35bik2',
-                                center: [{{ $lng }}, {{ $lat }}], // pakai koordinat tracking
+                                center: [{{ $lng }}, {{ $lat }}],
                                 zoom: 10
                             });
-                        
-                            // Resize map responsively
+
                             window.addEventListener('resize', () => map.resize());
-                        
-                            // Buat marker di posisi tracking
-                            new mapboxgl.Marker()
+
+                            // Buat elemen HTML untuk marker
+                            const el = document.createElement('div');
+                            el.className = 'custom-marker';
+                            el.style.backgroundImage = "url('{{ asset('images/truck-icon.png') }}')";
+                            el.style.width = '40px';
+                            el.style.height = '40px';
+                            el.style.backgroundSize = 'cover';
+
+                            // Tambahkan marker dengan ikon custom
+                            new mapboxgl.Marker(el)
                                 .setLngLat([{{ $lng }}, {{ $lat }}])
                                 .setPopup(new mapboxgl.Popup().setHTML(`<strong>Location:</strong> {{ $location->currentLocation }}<br><strong>Vehicle:</strong> {{ $location->currentVehicle }}`))
                                 .addTo(map);
                         </script>
+
                         
                     </div>
                 </div>
