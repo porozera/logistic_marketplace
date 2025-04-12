@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5>Layanan</h5>
+                    {{-- <h5>Layanan</h5>
                     @foreach ($services as $service)
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="insurance" id="insurance" {{ request('insurance') ? 'checked' : '' }}>
@@ -96,7 +96,25 @@
                           {{$service->serviceName}}
                         </label>
                     </div>
+                    @endforeach --}}
+                    <h5>Jenis Barang</h5>
+                    @foreach ($categories as $category)
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="category[]"
+                                id="category-{{ Str::slug($category) }}"
+                                value="{{ $category }}"
+                                {{ in_array($category, (array) request('category')) ? 'checked' : '' }}
+                            >
+                            <label class="form-check-label" for="category-{{ Str::slug($category) }}">
+                                {{ $category }}
+                            </label>
+                        </div>
                     @endforeach
+
+
                     {{-- <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="insurance" id="insurance" {{ request('insurance') ? 'checked' : '' }}>
                         <label class="form-check-label" for="insurance">

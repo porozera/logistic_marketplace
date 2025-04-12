@@ -277,6 +277,15 @@
                 <span class="pc-mtext">Complain</span>
             </a>
           </li>
+          <li class="pc-item">
+            <a href="#" class="pc-link bg-transparent" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <span class="pc-micon"><i class="ti ti-power text-danger"></i></span>
+                <span class="pc-mtext text-danger">Logout</span>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+          </li>        
           @endif
 
           {{-- <li class="pc-item pc-caption">

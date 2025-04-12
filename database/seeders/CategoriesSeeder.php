@@ -54,6 +54,12 @@ class CategoriesSeeder extends Seeder
                 'description' => 'Sepatu',
             ],
             [
+                'code' => 'GC07',
+                'name' => 'Elektornik',
+                'type' => 'General Cargo',
+                'description' => 'Elektornik',
+            ],
+            [
                 'code' => 'SC01',
                 'name' => 'Hewan',
                 'type' => 'Special Cargo',

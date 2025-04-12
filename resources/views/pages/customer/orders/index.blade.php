@@ -380,7 +380,7 @@
                     <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="{{ $offer['is_for_customer'] }}" hidden>
                     <input type="text" id="status" name="status" class="form-control"  value="{{ $offer['status'] }}" hidden>
                     <input type="text" id="lsp_id" name="lsp_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
-                    @if (($order)->address != null)
+                    @if (optional($order)->address != null)
                     <input type="text" id="address" name="address" class="form-control"  value="{{ $order['address'] }}" hidden>
                     @endif
                   </div>

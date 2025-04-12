@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\City;
 use App\Models\offersModel;
 use App\Models\Order;
@@ -42,20 +43,38 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
     
-        if ($request->has('insurance')) {
-            $query->where('commodities', 'LIKE', '%Asuransi%');
+        $categoryFilters = $request->input('category', []);
+
+        if (!empty($categoryFilters)) {
+            $query->where(function ($q) use ($categoryFilters) {
+                foreach ($categoryFilters as $category) {
+                    if ($category === 'General Cargo') {
+                        $q->orWhere('commodities', 'LIKE', '%Pakaian%')
+                        ->orWhere('commodities', 'LIKE', '%Makanan%')
+                        ->orWhere('commodities', 'LIKE', '%Alat Olah Raga%')
+                        ->orWhere('commodities', 'LIKE', '%Tas%')
+                        ->orWhere('commodities', 'LIKE', '%Peralatan Rumah Tangga%')
+                        ->orWhere('commodities', 'LIKE', '%Peralatan Kantor%')
+                        ->orWhere('commodities', 'LIKE', '%Sepatu%')
+                        ->orWhere('commodities', 'LIKE', '%Elektronik%');
+                    } elseif ($category === 'Dangerous Cargo') {
+                        $q->orWhere('commodities', 'LIKE', '%Senjata%')
+                        ->orWhere('commodities', 'LIKE', '%Cairan Kimia%')
+                        ->orWhere('commodities', 'LIKE', '%Peledak%')
+                        ->orWhere('commodities', 'LIKE', '%Petasan%')
+                        ->orWhere('commodities', 'LIKE', '%Puluru%');
+                    } elseif ($category === 'Special Cargo') {
+                        $q->orWhere('commodities', 'LIKE', '%Hewan%')
+                        ->orWhere('commodities', 'LIKE', '%Makanan Segar%')
+                        ->orWhere('commodities', 'LIKE', '%Tanaman Hias%')
+                        ->orWhere('commodities', 'LIKE', '%Emas%')
+                        ->orWhere('commodities', 'LIKE', '%Berlian%');
+                    }
+                }
+            });
             $searchPerformed = true;
         }
-    
-        if ($request->has('storage')) {
-            $query->where('commodities', 'LIKE', '%Tempat penyimpanan%');
-            $searchPerformed = true;
-        }
-    
-        if ($request->has('fragile')) {
-            $query->where('commodities', 'LIKE', '%Barang pecah belah%');
-            $searchPerformed = true;
-        }
+
     
         if ($request->has('maxTime') && $request->maxTime != '') {
             $query->whereRaw("DATEDIFF(estimationDate, shippingDate) <= ?", [$request->maxTime]);
@@ -73,9 +92,10 @@ class SearchRouteController extends Controller
 
         $offers = $query->get();
         $services = Service::all();
+        $categories = Category::distinct('type')->pluck('type')->toArray();
         $cities = City::pluck('name')->toArray();
     
-        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed', 'cities','services'));
+        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed', 'cities','services','categories'));
     }
     
     public function detail($id)
