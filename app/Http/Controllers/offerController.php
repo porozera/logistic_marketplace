@@ -125,7 +125,7 @@ class offerController extends Controller
             'truck_id' => $attributes['truck_id'],
             'timestamp' => now(),
         ]);
-        return redirect()->route('offers.index')->with('success', 'Offer successfully created!');
+        return redirect()->route('offers.index')->with('success', 'Route successfully created!');
     }
 
     public function show($id)

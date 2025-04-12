@@ -21,7 +21,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderLspController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentLspController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ProfileController;
@@ -132,6 +134,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
     Route::get('/lsp/dashboard', [OfferController::class, 'index']);
+
+    // Kelola rute
     Route::prefix('offers')->group(function(){
         Route::get('/', [OfferController::class, 'index'])->name('offers.index');
         Route::get('search', [OfferController::class, 'search'])->name('offers.search');
@@ -142,6 +146,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::put('/{id}', [OfferController::class, 'update'])->name('offers.update');
         Route::delete('/{id}', [OfferController::class, 'destroy'])->name('offers.destroy');
     });
+
+    //  Penawaran dari request route customer (bidding sama LSP lain)
     Route::prefix('permintaan-pengiriman')->group(function(){
         Route::get('/', [RequestRouteLspController::class, 'index'])->name('permintaan.pengiriman');
         Route::get('/{id}', [RequestRouteLspController::class, 'show']);
@@ -150,19 +156,29 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::post('store', [BidController::class, 'store'])->name('bids.store');
         Route::get('create/{id}', [BidController::class, 'create'])->name('bids.create');
     });
+
+    // Profile
     Route::prefix('profiles')->group(function(){
         Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         // Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::put('/{id}', [ProfileController::class, 'update'])->name('profile.update');
     });
+
+    // Open Container sampe ke pembayaran (LSP to LSP)
     Route::prefix('opencontainer')->group(function () {
         Route::get('/', [OpenContainerController::class, 'index'])->name('opencontainer.index');
         Route::get('/search', [OpenContainerController::class, 'search'])->name('opencontainer.search');
-        Route::get('/{id}', [OpenContainerController::class, 'ajukanPenawaran'])->name('opencontainer.ajukan');
-        Route::post('/{id}', [OpenContainerController::class, 'storePenawaran'])->name('opencontainer.store');
+        // Route::get('/{id}', [OpenContainerController::class, 'ajukanPenawaran'])->name('opencontainer.ajukan');
+        // Route::post('/{id}', [OpenContainerController::class, 'storePenawaran'])->name('opencontainer.store');
+        Route::get('/order/{id}', [OrderLspController::class, 'index'])->name('opencontainer.order');
+        Route::post('/order/perform', [OrderLspController::class, 'order'])->name('opencontainer.order.perform');
+        Route::get('/payment/{token}', [PaymentLspController::class, 'index'])->name('opencontainer.payment');
+        Route::get('/payment/success/{token}', [PaymentLspController::class, 'success'])->name('opencontainer.payment.success');
+        Route::get('/list-payment', [PaymentLspController::class, 'list_payment'])->name('opencontainer.list-payment');
     });
 
+    // Kelola Truck
     Route::prefix('trucks')->group(function () {
         Route::get('/', [TruckController::class, 'index'])->name('trucks.index');
         Route::get('/create', [TruckController::class, 'create'])->name('trucks.create');
@@ -170,6 +186,13 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::get('/{truck}/edit', [TruckController::class, 'edit'])->name('trucks.edit');
         Route::put('/{truck}', [TruckController::class, 'update'])->name('trucks.update');
         Route::delete('/{truck}', [TruckController::class, 'destroy'])->name('trucks.destroy');
+    });
+
+    // Order management
+    Route::prefix('order-management')->group(function () {
+        Route::get('/', [OrderLspController::class, 'manageOrder'])->name('order-management.index');
+        Route::get('/{id}', [OrderLspController::class, 'show'])->name('order-management.show');
+        Route::put('/{id}', [OrderLspController::class, 'update'])->name('order-management.update');
     });
 
 });

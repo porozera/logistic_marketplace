@@ -72,4 +72,9 @@ class Order extends Model
     {
         return "Rp " . number_format($this->totalAmount, 2, ',', '.');
     }
+
+    public function userOrders()
+    {
+        return $this->hasMany(UserOrder::class, 'order_id');
+    }
 }

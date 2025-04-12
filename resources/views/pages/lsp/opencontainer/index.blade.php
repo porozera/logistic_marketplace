@@ -225,7 +225,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a href="{{ route('opencontainer.ajukan', $item->id)}}" type="button" class="btn btn-primary w-50">Ajukan Penawaran</a>
+                            <a href="{{ route('opencontainer.order', $item->id)}}" type="button" class="btn btn-primary w-50">Ajukan Penawaran</a>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         </div>
                     </div>

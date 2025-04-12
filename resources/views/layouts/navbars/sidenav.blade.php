@@ -135,7 +135,7 @@
             <i class="ti ti-news"></i>
         </li>
         <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="/order-management" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-file-text"></i></span>
                 <span class="pc-mtext">Order Management</span>
             </a>
@@ -156,6 +156,12 @@
         <a href="../dashboard/index.html" class="pc-link">
           <span class="pc-micon"><i class="ti ti-truck-delivery"></i></span>
           <span class="pc-mtext">Tracking Order</span>
+        </a>
+      </li>
+    </li><li class="pc-item">
+        <a href="{{ route('opencontainer.list-payment') }}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-cash"></i></span>
+            <span class="pc-mtext">Payment History</span>
         </a>
       </li>
         <li class="pc-item pc-caption">
