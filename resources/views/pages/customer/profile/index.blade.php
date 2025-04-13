@@ -9,11 +9,7 @@
                     <div class="col-md-12">
                         <div class="page-header-title">
                             
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
+                            
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
@@ -28,6 +24,15 @@
               <h3 class="m-b-10">Profil Pengguna</h3>
                 <div class="card">
                     <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          @if(session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                        </div>
+                      </div>
                       <div class="row">
                         <div class="col text-end">
                           <a href="/profile/edit" class="btn btn-primary"><i class="ti ti-edit"></i><span class="ms-2">Edit</span></a>

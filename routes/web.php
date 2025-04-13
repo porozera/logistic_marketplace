@@ -180,6 +180,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/payment/{token}', [PaymentController::class, 'index'])->name('payment');
     Route::get('/payment/success/{token}', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('/list-payment', [PaymentController::class, 'list_payment'])->name('list-payment');
+    Route::get('/invoice/{token}', [PaymentController::class, 'invoice'])->name('invoice');
+    Route::get('/invoice/{token}/download', [PaymentController::class, 'invoice_download'])->name('invoice.download');
+
 
     //PROFILE CUSTOMER
     Route::get('/profile', [ProfileCustomerController::class, 'index'])->name('profile-customer');
