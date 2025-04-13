@@ -22,6 +22,62 @@
         </div>
             <!-- [ breadcrumb ] end -->
             <!-- [ Main Content ] start -->
+        {{-- @if ($userOrder->order->status == 'Selesai') --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="text-center text-primary">Beri Ulasan</h4>
+                        <br>
+                        <form action="/review/create/perform" method="post" id="reviewAddForm">
+                            @csrf
+                            @method('POST')
+                            <div class="row">
+                                <div class="form-group text-center mb-3">
+                                    <input type="hidden" name="ratingNumber" id="ratingNumber" value="{{ old('ratingNumber', 0) }}">
+                                
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="fa fa-star fa-2x star-rating" data-value="{{ $i }}" style="cursor: pointer; color: #ccc;"></i>
+                                    @endfor
+                                
+                                    @error('ratingNumber') 
+                                        <p class="text-danger text-xs pt-1"> {{$message}} </p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group mb-3">
+                                    <textarea class="form-control" name="description" rows="4" placeholder="Tulis pengalaman Anda disini!">{{ old('description') }}</textarea>
+                                    @error('description') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                                </div>
+                            </div>
+                            <input type="number" name="lsp_id" class="form-control" value="{{ $userOrder->order->lsp_id }}" hidden>
+                            <input type="number" name="order_id" class="form-control" value="{{ $userOrder->order->id }}" hidden>
+                            <span class="text-muted small">*Bagikan pengalaman Anda dengan LSP ini, pastikan untuk menyebutan detail yang mungkin dapat membantu pengguna lain.</span>
+                            <div class="row">
+                                <div class="col-12">
+                                    @if ($errors->any())
+                                    <div class="alert alert-danger w-100">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-md-4 text-end">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Kirim Ulasan</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- @endif   --}}
         <div class="row">
             <!-- [ sample-page ] start -->
             <div class="col-sm-12 col-md-12 col-xl-12">
@@ -197,6 +253,7 @@
             </div>
             
         </div>
+        
     </div>
 </div>
   <!-- [ Main Content ] end -->
@@ -225,12 +282,51 @@
         <script>
             document.getElementById('submitFormButton').addEventListener('click', function () {
                 // Submit the form
-                document.getElementById('requestRouteAddForm').submit();
+                document.getElementById('reviewAddForm').submit();
             });
         </script>
         <script>
             setTimeout(function() {
                 document.getElementById('success-alert').style.display = 'none';
             }, 3000);
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const stars = document.querySelectorAll('.star-rating');
+                const ratingInput = document.getElementById('ratingNumber');
+        
+                stars.forEach((star) => {
+                    star.addEventListener('click', function () {
+                        const rating = this.getAttribute('data-value');
+                        ratingInput.value = rating;
+        
+                        // update UI warna bintang
+                        stars.forEach(s => {
+                            s.style.color = (s.getAttribute('data-value') <= rating) ? '#f39c12' : '#ccc';
+                        });
+                    });
+        
+                    // Tambahan hover effect (opsional)
+                    star.addEventListener('mouseover', function () {
+                        const hoverRating = this.getAttribute('data-value');
+                        stars.forEach(s => {
+                            s.style.color = (s.getAttribute('data-value') <= hoverRating) ? '#f39c12' : '#ccc';
+                        });
+                    });
+        
+                    star.addEventListener('mouseout', function () {
+                        const currentRating = ratingInput.value;
+                        stars.forEach(s => {
+                            s.style.color = (s.getAttribute('data-value') <= currentRating) ? '#f39c12' : '#ccc';
+                        });
+                    });
+                });
+        
+                // Inisialisasi jika sudah ada nilai sebelumnya
+                const initRating = ratingInput.value;
+                stars.forEach(s => {
+                    s.style.color = (s.getAttribute('data-value') <= initRating) ? '#f39c12' : '#ccc';
+                });
+            });
         </script>
 @endsection

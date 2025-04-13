@@ -72,10 +72,10 @@
                             <div class="form-group mb-3">
                             <label class="form-label">Mode Pengiriman</label>
                             <select class="form-control" name="shipmentMode" id="shipmentMode">
-                                <option value="D2D">Door to Door</option>
-                                <option value="D2P">Door to Port</option>
-                                <option value="P2P">Port to Port</option>
-                                <option value="P2D">Port to Door</option>
+                                <option value="D2D">Door to Door (D2D)</option>
+                                <option value="D2P">Door to Port (D2P)</option>
+                                <option value="P2P">Port to Port (P2P)</option>
+                                <option value="P2D">Port to Door (P2D)</option>
                             </select>                            
                             @error('shipmentMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>

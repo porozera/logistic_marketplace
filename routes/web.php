@@ -27,6 +27,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Livewire\MapLocation;
 use App\Models\City;
@@ -207,6 +208,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     //TRACKING
     Route::get('/tracking', [TrackingController::class, 'index'])->name('tracking-customer');
     Route::get('/tracking/detail/{id}', [TrackingController::class, 'detail'])->name('tracking-customer.detail');
+
+    //REVIEW
+    Route::get('/review', [ReviewController::class, 'index'])->name('review');
+    Route::post('/review/create/perform', [ReviewController::class, 'store'])->name('review.store');
 });
 
 

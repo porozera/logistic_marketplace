@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-@section('title', 'Payment History')
+@section('title', 'Invoice')
 @section('style')
 <style>
     body {
@@ -89,11 +89,16 @@
                 </div>
             </div>
         </div>
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-8">
+        <div class="row d-flex justify-content-center align-items-center mb-3">
+            <div class="col-6 text-end">
                 <a href="{{ route('invoice.download', $userOrder->payment_token) }}" class="btn btn-success mt-3">
                     <i class="fas fa-file-download"></i> Download PDF
                 </a>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-8">
+                
                 
                 <div class="invoice-box">
                     <div class="header">
@@ -170,8 +175,12 @@
                     </table>
                     <div class="footer">
                         <p>Terima kasih telah menggunakan layanan kami.</p>
+                        <a href="{{ url()->previous() }}" class="btn btn-primary mt-3 w-100">
+                            Back
+                        </a>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
