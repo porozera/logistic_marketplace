@@ -22,10 +22,19 @@
         </div>
             <!-- [ breadcrumb ] end -->
             <!-- [ Main Content ] start -->
-        {{-- @if ($userOrder->order->status == 'Selesai') --}}
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <div class="col-12">
-                <div class="card">
+                @if(session('success'))
+                    <div class="alert alert-success" id="success-alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+        @if ($review == 0)
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                <div class="card card-hover">
                     <div class="card-body">
                         <h4 class="text-center text-primary">Beri Ulasan</h4>
                         <br>
@@ -77,7 +86,7 @@
                 </div>
             </div>
         </div>
-        {{-- @endif   --}}
+        @endif  
         <div class="row">
             <!-- [ sample-page ] start -->
             <div class="col-sm-12 col-md-12 col-xl-12">
@@ -267,7 +276,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Apakah Anda yakin melakukan permintaan rute ini?
+                        Apakah Anda yakin mengirim ulasan ini?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -328,5 +337,10 @@
                     s.style.color = (s.getAttribute('data-value') <= initRating) ? '#f39c12' : '#ccc';
                 });
             });
+        </script>
+        <script>
+            setTimeout(function() {
+                document.getElementById('success-alert').style.display = 'none';
+            }, 3000);
         </script>
 @endsection

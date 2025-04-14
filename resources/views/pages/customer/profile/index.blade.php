@@ -27,10 +27,10 @@
                       <div class="row">
                         <div class="col">
                           @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
+                              <div class="alert alert-success" id="success-alert">
+                                  {{ session('success') }}
+                              </div>
+                          @endif
                         </div>
                       </div>
                       <div class="row">
@@ -121,13 +121,20 @@
   const password = document.querySelector("#password");
 
   togglePassword.addEventListener("click", function () {
-  
-  // toggle the type attribute
-  const type = password.getAttribute("type") === "password" ? "text" : "password";
-  password.setAttribute("type", type);
-  // toggle the eye icon
-  this.classList.toggle('ti-eye');
-  this.classList.toggle('ti-eye-off');
+    const type = password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    this.classList.toggle('ti-eye');
+    this.classList.toggle('ti-eye-off');
   });
+</script>
+<script>
+  setTimeout(function () {
+      const alert = document.getElementById('success-alert');
+      if (alert) {
+          alert.style.transition = 'opacity 0.5s ease';
+          alert.style.opacity = '0';
+          setTimeout(() => alert.remove(), 500);
+      }
+  }, 5000);
 </script>
 @endsection

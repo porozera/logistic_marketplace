@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Review;
 use App\Models\Tracking;
 use App\Models\UserOrder;
 use Illuminate\Http\Request;
@@ -30,8 +31,11 @@ class TrackingController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         $location = Tracking::where('order_id', $userOrder->order->id)
-            ->orderBy('created_at', 'desc') // urutkan dari yang terbaru
-            ->first(); // ambil satu data paling atas        
-        return view('pages.customer.tracking.detail', compact('userOrder', 'tracking','location'));
+            ->orderBy('created_at', 'desc') 
+            ->first();
+        $review = Review::where('order_id', $userOrder->order->id)
+            ->where('customer_id', Auth::id())
+            ->count();
+        return view('pages.customer.tracking.detail', compact('userOrder', 'tracking','location','review'));
     }
 }

@@ -17,7 +17,7 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->validate([
-            'description' => 'required|string|max:255',
+            'description' => 'required',
             'ratingNumber' => 'required|integer|between:1,5',
             'lsp_id' => 'required',
             'order_id' => 'required',
@@ -31,5 +31,33 @@ class ReviewController extends Controller
             'order_id' => $attributes['order_id'],
         ]);
         return redirect()->back()->with('success', 'Review berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $reviews = Review::findOrFail($id);
+        return view('pages.customer.review.edit', compact('reviews'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $attributes = $request->validate([
+            'description' => 'required',
+            'ratingNumber' => 'required|integer|between:1,5',
+        ]);
+
+        $review = Review::where('id', $id)->where('customer_id', Auth::id())->firstOrFail();
+        $review->update([
+            'description' => $attributes['description'],
+            'ratingNumber' => $attributes['ratingNumber'],
+        ]);
+        return redirect()->route('review')->with('success', 'Review berhasil diubah.');
+    }
+
+    public function destroy($id)
+    {
+        $review = Review::where('id', $id)->where('customer_id', Auth::id())->firstOrFail();
+        $review->delete();
+        return redirect()->route('review')->with('success', 'Review berhasil dihapus.');
     }
 }

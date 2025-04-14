@@ -14,7 +14,7 @@
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0)">Detail Order</a></li>
+                            {{-- <li class="breadcrumb-item"><a href="javascript: void(0)">Detail Order</a></li> --}}
                             <li class="breadcrumb-item" aria-current="page">Daftar Ulasan</li>
                         </ul>
                     </div>
@@ -23,16 +23,45 @@
         </div>
             <!-- [ breadcrumb ] end -->
             <!-- [ Main Content ] start -->
+        @if ($reviews->isEmpty())
         <div class="row justify-content-center">
-            <div class="col-sm-12 col-md-8 col-xl-8">
-                <h3 class="">Daftar Ulasan</h3>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+                <h3 class="">Daftar Ulasan Anda</h3>
             </div>
         </div>
+        @else
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-8 col-xl-8">
+                <h3 class="">Daftar Ulasan Anda</h3>
+            </div>
+        </div>
+        @endif
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-8 col-xl-8">
+                @if(session('success'))
+                    <div class="alert alert-success" id="success-alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+        @if ($reviews->isEmpty())
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <div class="card text-center p-4 w-50">
+                    <div class="card-body">
+                        <img src="{{ asset('template/mantis/dist/assets/images/search_icon.png') }}" alt="Search Icon" class="mb-3" style="max-width: 100px;">
+                        <h3 class="mb-2">Tidak Ada Ulasan</h3>
+                        <p class="text-muted">Lakukan pengiriman untuk membuat ulasan!</p>
+                        <a href="/search-routes" class="btn btn-primary w-50">Cari Penawaran</a>
+                    </div>
+                </div>
+            </div>
+        @endif
         @foreach ($reviews as $item )
         <div class="row justify-content-center">
             <!-- [ sample-page ] start -->
             <div class="col-sm-12 col-md-8 col-xl-8">
-                <div class="card">
+                <div class="card card-hover">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8 d-flex align-items-center">
@@ -46,10 +75,15 @@
                                 </div>
                             </div>
                             <div class="col-4 d-flex justify-content-end align-items-center">
-                                <a href="" class="btn btn-icon btn-light-primary"><i class="ti ti ti-edit"></i></a>
+                                <a href="/review/edit/{{$item->id}}" class="btn btn-icon btn-light-primary"><i class="ti ti ti-edit"></i></a>
+                                <form action="/review/delete/{{$item->id}}" method="POST" id="reviewDeleteForm">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-icon btn-light-danger ms-1 mt-3" data-bs-toggle="modal" data-bs-target="#addModal"><i class="ti ti-trash"></i></button>
+                                </form>
                             </div>
                         </div>
-                        <br>
+        
                         <div class="row align-items-center">
                             <div class="col-12 d-flex justify-content-between">
                                 <div class="star-rating">
@@ -108,11 +142,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Apakah Anda yakin melakukan permintaan rute ini?
+                        Apakah Anda yakin menghapus ulasan ini?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="button" class="btn btn-primary" id="submitFormButton">Kirim</button>
+                        <button type="button" class="btn btn-danger" id="submitFormButton">Hapus</button>
                     </div>
                 </div>
             </div>
@@ -123,7 +157,7 @@
         <script>
             document.getElementById('submitFormButton').addEventListener('click', function () {
                 // Submit the form
-                document.getElementById('requestRouteAddForm').submit();
+                document.getElementById('reviewDeleteForm').submit();
             });
         </script>
         <script>
@@ -169,5 +203,15 @@
                     s.style.color = (s.getAttribute('data-value') <= initRating) ? '#f39c12' : '#ccc';
                 });
             });
+        </script>
+        <script>
+            setTimeout(function () {
+                const alert = document.getElementById('success-alert');
+                if (alert) {
+                    alert.style.transition = 'opacity 0.5s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500); 
+                }
+            }, 5000);
         </script>
 @endsection

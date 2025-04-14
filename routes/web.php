@@ -212,6 +212,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     //REVIEW
     Route::get('/review', [ReviewController::class, 'index'])->name('review');
     Route::post('/review/create/perform', [ReviewController::class, 'store'])->name('review.store');
+    Route::get('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
+    Route::put('/review/update/{id}/perform', [ReviewController::class, 'update'])->name('review.update');
+    Route::delete('/review/delete/{id}', [ReviewController::class, 'destroy'])->name('review.delete');
 });
 
 

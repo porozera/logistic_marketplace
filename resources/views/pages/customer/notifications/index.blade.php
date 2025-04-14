@@ -46,6 +46,13 @@
                                 {{ session('success') }}
                             </div>
                         @endif
+
+                        @if($notifications->isEmpty())
+                            <div class="alert alert-primary text-center">
+                                Tidak ada notifikasi baru.
+                            </div>
+                        @endif
+                        
                         @foreach ($notifications as $item)
                         @if ($item->is_read == 0)
                         <div class="alert  mb-0 d-flex justify-content-between align-items-center" style="background-color: #EDF3FF;">
@@ -84,7 +91,8 @@
                                 <form action="{{ route('notification-customer.delete', $item->id) }}" method="POST" class="mt-2">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    <button type="submit" class="btn btn-icon btn-light-danger ms-1"><i class="ti ti-trash"></i></button>
+                                    {{-- <a href="" class="btn btn-icon btn-light-danger ms-1"><i class="ti ti-trash"></i></a> --}}
                                 </form>
                             </div>
                         </div> 
