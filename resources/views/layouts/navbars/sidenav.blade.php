@@ -232,6 +232,12 @@
                 <span class="pc-mtext">Tracking Order</span>
             </a>
           </li>
+          <li class="pc-item">
+            <a href="{{ route('review') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-color-picker"></i></span>
+                <span class="pc-mtext">Daftar Ulasan</span>
+            </a>
+          </li>
           <li class="pc-item pc-caption">
             <label>Pesan</label>
             <i class="ti ti-news"></i>

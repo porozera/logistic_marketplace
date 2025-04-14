@@ -10,7 +10,8 @@ class ReviewController extends Controller
 {
     public function index()
     {
-        return view('pages.customer.review.index');
+        $reviews = Review::where('customer_id', Auth::id())->orderBy('created_at', 'desc')->paginate(5);
+        return view('pages.customer.review.index', compact('reviews'));
     }
 
     public function store(Request $request)

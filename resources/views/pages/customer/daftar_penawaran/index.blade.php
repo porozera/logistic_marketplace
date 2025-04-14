@@ -23,8 +23,21 @@
                 </div>
             </div>
         </div>
+        @if ($bids->isEmpty())
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-5 col-xl-5">
+                <h3 class="">Daftar Penawaran</h3>
+            </div>
+        </div>
+        @else
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-10 col-xl-10">
+                <h3 class="">Daftar Penawaran</h3>
+            </div>
+        </div>
+        @endif
         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-12">
+            <div class="col-sm-12 col-md-10 col-xl-10">
                 @if ($bids->isEmpty())
                 <div style="display: flex; justify-content: center; align-items: center;">
                     <div class="card text-center p-4 w-50">

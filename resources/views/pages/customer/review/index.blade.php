@@ -15,7 +15,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0)">Detail Order</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Review</li>
+                            <li class="breadcrumb-item" aria-current="page">Daftar Ulasan</li>
                         </ul>
                     </div>
                 </div>
@@ -24,40 +24,76 @@
             <!-- [ breadcrumb ] end -->
             <!-- [ Main Content ] start -->
         <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-8 col-xl-8">
+                <h3 class="">Daftar Ulasan</h3>
+            </div>
+        </div>
+        @foreach ($reviews as $item )
+        <div class="row justify-content-center">
             <!-- [ sample-page ] start -->
             <div class="col-sm-12 col-md-8 col-xl-8">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="text-center text-primary">Beri Ulasan</h4>
+                        <div class="row">
+                            <div class="col-8 d-flex align-items-center">
+                                <div class="me-4">
+                                    <img src="{{ $item->lsp->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
+                                        alt="profile-lsp" 
+                                        class="user-avtar border wid-35 rounded-circle">
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <h5 class="mb-0 fw-bold">{{ $item->lsp->companyName }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end align-items-center">
+                                <a href="" class="btn btn-icon btn-light-primary"><i class="ti ti ti-edit"></i></a>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row align-items-center">
+                            <div class="col-12 d-flex justify-content-between">
+                                <div class="star-rating">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="fas fa-star {{ $i <= $item->ratingNumber ? 'text-warning' : 'text-muted' }}"></i>
+                                    @endfor
+                                    <span>({{ $item->ratingNumber }})</span>
+                                </div>
+                                <p class="mb-0">{{ $item->created_at }}</p>
+                            </div>
+                        </div>
                         <br>
                         <div class="row">
-                            <div class="form-group text-center mb-3">
-                                <input type="hidden" name="ratingNumber" id="ratingNumber" value="{{ old('ratingNumber', 0) }}">
-                            
-                                @for ($i = 1; $i <= 5; $i++)
-                                    <i class="fa fa-star fa-2x star-rating" data-value="{{ $i }}" style="cursor: pointer; color: #ccc;"></i>
-                                @endfor
-                            
-                                @error('ratingNumber') 
-                                    <p class="text-danger text-xs pt-1"> {{$message}} </p>
-                                @enderror
+                            <div class="col-12">
+                                <div class="d-flex align-items-center">
+                                    <p class="fw-bold text-primary">{{ $item->order->origin }}</p>
+                                    <div class="bg-secondary mx-2 mb-3" style="width: 10px; height: 1px;"></div>
+                                    <p class="fw-bold text-primary">{{ $item->order->destination }}</p>
+                                    <p class="mx-2">|</p>
+                                    <p class="fw-bold text-primary">{{ $item->order->shipmentType}}</p>
+                                    <p class="mx-2">|</p>
+                                    <p class="fw-bold text-primary">{{ $item->order->shipmentMode}}</p>
+                                    <p class="mx-2">|</p>
+                                    <p class="fw-bold text-primary">{{ $item->order->shipping_date_formatted}}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group mb-3">
-                                <textarea class="form-control" name="address" rows="4" placeholder="Tulis pengalaman Anda disini!">{{ old('address') }}</textarea>
-                                @error('address') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
-                        </div>
-                        <span class="text-muted small">*Bagikan pengalaman Anda dengan LSP ini, pastikan untuk menyebutan detail yang mungkin dapat membantu pengguna lain.</span>
-                        <div class="row justify-content-end">
-                            <div class="col-md-4 text-end">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Kirim Ulasan</button>
+                            <div class="col-12">
+                                <p>Komentar:</p>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p>{{$item->description}}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        @endforeach
+        <div class="d-flex justify-content-center mt-4">
+            {{ $reviews->links('pagination::bootstrap-4') }}
         </div>
     </div>
 </div>

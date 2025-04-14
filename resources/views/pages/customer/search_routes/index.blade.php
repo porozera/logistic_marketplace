@@ -30,7 +30,7 @@
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-sm-12 col-md-12 col-xl-12">
-        <h3 class="m-b-10">Cari Rute</h2>
+        <h3 class="m-b-10">Cari Rute</h3>
           <div class="card">
             <div class="card-body">
                 <form action="{{ route('search-route') }}">
