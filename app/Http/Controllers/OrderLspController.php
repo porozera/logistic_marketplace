@@ -244,4 +244,12 @@ $attributes = $request->validate($rules);
         return view('pages.lsp.manage-order.index', compact('orders'));
     }
 
+    public function showOffer($id)
+    {
+        $order = Order::findOrFail($id);
+        $userOrders = UserOrder::where('order_id', $id)->get();
+
+    return view('pages.lsp.manage-order.show', compact('order', 'userOrders'));
+    }
+
 }

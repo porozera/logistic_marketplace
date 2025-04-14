@@ -88,7 +88,7 @@
                                 <a href="/offers/create" class="btn btn-primary" style="align-content: center">Tambah Rute</a>
                             </div>
 
-                            <table class="table table-hover table-borderless mb-0">
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>ID Rute</th>

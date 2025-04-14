@@ -17,13 +17,27 @@
             <div class="card card-hover mb-3 shadow-sm p-3" style="border-radius: 10px">
                 <div class="card-body">
                         <div class="row align-items-center mb-4">
-                            <div class="col-md-6 d-flex align-items-center justify-content-start">
+                            <div class="col-md-4 d-flex align-items-center justify-content-start">
                                 <h4 class="mb-0">No Offer : <span class="text-primary">{{$order->noOffer}}</span> </h4>
                             </div>
-                            <div class="col-md-6 d-flex align-items-center justify-content-end">
+                            <div class="col-md-4 d-flex align-items-center justify-content-start">
+                                @php
+                                $daysLeft = \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($order->loadingDate), false);
+                                $daysLeft = ceil($daysLeft);
+                                @endphp
+                                @if ($daysLeft > 0)
+                                <h4 class=" bg-primary text-light " style="border-radius: 30px; padding:5px">Muat dalam {{ $daysLeft }} hari</h4>
+                                @elseif ($daysLeft == 0)
+                                <h4 class=" bg-primary text-dark " style="border-radius: 30px; padding:5px">Muat Hari ini</h4>
+                                @else
+                                <h4 class=" bg-danger text-dark " style="border-radius: 30px; padding:5px">Lewat {{ abs($daysLeft) }} hari</h4>
+                                @endif
+                            </div>
+                            <div class="col-md-4 d-flex align-items-center justify-content-end">
                                 <h4 class="mb-0">ID : <span class="text-primary">{{$order->id}}</span> </h4>
                             </div>
                         </div>
+                        <hr class="text-primary" style="border: 1px solid #007bff; border-radius: 5px;">
                         <div class="row align-items-center mt-3">
                             <div class="col-md-6 d-flex align-items-center justify-content-start">
                                 <h5 class="mb-0 fw-bold">{{ $order->origin }}</h5>
@@ -47,24 +61,21 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="row align-items-center mt-3"></div>
-                            <div class="col-md-6 d-flex align-items-center justify-content-start">
-                                <h5 class="mb-0">Tanggal Muat : <span class="text-primary">{{ \Carbon\Carbon::parse($order->loadingDate)->translatedFormat('l, d F Y')}}</span></h5>
+                        <div class="row align-items-center mt-3">
+                            <div class="col-md-6 align-items-center justify-content-start d-flex">
+                                <div style="display: block">
+                                    <h5 class="mb-0">Tanggal Muat : </h5>
+                                    <h5 class="mb-0 text-primary mt-2">{{ \Carbon\Carbon::parse($order->loadingDate)->translatedFormat('l, d F Y')}}</h5>
+                                </div>
+                                <div style="display: block" class="ms-4">
+                                    <h5 class="mb-0">Tanggal Pengiriman : </h5>
+                                    <h5 class="mb-0 text-primary mt-2">{{ \Carbon\Carbon::parse($order->shippingDate)->translatedFormat('l, d F Y')}}</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-6  gap-2 text-end" style="display:flex; justify-content: flex-end">
+                                <a href=" {{route('order-management.showOffer', $order->id)}} " class="btn btn-primary" style="border-radius: 10px; width:250px">Lihat Detail</a>
                             </div>
                         </div>
-                            {{-- <div class="col-md-2 d-flex align-items-center gap-2 text-end" style="justify-content: flex-end">
-                                <h4 class="mb-0 text-primary">{{$order->noOffer}}</h4>
-                            </div> --}}
-                        {{-- <div>
-                            <h5 class="mb-1"><strong>{{ $order->origin }} ➝ {{ $order->destination }}</strong></h5>
-                            <p class="mb-0 text-muted">ID: {{ $order->noOffer }}</p>
-                            <p class="mb-0 text-muted">Sisa Volume: {{ $order->remainingVolume }} CBM | Berat: {{ $order->remainingWeight }} Kg</p>
-                        </div>
-                        <div class="text-end">
-                            <span class="badge bg-primary">{{ $order->shipmentMode }} - {{ $order->shipmentType }}</span>
-                            <p class="mb-0 mt-2">Total Pemesan: <strong>{{ $order->userOrders->count() }}</strong></p> --}}
-                            {{-- <a href="{{ route('lsp.orders.detail', $order->id) }}" class="btn btn-sm btn-outline-primary mt-2">Lihat Detail</a> --}}
-                        {{-- </div> --}}
                 </div>
             </div>
         @endforeach
