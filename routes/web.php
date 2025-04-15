@@ -196,6 +196,14 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::get('/{id}', [OrderLspController::class, 'showOffer'])->name('order-management.showOffer');
     });
 
+    // Bids List
+    Route::prefix('bids-list')->group(function () {
+        Route::get('/', [BidController::class, 'index'])->name('bids-list.index');
+        // Route::get('/{id}', [BidController::class, 'show'])->name('bids-list.show');
+        // Route::put('/{id}', [BidController::class, 'update'])->name('bids-list.update');
+        // Route::delete('/{id}', [BidController::class, 'destroy'])->name('bids-list.destroy');
+    });
+
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function () {

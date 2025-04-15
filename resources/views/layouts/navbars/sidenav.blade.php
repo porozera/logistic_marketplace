@@ -141,6 +141,12 @@
             </a>
         </li>
         <li class="pc-item">
+            <a href="/bids-list" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-list-check"></i></span>
+                <span class="pc-mtext">Bid List</span>
+            </a>
+        </li>
+        <li class="pc-item">
           <a href="/offers" class="pc-link">
             <span class="pc-micon"><i class="ti ti-map"></i></span>
             <span class="pc-mtext">Kelola Rute</span>

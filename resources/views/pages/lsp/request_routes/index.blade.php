@@ -27,6 +27,9 @@
                         <input type="text" class="form-control me-2" placeholder="Tujuan">
                         <button class="btn btn-primary">Cari</button>
                     </div>
+                    @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
 
                     @foreach ($requests as $request)
                         <div class="card mb-3 p-3 border-primary" style="border-radius: 10px">
