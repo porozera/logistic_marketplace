@@ -1,32 +1,35 @@
 <?php
 
 
+use App\Models\City;
 use App\Models\Service;
 use App\Models\Category;
-use App\Http\Controllers\ContainerController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FAQCustomerController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\RequestRouteController;
-use App\Http\Controllers\RequestRouteLspController;
-use App\Http\Middleware\RoleMiddleware;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BidController;
 use App\Http\Controllers\FaqController;
+use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\offerController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProvinceController;
-use App\Http\Controllers\BidController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProfileCustomerController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ContainerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LspReportController;
+use App\Http\Controllers\FAQCustomerController;
 use App\Http\Controllers\SearchRouteController;
-use App\Http\Controllers\ProfileController;
-use App\Models\City;
-use Illuminate\Http\Request;
+use App\Http\Controllers\RequestRouteController;
+use App\Http\Controllers\CustomerReportController;
+use App\Http\Controllers\ProfileCustomerController;
+use App\Http\Controllers\RequestRouteLspController;
+use App\Http\Controllers\ShipmentReportController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -72,7 +75,7 @@ Route::get('/terms-of-service/customer', function () {return view('auth.terms_of
 // Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'index_admin'])->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index_admin'])->name('admin.dashboard');
 
     // Contaniner
     Route::get('/admin/container', [ContainerController::class,'index']);
@@ -122,10 +125,23 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::put('/admin/faq/{id}', [FaqController::class, 'update']);
     Route::delete('/admin/faq/{id}', [FaqController::class, 'destroy'])->name('faq.destroy');
 
+    //LSP
+    Route::get('/report-lsp', [LspReportController::class, 'index'])->name('admin.lsp.index');
+    Route::get('/report-lsp/edit/{id}', [LspReportController::class, 'edit'])->name('admin.lsp.edit');
+    Route::put('/report-lsp/{id}', [LspReportController::class, 'update'])->name('admin.lsp.update');
+    Route::get('/report-lsp/{id}', [LspReportController::class, 'show'])->name('admin.lsp.show');
+    Route::delete('/report-lsp/{id}', [LspReportController::class, 'destroy'])->name('admin.lsp.destroy');
 
-    //Laporan
-    Route::get('/admin/report-user', [LaporanController::class, 'index_user']);
-    Route::get('/admin/report-shipment', [LaporanController::class, 'index_shipment']);
+    //Customer
+    Route::get('/report-customer', [CustomerReportController::class, 'index'])->name('admin.customer.index');
+    Route::get('/report-customer/edit/{id}', [CustomerReportController::class, 'edit'])->name('admin.customer.edit');
+    Route::put('/report-customer/{id}', [CustomerReportController::class, 'update'])->name('admin.customer.update');
+    Route::get('/report-customer/{id}', [CustomerReportController::class, 'show'])->name('admin.customer.show');
+    Route::delete('/report-customer/{id}', [CustomerReportController::class, 'destroy'])->name('admin.customer.destroy');
+    
+    //Shipment
+    Route::get('/report-shipment', [ShipmentReportController::class, 'index'])->name('admin.shipment.index');
+    Route::get('/report-shipment/{id}', [ShipmentReportController::class, 'show'])->name('admin.shipment.show');
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {

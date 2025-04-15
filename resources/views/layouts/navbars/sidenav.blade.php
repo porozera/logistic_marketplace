@@ -30,7 +30,7 @@
             <i class="ti ti-dashboard"></i>
           </li>
           <li class="pc-item {{ Request::is('admin/container*') ? 'active' : '' }}">
-            <a href="container" class="pc-link">
+            <a href="admin/container" class="pc-link">
               <span class="pc-micon"><i class="ti ti-caravan"></i></span>
               <span class="pc-mtext">Kontainer</span>
             </a>
@@ -61,13 +61,19 @@
           </li>
   
           <li class="pc-item pc-caption">
-            <label>Laporan</label>
+            <label>Manajemen Data</label>
             <i class="ti ti-news"></i>
           </li>
           <li class="pc-item">
-            <a href="report-user" class="pc-link">
+            <a href="report-customer" class="pc-link">
               <span class="pc-micon"><i class="ti ti-users"></i></span>
               <span class="pc-mtext">Pengguna</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="report-lsp" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-building-warehouse"></i></span>
+              <span class="pc-mtext">Logistic Service Provider (LSP)</span>
             </a>
           </li>
           <li class="pc-item">
