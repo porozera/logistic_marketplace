@@ -100,7 +100,7 @@
             </a>
         </li>
         <li class="pc-item {{ Request::is('admin/faq*') ? 'active' : '' }}">
-            <a href="admin.faq" class="pc-link">
+            <a href="{{ route('admin.faq') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-zoom-question"></i></span>
                 <span class="pc-mtext">FAQs Data</span>
             </a>

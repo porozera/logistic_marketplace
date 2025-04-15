@@ -12,7 +12,7 @@
             <div class="col-md-12">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan Pengiriman</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan</a></li>
                 <li class="breadcrumb-item" aria-current="page">Tambah Data</li>
               </ul>
             </div>
@@ -32,7 +32,7 @@
         </div>
         <div class="card-body">
 
-          <form action="service-add" method="post">
+          <form action="{{ route('admin.service.store') }}" method="post">
             @csrf
             <div>
                 <div class="form-group">
