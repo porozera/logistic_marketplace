@@ -3,10 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="container" style="padding-left: 250px; padding-top:80px;">
- 
-    
-      <div class="pc-content">
+<div class="pc-container">
+  <div class="pc-content">
         <!-- [ breadcrumb ] start -->
         <div class="page-header">
           <div class="page-block">
@@ -97,13 +95,14 @@
           <!-- HTML5 Export Buttons end -->
         </div>
         <!-- [ Main Content ] end -->
-      </div>
-      <script src="{{ asset('template/mantis/dist/assets/js/plugins/popper.min.js') }}"></script>
-      <script src="{{ asset('template/mantis/dist/assets/js/plugins/simplebar.min.js') }}"></script>
-      <script src="{{ asset('template/mantis/dist/assets/js/plugins/bootstrap.min.js') }}"></script>
-      <script src="{{ asset('template/mantis/dist/assets/js/fonts/custom-font.js') }}"></script>
-      <script src="{{ asset('template/mantis/dist/assets/js/pcoded.js') }}"></script>
-      <script src="{{ asset('template/mantis/dist/assets/js/plugins/feather.min.js') }}"></script>
+    </div>
+  </div>
+<script src="{{ asset('template/mantis/dist/assets/js/plugins/popper.min.js') }}"></script>
+<script src="{{ asset('template/mantis/dist/assets/js/plugins/simplebar.min.js') }}"></script>
+<script src="{{ asset('template/mantis/dist/assets/js/plugins/bootstrap.min.js') }}"></script>
+<script src="{{ asset('template/mantis/dist/assets/js/fonts/custom-font.js') }}"></script>
+<script src="{{ asset('template/mantis/dist/assets/js/pcoded.js') }}"></script>
+<script src="{{ asset('template/mantis/dist/assets/js/plugins/feather.min.js') }}"></script>
       
 
 <script>layout_change('light');</script>

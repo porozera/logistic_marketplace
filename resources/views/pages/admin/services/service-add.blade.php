@@ -3,7 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="container" style="padding-left: 250px; padding-top:80px;">
+<div class="pc-container">
+  <div class="pc-content">
     <!-- [ breadcrumb ] start -->
     <div class="page-header">
         <div class="page-block">
@@ -74,5 +75,6 @@
           </form>
         </div>
       </div>
+    </div>
 </div>
 @endsection

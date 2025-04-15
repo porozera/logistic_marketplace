@@ -30,24 +30,24 @@
             <i class="ti ti-dashboard"></i>
           </li>
           <li class="pc-item {{ Request::is('admin/container*') ? 'active' : '' }}">
-            <a href="admin/container" class="pc-link">
+            <a href="{{ route('admin.container') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-caravan"></i></span>
               <span class="pc-mtext">Kontainer</span>
             </a>
           </li>
           <li class="pc-item {{ Request::is('admin/service*') ? 'active' : '' }}">
-            <a href="service" class="pc-link">
+            <a href="{{ route('admin.service') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
               <span class="pc-mtext">Layanan</span>
             </a>
           </li>
           <li class="pc-item {{ Request::is('admin/category*') ? 'active' : '' }}">
-            <a href="category" class="pc-link">
+            <a href="{{ route('admin.category') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-box"></i></span>
               <span class="pc-mtext">Kategori Barang</span>
             </a>
           </li>
-          <li class="pc-item {{ Request::is('admin/province*') ? 'active' : '' }}">
+          {{-- <li class="pc-item {{ Request::is('admin/province*') ? 'active' : '' }}">
             <a href="province" class="pc-link">
               <span class="pc-micon"><i class="ti ti-building-skyscraper"></i></span>
               <span class="pc-mtext">Provinsi</span>
@@ -58,26 +58,26 @@
               <span class="pc-micon"><i class="ti ti-building"></i></span>
               <span class="pc-mtext">Kota</span>
             </a>
-          </li>
+          </li> --}}
   
           <li class="pc-item pc-caption">
             <label>Manajemen Data</label>
             <i class="ti ti-news"></i>
           </li>
-          <li class="pc-item">
-            <a href="report-customer" class="pc-link">
+          <li class="pc-item {{ Request::is('admin/report-customer*') ? 'active' : '' }}">
+            <a href="{{ route('admin.customer.index') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-users"></i></span>
               <span class="pc-mtext">Pengguna</span>
             </a>
           </li>
-          <li class="pc-item">
-            <a href="report-lsp" class="pc-link">
+          <li class="pc-item {{ Request::is('admin/report-lsp*') ? 'active' : '' }}">
+            <a href="{{ route('admin.lsp.index') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-building-warehouse"></i></span>
               <span class="pc-mtext">Logistic Service Provider (LSP)</span>
             </a>
           </li>
-          <li class="pc-item">
-            <a href="report-shipment" class="pc-link">
+          <li class="pc-item {{ Request::is('admin/report-shipment*') ? 'active' : '' }}">
+            <a href="{{ route('admin.shipment.index') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-truck-delivery"></i></span>
               <span class="pc-mtext">Pengiriman</span>
             </a>
@@ -100,7 +100,7 @@
             </a>
         </li>
         <li class="pc-item {{ Request::is('admin/faq*') ? 'active' : '' }}">
-            <a href="faq" class="pc-link">
+            <a href="admin.faq" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-zoom-question"></i></span>
                 <span class="pc-mtext">FAQs Data</span>
             </a>
