@@ -113,9 +113,9 @@
                             // Buat elemen HTML untuk marker
                             const el = document.createElement('div');
                             el.className = 'custom-marker';
-                            el.style.backgroundImage = "url('{{ asset('images/truck-icon.png') }}')";
-                            el.style.width = '40px';
-                            el.style.height = '40px';
+                            el.style.backgroundImage = "url('{{ asset('images/truck-icon3.png') }}')";
+                            el.style.width = '50px';
+                            el.style.height = '50px';
                             el.style.backgroundSize = 'cover';
 
                             // Tambahkan marker dengan ikon custom
@@ -133,74 +133,97 @@
 
         <div class="row">
             <div class="col-sm-12 col-md-6 col-xl-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4>Detail Order</h4>
-                        <div class="mb-2">
-                            Penyedia Jasa Logistik:
-                            <span class="fw-bold d-inline">{{ $userOrder->order->lspName }}</span>
-                        </div>
-        
-                        <div class="mb-3">
-                            <h5 class="fw-bold text-primary d-inline">ID: </h5>
-                            <h5 class="text-primary d-inline">{{ $userOrder->order->noOffer }}</h5>
-                        </div>
-        
-                        <div class="row mb-2">
-                            <div class="col">Mode Pengiriman</div>
-                            <div class="col text-end">
-                                {{-- <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i> --}}
-                                @if ($userOrder->order->shipmentMode == 'D2D')
-                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Door    
-                                @elseif ($$userOrder->order->shipmentMode == 'D2P')
-                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Port
-                                @elseif ($$userOrder->order->shipmentMode == 'P2D')
-                                <i class="ti ti-truck-delivery text-primary me-1"></i> Port to Door   
-                                @elseif ($$userOrder->order->shipmentMode == 'P2P')
-                                <i class="ti ti-sailboat text-primary me-1"></i> Port to Port
-                                @endif
+                <div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Detail Order</h4>
+                            <div class="mb-2">
+                                Penyedia Jasa Logistik:
+                                <span class="fw-bold d-inline">{{ $userOrder->order->lspName }}</span>
+                            </div>
+            
+                            <div class="mb-3">
+                                <h5 class="fw-bold text-primary d-inline">ID: </h5>
+                                <h5 class="text-primary d-inline">{{ $userOrder->order->noOffer }}</h5>
+                            </div>
+            
+                            <div class="row mb-2">
+                                <div class="col">Mode Pengiriman</div>
+                                <div class="col text-end">
+                                    {{-- <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i> --}}
+                                    @if ($userOrder->order->shipmentMode == 'D2D')
+                                    <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Door    
+                                    @elseif ($$userOrder->order->shipmentMode == 'D2P')
+                                    <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Port
+                                    @elseif ($$userOrder->order->shipmentMode == 'P2D')
+                                    <i class="ti ti-truck-delivery text-primary me-1"></i> Port to Door   
+                                    @elseif ($$userOrder->order->shipmentMode == 'P2P')
+                                    <i class="ti ti-sailboat text-primary me-1"></i> Port to Port
+                                    @endif
+                                </div>
+                            </div>
+            
+                            <div class="row">
+                                <div class="col">Tipe Pengiriman</div>
+                                <div class="col text-end">
+                                    <button type="button" class="btn btn-success rounded-pill">
+                                        {{ $userOrder->order->shipmentType == 'LCL' ? 'Less Container Load' : 'Full Container Load' }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <strong>Alamat Tujuan:</strong> 
+                                <span class="text-primary">{{ $userOrder->order->address }}</span>
+                            </div>
+                            <hr>
+            
+                            <h5 class="mb-1">Asal Pengiriman</h5>
+                            <p class="text-primary">{{ $userOrder->order->origin }}</p>
+            
+                            <h5 class="mb-1">Tujuan Pengiriman</h5>
+                            <p class="text-primary">{{ $userOrder->order->destination }}</p>
+            
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <h5 class="mb-1">Tanggal Muat Barang</h5>
+                                    <p class="text-primary">{{ $userOrder->order->loading_date_formatted }}</p>
+                                </div>
+                            </div>
+            
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <h5 class="mb-1">Tanggal Pengiriman</h5>
+                                    <p class="text-primary">{{ $userOrder->order->shipping_date_formatted }}</p>
+                                </div>
+                            </div>
+    
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <h5 class="mb-1">Estmasi Tanggal Tiba</h5>
+                                    <p class="text-primary">{{ $userOrder->order->estimation_date_formatted }}</p>
+                                </div>
                             </div>
                         </div>
-        
-                        <div class="row">
-                            <div class="col">Tipe Pengiriman</div>
-                            <div class="col text-end">
-                                <button type="button" class="btn btn-success rounded-pill">
-                                    {{ $userOrder->order->shipmentType == 'LCL' ? 'Less Container Load' : 'Full Container Load' }}
-                                </button>
-                            </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Detail LSP</h4>
                         </div>
-                        <div class="row">
-                            <strong>Alamat Tujuan:</strong> 
-                            <span class="text-primary">{{ $userOrder->order->address }}</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Detail Truck</h4>
                         </div>
-                        <hr>
-        
-                        <h5 class="mb-1">Asal Pengiriman</h5>
-                        <p class="text-primary">{{ $userOrder->order->origin }}</p>
-        
-                        <h5 class="mb-1">Tujuan Pengiriman</h5>
-                        <p class="text-primary">{{ $userOrder->order->destination }}</p>
-        
-                        <div class="row mb-3">
-                            <div class="col">
-                                <h5 class="mb-1">Tanggal Muat Barang</h5>
-                                <p class="text-primary">{{ $userOrder->order->loading_date_formatted }}</p>
-                            </div>
-                        </div>
-        
-                        <div class="row mb-3">
-                            <div class="col">
-                                <h5 class="mb-1">Tanggal Pengiriman</h5>
-                                <p class="text-primary">{{ $userOrder->order->shipping_date_formatted }}</p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <h5 class="mb-1">Estmasi Tanggal Tiba</h5>
-                                <p class="text-primary">{{ $userOrder->order->estimation_date_formatted }}</p>
-                            </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Detail Container</h4>
                         </div>
                     </div>
                 </div>
@@ -259,10 +282,8 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
-            
+            </div>    
         </div>
-        
     </div>
 </div>
   <!-- [ Main Content ] end -->

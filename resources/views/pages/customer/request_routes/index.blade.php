@@ -29,7 +29,7 @@
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-12 col-xl-12">
-            <h3 class="m-b-10">Permintaan Rute</h3>
+            <h3 class="m-b-10">Buat Permintaan Rute</h3>
           <div class="card">
             <div class="card-body">
               <h4 class="mb-2">Detail Pengiriman</h4>

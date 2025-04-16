@@ -20,6 +20,10 @@ class PaymentController extends Controller
         return view('pages.customer.orders.payment', compact('userOrder', 'order'));
     }
 
+    public function failed(){
+        return view('pages.customer.orders.failed');
+    }
+
     public function success($token)
     {
         $userOrder = UserOrder::where('payment_token', $token)->first();
