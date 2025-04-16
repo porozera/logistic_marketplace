@@ -20,6 +20,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\BidController;
+use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\DaftarPenawaranController;
 use App\Http\Controllers\NotificationCustomerController;
 use App\Http\Controllers\OrderController;
@@ -216,6 +217,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
     Route::put('/review/update/{id}/perform', [ReviewController::class, 'update'])->name('review.update');
     Route::delete('/review/delete/{id}', [ReviewController::class, 'destroy'])->name('review.delete');
+
+    //COMPLAIN
+    Route::get('/complain', [ComplainController::class, 'index'])->name('complain');
+    Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
+    Route::get('/complain/create', [ComplainController::class, 'create'])->name('complain.create');
+    Route::post('/complain/create/perform', [ComplainController::class, 'store'])->name('complain.create.store');
 });
 
 

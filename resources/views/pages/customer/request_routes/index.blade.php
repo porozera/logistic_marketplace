@@ -11,7 +11,7 @@
             <div class="col-md-12">
               <div class="page-header-title">
                 @if(session('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success" id="success-alert">
                         {{ session('success') }}
                     </div>
                 @endif
@@ -244,5 +244,11 @@
                 // Submit the form
                 document.getElementById('requestRouteAddForm').submit();
             });
+        </script>
+
+        <script>
+            setTimeout(function() {
+                document.getElementById('success-alert').style.display = 'none';
+            }, 3000);
         </script>
 @endsection

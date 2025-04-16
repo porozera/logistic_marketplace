@@ -278,9 +278,9 @@
             </a>
           </li>
           <li class="pc-item">
-            <a href="" class="pc-link">
+            <a href="{{ route('complain') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-mailbox"></i></span>
-                <span class="pc-mtext">Complain</span>
+                <span class="pc-mtext">Complains</span>
             </a>
           </li>
           <li class="pc-item">

@@ -12,7 +12,7 @@ class RequestRouteController extends Controller
 {
     public function index()
     {
-        $list_request = RequestRoute::where('user_id',Auth::id())->paginate(10);
+        $list_request = RequestRoute::where('user_id',Auth::id())->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::all();
         return view('pages.customer.request_routes.index',compact('list_request','categories'));
     }
