@@ -24,14 +24,21 @@
             <!-- [ Main Content ] start -->
         <div class="row d-flex justify-content-center">
             <div class="col-12">
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 @if(session('success'))
-                    <div class="alert alert-success" id="success-alert">
-                        {{ session('success') }}
-                    </div>
+                <script>
+                    Swal.fire({
+                        title: 'Sukses!',
+                        text: '{{ session('success') }}',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                </script>
                 @endif
             </div>
         </div>
-        @if ($review == 0)
+        @if ($review == 0 && $userOrder->order->status == 'selesai')
+        {{-- @if ($review == 0) --}}
         <div class="row d-flex justify-content-center">
             <div class="col-8">
                 <div class="card card-hover">
@@ -62,6 +69,7 @@
                             </div>
                             <input type="number" name="lsp_id" class="form-control" value="{{ $userOrder->order->lsp_id }}" hidden>
                             <input type="number" name="order_id" class="form-control" value="{{ $userOrder->order->id }}" hidden>
+                            <input type="number" name="userOrder_id" class="form-control" value="{{ $userOrder->id }}" hidden>
                             <span class="text-muted small">*Bagikan pengalaman Anda dengan LSP ini, pastikan untuk menyebutan detail yang mungkin dapat membantu pengguna lain.</span>
                             <div class="row">
                                 <div class="col-12">

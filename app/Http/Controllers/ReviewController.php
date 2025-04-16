@@ -21,6 +21,7 @@ class ReviewController extends Controller
             'ratingNumber' => 'required|integer|between:1,5',
             'lsp_id' => 'required',
             'order_id' => 'required',
+            'userOrder_id' => 'required',
         ]);
 
         Review::create([
@@ -30,7 +31,7 @@ class ReviewController extends Controller
             'lsp_id' => $attributes['lsp_id'],
             'order_id' => $attributes['order_id'],
         ]);
-        return redirect()->back()->with('success', 'Review berhasil ditambahkan.');
+        return redirect()->route('tracking-customer.detail', $attributes['userOrder_id'])->with('success', 'Review berhasil ditambahkan.');
     }
 
     public function edit($id)

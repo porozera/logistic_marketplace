@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-@section('title', 'Make a Complain')
+@section('title', 'Buat Complain')
 @section('content')
  <!-- [ Main Content ] start -->
 <div class="pc-container">
@@ -15,7 +15,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0)">Complains</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Make a Complain</li>
+                            <li class="breadcrumb-item" aria-current="page">Buat Complain</li>
                         </ul>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
         <div class="row justify-content-center mb-3">
             <div class="col-sm-12 col-md-8 col-xl-8">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">Make a Complain</h3>
+                    <h3 class="mb-0">Buat Complain</h3>
                 </div>
             </div>
         </div>

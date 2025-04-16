@@ -51,7 +51,8 @@ class RequestRouteController extends Controller
             "deadline" => Carbon::now()->addDays(7)->toDateString()
         ]);
         $deadline = Carbon::now()->addDays(7)->toDateString();
-        return redirect("/request-routes/success?deadline=$deadline")->with('success', 'Permintaan rute berhasil dikrimkan!');
+        // return redirect("/request-routes/success?deadline=$deadline")->with('success', 'Permintaan rute berhasil dikrimkan!');
+        return redirect("/request-routes")->with('success', 'Permintaan rute berhasil dikrimkan! Silakan cek kotak pesan secara berkala');
     }
 
     public function success()

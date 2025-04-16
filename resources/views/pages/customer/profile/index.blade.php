@@ -26,10 +26,16 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col">
+                          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                           @if(session('success'))
-                              <div class="alert alert-success" id="success-alert">
-                                  {{ session('success') }}
-                              </div>
+                          <script>
+                              Swal.fire({
+                                  title: 'Sukses!',
+                                  text: '{{ session('success') }}',
+                                  icon: 'success',
+                                  confirmButtonText: 'OK'
+                              });
+                          </script>
                           @endif
                         </div>
                       </div>

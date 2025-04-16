@@ -90,7 +90,7 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
 
-        $offers = $query->get();
+        $offers = $query->orderBy('created_at', 'desc')->get();
         $services = Service::all();
         $categories = Category::distinct('type')->pluck('type')->toArray();
         $cities = City::pluck('name')->toArray();

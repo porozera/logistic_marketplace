@@ -21,6 +21,15 @@
                 </div>
             </div>
         </div>
+        
+
+        @if ($complains->isEmpty())
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-6 col-xl-6">
+                <h3 class="">Complains</h3>
+            </div>
+        </div>
+        @else
         <div class="row justify-content-center mb-3">
             <div class="col-sm-12 col-md-8 col-xl-8">
                 <div class="d-flex justify-content-between align-items-center">
@@ -29,15 +38,32 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-sm-12 col-md-8 col-xl-8">
-                @if(session('success'))
-                    <div class="alert alert-success" id="success-alert" role="alert">
-                        {{ session('success') }}
+        @endif
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            @if(session('success'))
+            <script>
+                Swal.fire({
+                    title: 'Sukses!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            </script>
+            @endif
+            
+        @if ($complains->isEmpty())
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <div class="card text-center p-4 w-50">
+                    <div class="card-body">
+                        <img src="{{ asset('template/mantis/dist/assets/images/search_icon.png') }}" alt="Search Icon" class="mb-3" style="max-width: 100px;">
+                        <h3 class="mb-2">Tidak Ada complain</h3>
+                        <p class="text-muted">Jika ada keluhah, silahkan buat Complain!</p>
+                        <a href="/complain/create" class="btn btn-primary w-50">Buat Complain</a>
                     </div>
-                @endif
+                </div>
             </div>
-        </div>
+        @endif
         
         @foreach ($complains as $item )
         <div class="row justify-content-center">
