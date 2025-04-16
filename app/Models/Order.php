@@ -77,4 +77,9 @@ class Order extends Model
     {
         return $this->hasMany(UserOrder::class, 'order_id');
     }
+
+    public function lsp()
+    {
+        return $this->belongsTo(User::class, 'lsp_id');
+    }
 }

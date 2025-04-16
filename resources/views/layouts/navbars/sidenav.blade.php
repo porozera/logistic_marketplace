@@ -159,7 +159,7 @@
         </a>
     </li>
     <li class="pc-item">
-        <a href="../dashboard/index.html" class="pc-link">
+        <a href="/trackings" class="pc-link">
           <span class="pc-micon"><i class="ti ti-truck-delivery"></i></span>
           <span class="pc-mtext">Tracking Order</span>
         </a>

@@ -29,6 +29,7 @@ use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\OpenContainerController;
 use App\Http\Controllers\TruckController;
+use App\Http\Controllers\TrackingLspController;
 use App\Models\City;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -202,6 +203,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         // Route::get('/{id}', [BidController::class, 'show'])->name('bids-list.show');
         // Route::put('/{id}', [BidController::class, 'update'])->name('bids-list.update');
         // Route::delete('/{id}', [BidController::class, 'destroy'])->name('bids-list.destroy');
+    });
+
+    // Tracking Lsp
+    Route::prefix('trackings')->group(function () {
+        Route::get('/', [TrackingLspController::class, 'index'])->name('tracking-lsp.index');
+        Route::get('/{id}', [TrackingLspController::class, 'detail'])->name('tracking-lsp.detail');
     });
 
 });

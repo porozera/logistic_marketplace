@@ -41,16 +41,16 @@ class PaymentLspController extends Controller
             $order->save();
         }
 
-        // $tracking = Tracking::create([
-        //     'order_id' => $userOrder->order_id,
-        //     'currentLocation' => 'Warehouse',
-        //     'currentVehicle' => 'Truck',
-        //     'status' => 'Loading Item',
-        //     'description' => 'Sedang tahap loading muatan.',
-        //     'longitude' => null,
-        //     'latitude' => null,
-        // ]);
-        // $tracking->save();
+        $tracking = Tracking::create([
+            'order_id' => $userOrder->order_id,
+            'currentLocation' => 'Warehouse',
+            'currentVehicle' => 'Truck',
+            'status' => 'Loading Item',
+            'description' => 'Sedang tahap loading muatan.',
+            'longitude' => null,
+            'latitude' => null,
+        ]);
+        $tracking->save();
 
         $userOrderItem = UserOrder::where('payment_token', $token)->first();
         $orderItem = Order::find($userOrder->order_id);
