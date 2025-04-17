@@ -8,6 +8,7 @@ use App\Models\RequestUser;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\ApprovedAccountMail;
+use App\Mail\RejectedAccountMail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -120,30 +121,52 @@ class ApprovalController extends Controller
         return redirect()->route('admin.approval-lsp')->with('success', 'Akun berhasil di-approve, email dan password telah dikirim.');
     }
 
+    public function sendRejectEmail(Request $request) {
+        $email = $request->input('email');
+        $approvalId = $request->input('approval_id');
 
+        if (!$email || !$approvalId) {
+            return redirect()->route('admin.approval-lsp')->with('error', 'Data tidak lengkap.');
+        }
 
+        $approval = RequestUser::find($approvalId);
+        if (!$approval) {
+            return redirect()->route('admin.approval-lsp')->with('error', 'Data tidak ditemukan.');
+        }
+        // Update status approval
+        $approval->status = 'Ditolak';
+        $approval->save();
 
+        // Kirim email
+        Mail::to($approval->email)->send(new RejectedAccountMail($approval));
 
-
-
-
-
-
-
-
-    public function showForm() {
-        return view('pages.admin.approval.sendingEmail');
+        return redirect()->route('admin.approval-lsp')->with('rejected', 'Akun telah ditolak dan notifikasi telah dikirim.');
     }
-    public function sendEmail(Request $request) {
-        $request->validate([
-            'email' => 'required|email',
-            'pesan' => 'required|string',
-        ]);
 
-        Mail::to($request->email)->send(new SendingEmail([
-            'pesan' => $request->pesan
-        ]));
 
-        return back()->with('success', 'Email berhasil dikirim!');
-    }
+
+
+
+
+
+
+
+
+
+
+    // public function showForm() {
+    //     return view('pages.admin.approval.sendingEmail');
+    // }
+    // public function sendEmail(Request $request) {
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'pesan' => 'required|string',
+    //     ]);
+
+    //     Mail::to($request->email)->send(new SendingEmail([
+    //         'pesan' => $request->pesan
+    //     ]));
+
+    //     return back()->with('success', 'Email berhasil dikirim!');
+    // }
 }

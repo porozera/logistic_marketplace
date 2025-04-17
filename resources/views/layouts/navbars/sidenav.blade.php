@@ -18,7 +18,7 @@
               </a>
           </li>
 
-          <li class="pc-item">
+          <li class="pc-item {{ Request::is('admin/approval-lsp*') ? 'active' : '' }}">
               <a href="{{ route('admin.approval-lsp') }}" class="pc-link">
                   <span class="pc-micon"><i class="ti ti-checkbox"></i></span>
                   <span class="pc-mtext">Approval LSP</span>

@@ -63,17 +63,22 @@
 
                         <!-- Kanan -->
                         @if ($approval->status === 'Butuh di Approve')
-                        <div>
-                            <form action="{{ route('approval.sendEmail') }}" method="post">
+                        <div class="d-flex align-items-center gap-2">
+                            <form action="{{ route('approval.sendEmail') }}" method="post" class="m-0">
                                 @csrf
-                                <input type="hidden" class="form-control" name="email" value="{{ $approval->email }}">
+                                <input type="hidden" name="email" value="{{ $approval->email }}">
                                 <input type="hidden" name="approval_id" value="{{ $approval->id }}">
-                                    {{-- <textarea name="pesan" id="" cols="30" rows="10"></textarea> --}}
-                                    <button type="submit" class="btn btn-primary">Approve</button>
+                                <button type="submit" class="btn btn-primary w-100" style="min-width: 100px;">Approve</button>
                             </form>
-
-                            <button type="submit" class="btn btn-danger">Reject</button>
+                        
+                            <form action="{{ route('rejected.sendEmail') }}" method="post" class="m-0">
+                                @csrf
+                                <input type="hidden" name="email" value="{{ $approval->email }}">
+                                <input type="hidden" name="approval_id" value="{{ $approval->id }}">
+                                <button type="submit" class="btn btn-danger w-100" style="min-width: 100px;">Reject</button>
+                            </form>
                         </div>
+                        
                         @endif
                     </div>
                 </form>

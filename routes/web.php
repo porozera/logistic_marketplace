@@ -85,11 +85,6 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::get('/approval-lsp', [ApprovalController::class, 'index'])->name('admin.approval-lsp');
         Route::get('/approval-lsp/detail/{id}', [ApprovalController::class, 'show'])->name('admin.approval-lsp.detail');
 
-        //approve
-        // Route::post('/approve/{id}', [ApprovalController::class, 'approve'])->name('approve.user');
-
-        
-
         //Contaniner
         Route::get('/container', [ContainerController::class,'index'])->name('admin.container');
         Route::get('/container-add', [ContainerController::class,'add']);
@@ -156,22 +151,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::get('/report-shipment', [ShipmentReportController::class, 'index'])->name('admin.shipment.index');
         Route::get('/report-shipment/{id}', [ShipmentReportController::class, 'show'])->name('admin.shipment.show');
     });
-
-    // Route::get('/', function () {
-    //     return view('pages.admin.approval.sendingEmail'); 
-    // });
-    // Route::post('/kirim', function () {
-    //     Mail::to(request('email'))->send(new SendingEmail([
-    //         'pesan' => request()->pesan
-    //     ]));
-    //     // return view('admin.approval.sendingEmail'); 
-    // });
-
-    // Route::get('/', [ApprovalController::class, 'showForm'])->name('email.form');
-    // Route::post('/kirim', [ApprovalController::class, 'sendEmail'])->name('email.kirim');
-
+    
     // approve akun
     Route::post('/send-approve-email', [ApprovalController::class, 'sendApproveEmail'])->name('approval.sendEmail');
+    Route::post('/send-reject-email', [ApprovalController::class, 'sendRejectEmail'])->name('rejected.sendEmail');
     
     
 });

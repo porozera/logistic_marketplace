@@ -55,7 +55,7 @@
                           <td>{{ $item->companyName }}</td>
                           <td>{{ $item->permitNumber }}</td>
                           <td>{{ $item->email }}</td>
-                          <td><span class="badge bg-light-success rounded-pill f-12 {{ $item->badgeClass }}">{{ $item->status }}</span></td>
+                          <td class="text-center"><span class="badge bg-light-success rounded-pill f-12 {{ $item->badgeClass }}">{{ $item->status }}</span></td>
                           <td class="text-center">
                             <a href="{{ route('admin.approval-lsp.detail', ['id' => $item->id]) }}" class="btn btn-primary btn-sm py-2 px-3 rounded-2">
                               Lihat Detail
@@ -368,18 +368,34 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        @if(session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: "{{ session('success') }}",
-                showConfirmButton: true, // Menampilkan tombol "OK"
-                confirmButtonText: "OK", // Label tombol
-                confirmButtonColor: "#3085d6", // Warna tombol OK
-            });
-        @endif
-    });
+  document.addEventListener('DOMContentLoaded', function() {
+      @if(session('success'))
+          Swal.fire({
+              icon: 'success',
+              title: 'Berhasil!',
+              text: @json(session('success')),
+              confirmButtonText: "OK",
+              confirmButtonColor: "#3085d6",
+          });
+      @elseif(session('rejected'))
+          Swal.fire({
+              icon: 'success',
+              title: 'Berhasil!',
+              text: @json(session('rejected')),
+              confirmButtonText: "OK",
+              confirmButtonColor: "#3085d6",
+          });
+      @elseif(session('error'))
+          Swal.fire({
+              icon: 'error',
+              title: 'Gagal!',
+              text: @json(session('error')),
+              confirmButtonText: "OK",
+              confirmButtonColor: "#d33",
+          });
+      @endif
+  });
 </script>
+
 
 @endsection

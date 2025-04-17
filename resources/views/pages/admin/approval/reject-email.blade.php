@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Akun Anda Telah Disetujui</title>
+    <title>Permintaan Akun Ditolak</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f6f9fc;
+            background-color: #fdf4f4;
             margin: 0;
             padding: 20px;
         }
@@ -21,7 +21,7 @@
         }
 
         .header {
-            background-color: #0056b3;
+            background-color: #d9534f;
             padding: 20px;
             border-radius: 8px 8px 0 0;
             color: #ffffff;
@@ -35,7 +35,7 @@
         }
 
         .content strong {
-            color: #0056b3;
+            color: #d9534f;
         }
 
         .footer {
@@ -46,9 +46,9 @@
         }
 
         .info-box {
-            background-color: #f1f5ff;
+            background-color: #fbe9e9;
             padding: 15px;
-            border-left: 4px solid #0056b3;
+            border-left: 4px solid #d9534f;
             margin-top: 15px;
             border-radius: 4px;
         }
@@ -61,21 +61,20 @@
 <body>
 <div class="container">
     <div class="header">
-        <h2>Permintaan Akun Disetujui</h2>
+        <h2>Permintaan Akun Ditolak</h2>
     </div>
     <div class="content">
         <p>Halo <strong>{{ $companyName }}</strong>,</p>
 
-        <p>Permintaan akun Anda pada sistem kami telah <strong>disetujui</strong>. Berikut ini adalah informasi akun Anda:</p>
+        <p>Terima kasih telah mengajukan permintaan akun pada sistem kami. Setelah dilakukan peninjauan, kami mohon maaf karena <strong>permintaan akun Anda belum dapat disetujui</strong> saat ini.</p>
 
         <div class="info-box">
-            <p><strong>Email:</strong> {{ $email }}</p>
-            <p><strong>Password:</strong> {{ $password }}</p>
+            <p>Alasan penolakan dapat disebabkan oleh data yang tidak lengkap atau tidak sesuai dengan ketentuan.</p>
         </div>
 
-        <p>Silakan gunakan kredensial ini untuk login ke dalam sistem kami. Kami menyarankan Anda untuk mengganti password setelah login pertama demi keamanan akun Anda.</p>
+        <p>Jika Anda yakin telah mengisi data dengan benar atau ingin mengajukan kembali, silakan hubungi tim kami atau ajukan ulang melalui sistem.</p>
 
-        <p>Terima kasih telah bergabung dengan kami.</p>
+        <p>Kami menghargai minat Anda untuk bergabung dan berharap dapat bekerja sama di lain kesempatan.</p>
 
         <p>Salam hormat,<br><strong>Tim Admin</strong></p>
     </div>

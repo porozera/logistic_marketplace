@@ -2,35 +2,27 @@
 
 namespace App\Mail;
 
-use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 
-class ApprovedAccountMail extends Mailable
+class RejectedAccountMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $companyName;
     public $email;
-    public $password;
-
-
-    // private $pesan = "";
 
     /**
      * Create a new message instance.
      */
-    public function __construct($approval,$password)
+    public function __construct($approval)
     {
-        // $this->pesan = $pesan['pesan'];
-        // Ambil data dari model RequestUser
         $this->companyName = $approval->companyName;
         $this->email = $approval->email;
-        $this->password = $password;// 8 karakter password acak
     }
 
     /**
@@ -39,7 +31,7 @@ class ApprovedAccountMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Akun Anda Telah Disetujui',
+            subject: 'Akun Anda Telah Ditolak',
         );
     }
 
@@ -49,11 +41,10 @@ class ApprovedAccountMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'pages.admin.approval.approve-email',
+            view: 'pages.admin.approval.reject-email',
             with: [
                 'companyName' => $this->companyName,  // Nama perusahaan
                 'email' => $this->email,  // Email yang didaftarkan
-                'password' => $this->password,  // Password yang digenerate
             ]
         );
     }
