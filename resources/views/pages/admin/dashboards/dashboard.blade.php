@@ -3,7 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="container" style="padding-left: 250px; padding-top:80px;">      
+<div class="pc-container">
+  <div class="pc-content">      
           <!-- [ Main Content ] start -->
           
           {{-- <div class="pc-content">
@@ -590,10 +591,7 @@
         </div>
       </div>
       <!-- [ Main Content ] end -->
-    
-    
-      
-
+  </div>
 </div>
 
 <script src="{{ asset('template/mantis/dist/assets/js/plugins/popper.min.js') }}"></script>

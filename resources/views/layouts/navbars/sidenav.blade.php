@@ -19,7 +19,7 @@
           </li>
 
           <li class="pc-item">
-              <a href="" class="pc-link">
+              <a href="{{ route('admin.approval-lsp') }}" class="pc-link">
                   <span class="pc-micon"><i class="ti ti-checkbox"></i></span>
                   <span class="pc-mtext">Approval LSP</span>
               </a>

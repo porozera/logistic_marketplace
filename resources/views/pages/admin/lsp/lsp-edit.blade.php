@@ -69,7 +69,7 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="permitNumber" class="form-label">Nomor Izin Penyelenggara</label>
+                                <label for="permitNumber" class="form-label">Nomor Izin Penyelenggaraan</label>
                                 <input type="text" name="permitNumber" id="permitNumber" class="form-control" value="{{ $lsp->permitNumber }}">
 
                             </div>

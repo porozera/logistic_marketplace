@@ -3,8 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="pc-container">
-  <div class="pc-content">
+  <div class="pc-container">
+      <div class="pc-content">
         <!-- [ breadcrumb ] start -->
         <div class="page-header">
           <div class="page-block">
@@ -12,12 +12,12 @@
               <div class="col-md-12">
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                  <li class="breadcrumb-item" aria-current="page">Logistic Service Provider</li>
+                  <li class="breadcrumb-item" aria-current="page">Approval LSP</li>
                 </ul>
               </div>
               <div class="col-md-12">
                 <div class="page-header-title">
-                  <h2 class="mb-0">Logistic Service Provider (LSP)</h2>
+                  <h2 class="mb-0 mt-3">Approval LSP</h2>
                 </div>
               </div>
             </div>
@@ -30,63 +30,49 @@
           <!-- HTML5 Export Buttons table start -->
           <div class="col-sm-12">
             <div class="card">
-              <div class="card-header table-card-header">
+              {{-- <div class="card-header table-card-header">
                 <h5>HTML5 Export Buttons</h5>
                 <small
                   >This example demonstrates these four button types with their default options. The other examples in this section
                   demonstrate some of the options available.</small
                 >
-              </div>
+              </div> --}}
               <div class="card-body">
                 <div class="dt-responsive table-responsive">
-                  <table id="basic-btn" class="table table-striped nowrap">
+                  <table id="basic-btn" class="table nowrap">
                     <thead>
                         <tr>
-                            <th>Perusahaan</th>
-                            <th>Email</th>
+                            <th>Nama Perusahaan</th>
                             <th>Nomor Izin Penyelenggaraan</th>
-                            <th>Rating</th>
-                            <th>Aksi</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th class="text-center">Aksi</th>
                           </tr>
                     </thead>
                     <tbody>
-                        @foreach($lsps as $lsp)
+                        @foreach ($approvals as $item)
                         <tr>
-                          <td>{{ $lsp->companyName }}</td>
-                          <td>{{ $lsp->email }}</td>
-                          <td>{{ $lsp->permitNumber }}</td>
-                          <td>{{ $lsp->rating }}</td>
-                          <td>
-                            <ul class="list-inline me-auto mb-0">
-                              <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="View">
-                                <a href="{{ route('admin.lsp.show', $lsp->id) }}" class="avtar avtar-xs btn-link-secondary">
-                                    <i class="ti ti-eye f-18"></i>
-                                </a>
-                            </li>
-                              <li class="list-inline-item align-bottom">
-                                <a href="{{ route('admin.lsp.edit', $lsp->id) }}" class="avtar avtar-xs btn-link-primary">
-                                  <i class="ti ti-edit-circle f-18"></i>
-                                </a>
-                              </li>
-                              <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
-                                <a href="javascript:void(0);" class="avtar avtar-xs btn-link-danger" onclick="confirmDelete({{ $lsp->id }})">
-                                  <i class="ti ti-trash f-18"></i>
-                                </a>
-                              </li>
-                            </ul>
+                          <td>{{ $item->companyName }}</td>
+                          <td>{{ $item->permitNumber }}</td>
+                          <td>{{ $item->email }}</td>
+                          <td><span class="badge bg-light-success rounded-pill f-12 {{ $item->badgeClass }}">{{ $item->status }}</span></td>
+                          <td class="text-center">
+                            <a href="{{ route('admin.approval-lsp.detail', ['id' => $item->id]) }}" class="btn btn-primary btn-sm py-2 px-3 rounded-2">
+                              Lihat Detail
+                          </a>
                           </td>
                         </tr>
-                      @endforeach
+                        @endforeach
                     </tbody>
-                    <tfoot>
+                    {{-- <tfoot>
                         <tr>
-                            <th>Perusahaan</th>
+                            <th>Nama Perusahaan</th>
+                            <th>Nomor Izin Penyelenggara</th>
                             <th>Email</th>
-                            <th>No Telepon</th>
-                            <th>Rating</th>
-                            <th>Aksi</th>
+                            <th>Status</th>
+                            <th class="text-center">Aksi</th>
                           </tr>
-                    </tfoot>
+                    </tfoot> --}}
                   </table>
                 </div>
               </div>
@@ -95,8 +81,13 @@
           <!-- HTML5 Export Buttons end -->
         </div>
         <!-- [ Main Content ] end -->
+      </div>
     </div>
-  </div>
+
+
+
+
+    
 <script src="{{ asset('template/mantis/dist/assets/js/plugins/popper.min.js') }}"></script>
 <script src="{{ asset('template/mantis/dist/assets/js/plugins/simplebar.min.js') }}"></script>
 <script src="{{ asset('template/mantis/dist/assets/js/plugins/bootstrap.min.js') }}"></script>
@@ -293,30 +284,6 @@
   </div>
 </div>
 
-<!-- Modal Konfirmasi Hapus -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form method="POST" id="deleteForm">
-        @csrf
-        @method('DELETE')
-        <div class="modal-header">
-          <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Apakah kamu yakin ingin menghapus data ini?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-danger">Hapus</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
     <!-- [Page Specific JS] start -->
     <!-- datatable Js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -397,10 +364,9 @@
       });
     </script>
     <!-- [Page Specific JS] end -->
-</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         @if(session('success'))
@@ -415,17 +381,5 @@
         @endif
     });
 </script>
-
-
-<script>
-  function confirmDelete(id) {
-      let form = document.getElementById('deleteForm');
-      form.action = "/report-lsp/" + id; // Mengatur action form delete
-      let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-      deleteModal.show(); // Menampilkan modal
-  }
-</script>
-
-
 
 @endsection

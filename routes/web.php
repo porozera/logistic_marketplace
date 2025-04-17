@@ -4,7 +4,10 @@
 use App\Models\City;
 use App\Models\Service;
 use App\Models\Category;
+use App\Mail\SendingEmail;
 use Illuminate\Http\Request;
+use App\Mail\ApprovedAccountMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\FaqController;
@@ -17,6 +20,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RegisterController;
@@ -27,9 +31,9 @@ use App\Http\Controllers\FAQCustomerController;
 use App\Http\Controllers\SearchRouteController;
 use App\Http\Controllers\RequestRouteController;
 use App\Http\Controllers\CustomerReportController;
+use App\Http\Controllers\ShipmentReportController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
-use App\Http\Controllers\ShipmentReportController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -75,11 +79,18 @@ Route::get('/terms-of-service/customer', function () {return view('auth.terms_of
 // Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index_admin'])->name('admin.dashboard');
     Route::prefix('admin')->group(function(){
+        //Approval LSP
+        Route::get('/approval-lsp', [ApprovalController::class, 'index'])->name('admin.approval-lsp');
+        Route::get('/approval-lsp/detail/{id}', [ApprovalController::class, 'show'])->name('admin.approval-lsp.detail');
 
-        Route::get('/dashboard', [DashboardController::class, 'index_admin'])->name('admin.dashboard');
+        //approve
+        // Route::post('/approve/{id}', [ApprovalController::class, 'approve'])->name('approve.user');
 
-        // Contaniner
+        
+
+        //Contaniner
         Route::get('/container', [ContainerController::class,'index'])->name('admin.container');
         Route::get('/container-add', [ContainerController::class,'add']);
         Route::post('/container-add', [ContainerController::class,'store']);
@@ -87,7 +98,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::put('/container/{id}', [ContainerController::class, 'update']);
         Route::delete('/container/{id}', [ContainerController::class, 'destroy'])->name('container.destroy');
 
-        // Service
+        //Service
         Route::get('/service', [ServiceController::class,'index'])->name('admin.service');
         Route::get('/service-add', [ServiceController::class,'add'])->name('admin.service.store');
         Route::post('/service-add', [ServiceController::class,'store']);
@@ -95,7 +106,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::put('/service/{id}', [ServiceController::class, 'update']);
         Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy');
 
-        // Category
+        //Category
         Route::get('/category', [CategoryController::class, 'index'])->name('admin.category');
         Route::get('/category-add', [CategoryController::class, 'add']);
         Route::post('/category-add', [CategoryController::class, 'store']);
@@ -103,7 +114,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::put('/category/{id}', [CategoryController::class, 'update']);
         Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
-        // Province
+        //Province
         // Route::get('/admin/province', [ProvinceController::class, 'index']);
         // Route::get('/admin/province-add', [ProvinceController::class, 'add']);
         // Route::post('/admin/province-add', [ProvinceController::class, 'store']);
@@ -119,7 +130,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         // Route::put('/admin/city/{id}', [CityController::class, 'update']);
         // Route::delete('/admin/city/{id}', [CityController::class, 'destroy'])->name('city.destroy');
 
-        // FAQs
+        //FAQs
         Route::get('/faq', [FaqController::class, 'index'])->name('admin.faq');
         Route::get('/faq-add', [FaqController::class, 'add']);
         Route::post('/faq-add', [FaqController::class, 'store']);
@@ -145,6 +156,24 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::get('/report-shipment', [ShipmentReportController::class, 'index'])->name('admin.shipment.index');
         Route::get('/report-shipment/{id}', [ShipmentReportController::class, 'show'])->name('admin.shipment.show');
     });
+
+    // Route::get('/', function () {
+    //     return view('pages.admin.approval.sendingEmail'); 
+    // });
+    // Route::post('/kirim', function () {
+    //     Mail::to(request('email'))->send(new SendingEmail([
+    //         'pesan' => request()->pesan
+    //     ]));
+    //     // return view('admin.approval.sendingEmail'); 
+    // });
+
+    // Route::get('/', [ApprovalController::class, 'showForm'])->name('email.form');
+    // Route::post('/kirim', [ApprovalController::class, 'sendEmail'])->name('email.kirim');
+
+    // approve akun
+    Route::post('/send-approve-email', [ApprovalController::class, 'sendApproveEmail'])->name('approval.sendEmail');
+    
+    
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {

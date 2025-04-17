@@ -57,7 +57,7 @@
                     <!-- Kanan -->
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="form-label">Nomor Izin Penyelenggara</label>
+                            <label class="form-label">Nomor Izin Penyelenggaraan</label>
                             <input type="text" class="form-control" value="{{ $lsp->permitNumber }}" disabled>
                         </div>
 
