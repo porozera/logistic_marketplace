@@ -161,11 +161,11 @@
                                     {{-- <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i> --}}
                                     @if ($userOrder->order->shipmentMode == 'D2D')
                                     <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Door    
-                                    @elseif ($$userOrder->order->shipmentMode == 'D2P')
+                                    @elseif ($userOrder->order->shipmentMode == 'D2P')
                                     <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Port
-                                    @elseif ($$userOrder->order->shipmentMode == 'P2D')
+                                    @elseif ($userOrder->order->shipmentMode == 'P2D')
                                     <i class="ti ti-truck-delivery text-primary me-1"></i> Port to Door   
-                                    @elseif ($$userOrder->order->shipmentMode == 'P2P')
+                                    @elseif ($userOrder->order->shipmentMode == 'P2P')
                                     <i class="ti ti-sailboat text-primary me-1"></i> Port to Port
                                     @endif
                                 </div>

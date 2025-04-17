@@ -184,7 +184,7 @@
 
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="{{ route('dashboard-customer') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-chart-bar"></i></span>
               <span class="pc-mtext">Dashboard</span>
             </a>

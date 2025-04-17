@@ -121,8 +121,22 @@
                                     <a href="blog.html" class="nav-link text-left">Contact</a>
                                 </li>
                                 <li>
-                                  <a href="{{ route('login') }}" class="nav-link text-left">Masuk</a>
-                                </li>
+                                  @guest
+                                      <a href="{{ route('login') }}" class="nav-link text-left">Masuk</a>
+                                  @else
+                                      @php
+                                          $role = Auth::user()->role;
+                                          $dashboardRoutes = [
+                                              'admin' => route('admin.dashboard'),
+                                              'lsp' => route('lsp-dashboard'),
+                                              'customer' => route('dashboard-customer'),
+                                          ];
+                                          $dashboardUrl = $dashboardRoutes[$role] ?? route('home');
+                                      @endphp
+                                      <a href="{{ $dashboardUrl }}" class="nav-link text-left">Dashboard</a>
+                                  @endguest
+                              </li>
+                              
                             </ul>
                         </nav>
                     </div>

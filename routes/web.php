@@ -22,6 +22,7 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\DaftarPenawaranController;
+use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\NotificationCustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
@@ -135,7 +136,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
-    Route::get('/lsp/dashboard', [OfferController::class, 'index']);
+    Route::get('/lsp/dashboard', [OfferController::class, 'index'])->name('lsp-dashboard');
     Route::prefix('offers')->group(function(){
         Route::get('/', [OfferController::class, 'index'])->name('offers.index');
         Route::get('search', [OfferController::class, 'search'])->name('offers.search');
@@ -223,6 +224,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
     Route::get('/complain/create', [ComplainController::class, 'create'])->name('complain.create');
     Route::post('/complain/create/perform', [ComplainController::class, 'store'])->name('complain.create.store');
+
+    //DASHBOARD
+    Route::get('/dashboard/customer', [DashboardCustomerController::class, 'index'])->name('dashboard-customer');
 });
 
 
