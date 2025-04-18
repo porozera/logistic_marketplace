@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Akun Anda Telah Disetujui</title>
+    <title>Permintaan Dokumen Legalitas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f6f9fc;
+            background-color: #f4f8fd;
             margin: 0;
             padding: 20px;
         }
@@ -21,7 +21,7 @@
         }
 
         .header {
-            background-color: #0056b3;
+            background-color: #007bff;
             padding: 20px;
             border-radius: 8px 8px 0 0;
             color: #ffffff;
@@ -35,7 +35,7 @@
         }
 
         .content strong {
-            color: #0056b3;
+            color: #007bff;
         }
 
         .footer {
@@ -46,9 +46,9 @@
         }
 
         .info-box {
-            background-color: #f1f5ff;
+            background-color: #eaf3ff;
             padding: 15px;
-            border-left: 4px solid #0056b3;
+            border-left: 4px solid #007bff;
             margin-top: 15px;
             border-radius: 4px;
         }
@@ -61,29 +61,31 @@
 <body>
 <div class="container">
     <div class="header">
-        <h2>Permintaan Akun Disetujui</h2>
+        <h2>Permintaan Dokumen Legalitas</h2>
     </div>
     <div class="content">
-        <p>Halo</strong>,</p>
+        <p>Halo <strong>{{ $companyName }}</strong>,</p>
 
-        <p>Permintaan akun Anda pada sistem kami telah <strong>disetujui</strong>. Berikut ini adalah informasi login Anda:</p>
+        <p>Terima kasih telah melakukan pendaftaran pada sistem kami. Saat ini, kami memerlukan dokumen tambahan untuk keperluan verifikasi.</p>
 
         <div class="info-box">
-            <p><strong>Email:</strong>hanjaya@gmail.com</p>
-            <p><strong>Password:</strong> hanjaya123</p>
-            <p><strong>Pesan:</strong>{{ $pesan }}</p>
+            <p>Mohon untuk mengirimkan dokumen bukti legalitas perusahaan berupa <strong>Surat Pernyataan Laporan Penyelenggara POS</strong> untuk kami lakukan pengecekan lebih lanjut.</p>
+            
         </div>
 
-        <p>Silakan gunakan kredensial ini untuk login ke dalam sistem kami. Kami menyarankan Anda untuk mengganti password setelah login pertama demi keamanan akun Anda.</p>
+        <p>Dokumen dapat dikirimkan melalui sistem atau melalui email ke alamat kami.</p>
 
-        <p>Terima kasih telah bergabung dengan kami.</p>
+        <p>Mohon untuk mengirimkan dokumen tersebut selambat-lambatnya dalam waktu 7 (tujuh) hari kerja sejak email ini dikirimkan.</p>
+
+        <p>Jika ada pertanyaan lebih lanjut, jangan ragu untuk menghubungi tim kami.</p>
+
+        <p>Terima kasih atas perhatian dan kerja samanya.</p>
 
         <p>Salam hormat,<br><strong>Tim Admin</strong></p>
     </div>
     <div class="footer">
-        &copy; {{ date('Y') }} Logistik Platform. Semua hak dilindungi.
+        &copy; {{ date('Y') }} Nama Aplikasi. Semua hak dilindungi.
     </div>
 </div>
 </body>
 </html>
-

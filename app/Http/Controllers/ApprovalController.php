@@ -9,8 +9,10 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\ApprovedAccountMail;
 use App\Mail\RejectedAccountMail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\ConfirmationAccountMail;
 
 class ApprovalController extends Controller
 {
@@ -18,9 +20,10 @@ class ApprovalController extends Controller
         $approvals = RequestUser::all();
         $approvals = RequestUser::all()->map(function ($item) {
             $item->badgeClass = match($item->status) {
-                'Telah di Approve' => 'bg-light-success',
-                'Ditolak' => 'bg-light-danger',
-                'Butuh di Approve' => 'bg-light-warning',
+                'Approved' => 'bg-light-success',
+                'Rejected' => 'bg-light-danger',
+                'Requested' => 'bg-light-warning',
+                'On Confirmation' => 'bg-light-primary',
             };
             return $item;
         });
@@ -33,49 +36,9 @@ class ApprovalController extends Controller
         return view('pages.admin.approval.approval-detail', compact('approval'));
     }
 
-//     public function approve($id)
-// {
-//     $requestUser = RequestUser::findOrFail($id);
-
-//     // Generate random password
-//     $plainPassword = Str::random(10);
-//     $hashedPassword = Hash::make($plainPassword);
-
-//     // Kirim email
-//     Mail::to($requestUser->email)->send(new ApproveAccountMail(
-//         $requestUser->email,
-//         $plainPassword,
-//         'Akun Anda telah disetujui oleh Admin.'
-//     ));
-
-//     // Ubah status
-//     $requestUser->status = 'Sudah di Approve';
-//     $requestUser->save();
-
-//     // Masukkan data ke tabel users
-//     User::create([
-//         'username' => explode('@', $requestUser->email)[0],
-//         'email' => $requestUser->email,
-//         'password' => $hashedPassword,
-//         'firstName' => '',
-//         'lastName' => '',
-//         'role' => 'lsp',
-//         'telpNumber' => $requestUser->telpNumber,
-//         'profilePicture' => null,
-//         'description' => null,
-//         'rating' => null,
-//         'address' => $requestUser->address,
-//         'companyName' => $requestUser->companyName,
-//         'bannerPicture' => null,
-//         'accountNumber' => null,
-//         'accountName' => null,
-//         'permitNumber' => $requestUser->permitNumber,
-//     ]);
-
-//     return redirect()->back()->with('success', 'Akun berhasil di-approve dan email dikirim.');
-// }
-
     public function sendApproveEmail(Request $request) {
+        Log::info('🚀 sendConfirmationEmail terpanggil');
+
         $email = $request->input('email');
         $approvalId = $request->input('approval_id');
 
@@ -112,7 +75,7 @@ class ApprovalController extends Controller
         ]);
 
         // Update status approval
-        $approval->status = 'Telah di Approve';
+        $approval->status = 'Approved';
         $approval->save();
 
         // Kirim email
@@ -134,7 +97,7 @@ class ApprovalController extends Controller
             return redirect()->route('admin.approval-lsp')->with('error', 'Data tidak ditemukan.');
         }
         // Update status approval
-        $approval->status = 'Ditolak';
+        $approval->status = 'Rejected';
         $approval->save();
 
         // Kirim email
@@ -143,30 +106,26 @@ class ApprovalController extends Controller
         return redirect()->route('admin.approval-lsp')->with('rejected', 'Akun telah ditolak dan notifikasi telah dikirim.');
     }
 
+    public function sendConfirmationEmail(Request $request) {
+        $email = $request->input('email');
+        $approvalId = $request->input('approval_id');
 
+        if (!$email || !$approvalId) {
+            return redirect()->route('admin.approval-lsp')->with('error', 'Data tidak lengkap.');
+        }
 
+        $approval = RequestUser::find($approvalId);
+        if (!$approval) {
+            return redirect()->route('admin.approval-lsp')->with('error', 'Data tidak ditemukan.');
+        }
+        // Update status approval
+        $approval->status = 'On Confirmation';
+        $approval->save();
 
+        // Kirim email
+        Mail::to($approval->email)->send(new ConfirmationAccountMail($approval));
 
+        return redirect()->route('admin.approval-lsp')->with('success', 'Permintaan konfirmasi berhasil dikirim!');
+    }
 
-
-
-
-
-
-
-    // public function showForm() {
-    //     return view('pages.admin.approval.sendingEmail');
-    // }
-    // public function sendEmail(Request $request) {
-    //     $request->validate([
-    //         'email' => 'required|email',
-    //         'pesan' => 'required|string',
-    //     ]);
-
-    //     Mail::to($request->email)->send(new SendingEmail([
-    //         'pesan' => $request->pesan
-    //     ]));
-
-    //     return back()->with('success', 'Email berhasil dikirim!');
-    // }
 }

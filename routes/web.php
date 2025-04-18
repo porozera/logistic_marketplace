@@ -155,6 +155,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     // approve akun
     Route::post('/send-approve-email', [ApprovalController::class, 'sendApproveEmail'])->name('approval.sendEmail');
     Route::post('/send-reject-email', [ApprovalController::class, 'sendRejectEmail'])->name('rejected.sendEmail');
+    Route::post('/send-confirmation-email', [ApprovalController::class, 'sendConfirmationEmail'])->name('confirmation.sendEmail');
     
     
 });
