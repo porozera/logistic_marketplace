@@ -32,37 +32,55 @@ class PaymentController extends Controller
             return redirect()->route('home')->with('error', 'Akses tidak sah!');
         }
     
-        $userOrder->paymentStatus = 'Lunas';
-        $userOrder->save();
+        if ($userOrder->paymentStatus !== 'Lunas') {
+            $userOrder->paymentStatus = 'Lunas';
+            $userOrder->save();
     
-        $order = Order::find($userOrder->order_id);
+            $order = Order::find($userOrder->order_id);
     
-        if ($order) {
-            $order->remainingAmount -= $userOrder->totalPrice;
-            $order->paidAmount += $userOrder->totalPrice;
+            if ($order) {
+                $totalPaid = UserOrder::where('order_id', $order->id)
+                                ->where('paymentStatus', 'Lunas')
+                                ->sum('totalPrice');
     
-            if ($order->remainingAmount == 0 || $order->paidAmount == $order->totalAmount){
-                $order->paymentStatus = 'Lunas'; 
+                $order->paidAmount = $totalPaid;
+                $order->remainingAmount = $order->totalAmount - $totalPaid;
+    
+                $countPaid = UserOrder::where('order_id', $order->id)
+                                ->where('paymentStatus', 'Lunas')
+                                ->count();
+    
+                if ($countPaid === 1) {
+                    $order->status = 'Loading Item';
+    
+                    if (!Tracking::where('order_id', $order->id)->exists()) {
+                        Tracking::create([
+                            'order_id' => $order->id,
+                            'currentLocation' => 'Warehouse',
+                            'currentVehicle' => 'Truck',
+                            'status' => 'Loading Item',
+                            'description' => 'Sedang tahap loading muatan.',
+                            'longitude' => null,
+                            'latitude' => null,
+                        ]);
+                    }
+                }
+    
+                if ($order->remainingAmount <= 0) {
+                    $order->paymentStatus = 'Lunas';
+                }
+    
+                $order->save();
             }
-    
-            $order->save();
         }
-
-        $tracking = Tracking::create([
-            'order_id' => $userOrder->order_id,
-            'currentLocation' => 'Warehouse',
-            'currentVehicle' => 'Truck',
-            'status' => 'Loading Item',
-            'description' => 'Sedang tahap loading muatan.',
-            'longitude' => null,
-            'latitude' => null,
-        ]);
-        $tracking->save();
-
-        $userOrderItem = UserOrder::where('payment_token', $token)->first();
+    
+        $userOrderItem = $userOrder;
         $orderItem = Order::find($userOrder->order_id);
-        return view('pages.customer.orders.success',compact('userOrderItem','orderItem'));
+    
+        return view('pages.customer.orders.success', compact('userOrderItem', 'orderItem'));
     }
+    
+
     
     public function list_payment(){
         $userOrders = UserOrder::where('user_id', Auth::id())

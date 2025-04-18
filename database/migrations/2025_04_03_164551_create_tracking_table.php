@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->string('currentLocation');
             $table->string('currentVehicle');
-            $table->string('status');
+            $table->enum('status', ['Loading Item', 'On The Way', 'Finished'])->nullable();
             $table->text('description')->nullable();
             $table->decimal('longitude')->nullable();
             $table->decimal('latitude')->nullable();

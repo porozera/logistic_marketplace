@@ -22,7 +22,7 @@ class DashboardCustomerController extends Controller
         $pengirimanBerjalan = UserOrder::where('user_id', Auth::id())
             ->where('paymentStatus', 'Lunas')
             ->whereHas('order', function ($query) {
-                $query->where('status', '!=', 'Selesai');
+                $query->where('status', '!=', 'Finished');
             })
             ->count();
     
@@ -39,7 +39,10 @@ class DashboardCustomerController extends Controller
     
         $userOrder = UserOrder::with(['order', 'order.lsp'])
             ->where('user_id', Auth::id())
-            ->where('paymentStatus','Lunas')
+            ->where('paymentStatus', 'Lunas')
+            ->whereHas('order', function ($query) {
+            $query->where('status', '!=', 'Finished');
+            })
             ->get();
     
         return view('pages.customer.dashboard.index', compact(

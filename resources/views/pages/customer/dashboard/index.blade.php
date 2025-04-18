@@ -23,7 +23,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <h4>Hello, {{ Auth::user()->username }}</h4>
+                <h4>Hello, {{ Auth::user()->firstName }}</h4>
             </div>
         </div>
         <div class="row">
@@ -90,9 +90,12 @@
                                 {{ $location->order_id }} - {{ $location->latitude }} , {{ $location->longitude }}
                             </div>
                         @endforeach --}}
-                    <h5 class="fw-bold">Lokasi Pengiriman Terakhir</h5>
+                    <div class="d-flex align-items-center">
+                        <h5 class="fw-bold">Lokasi Pengiriman Terakhir</h5>
+                        <i class="ti ti-map-pin text-danger ms-2 mb-2"></i>
+                    </div>
 
-                    <div id="map" style="width: 100%; height: 500px;"></div>
+                    {{-- <div id="map" style="width: 100%; height: 600px;"></div> --}}
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';
@@ -159,30 +162,40 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Daftar Pengiriman</h5>
+                        <h5 class="fw-bold">Daftar Pengiriman</h5>
                         <div class="table-responsive" style="overflow-x: auto;">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Nomor Pengiriman</th>
-                                        <th>LSP</th>
-                                        <th>Asal</th>
-                                        <th>Tujuan</th>
-                                        <th>Berat</th>
-                                        <th>Volume</th>
-                                        <th>Status</th>
+                                        <th class="text-center">Nomor Pengiriman</th>
+                                        <th class="text-center">LSP</th>
+                                        <th class="text-center">Asal</th>
+                                        <th class="text-center">Tujuan</th>
+                                        <th class="text-center">Berat</th>
+                                        <th class="text-center">Volume</th>
+                                        <th class="text-center">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($userOrder as $item)
                                     <tr>
-                                        <td>{{$item->order->noOffer}}</td>
-                                        <td>{{$item->order->lspName}}</td>
-                                        <td>{{$item->order->origin}}</td>
-                                        <td>{{$item->order->destination}}</td>
-                                        <td>{{$item->weight}}</td>
-                                        <td>{{$item->volume}}</td>
-                                        <td>{{$item->order->status}}</td>
+                                        <td class="text-center text-primary">{{$item->order->noOffer}}</td>
+                                        <td class="text-center">{{$item->order->lspName}}</td>
+                                        <td class="text-center">{{$item->order->origin}}</td>
+                                        <td class="text-center">{{$item->order->destination}}</td>
+                                        <td class="text-center">{{$item->weight}} Kg</td>
+                                        <td class="text-center">{{$item->volume}} CBM</td>
+                                        <td class="text-center">
+                                            @if ($item->order->status == "Loading Item")
+                                            <span class="badge rounded-pill text-bg-warning" style="font-size: 14px;">Loading Item</span>
+                                            @elseif ($item->order->status == "On The Way")
+                                            <span class="badge rounded-pill text-bg-primary" style="font-size: 14px;">On The Way</span>
+                                            @elseif ($item->order->status == "Finished")
+                                            <span class="badge rounded-pill text-bg-success" style="font-size: 14px;">Finished</span>
+                                            @else
+                                            {{$item->order->status}}
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

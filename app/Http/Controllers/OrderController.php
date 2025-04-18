@@ -90,7 +90,7 @@ class OrderController extends Controller
                 "maxWeight" => $attributes['maxWeight'],
                 "maxVolume" => $attributes['maxVolume'],
                 "commodities" => $attributes['commodities'],
-                "status" => "Menunggu Tanggal Muat",
+                // "status" => "Loading Item",
                 "remainingWeight" => $attributes['remainingWeight'] - $attributes['weight'],
                 "remainingVolume" => $attributes['remainingVolume'] - $attributes['total_cbm'],
                 "price" => $attributes['price'],
@@ -121,6 +121,7 @@ class OrderController extends Controller
                 "totalAmount" => $order->totalAmount + $attributes['total_price'],
                 "remainingAmount" => $order->remainingAmount + $attributes['total_price'],
                 "commodities" => $updatedCommodities,
+                "paymentStatus" => "Belum Lunas"
             ]);
         }
         
