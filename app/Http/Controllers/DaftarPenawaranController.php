@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class DaftarPenawaranController extends Controller
 {
@@ -104,7 +105,7 @@ class DaftarPenawaranController extends Controller
                 "maxWeight" => $attributes['maxWeight'],
                 "maxVolume" => $attributes['maxVolume'],
                 "commodities" => $attributes['commodities'],
-                "status" => "Menunggu Tanggal Muat",
+                "status" => "Loading Item",
                 "remainingWeight" => $attributes['remainingWeight'] - $attributes['weight'],
                 "remainingVolume" => $attributes['remainingVolume'] - $attributes['total_cbm'],
                 "price" => $attributes['price'],
@@ -150,6 +151,7 @@ class DaftarPenawaranController extends Controller
             "commodities" => $attributes['commodities'],
             "services" => $attributes['selected_services'] ?? "",
             "payment_token" => Str::uuid(),
+            "expires_at" => Carbon::now()->addMinutes(30),
         ]);
 
         // Set your Merchant Server Key

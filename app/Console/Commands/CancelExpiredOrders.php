@@ -51,8 +51,24 @@ class CancelExpiredOrders extends Command
                 'description' => "Pesanan Anda dengan ID {$userOrder->order->noOffer} telah dibatalkan karena tidak melakukan pembayaran.",
                 'is_read' => 0,
             ]);
-            
+
             $userOrder->delete();
+
+            $remainingCommodities = UserOrder::where('order_id', $order->id)
+                ->pluck('commodities')
+                ->flatMap(function ($item) {
+                    return array_map('trim', explode(',', $item));
+                })
+                ->unique()
+                ->implode(', ');
+
+            $order->commodities = $remainingCommodities;
+            $order->save();
+
+            offersModel::where('noOffer', $order->noOffer)->update([
+                'commodities' => $remainingCommodities,
+            ]);
+
 
             $order->refresh();
 
