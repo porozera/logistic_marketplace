@@ -174,6 +174,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     //SEARCH ROUTES
     Route::get('/search-routes', [SearchRouteController::class, 'index'])->name('search-route');
     Route::get('/search-routes/{id}', [SearchRouteController::class, 'detail'])->name('search-route.detail');
+    Route::get('/profile/lsp/{id}', [SearchRouteController::class, 'profile_lsp'])->name('profile-lsp');
 
     //ORDERS
     Route::get('/order/{id}', [OrderController::class, 'index'])->name('order');
@@ -189,9 +190,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
 
     //PROFILE CUSTOMER
-    Route::get('/profile', [ProfileCustomerController::class, 'index'])->name('profile-customer');
-    Route::get('/profile/edit', [ProfileCustomerController::class, 'edit'])->name('profile-customer.edit');
-    Route::put('/profile/edit/perform', [ProfileCustomerController::class, 'update'])->name('profile-customer.update');
+    Route::get('/profile/customer', [ProfileCustomerController::class, 'index'])->name('profile-customer');
+    Route::get('/profile/customer/edit', [ProfileCustomerController::class, 'edit'])->name('profile-customer.edit');
+    Route::put('/profile/customer/edit/perform', [ProfileCustomerController::class, 'update'])->name('profile-customer.update');
 
     //FAQ
     Route::get('/FAQ-customer', [FAQCustomerController::class, 'index'])->name('FAQ-customer');

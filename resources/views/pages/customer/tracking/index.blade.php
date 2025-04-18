@@ -53,22 +53,33 @@
                     <div class="row">
                         <div class="col-4 d-flex align-items-center">
                             <div class="me-4">
-                                <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
-                                    alt="profile-lsp" 
-                                    class="user-avtar border wid-35 rounded-circle">
+                                <a href="/profile/lsp/{{ $item->order->lsp->id }}" class="me-4">
+                                    <img src="{{ $item->order->lsp->profilePicture ? asset('storage/' . $item->order->lsp->profilePicture) : asset('default-profile.jpg') }}" 
+                                        alt="profile-lsp" 
+                                        class="user-avtar border wid-35 rounded-circle" 
+                                        style="object-fit: cover; width: 35px; height: 35px;">
+                                </a>
                             </div>
                             <div>
-                                <h5 class="mb-0 fw-bold">{{ $item->order->lspName }}</h5>
+                                <h5 class="mb-0 fw-bold">{{ $item->order->lsp->companyName }}</h5>
                             </div>
                         </div>
                         <div class="col-4">
-                            @if ($item['shipmentMode'] == 'laut')
+                            @if ($item->order->shipmentMode == 'D2D')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-sailboat me-1"></i> Laut
+                                    <i class="ti ti-sailboat me-1"></i> Door to Door
                                 </button>   
-                            @else
+                            @elseif ($item->order->shipmentMode == 'D2P')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-truck-delivery me-1"></i> Darat
+                                    <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                                </button>
+                            @elseif ($item->order->shipmentMode == 'P2P')
+                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-truck-delivery me-1"></i> Port to Port
+                                </button>
+                            @elseif ($item->order->shipmentMode == 'P2D')
+                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-truck-delivery me-1"></i> Port to Door
                                 </button>
                             @endif
                         </div>

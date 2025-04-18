@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\offersModel;
 use App\Models\Order;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SearchRouteController extends Controller
@@ -100,12 +101,17 @@ class SearchRouteController extends Controller
     
     public function detail($id)
     {
-        $offer = offersModel::find($id);
+        $offer = offersModel::with('user')->find($id);
         $services = Service::all();
         $order = null;
         if ($offer && isset($offer->noOffer)) { 
             $order = Order::where('noOffer', $offer->noOffer)->first() ?? null;
         }
         return view('pages.customer.search_routes.detail', compact('offer','services','order'));
+    }
+
+    public function profile_lsp($id){
+        $lsp = User::find($id);
+        return view('pages.customer.search_routes.profile_lsp', compact('lsp'));
     }
 }

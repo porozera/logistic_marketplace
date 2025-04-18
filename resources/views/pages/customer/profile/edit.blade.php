@@ -26,7 +26,7 @@
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-8">
               <h3 class="m-b-10">Edit Profile</h3>
-                <form action="/profile/edit/perform" method="POST" id="updateProfileForm" enctype="multipart/form-data">
+                <form action="/profile/customer/edit/perform" method="POST" id="updateProfileForm" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                 <div class="card">

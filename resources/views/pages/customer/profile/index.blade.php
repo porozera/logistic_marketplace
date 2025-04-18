@@ -41,7 +41,7 @@
                       </div>
                       <div class="row">
                         <div class="col text-end">
-                          <a href="/profile/edit" class="btn btn-primary"><i class="ti ti-edit"></i><span class="ms-2">Edit</span></a>
+                          <a href="/profile/customer/edit" class="btn btn-primary"><i class="ti ti-edit"></i><span class="ms-2">Edit</span></a>
                         </div>
                       </div>
                       <div class="row">

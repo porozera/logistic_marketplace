@@ -59,7 +59,8 @@
                             <div class="d-flex align-items-center">
                                 <img src="{{ $item->sender->profilePicture ? asset('storage/' . $item->sender->profilePicture) : asset('default-profile.jpg') }}" 
                                     alt="profile-lsp" 
-                                    class="user-avtar wid-35 rounded-circle border me-3">
+                                    class="user-avtar wid-35 rounded-circle border me-3"
+                                    style="object-fit: cover; width: 35px; height: 35px;">
                                 <div class="d-flex flex-column">
                                     <h5 class="mb-1">{{ $item->header }}</h5>
                                     <p class="text-gray-600 mb-0">{{ $item->description }}</p>

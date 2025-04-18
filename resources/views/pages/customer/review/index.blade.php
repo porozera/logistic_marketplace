@@ -72,9 +72,10 @@
                         <div class="row">
                             <div class="col-8 d-flex align-items-center">
                                 <div class="me-4">
-                                    <img src="{{ $item->lsp->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
+                                    <img src="{{ $item->lsp->profilePicture ? asset('storage/' . $item->lsp->profilePicture) : asset('default-profile.jpg') }}" 
                                         alt="profile-lsp" 
-                                        class="user-avtar border wid-35 rounded-circle">
+                                        class="user-avtar border wid-35 rounded-circle"
+                                        style="object-fit: cover; width: 35px; height: 35px;">
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
                                     <h5 class="mb-0 fw-bold">{{ $item->lsp->companyName }}</h5>

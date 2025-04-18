@@ -128,9 +128,12 @@
                         <div class="row">
                             <div class="col-4 d-flex align-items-center">
                                 <div class="me-4">
-                                    <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
-                                        alt="profile-lsp" 
-                                        class="user-avtar border wid-35 rounded-circle">
+                                    <a href="/profile/lsp/{{ $item->user->id }}" class="">
+                                        <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
+                                            alt="profile-lsp" 
+                                            class="user-avtar border wid-35 rounded-circle" 
+                                            style="object-fit: cover; width: 35px; height: 35px;">
+                                    </a>
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
                                     <h5 class="mb-0 fw-bold">{{ $item->lspName }}</h5>

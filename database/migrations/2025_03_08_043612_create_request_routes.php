@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('origin');
             $table->string('destination');
-            $table->string('shipmentType');
-            $table->string('shipmentMode');
+            $table->enum('shipmentMode', ['D2D', 'D2P', 'P2D', 'P2P']);
+            $table->enum('shipmentType', ['FCL', 'LCL']);
             $table->date('shippingDate');
             $table->date('deadline');
             $table->integer('weight');

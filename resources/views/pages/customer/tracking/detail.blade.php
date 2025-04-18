@@ -37,8 +37,8 @@
                 @endif
             </div>
         </div>
-        @if ($review == 0 && $userOrder->order->status == 'selesai')
-        {{-- @if ($review == 0) --}}
+        {{-- @if ($review == 0 && $userOrder->order->status == 'selesai') --}}
+        @if ($review == 0)
         <div class="row d-flex justify-content-center">
             <div class="col-8">
                 <div class="card card-hover">

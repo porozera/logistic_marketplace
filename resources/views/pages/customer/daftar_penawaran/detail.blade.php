@@ -35,9 +35,12 @@
                     <div class="row align-items-center">
                         <div class="col-md-6 d-flex align-items-center">
                             <div class="me-2">
-                                <img src="{{ asset('template/mantis/dist/assets/images/user/avatar-2.jpg') }}" 
-                                     alt="profile-lsp" 
-                                     class="user-avtar wid-35 rounded-circle">
+                                <a href="/profile/lsp/{{ $offer->user->id }}" class="me-2">
+                                    <img src="{{ $offer->user->profilePicture ? asset('storage/' . $offer->user->profilePicture) : asset('default-profile.jpg') }}" 
+                                        alt="profile-lsp" 
+                                        class="user-avtar border wid-35 rounded-circle" 
+                                        style="object-fit: cover; width: 35px; height: 35px;">
+                                </a>
                             </div>
                             <div class="d-flex align-items-center gap-2">
                                 <h5 class="mb-0 fw-bold">{{ $offer['lspName']}}</h5>
