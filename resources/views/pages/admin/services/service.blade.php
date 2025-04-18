@@ -46,7 +46,7 @@
                       <th>Deskripsi</th>
                       <th>Harga</th>
                       <th>Icon</th>
-                      <th class="text-center">Actions</th>
+                      <th class="text-center">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -80,6 +80,7 @@
                       </td>
                     </tr>
                     @endforeach
+                  </tbody>
 
 
                     

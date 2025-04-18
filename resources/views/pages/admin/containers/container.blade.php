@@ -46,7 +46,7 @@
                       <th>Berat Maksimal (kg)</th>
                       <th>Volume (CBM)</th>
                       <th>Deskripsi</th>
-                      <th class="text-center">Actions</th>
+                      <th class="text-center">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -80,6 +80,7 @@
                       </td>
                     </tr>
                     @endforeach
+                  </tbody>
 
 
                     

@@ -81,7 +81,7 @@ class ApprovalController extends Controller
         // Kirim email
         Mail::to($approval->email)->send(new ApprovedAccountMail($approval, $generatedPassword));
 
-        return redirect()->route('admin.approval-lsp')->with('success', 'Akun berhasil di-approve, email dan password telah dikirim.');
+        return redirect()->route('admin.complain.index')->with('success', 'Akun berhasil di-approve, email dan password telah dikirim.');
     }
 
     public function sendRejectEmail(Request $request) {

@@ -22,6 +22,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ContainerController;
@@ -34,6 +35,7 @@ use App\Http\Controllers\CustomerReportController;
 use App\Http\Controllers\ShipmentReportController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
+use App\Mail\ComplainAnswerMail;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -150,6 +152,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         //Shipment
         Route::get('/report-shipment', [ShipmentReportController::class, 'index'])->name('admin.shipment.index');
         Route::get('/report-shipment/{id}', [ShipmentReportController::class, 'show'])->name('admin.shipment.show');
+        
+        //Manajemen Komplain
+        Route::get('/complain', [ComplainController::class, 'index'])->name('admin.complain.index');
+        Route::get('/complain-detail/{id}', [ComplainController::class, 'detail'])->name('admin.complain.detail');
+
     });
     
     // approve akun
@@ -157,7 +164,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::post('/send-reject-email', [ApprovalController::class, 'sendRejectEmail'])->name('rejected.sendEmail');
     Route::post('/send-confirmation-email', [ApprovalController::class, 'sendConfirmationEmail'])->name('confirmation.sendEmail');
     
-    
+    //email complain answer
+    // Route::post('/send-answer-email', [ApprovalController::class, 'sendConfirmationEmail'])->name('answer.sendEmail');
+
+    Route::post('/send-answer-email', [ComplainController::class, 'sendAnswer'])->name('complain.sendAnswer');
+
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {

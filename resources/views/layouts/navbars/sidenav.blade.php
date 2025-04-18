@@ -93,8 +93,8 @@
             <label>Lainnya</label>
             <i class="ti ti-news"></i>
           </li>
-          <li class="pc-item">
-            <a href="" class="pc-link">
+          <li class="pc-item {{ Request::is('admin/complain*') ? 'active' : '' }}">
+            <a href="{{ route('admin.complain.index') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-file-symlink"></i></span>
                 <span class="pc-mtext">Manajemen Komplain</span>
             </a>
