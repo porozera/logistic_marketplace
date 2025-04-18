@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text('services')->nullable();
             $table->string('snap_token')->nullable();
             $table->uuid('payment_token')->unique()->nullable();
+            $table->timestamp('expires_at')->nullable();
         });
     }
 

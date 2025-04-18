@@ -75,4 +75,16 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'lsp_id');
     }
+
+    public function userOrders()
+    {
+        return $this->hasMany(UserOrder::class);
+    }
+
+    public function offer()
+    {
+        return $this->belongsTo(offersModel::class, 'noOffer', 'noOffer');
+    }
+
+
 }

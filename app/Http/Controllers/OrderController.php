@@ -139,6 +139,7 @@ class OrderController extends Controller
             "commodities" => $attributes['commodities'],
             "services" => $attributes['selected_services'] ?? "",
             "payment_token" => Str::uuid(),
+            "expires_at" => Carbon::now()->addSecond(10),
         ]);
 
         // Set your Merchant Server Key
