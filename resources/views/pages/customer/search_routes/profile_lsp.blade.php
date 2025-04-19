@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Profile LSP')
 @section('content')
 
 <!-- Custom CSS -->
@@ -27,69 +27,140 @@
 </style>
 <div class="pc-container">
     <div class="pc-content">
-        <!-- Banner Section -->
-        <div class="position-relative" style="background: url('{{ asset('storage/' . $lsp->bannerPicture) }}') no-repeat center center; background-size: cover; height: 250px;">
-            <!-- Profile Picture -->
-            <div class="position-absolute top-50 start-50 translate-middle">
-                <img src="{{ asset('storage/' . $lsp->profilePicture) }}" alt="Profile Picture"
-                    class="rounded-circle border border-white"
-                    style="width: 150px; height: 150px; object-fit: cover;">
-            </div>
-        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- Banner Section -->
+                    <div class="position-relative" style="background: url('{{ asset('storage/' . $lsp->bannerPicture) }}') no-repeat center center; background-size: cover; height: 250px;">
+                        <!-- Profile Picture -->
+                        <div class="position-absolute top-50 start-50 translate-middle">
+                            <img src="{{ asset('storage/' . $lsp->profilePicture) }}" alt="Profile Picture"
+                                class="rounded-circle border border-white"
+                                style="width: 150px; height: 150px; object-fit: cover;">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ url()->previous() }}" class="text-decoration-none text-dark d-flex align-items-center">
+                                        <i class="ti ti-chevron-left" style="font-size: 20px; margin-right: 5px;"></i>
+                                        <h5 class="mb-0">Kembali</h5>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center"><h3>{{$lsp->companyName}}</h3></div>
+                            <div class="col-4"></div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-4"></div>
+                            <div class="col-4 text-center">
+                                <div class="star-rating">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="fas fa-2x fa-star {{ $i <= $lsp->rating ? 'text-warning' : 'text-muted' }}"></i>
+                                    @endfor
+                                    {{-- <span>({{ $lsp->rating }})</span> --}}
+                                </div>
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4 text-center">
+                                <p>({{$totalUlasan}} Ulasan)</p>
+                            </div>
+                            <div class="col-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-8 text-center">
+                                <p style="font-size: 18px">{{$lsp->description}}</p>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
 
-        <!-- Company Details -->
-        <div class="text-center mt-5">
-            <h2>{{ $lsp->companyName ?? 'Nama Perusahaan' }}</h2>
-            <div class="d-flex justify-content-center align-items-center">
-                @for ($i = 0; $i < floor($lsp->rating); $i++)
-                    ⭐
-                @endfor
-            </div>
-            <span class="ml-2">({{ $user->rating ?? '0' }} ulasan)</span>
-            <p class="mt-3">{{ $lsp->description ?? 'Deskripsi perusahaan belum tersedia.' }}</p>
-        </div>
+                        <br>
 
-        <!-- Company Stats -->
-        <div class="d-flex justify-content-around mt-4">
-            <div class="stat-card text-center">
-                <span>1000 Pengiriman Berhasil</span>
-                <i class="fas fa-gift text-primary"></i>
-            </div>
-            <div class="stat-card text-center">
-                <span>80 Kendaraan Aktif</span>
-                <i class="fas fa-truck text-primary"></i>
-            </div>
-            <div class="stat-card text-center">
-                <span>30 Armada Kapal</span>
-                <i class="fas fa-ship text-primary"></i>
-            </div>
-        </div>
+                        <div class="row mt-2">
+                            <div class="col-4 text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="card rounded-pill w-75">
+                                        <div class="card-body py-2">
+                                            <p class="mt-3" style="font-size: 16px">1000 Pengiriman Berhasil <i class="ti ti-box text-primary mt-1" style="font-size: 18px"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="card rounded-pill w-75">
+                                        <div class="card-body py-2">
+                                            <p class="mt-3" style="font-size: 16px">80 Kendaraan Aktif <i class="ti ti-truck text-primary mt-1" style="font-size: 18px"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="card rounded-pill w-75">
+                                        <div class="card-body py-2">
+                                            <p class="mt-3" style="font-size: 16px">1000 Pengiriman Berhasil <i class="ti ti-box text-primary mt-1" style="font-size: 18px"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-        <!-- Payment Methods -->
-        <h4 class="mt-5 text-center mb-5">Menyediakan Pembayaran</h4>
-        <div class="d-flex justify-content-around mt-3">
-            <img src="{{ asset('images/mandiri.jpg') }}" alt="Mandiri" width="250" height="140" class="rounded">
-            <img src="{{ asset('images/mastercard.png') }}" alt="MasterCard" width="250" height="140" class="rounded">
-            <img src="{{ asset('images/bri.png') }}" alt="BRI" width="250" height="140" class="rounded">
-            <img src="{{ asset('images/dana.png') }}" alt="Dana" width="250" height="140" class="rounded">
-        </div>
+                        <br>
 
-        <!-- Customer Reviews -->
-        <h4 class="mt-5 text-center mb-5">Review Pelanggan</h4>
-        <div class="d-flex justify-content-around mt-3">
-            <div class="card p-3" style="width: 30%;">
-                <p>"Layanan dari LSP ini sangat memuaskan..."</p>
-                <small>⭐ ⭐ ⭐ ⭐ ⭐ - Matt Murdock</small>
+                        <div class="row mt-2 mb-2">
+                            <div class="col-4"></div>
+                            <div class="col-4 text-center"><h3>Review Pelanggan</h3></div>
+                            <div class="col-4"></div>
+                        </div>
+
+                        <br>
+                        
+                        <div class="row mt-4">
+                            @foreach ($reviews as $item)
+                            <div class="col-4 text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="card w-75">
+                                        <div class="card-body py-2">
+                                            <div class="row align-items-center">
+                                                <div class="col-3">
+                                                    <img src="{{ $item->customer->profilePicture ? asset('storage/' . $item->customer->profilePicture) : asset('default-profile.jpg') }}" 
+                                                        alt="profile-lsp" 
+                                                        class="user-avtar border wid-35 rounded-circle"
+                                                        style="object-fit: cover; width: 40px; height: 40px;">
+                                                </div>
+                                                <div class="col-6 text-start">
+                                                    <p class="fw-bold mb-1">{{$item->customer->username}}</p>
+                                                    <div class="star-rating">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            <i class="fas fa-star {{ $i <= $item->ratingNumber ? 'text-warning' : 'text-muted' }}"></i>
+                                                        @endfor
+                                                    </div>
+                                                </div>
+                                                <div class="col-3 text-end">
+                                                    <p class="text-muted" style="font-size: 0.8rem;">{{ $item->created_at->format('d M') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center mt-2">
+                                                <div class="col-12 text-start">
+                                                    <p class="mb-0">{{$item->description}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card p-3" style="width: 30%;">
-                <p>"Saya cukup puas dengan LSP ini..."</p>
-                <small>⭐ ⭐ ⭐ ⭐ ⭐ - Nina Amilah</small>
-            </div>
-            <div class="card p-3" style="width: 30%;">
-                <p>"Saya sudah beberapa kali menggunakan layanan ini..."</p>
-                <small>⭐ ⭐ ⭐ ⭐ ⭐ - Summer Mayers</small>
-            </div>
-        </div>
+        </div> 
     </div>
 </div>
 @endsection
