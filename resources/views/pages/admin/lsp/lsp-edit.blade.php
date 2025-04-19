@@ -58,10 +58,6 @@
                                 <input type="email" name="email" id="email" class="form-control" value="{{ $lsp->email }}">
                             </div>
                             <div class="form-group">
-                                <label for="telpNumber" class="form-label">No. Telepon</label>
-                                <input type="text" name="telpNumber" id="telpNumber" class="form-control" value="{{ $lsp->telpNumber }}">
-                            </div>
-                            <div class="form-group">
                                 <label for="address" class="form-label">Alamat</label>
                                 <textarea name="address" id="address" class="form-control" rows="3">{{ $lsp->address }}</textarea>
                             </div>
@@ -74,20 +70,6 @@
 
                             </div>
                             <div class="form-group">
-                                <label for="profilePicture" class="form-label">Foto Profil</label>
-                                <input type="file" name="profilePicture" id="profilePicture" class="form-control">
-                                @if ($lsp->profilePicture)
-                                    <img src="{{ asset('storage/' . $lsp->profilePicture) }}" class="mt-2" width="100">
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="bannerPicture" class="form-label">Banner</label>
-                                <input type="file" name="bannerPicture" id="bannerPicture" class="form-control">
-                                @if ($lsp->bannerPicture)
-                                    <img src="{{ asset('storage/' . $lsp->bannerPicture) }}" class="mt-2" width="100">
-                                @endif
-                            </div>
-                            <div class="form-group">
                                 <label for="accountName" class="form-label">Nama Akun Bank</label>
                                 <input type="text" name="accountName" id="accountName" class="form-control" value="{{ $lsp->accountName }}">
                             </div>
@@ -98,6 +80,10 @@
                             <div class="form-group">
                                 <label for="rating" class="form-label">Rating</label>
                                 <input type="number" step="0.1" name="rating" id="rating" class="form-control" value="{{ $lsp->rating }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="telpNumber" class="form-label">No. Telepon</label>
+                                <input type="text" name="telpNumber" id="telpNumber" class="form-control" value="{{ $lsp->telpNumber }}">
                             </div>
                             <div class="form-group">
                                 <label for="description" class="form-label">Deskripsi</label>

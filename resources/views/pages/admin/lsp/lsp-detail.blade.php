@@ -40,7 +40,6 @@
                             'lastName' => 'Nama Belakang',
                             'companyName' => 'Nama Perusahaan',
                             'email' => 'Email',
-                            'telpNumber' => 'No. Telepon',
                             'address' => 'Alamat'
                         ] as $field => $label)
                             <div class="form-group">
@@ -61,28 +60,11 @@
                             <input type="text" class="form-control" value="{{ $lsp->permitNumber }}" disabled>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Foto Profil</label><br>
-                            @if ($lsp->profilePicture)
-                                <img src="{{ asset('storage/' . $lsp->profilePicture) }}" class="mt-2" width="100">
-                            @else
-                                <p>Tidak ada foto</p>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Banner</label><br>
-                            @if ($lsp->bannerPicture)
-                                <img src="{{ asset('storage/' . $lsp->bannerPicture) }}" class="mt-2" width="100">
-                            @else
-                                <p>Tidak ada banner</p>
-                            @endif
-                        </div>
-
                         @foreach ([
                             'accountName' => 'Nama Akun Bank',
                             'accountNumber' => 'Nomor Rekening',
-                            'rating' => 'Rating'
+                            'rating' => 'Rating',
+                            'telpNumber' => 'No. Telepon',
                         ] as $field => $label)
                             <div class="form-group">
                                 <label class="form-label">{{ $label }}</label>

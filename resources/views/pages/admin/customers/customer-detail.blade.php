@@ -39,7 +39,6 @@
                             'firstName' => 'Nama Depan',
                             'lastName' => 'Nama Belakang',
                             'email' => 'Email',
-                            'telpNumber' => 'No. Telepon',
                             'address' => 'Alamat'
                         ] as $field => $label)
                             <div class="form-group">
@@ -55,27 +54,10 @@
 
                     <!-- Kanan -->
                     <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-label">Foto Profil</label><br>
-                            @if ($customer->profilePicture)
-                                <img src="{{ asset('storage/' . $customer->profilePicture) }}" class="mt-2" width="100">
-                            @else
-                                <p>Tidak ada foto</p>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Banner</label><br>
-                            @if ($customer->bannerPicture)
-                                <img src="{{ asset('storage/' . $customer->bannerPicture) }}" class="mt-2" width="100">
-                            @else
-                                <p>Tidak ada banner</p>
-                            @endif
-                        </div>
-
                         @foreach ([
                             'accountName' => 'Nama Akun Bank',
-                            'accountNumber' => 'Nomor Rekening'
+                            'accountNumber' => 'Nomor Rekening',
+                            'telpNumber' => 'No. Telepon'
                             
                         ] as $field => $label)
                             <div class="form-group">

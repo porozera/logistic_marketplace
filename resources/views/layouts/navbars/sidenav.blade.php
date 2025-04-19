@@ -82,13 +82,6 @@
               <span class="pc-mtext">Pengiriman</span>
             </a>
           </li>
-          <li class="pc-item">
-            <a href="../pages/register-v3.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-file-invoice"></i></span>
-              <span class="pc-mtext">Keuangan</span>
-            </a>
-          </li>
-
           <li class="pc-item pc-caption">
             <label>Lainnya</label>
             <i class="ti ti-news"></i>
@@ -105,6 +98,16 @@
                 <span class="pc-mtext">FAQs Data</span>
             </a>
         </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              <span class="pc-micon"><i class="ti ti-logout text-danger"></i></span>
+              <span class="pc-mtext text-danger">Logout</span>
+          </a>
+      
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+          </form>
+      </li>
           @endif
           
           {{-- @if(Auth::user()->role === 'lsp')

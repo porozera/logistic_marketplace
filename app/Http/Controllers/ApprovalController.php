@@ -12,6 +12,7 @@ use App\Mail\RejectedAccountMail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
 use App\Mail\ConfirmationAccountMail;
 
 class ApprovalController extends Controller

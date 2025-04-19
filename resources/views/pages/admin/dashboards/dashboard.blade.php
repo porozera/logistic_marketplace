@@ -247,13 +247,12 @@
               <div class="col-md-12">
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                  <li class="breadcrumb-item"><a href="javascript: void(0)">Widget</a></li>
-                  <li class="breadcrumb-item" aria-current="page">Statistics</li>
+                  <li class="breadcrumb-item" aria-current="page">Dashboard</li>
                 </ul>
               </div>
               <div class="col-md-12">
                 <div class="page-header-title">
-                  <h2 class="mb-0">Statistics</h2>
+                  <h2 class="mb-0 mt-2">Dashboard</h2>
                 </div>
               </div>
             </div>
@@ -262,67 +261,77 @@
         <!-- [ breadcrumb ] end -->
         <div class="row">
           <!-- [ sample-page ] start -->
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-6 col-md-6">
+            <a href="{{ route('admin.customer.index') }}" style="text-decoration: none; color: inherit;">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-8">
+                      <h3 class="mb-1">{{ $totalCustomer }}</h3>
+                      <p class="text-muted mb-0">Total Customer</p>
+                    </div>
+                    <div class="col-4 text-end">
+                      <i class="ti ti-users text-info f-36"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          
+          <div class="col-lg-6 col-md-6">
+            <a href="{{ route('admin.lsp.index') }}" style="text-decoration: none; color: inherit;">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-8">
+                      <h3 class="mb-1">{{ $totalLsp }}</h3>
+                      <p class="text-muted mb-0">Total Logistic Service Provider (LSP)</p>
+                    </div>
+                    <div class="col-4 text-end">
+                      <i class="ti ti-building-warehouse text-warning f-36"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          
+          <div class="col-lg-6 col-md-6">
+            <a href="{{ route('admin.shipment.index') }}" style="text-decoration: none; color: inherit;">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-8">
+                      <h3 class="mb-1">{{ $totalOrder }}</h3>
+                      <p class="text-muted mb-0">Total Pengiriman</p>
+                    </div>
+                    <div class="col-4 text-end">
+                      <i class="ti ti-truck-delivery text-success f-36"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          
+          <div class="col-lg-6 col-md-6">
             <div class="card">
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col-8">
-                    <h3 class="mb-1">$30200</h3>
-                    <p class="text-muted mb-0">All Earnings</p>
+                    <h3 class="mb-1">Rp {{ number_format($totalAmount, 0, ',', '.') }}</h3>
+                    <p class="text-muted mb-0">Total Transaksi</p>
                   </div>
                   <div class="col-4 text-end">
-                    <i class="ti ti-chart-bar text-secondary f-36"></i>
+                    <i class="ti ti-report-money text-primary f-36"></i>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col-8">
-                    <h3 class="mb-1">145</h3>
-                    <p class="text-muted mb-0">Task</p>
-                  </div>
-                  <div class="col-4 text-end">
-                    <i class="ti ti-calendar-event text-danger f-36"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col-8">
-                    <h3 class="mb-1">290+</h3>
-                    <p class="text-muted mb-0">Page Views</p>
-                  </div>
-                  <div class="col-4 text-end">
-                    <i class="ti ti-file-text text-success f-36"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col-8">
-                    <h3 class="mb-1">500</h3>
-                    <p class="text-muted mb-0">Downloads</p>
-                  </div>
-                  <div class="col-4 text-end">
-                    <i class="ti ti-download text-primary f-36"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-xl-3">
+          
+          {{-- <div class="col-md-6 col-xl-3">
             <div class="card social-widget-card bg-primary">
               <div class="card-body">
                 <h3 class="text-white m-0">1165 +</h3>
@@ -357,9 +366,9 @@
                 <i class="fab fa-youtube"></i>
               </div>
             </div>
-          </div>
+          </div> --}}
 
-          <div class="col-xl-4 col-md-12">
+          {{-- <div class="col-xl-4 col-md-12">
             <div class="card comp-card">
               <div class="card-body">
                 <div class="row align-items-center">
@@ -406,9 +415,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
 
-          <div class="col-md-6 col-xl-3">
+          {{-- <div class="col-md-6 col-xl-3">
             <div class="card">
               <div class="card-body">
                 <h6 class="mb-2 f-w-400 text-muted">Total Page Views</h6>
@@ -451,8 +460,8 @@
                 <p class="mb-0 text-muted text-sm">You made an extra <span class="text-danger">$20,395</span> this year </p>
               </div>
             </div>
-          </div>
-          <div class="col-sm-4">
+          </div> --}}
+          {{-- <div class="col-sm-4">
             <div class="card bg-success text-white widget-visitor-card">
               <div class="card-body text-center">
                 <h2 class="text-white">1,658</h2>
@@ -478,8 +487,8 @@
                 <i class="ti ti-calendar-stats d-block f-46 text-white"></i>
               </div>
             </div>
-          </div>
-          <div class="col-xl-6">
+          </div> --}}
+          {{-- <div class="col-xl-6">
             <div class="card">
               <div class="row g-0">
                 <div class="col-md-6">
@@ -584,6 +593,59 @@
                     <h6>Income Salaries & Budget</h6>
                     <p class="text-muted mb-0">All your income salaries and budget comes here, you can track them or manage them</p>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div> --}}
+          <div class="col-md-12 col-xl-12">
+            <h5 class="mb-3">Recent Orders</h5>
+            <div class="card tbl-card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover mb-0">
+                    <div class="d-flex justify-content-start mb-3">
+                      <a href="{{ route('admin.shipment.index') }}" class="btn btn-primary">
+                          <i class="ti ti-truck-delivery me-1"></i> Lihat Detail
+                      </a>
+                  </div>
+                    <thead>
+                        <tr>
+                            <th class="text-center">NO. ORDER</th>
+                            <th class="text-center">PERUSAHAAN</th>
+                            <th class="text-center">ASAL</th>
+                            <th class="text-center">TUJUAN</th>
+                            <th class="text-center">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($recentOrders as $order)
+                            <tr>
+                                <td class="text-center"><a href="#" class="text-muted">{{ $order->noOffer }}</a></td>
+                                <td class="text-center">{{ $order->lspName }}</td>
+                                <td class="text-center">{{ $order->origin }}</td>
+                                <td class="text-center">{{ $order->destination }}</td>
+                                <td class="text-center">
+                                    @php
+                                        $badgeClass = match($order->status) {
+                                            'Loading Item' => 'bg-light-warning',
+                                            'On The Way' => 'bg-light-primary',
+                                            'Finished' => 'bg-light-success',
+                                            default => 'bg-light-secondary'
+                                        };
+                                    @endphp
+                                    <span class="badge {{ $badgeClass }} rounded-pill f-12">
+                                        {{ $order->status }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">No recent orders available.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                
                 </div>
               </div>
             </div>

@@ -39,7 +39,7 @@
               </div>
               <div class="card-body">
                 <div class="dt-responsive table-responsive">
-                  <table id="basic-btn" class="table table-striped nowrap">
+                  <table id="basic-btn" class="table table-hover nowrap">
                     <thead>
                         <tr>
                             <th>Perusahaan</th>

@@ -54,10 +54,6 @@
                                 <input type="email" name="email" id="email" class="form-control" value="{{ $customer->email }}">
                             </div>
                             <div class="form-group">
-                                <label for="telpNumber" class="form-label">No. Telepon</label>
-                                <input type="text" name="telpNumber" id="telpNumber" class="form-control" value="{{ $customer->telpNumber }}">
-                            </div>
-                            <div class="form-group">
                                 <label for="address" class="form-label">Alamat</label>
                                 <textarea name="address" id="address" class="form-control" rows="3">{{ $customer->address }}</textarea>
                             </div>
@@ -65,26 +61,16 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="profilePicture" class="form-label">Foto Profil</label>
-                                <input type="file" name="profilePicture" id="profilePicture" class="form-control">
-                                @if ($customer->profilePicture)
-                                    <img src="{{ asset('storage/' . $customer->profilePicture) }}" class="mt-2" width="100">
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <label for="bannerPicture" class="form-label">Banner</label>
-                                <input type="file" name="bannerPicture" id="bannerPicture" class="form-control">
-                                @if ($customer->bannerPicture)
-                                    <img src="{{ asset('storage/' . $customer->bannerPicture) }}" class="mt-2" width="100">
-                                @endif
-                            </div>
-                            <div class="form-group">
                                 <label for="accountName" class="form-label">Nama Akun Bank</label>
                                 <input type="text" name="accountName" id="accountName" class="form-control" value="{{ $customer->accountName }}">
                             </div>
                             <div class="form-group">
                                 <label for="accountNumber" class="form-label">Nomor Rekening</label>
                                 <input type="text" name="accountNumber" id="accountNumber" class="form-control" value="{{ $customer->accountNumber }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="telpNumber" class="form-label">No. Telepon</label>
+                                <input type="text" name="telpNumber" id="telpNumber" class="form-control" value="{{ $customer->telpNumber }}">
                             </div>
                             <div class="form-group">
                                 <label for="description" class="form-label">Deskripsi</label>

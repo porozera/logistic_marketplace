@@ -52,7 +52,7 @@
 </head>
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
     @include('../layouts.navbars.sidenav')
-    @include('../layouts.navbars.topnav')
+    {{-- @include('../layouts.navbars.topnav') --}}
     @yield('content')
     {{-- @guest
         @yield('content')
