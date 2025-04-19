@@ -6,6 +6,7 @@ use App\Models\Complain;
 use Illuminate\Http\Request;
 use App\Mail\ComplainAnswerMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class ComplainController extends Controller
 {
@@ -41,6 +42,31 @@ class ComplainController extends Controller
         // Redirect kembali dengan sweetalert notification
         return redirect()->route('admin.complain.index')->with('success', 'Email tanggapan berhasil dikirim!');
     }
+
+    public function show() {
+        // $complains = Complain::all();
+        return view('landing-contact');
+    } 
+
+    public function storeComplain(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'username' => 'required|string|max:255',
+        'email' => 'required|email',
+        'pesan' => 'required|string|min:10',
+    ]);
+
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput()->with('error', 'Mohon periksa kembali isian Anda.');
+    }
+
+    Complain::create([
+        'username' => $request->username,
+        'email' => $request->email,
+        'description' => $request->pesan,
+        'status' => 'Pending',
+    ]);
+
+    return back()->with('success', 'Pesan Anda telah dikirim! Kami akan segera menanggapi.');
     
-    
+    }
 }

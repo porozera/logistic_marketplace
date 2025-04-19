@@ -45,11 +45,11 @@
                             <li>
                                 <a href="services.html" class="nav-link text-left">Services</a>
                             </li>
-                            <li class="active">
-                                <a href="testimonials.html" class="nav-link text-left">Faq</a>
-                            </li>
                             <li>
-                                <a href="blog.html" class="nav-link text-left">Contact</a>
+                                <a href="{{'landing-faq'}}" class="nav-link text-left">Faq</a>
+                            </li>
+                            <li class="active">
+                                <a href="{{'landing-contact'}}" class="nav-link text-left">Contact</a>
                             </li>
                             <li>
                                 <a href="/login" class="nav-link text-left">Masuk</a>
@@ -62,84 +62,44 @@
     </div>
 
     <div class="container" style="max-width: 750px; padding-top: 100px;">
-        <h2 class="text-center text-black mb-4">Help Center</h2>
+        <h2 class="text-center text-black mb-4">Contact</h2>
     
-        <!-- Search Bar -->
-        <div class="input-group mb-4">
-            <input type="text" class="form-control" placeholder="Search help articles...">
-            <button class="btn btn-primary">
-                <i class="bi bi-search"></i>
-            </button>
-        </div>
-    
-        <!-- Kategori dalam 2 Kolom -->
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <a href="landing-faq/faq-general" class="text-decoration-none">
-                    <div class="pc-component">
-                        <div class="card">
-                            <div class="card-body">
-                                <i class="bi bi-box-fill text-black" style="font-size: 2rem;"></i>
-                                <h3 class="card-title text-black pt-3">General</h3>
-                                <p class="card-text text-black">Membantu menjawab pertanyaan umum yang sering diajukan oleh pengguna.</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+        <form action="{{ route('complain.send') }}" method="POST" class="bg-white p-5 rounded shadow-sm">
+            @csrf
+        
+            <div class="form-group mb-3">
+                <label for="username" class="text-black">Nama Lengkap</label>
+                <input type="text" id="username" name="username" class="form-control @error('username') is-invalid @enderror" placeholder="Masukkan nama Anda" required>
+                @error('username')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
-            <div class="col-md-6 mb-4">
-                <a href="landing-faq/faq-peralatan" class="text-decoration-none">
-                    <div class="pc-component">
-                        <div class="card">
-                            <div class="card-body">
-                                <i class="bi bi-tools text-black" style="font-size: 2rem;"></i>
-                                <h3 class="card-title text-black pt-3">Peralatan</h3>
-                                <p class="card-text text-black">Masalah umum yang mungkin terjadi pada peralatan yang digunakan dalam layanan atau produk tertentu.</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+        
+            <div class="form-group mb-3">
+                <label for="email" class="text-black">Email</label>
+                <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Masukkan email Anda" required>
+                @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
-            <div class="col-md-6 mb-4">
-                <a href="landing-faq/faq-harga" class="text-decoration-none">
-                    <div class="pc-component">
-                        <div class="card">
-                            <div class="card-body">
-                                <i class="bi bi-credit-card-2-back-fill text-black" style="font-size: 2rem;"></i>
-                                <h3 class="card-title text-black pt-3">Pembayaran</h3>
-                                <p class="card-text text-black">Informasi terkait biaya, metode pembayaran, serta pertanyaan lain terkait dengan transaksi.</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+        
+            <div class="form-group mb-4">
+                <label for="pesan" class="text-black">Keluhan / Pesan</label>
+                <textarea name="pesan" id="pesan" cols="30" rows="5" class="form-control @error('pesan') is-invalid @enderror" placeholder="Tulis keluhan atau pesan Anda" required></textarea>
+                @error('pesan')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
-            <div class="col-md-6 mb-4">
-                <a href="landing-faq/faq-pengiriman" class="text-decoration-none">
-                    <div class="pc-component">
-                        <div class="card">
-                            <div class="card-body">
-                                <i class="bi bi-truck text-black" style="font-size: 2rem;"></i>
-                                <h3 class="card-title text-black pt-3">Pengiriman</h3>
-                                <p class="card-text text-black">Informasi mengenai proses serta kendala yang mungkin terjadi selama pengiriman.</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+        
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary px-4 py-2">Kirim Pesan</button>
             </div>
-        </div>
+        </form>
+        
     </div>
     
     
-    {{-- @foreach ($categories as $category)
-        <div class="col-md-6 mb-4">
-            <a href="{{ route('faq.show', $category->id) }}" class="text-decoration-none">
-                <div class="card shadow-sm p-3">
-                    <h5 class="fw-bold">{{ $category->name }}</h5>
-                    <p>{{ $category->description }}</p>
-                </div>
-            </a>
-        </div>
-    @endforeach --}}
+    
 
     
     {{-- footer --}}
@@ -220,6 +180,29 @@
 
 
 <script src="{{ asset('template/waterboat/js/main.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: {!! json_encode(session('success')) !!},
+            confirmButtonText: "OK",
+            confirmButtonColor: "#3085d6",
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: {!! json_encode(session('error')) !!},
+            confirmButtonText: "OK",
+            confirmButtonColor: "#d33",
+        });
+    @endif
+</script>
+
     
 </body>
 </html>

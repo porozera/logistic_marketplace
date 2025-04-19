@@ -36,6 +36,7 @@ use App\Http\Controllers\ShipmentReportController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
 use App\Mail\ComplainAnswerMail;
+use App\Models\Complain;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -50,12 +51,14 @@ Route::get('/landing-page', function () {
     return view('landing-page');
 });
 
-Route::get('/landing-faq', [DashboardController::class, 'faq_category']);
+Route::get('/landing-faq', [DashboardController::class, 'faq_category'])->name('landing-faq');
 Route::get('/landing-faq/faq-general', [DashboardController::class, 'show_faq_general']);
 Route::get('/landing-faq/faq-peralatan', [DashboardController::class, 'show_faq_peralatan']);
 Route::get('/landing-faq/faq-harga', [DashboardController::class, 'show_faq_harga']);
 Route::get('/landing-faq/faq-pengiriman', [DashboardController::class, 'show_faq_pengiriman']);
 
+Route::get('/landing-contact', [ComplainController::class, 'show'])->name('landing-contact');
+Route::post('/complain/send', [ComplainController::class, 'storeComplain'])->name('complain.send');
 
 // Route::get('/kontainer', function () {
 //     return view('admin.kontainer');
@@ -165,8 +168,6 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::post('/send-confirmation-email', [ApprovalController::class, 'sendConfirmationEmail'])->name('confirmation.sendEmail');
     
     //email complain answer
-    // Route::post('/send-answer-email', [ApprovalController::class, 'sendConfirmationEmail'])->name('answer.sendEmail');
-
     Route::post('/send-answer-email', [ComplainController::class, 'sendAnswer'])->name('complain.sendAnswer');
 
 });
