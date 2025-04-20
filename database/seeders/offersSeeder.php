@@ -33,6 +33,8 @@ class OffersSeeder extends Seeder
                 'timestamp' => Carbon::now(),
                 'is_for_lsp' => true,
                 'is_for_customer' => true,
+                'truck_first_id' => 1,
+                'truck_second_id' => 2
             ],
             [
                 'noOffer' => 'OFF'.Str::random(5),
@@ -55,6 +57,8 @@ class OffersSeeder extends Seeder
                 'timestamp' => Carbon::now(),
                 'is_for_lsp' => true,
                 'is_for_customer' => true,
+                'truck_first_id' => 1,
+                'truck_second_id' => null
             ],
             [
                 'noOffer' => 'OFF'.Str::random(5),
@@ -77,6 +81,8 @@ class OffersSeeder extends Seeder
                 'timestamp' => Carbon::now(),
                 'is_for_lsp' => true,
                 'is_for_customer' => true,
+                'truck_first_id' => null,
+                'truck_second_id' => null
             ],
         ];
 
