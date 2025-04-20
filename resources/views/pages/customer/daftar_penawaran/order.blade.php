@@ -302,6 +302,8 @@
                     <input type="text" id="status" name="status" class="form-control"  value="{{ $offer['status'] }}" hidden>
                     <input type="text" id="lsp_id" name="lsp_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
                     <input type="text" id="address" name="address" class="form-control"  value="{{ $offer->requestRoute->address }}" hidden>
+                    <input type="text" id="truck_second_id" name="truck_second_id" class="form-control"  value="{{ $offer['truck_second_id'] }}" hidden>
+                    <input type="text" id="truck_first_id" name="truck_first_id" class="form-control"  value="{{ $offer['truck_first_id'] }}" hidden>
                   </div>
                   <div class="row">
                     <div class="col">

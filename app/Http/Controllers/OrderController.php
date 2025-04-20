@@ -60,6 +60,8 @@ class OrderController extends Controller
             'status' => 'required',
             'address' => 'required',
             'lsp_id' => 'required',
+            'truck_first_id' => 'nullable',
+            'truck_second_id' => 'nullable',
         ]);
 
         if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
@@ -100,7 +102,9 @@ class OrderController extends Controller
                 "remainingAmount" => $attributes['total_price'],
                 "address" => $attributes['address'],
                 "lsp_id" => $attributes['lsp_id'],
-                "paymentStatus" => "Belum Lunas"
+                "paymentStatus" => "Belum Lunas",
+                "truck_first_id" => $attributes['truck_first_id'],
+                "truck_second_id" => $attributes['truck_second_id'],
             ]);
         } else {
             $remainingWeight = $order->remainingWeight - $attributes['weight'];
