@@ -31,12 +31,24 @@ class Bid extends Model
         'size',
         'price',
         'user_id',
-        'requestOffer_id'
+        'requestOffer_id',
+        'truck_first_id',
+        'truck_second_id',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function truck_first()
+    {
+        return $this->belongsTo(Truck::class);
+    }
+
+    public function truck_second()
+    {
+        return $this->belongsTo(Truck::class);
     }
 
     public function requestRoute()

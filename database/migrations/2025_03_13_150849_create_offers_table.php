@@ -29,6 +29,10 @@ return new class extends Migration {
             $table->dateTime('timestamp');
             $table->boolean('is_for_lsp')->default(true);
             $table->boolean('is_for_customer')->default(true);
+            $table->unsignedBigInteger('truck_first_id')->nullable();
+            $table->unsignedBigInteger('truck_second_id')->nullable();
+            $table->foreign('truck_first_id')->references('id')->on('trucks')->onDelete('cascade');
+            $table->foreign('truck_second_id')->references('id')->on('trucks')->onDelete('cascade');
             $table->timestamps();
         });
     }

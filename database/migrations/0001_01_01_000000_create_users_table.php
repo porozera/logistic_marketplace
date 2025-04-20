@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('telpNumber');
             $table->string('profilePicture')->nullable();
             $table->text('description')->nullable();
-            $table->float('rating', 3, 2)->nullable();
+            $table->float('rating', 2, 1)->nullable();
             $table->text('address');
             $table->string('companyName')->nullable();
             $table->string('bannerPicture')->nullable();

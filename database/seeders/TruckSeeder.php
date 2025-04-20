@@ -12,7 +12,7 @@ class TruckSeeder extends Seeder
     {
         DB::table('trucks')->insert([
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'plateNumber' => 'B 1234 ABC',
                 'type' => 'Trailer',
                 'brand' => 'Hino',

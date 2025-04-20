@@ -28,6 +28,10 @@ return new class extends Migration {
             $table->decimal('price', 15, 2);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('requestOffer_id')->constrained('request_routes')->onDelete('cascade');
+            $table->unsignedBigInteger('truck_first_id')->nullable();
+            $table->unsignedBigInteger('truck_second_id')->nullable();
+            $table->foreign('truck_first_id')->references('id')->on('trucks')->onDelete('cascade');
+            $table->foreign('truck_second_id')->references('id')->on('trucks')->onDelete('cascade');
             $table->timestamps();
         });
     }

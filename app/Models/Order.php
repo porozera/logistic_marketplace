@@ -91,5 +91,13 @@ class Order extends Model
         return $this->belongsTo(offersModel::class, 'noOffer', 'noOffer');
     }
 
+    public function truck_first()
+    {
+        return $this->belongsTo(Truck::class);
+    }
 
+    public function truck_second()
+    {
+        return $this->belongsTo(Truck::class);
+    }
 }

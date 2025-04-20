@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('currentVehicle');
             $table->enum('status', ['Loading Item', 'On The Way', 'Finished'])->nullable();
             $table->text('description')->nullable();
-            $table->decimal('longitude')->nullable();
-            $table->decimal('latitude')->nullable();
+            $table->decimal('longitude', 10, 8)->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
             
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
