@@ -53,7 +53,7 @@
                         </tr>
                         <tr>
                             <th>Price</th>
-                            <td>{{ $offer->price }}</td>
+                            <td>Rp. {{ number_format($offer->price, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
                             <th>Loading Date</th>
