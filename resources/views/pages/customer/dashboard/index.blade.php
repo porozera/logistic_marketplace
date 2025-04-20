@@ -178,28 +178,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($userOrder as $item)
+                                    @if ($userOrder->isEmpty())
                                     <tr>
-                                        <td class="text-center text-primary">{{$item->order->noOffer}}</td>
-                                        <td class="text-center">{{$item->order->lspName}}</td>
-                                        <td class="text-center">{{$item->order->origin}}</td>
-                                        <td class="text-center">{{$item->order->destination}}</td>
-                                        <td class="text-center">{{$item->weight}} Kg</td>
-                                        <td class="text-center">{{$item->volume}} CBM</td>
-                                        <td class="text-center">
-                                            @if ($item->order->status == "Loading Item")
-                                            <span class="badge rounded-pill text-bg-warning" style="font-size: 14px;">Loading Item</span>
-                                            @elseif ($item->order->status == "On The Way")
-                                            <span class="badge rounded-pill text-bg-primary" style="font-size: 14px;">On The Way</span>
-                                            @elseif ($item->order->status == "Finished")
-                                            <span class="badge rounded-pill text-bg-success" style="font-size: 14px;">Finished</span>
-                                            @else
-                                            {{$item->order->status}}
-                                            @endif
-                                        </td>
-                                        <td class="text-center"><a href="/tracking/detail/{{$item->id}}">Track</a></td>
+                                        <td colspan="8" class="text-center">Tidak Ada Data Pengiriman</td>
                                     </tr>
-                                    @endforeach
+                                    @else
+                                        @foreach ($userOrder as $item)
+                                        <tr>
+                                            <td class="text-center text-primary">{{$item->order->noOffer}}</td>
+                                            <td class="text-center">{{$item->order->lspName}}</td>
+                                            <td class="text-center">{{$item->order->origin}}</td>
+                                            <td class="text-center">{{$item->order->destination}}</td>
+                                            <td class="text-center">{{$item->weight}} Kg</td>
+                                            <td class="text-center">{{$item->volume}} CBM</td>
+                                            <td class="text-center">
+                                                @if ($item->order->status == "Loading Item")
+                                                <span class="badge rounded-pill text-bg-warning" style="font-size: 14px;">Loading Item</span>
+                                                @elseif ($item->order->status == "On The Way")
+                                                <span class="badge rounded-pill text-bg-primary" style="font-size: 14px;">On The Way</span>
+                                                @elseif ($item->order->status == "Finished")
+                                                <span class="badge rounded-pill text-bg-success" style="font-size: 14px;">Finished</span>
+                                                @else
+                                                {{$item->order->status}}
+                                                @endif
+                                            </td>
+                                            <td class="text-center"><a href="/tracking/detail/{{$item->id}}">Track</a></td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
