@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Faq;
+use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,9 +14,21 @@ class DashboardController extends Controller
         return view('welcome');
     }
 
-    public function index_admin()
-    {
-        return view('pages.admin.dashboards.dashboard');
+    public function index_admin() {
+        $totalCustomer = User::where('role', 'customer')->count();
+        $totalLsp = User::where('role', 'lsp')->count();
+        $totalOrder = Order::count();
+        $totalAmount = Order::sum('totalAmount');
+        // Ambil 10 data order terakhir
+        $recentOrders = Order::latest()->take(10)->get();
+
+        return view('pages.admin.dashboards.dashboard', compact(
+            'totalCustomer',
+            'totalLsp',
+            'totalOrder',
+            'totalAmount',
+            'recentOrders'
+        ));
     }
 
     public function faq_category() {
@@ -48,4 +62,6 @@ class DashboardController extends Controller
         $faqs = Faq::where('type', 'Pengiriman')->get();
         return view('pages.admin.faqs.faq-pengiriman', compact('faqs'));
     }
+
+
 }

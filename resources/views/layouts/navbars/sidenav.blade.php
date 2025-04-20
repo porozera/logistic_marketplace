@@ -18,8 +18,8 @@
               </a>
           </li>
 
-          <li class="pc-item">
-              <a href="" class="pc-link">
+          <li class="pc-item {{ Request::is('admin/approval-lsp*') ? 'active' : '' }}">
+              <a href="{{ route('admin.approval-lsp') }}" class="pc-link">
                   <span class="pc-micon"><i class="ti ti-checkbox"></i></span>
                   <span class="pc-mtext">Approval LSP</span>
               </a>
@@ -30,24 +30,24 @@
             <i class="ti ti-dashboard"></i>
           </li>
           <li class="pc-item {{ Request::is('admin/container*') ? 'active' : '' }}">
-            <a href="container" class="pc-link">
+            <a href="{{ route('admin.container') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-caravan"></i></span>
               <span class="pc-mtext">Kontainer</span>
             </a>
           </li>
           <li class="pc-item {{ Request::is('admin/service*') ? 'active' : '' }}">
-            <a href="service" class="pc-link">
+            <a href="{{ route('admin.service') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
               <span class="pc-mtext">Layanan</span>
             </a>
           </li>
           <li class="pc-item {{ Request::is('admin/category*') ? 'active' : '' }}">
-            <a href="category" class="pc-link">
+            <a href="{{ route('admin.category') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-box"></i></span>
               <span class="pc-mtext">Kategori Barang</span>
             </a>
           </li>
-          <li class="pc-item {{ Request::is('admin/province*') ? 'active' : '' }}">
+          {{-- <li class="pc-item {{ Request::is('admin/province*') ? 'active' : '' }}">
             <a href="province" class="pc-link">
               <span class="pc-micon"><i class="ti ti-building-skyscraper"></i></span>
               <span class="pc-mtext">Provinsi</span>
@@ -61,44 +61,53 @@
           </li>
 
           <li class="pc-item pc-caption">
-            <label>Laporan</label>
+            <label>Manajemen Data</label>
             <i class="ti ti-news"></i>
           </li>
-          <li class="pc-item">
-            <a href="report-user" class="pc-link">
+          <li class="pc-item {{ Request::is('admin/report-customer*') ? 'active' : '' }}">
+            <a href="{{ route('admin.customer.index') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-users"></i></span>
               <span class="pc-mtext">Pengguna</span>
             </a>
           </li>
-          <li class="pc-item">
-            <a href="report-shipment" class="pc-link">
+          <li class="pc-item {{ Request::is('admin/report-lsp*') ? 'active' : '' }}">
+            <a href="{{ route('admin.lsp.index') }}" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-building-warehouse"></i></span>
+              <span class="pc-mtext">Logistic Service Provider (LSP)</span>
+            </a>
+          </li>
+          <li class="pc-item {{ Request::is('admin/report-shipment*') ? 'active' : '' }}">
+            <a href="{{ route('admin.shipment.index') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-truck-delivery"></i></span>
               <span class="pc-mtext">Pengiriman</span>
             </a>
           </li>
-          <li class="pc-item">
-            <a href="../pages/register-v3.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-file-invoice"></i></span>
-              <span class="pc-mtext">Keuangan</span>
-            </a>
-          </li>
-
           <li class="pc-item pc-caption">
             <label>Lainnya</label>
             <i class="ti ti-news"></i>
           </li>
-          <li class="pc-item">
-            <a href="" class="pc-link">
+          <li class="pc-item {{ Request::is('admin/complain*') ? 'active' : '' }}">
+            <a href="{{ route('admin.complain.index') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-file-symlink"></i></span>
                 <span class="pc-mtext">Manajemen Komplain</span>
             </a>
         </li>
         <li class="pc-item {{ Request::is('admin/faq*') ? 'active' : '' }}">
-            <a href="faq" class="pc-link">
+            <a href="{{ route('admin.faq') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-zoom-question"></i></span>
                 <span class="pc-mtext">FAQs Data</span>
             </a>
         </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              <span class="pc-micon"><i class="ti ti-logout text-danger"></i></span>
+              <span class="pc-mtext text-danger">Logout</span>
+          </a>
+      
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+          </form>
+      </li>
           @endif
 
           @if(Auth::user()->role === 'lsp')
@@ -189,7 +198,7 @@
 
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="{{ route('dashboard-customer') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-chart-bar"></i></span>
               <span class="pc-mtext">Dashboard</span>
             </a>
@@ -217,7 +226,7 @@
               </a>
           </li>
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="{{ route('list-offer') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
                 <span class="pc-mtext">Daftar Penawaran</span>
             </a>
@@ -228,13 +237,19 @@
           </li><li class="pc-item">
             <a href="{{ route('list-payment') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-cash"></i></span>
-                <span class="pc-mtext">Daftar Pembayaran</span>
+                <span class="pc-mtext">Payment History</span>
             </a>
           </li>
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="{{ route('tracking-customer') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-map-2"></i></span>
                 <span class="pc-mtext">Tracking Order</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="{{ route('review') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-color-picker"></i></span>
+                <span class="pc-mtext">Daftar Ulasan</span>
             </a>
           </li>
           <li class="pc-item pc-caption">
@@ -242,9 +257,22 @@
             <i class="ti ti-news"></i>
           </li>
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
-                <span class="pc-micon"><i class="ti ti-mail"></i></span>
-                <span class="pc-mtext">Kotak Pesan</span>
+            <a href="{{ route('notification-customer') }}" class="pc-link">
+              <span class="pc-micon position-relative">
+              <i class="ti ti-mail"></i>
+              @php
+                $unreadNotifications = \App\Models\Notification::where('receiver_id', Auth::id())
+                ->where('is_read', 0)
+                ->count();
+              @endphp
+              @if($unreadNotifications > 0)
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
+                {{ $unreadNotifications }}
+                <span class="visually-hidden">unread messages</span>
+                </span>
+              @endif
+              </span>
+              <span class="pc-mtext">Kotak Pesan</span>
             </a>
           </li>
           <li class="pc-item">
@@ -264,11 +292,20 @@
             </a>
           </li>
           <li class="pc-item">
-            <a href="" class="pc-link">
+            <a href="{{ route('complain-customer') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-mailbox"></i></span>
-                <span class="pc-mtext">Complain</span>
+                <span class="pc-mtext">Complains</span>
             </a>
           </li>
+          <li class="pc-item">
+            <a href="#" class="pc-link bg-transparent" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <span class="pc-micon"><i class="ti ti-power text-danger"></i></span>
+                <span class="pc-mtext text-danger">Logout</span>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+          </li>        
           @endif
 
           {{-- <li class="pc-item pc-caption">

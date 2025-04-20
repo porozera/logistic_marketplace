@@ -30,7 +30,8 @@ class UserOrder extends Model
         'commodities',
         'services',
         'snap_token',
-        'payment_token'
+        'payment_token',
+        'expires_at'
     ];
 
     /**

@@ -17,4 +17,9 @@ class Tracking extends Model
         'longitude',
         'latitude',
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

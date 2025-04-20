@@ -3,7 +3,8 @@
 @section('title', 'Kontainer')
 
 @section('content')
-<div class="container" style="padding-left: 250px; padding-top:80px;">
+<div class="pc-container">
+  <div class="pc-content">
     <!-- [ breadcrumb ] start -->
     <div class="page-header">
         <div class="page-block">
@@ -45,7 +46,7 @@
                       <th>Berat Maksimal (kg)</th>
                       <th>Volume (CBM)</th>
                       <th>Deskripsi</th>
-                      <th class="text-center">Actions</th>
+                      <th class="text-center">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -79,6 +80,7 @@
                       </td>
                     </tr>
                     @endforeach
+                  </tbody>
 
 
                     
@@ -91,7 +93,9 @@
       </div>
       <!-- [ Main Content ] end -->
     
-</div>
+
+    </div>
+  </div>
 <!-- Modal Konfirmasi Delete -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -113,6 +117,7 @@
           </div>
       </div>
   </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

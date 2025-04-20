@@ -31,8 +31,9 @@ class User extends Authenticatable
         'address',
         'companyName',
         'bannerPicture',
+        'permitNumber',
         'accountName',
-        'accountNumber',
+        'accountNumber'
     ];
 
     /**
@@ -58,4 +59,9 @@ class User extends Authenticatable
             'rating' => 'float',
         ];
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'lsp_id');
+    }   
 }

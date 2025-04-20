@@ -3,7 +3,8 @@
 @section('title', 'Edit Layanan')
 
 @section('content')
-<div class="container" style="padding-left: 250px; padding-top:80px;">
+<div class="pc-container">
+  <div class="pc-content">
 
     <!-- [ breadcrumb ] start -->
     <div class="page-header">
@@ -12,7 +13,7 @@
             <div class="col-md-12">
               <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan Pengiriman</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Layanan</a></li>
                 <li class="breadcrumb-item" aria-current="page">Edit Data</li>
               </ul>
             </div>
@@ -72,6 +73,6 @@
             </form>
         </div>
     </div>
-
+  </div>
 </div>
 @endsection

@@ -13,11 +13,11 @@ return new class extends Migration {
             $table->string('lspName');
             $table->string('origin');
             $table->string('destination');
-            $table->enum('shipmentMode', ['laut', 'darat']);
+            $table->enum('shipmentMode', ['D2D', 'D2P', 'P2D', 'P2P']);
             $table->enum('shipmentType', ['FCL', 'LCL']);
-            $table->date('loadingDate');
-            $table->date('shippingDate');
-            $table->date('estimationDate');
+            $table->dateTime('loadingDate');
+            $table->dateTime('shippingDate');
+            $table->dateTime('estimationDate');
             $table->integer('maxWeight');
             $table->integer('maxVolume');
             $table->integer('remainingWeight')->nullable();

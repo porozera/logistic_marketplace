@@ -115,14 +115,37 @@
                                     <a href="services.html" class="nav-link text-left">Services</a>
                                 </li>
                                 <li>
-                                    <a href="landing-faq" class="nav-link text-left">Faq</a>
+                                    <a href="{{'landing-faq'}}" class="nav-link text-left">Faq</a>
                                 </li>
                                 <li>
-                                    <a href="blog.html" class="nav-link text-left">Contact</a>
+                                    <a href="{{'landing-contact'}}" class="nav-link text-left">Contact</a>
                                 </li>
                                 <li>
-                                  <a href="{{ route('login') }}" class="nav-link text-left">Masuk</a>
-                                </li>
+                                  @guest
+                                      <a href="{{ route('login') }}" class="nav-link text-left">Masuk</a>
+                                  @else
+                                      @php
+                                          $role = Auth::user()->role;
+                                          $dashboardRoutes = [
+                                              'admin' => route('admin.dashboard'),
+                                              'lsp' => route('lsp-dashboard'),
+                                              'customer' => route('dashboard-customer'),
+                                          ];
+                                          $dashboardUrl = $dashboardRoutes[$role] ?? route('home');
+                                      @endphp
+                                      <a href="{{ $dashboardUrl }}" class="nav-link text-left">Dashboard</a>
+                                  @endguest
+                              </li>
+                              <li>
+                                <a href="#" class="pc-link bg-transparent" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                  <span class="pc-micon"><i class="ti ti-power text-danger"></i></span>
+                                  <span class="pc-mtext text-danger">Logout</span>
+                              </a>
+                              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                  @csrf
+                              </form>
+                              </li>
+                              
                             </ul>
                         </nav>
                     </div>

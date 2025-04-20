@@ -21,7 +21,8 @@ class RequestRoute extends Model
         'commodities',
         'description',
         'status',
-        'deadline'
+        'deadline',
+        'address'
     ];
 
     public function user()

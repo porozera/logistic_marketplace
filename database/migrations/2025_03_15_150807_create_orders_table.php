@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('lspName');
             $table->string('origin');
             $table->string('destination');
-            $table->enum('shipmentMode', ['laut', 'darat']);
+            $table->enum('shipmentMode', ['D2D', 'D2P', 'P2D', 'P2P']);
             $table->enum('shipmentType', ['FCL', 'LCL']);
             $table->date('loadingDate');
             $table->date('shippingDate');
@@ -28,12 +28,15 @@ return new class extends Migration
             $table->integer('remainingWeight')->nullable();
             $table->integer('remainingVolume')->nullable();
             $table->text('commodities')->nullable();
-            $table->string('status')->nullable();
+            $table->text('address')->nullable();
+            $table->enum('status', ['Loading Item', 'On The Way', 'Finished'])->nullable();
             $table->decimal('price', 15, 2);
             $table->decimal('totalAmount', 15, 2);
             $table->decimal('remainingAmount', 15, 2);
             $table->decimal('paidAmount', 15, 2);
-            $table->string('paymentStatus');
+            $table->enum('paymentStatus', ['Lunas', 'Belum Lunas'])->nullable();
+            $table->unsignedBigInteger('lsp_id');
+            $table->foreign('lsp_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
