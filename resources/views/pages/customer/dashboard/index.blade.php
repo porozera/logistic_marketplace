@@ -174,6 +174,7 @@
                                         <th class="text-center">Berat</th>
                                         <th class="text-center">Volume</th>
                                         <th class="text-center">Status</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -196,6 +197,7 @@
                                             {{$item->order->status}}
                                             @endif
                                         </td>
+                                        <td class="text-center"><a href="/tracking/detail/{{$item->id}}">Track</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
