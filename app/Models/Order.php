@@ -35,6 +35,10 @@ class Order extends Model
         'paymentStatus',
         'lsp_id',
         'address',
+        'container_id',
+        'truck_first_id',
+        'truck_second_id',
+        'address',
     ];
 
     /**
@@ -70,6 +74,7 @@ class Order extends Model
     {
         return "Rp " . number_format($this->totalAmount, 2, ',', '.');
     }
+
 
     public function lsp()
     {

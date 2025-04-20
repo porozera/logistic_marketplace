@@ -30,6 +30,10 @@
                     <input type="date" class="form-control" name="shippingDate" value="{{ $requestRoute->shippingDate }}" readonly>
                 </div>
                 <div class="mb-3">
+                    <label for="commodities" class="form-label">Commodities</label>
+                    <input type="text" class="form-control" name="commodities" value="{{ $requestRoute->commodities }}" readonly>
+                </div>
+                <div class="mb-3">
                     <label for="loadingDate" class="form-label">Loading Date</label>
                     <input type="date" class="form-control" name="loadingDate" required>
                 </div>

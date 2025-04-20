@@ -82,6 +82,7 @@ class BidController extends Controller
         'shippingDate' => $request->shippingDate,
         'loadingDate' => $validated['loadingDate'],
         'estimationDate' => $validated['estimationDate'],
+        'commodities' => $request->commodities,
         'maxWeight' => $validated['maxWeight'],
         'maxVolume' => $validated['maxVolume'],
         'remainingWeight' => $validated['maxWeight'],
@@ -106,6 +107,11 @@ class BidController extends Controller
     ]);
 
     return redirect()->route('permintaan.pengiriman')->with('success', 'Penawaran berhasil diajukan!');
-}
+    }
 
+    public function index ()
+    {
+        $bids = Bid::where('user_id', auth()->id())->get();
+        return view('pages.lsp.list-bids.index', compact('bids'));
+    }
 }

@@ -21,6 +21,9 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <h3 class="mb-3">Daftar Rute</h3>
+                            @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                             @endif
                             <div style="display: flex; justify-content:space-between" class="mb-2">
                                 <li class="pc-h-item d-none d-md-inline-flex" style="align-items: center">
                                     <i data-feather="search" class="icon-search" style="margin-right: 10px"></i>
@@ -85,7 +88,7 @@
                                 <a href="/offers/create" class="btn btn-primary" style="align-content: center">Tambah Rute</a>
                             </div>
 
-                            <table class="table table-hover table-borderless mb-0">
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>ID Rute</th>

@@ -8,7 +8,7 @@
         </a>
       </div>
       <div class="navbar-content">
-        
+
         <ul class="pc-navbar">
           @if(Auth::user()->role === 'admin')
           <li class="pc-item">
@@ -24,7 +24,7 @@
                   <span class="pc-mtext">Approval LSP</span>
               </a>
           </li>
-  
+
           <li class="pc-item pc-caption">
             <label>Master Data</label>
             <i class="ti ti-dashboard"></i>
@@ -58,8 +58,8 @@
               <span class="pc-micon"><i class="ti ti-building"></i></span>
               <span class="pc-mtext">Kota</span>
             </a>
-          </li> --}}
-  
+          </li>
+
           <li class="pc-item pc-caption">
             <label>Manajemen Data</label>
             <i class="ti ti-news"></i>
@@ -109,8 +109,8 @@
           </form>
       </li>
           @endif
-          
-          {{-- @if(Auth::user()->role === 'lsp')
+
+          @if(Auth::user()->role === 'lsp')
           <li class="pc-item">
             <a href="../dashboard/index.html" class="pc-link">
               <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
@@ -118,78 +118,83 @@
             </a>
           </li>
           <li class="pc-item">
-            <a href="/profile" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+            <a href="/profiles" class="pc-link">
+              <span class="pc-micon"><i class="ti ti-user"></i></span>
               <span class="pc-mtext">Profile</span>
             </a>
           </li>
+          <li class="pc-item pc-caption">
+              <label>Request</label>
+              <i class="ti ti-news"></i>
+          </li>
           <li class="pc-item">
+              <a href="/permintaan-pengiriman" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-tir"></i></span>
+                <span class="pc-mtext">Permintaan Pengiriman</span>
+            </a>
+        </li>
+        <li class="pc-item">
+            <a href="/opencontainer" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-forklift"></i></span>
+                <span class="pc-mtext">Open Container</span>
+            </a>
+        </li>
+        <li class="pc-item pc-caption">
+            <label>Management</label>
+            <i class="ti ti-news"></i>
+        </li>
+        <li class="pc-item">
+            <a href="/order-management" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-file-text"></i></span>
+                <span class="pc-mtext">Order Management</span>
+            </a>
+        </li>
+        <li class="pc-item">
+            <a href="/bids-list" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-list-check"></i></span>
+                <span class="pc-mtext">Bid List</span>
+            </a>
+        </li>
+        <li class="pc-item">
+          <a href="/offers" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-map"></i></span>
+            <span class="pc-mtext">Kelola Rute</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="/trucks" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-truck"></i></span>
+            <span class="pc-mtext">Kelola Truck</span>
+        </a>
+    </li>
+    <li class="pc-item">
+        <a href="/trackings" class="pc-link">
+          <span class="pc-micon"><i class="ti ti-truck-delivery"></i></span>
+          <span class="pc-mtext">Tracking Order</span>
+        </a>
+      </li>
+    </li><li class="pc-item">
+        <a href="{{ route('opencontainer.list-payment') }}" class="pc-link">
+            <span class="pc-micon"><i class="ti ti-cash"></i></span>
+            <span class="pc-mtext">Payment History</span>
+        </a>
+      </li>
+        <li class="pc-item pc-caption">
+            <label>Pesan</label>
+            <i class="ti ti-news"></i>
+        </li>
+        <li class="pc-item">
             <a href="../dashboard/index.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Order Management</span>
+                <span class="pc-micon"><i class="ti ti-mail"></i></span>
+                <span class="pc-mtext">Kotak Pesan</span>
             </a>
-          </li>
-          <li class="pc-item">
+        </li>
+        <li class="pc-item">
             <a href="../dashboard/index.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Kotak Pesan</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Chat</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="/permintaan-pengiriman" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Permintaan Pengiriman</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Open Container</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Tracking Order</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Rent Warehouse</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Kelola Warehouse</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="/offers" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Kelola Rute</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Pengaturan</span>
-            </a>
-          </li>
-          <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
-              <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
-              <span class="pc-mtext">Logout</span>
-            </a>
-          </li>
-          @endif --}}
+                <span class="pc-micon"><i class="ti ti-brand-hipchat"></i></span>
+            <span class="pc-mtext">Chat</span>
+          </a>
+          @endif
 
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">

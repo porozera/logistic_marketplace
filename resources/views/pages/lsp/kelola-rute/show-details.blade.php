@@ -49,24 +49,20 @@
                         <td>{{ $offer->commodities }}</td>
                     </tr>
                     <tr>
-                        <th>Status</th>
-                        <td>{{ $offer->status }}</td>
-                    </tr>
-                    <tr>
                         <th>Price</th>
                         <td>{{ $offer->price }}</td>
                     </tr>
                     <tr>
                         <th>Loading Date</th>
-                        <td>{{ $offer->loadingDate }}</td>
+                        <td>{{ \Carbon\Carbon::parse($offer->loadingDate)->format('d-m-y') }}</td>
                     </tr>
                     <tr>
                         <th>Shipping Date</th>
-                        <td>{{ $offer->shippingDate }}</td>
+                        <td>{{ \Carbon\Carbon::parse($offer->shippingDate)->format('d-m-y') }}</td>
                     </tr>
                     <tr>
                         <th>Estimation Date</th>
-                        <td>{{ $offer->estimationDate }}</td>
+                        <td>{{ \Carbon\Carbon::parse($offer->estimationDate)->format('d-m-y') }}</td>
                     </tr>
                     <tr>
                         <th>Remaining Weight</th>
@@ -75,6 +71,14 @@
                     <tr>
                         <th>Remaining Volume</th>
                         <td>{{ $offer->remainingVolume }}</td>
+                    </tr>
+                    <tr>
+                        <th>Truck ID</th>
+                        <td>{{ $offer->truck_id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ $offer->status }}</td>
                     </tr>
                 </table>
 

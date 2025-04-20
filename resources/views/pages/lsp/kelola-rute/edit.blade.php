@@ -60,6 +60,24 @@
                             <input type="text" class="form-control" id="price" name="price" value="{{ $offer->price }}" required>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="truck_id" class="form-label">Jenis Truk</label>
+                            <select class="form-select" name="truck_id" id="truck_id" required>
+                                @foreach($trucks as $truck)
+                                    <option value="{{ $truck->id }}" {{ $offer->truck_id == $truck->id ? 'selected' : '' }}>{{ $truck->type }} - {{$truck->brand}} - {{ $truck->plateNumber }} ({{$truck->driverName}}) </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <hr>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status" required>
+                                <option value="active" {{ $offer->status == 'active' ? 'selected' : '' }}>Active</option>
+                                <option value="deactive" {{ $offer->status == 'deactive' ? 'selected' : '' }}>Deactive</option>
+                            </select>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Update Offer</button>
                     </form>
                 </div>
