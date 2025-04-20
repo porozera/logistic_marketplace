@@ -46,6 +46,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if ($userOrders->isEmpty())
+                                <tr>
+                                    <td colspan="12" class="text-center">No Payment History</td>
+                                </tr>
+                                @else
                                 @php
                                    $no = ($userOrders->currentPage() - 1) * $userOrders->perPage() + 1
                                 @endphp
@@ -80,6 +85,7 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @endif
                             </tbody>                         
                         </table>  
                         <div class="d-flex justify-content-center mt-4">
