@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->string('lspName');
             $table->string('origin');
             $table->string('destination');
-            $table->enum('shipmentMode', ['laut', 'darat']);
+            $table->enum('shipmentMode', ['D2D', 'D2P', 'P2D', 'P2P']);
             $table->enum('shipmentType', ['FCL', 'LCL']);
             $table->dateTime('loadingDate');
             $table->dateTime('shippingDate');

@@ -184,7 +184,7 @@
 
           @if(Auth::user()->role === 'customer')
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="{{ route('dashboard-customer') }}" class="pc-link">
               <span class="pc-micon"><i class="ti ti-chart-bar"></i></span>
               <span class="pc-mtext">Dashboard</span>
             </a>
@@ -212,7 +212,7 @@
               </a>
           </li>
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="{{ route('list-offer') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
                 <span class="pc-mtext">Daftar Penawaran</span>
             </a>
@@ -223,13 +223,19 @@
           </li><li class="pc-item">
             <a href="{{ route('list-payment') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-cash"></i></span>
-                <span class="pc-mtext">Daftar Pembayaran</span>
+                <span class="pc-mtext">Payment History</span>
             </a>
           </li>
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
+            <a href="{{ route('tracking-customer') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-map-2"></i></span>
                 <span class="pc-mtext">Tracking Order</span>
+            </a>
+          </li>
+          <li class="pc-item">
+            <a href="{{ route('review') }}" class="pc-link">
+                <span class="pc-micon"><i class="ti ti-color-picker"></i></span>
+                <span class="pc-mtext">Daftar Ulasan</span>
             </a>
           </li>
           <li class="pc-item pc-caption">
@@ -237,9 +243,22 @@
             <i class="ti ti-news"></i>
           </li>
           <li class="pc-item">
-            <a href="../dashboard/index.html" class="pc-link">
-                <span class="pc-micon"><i class="ti ti-mail"></i></span>
-                <span class="pc-mtext">Kotak Pesan</span>
+            <a href="{{ route('notification-customer') }}" class="pc-link">
+              <span class="pc-micon position-relative">
+              <i class="ti ti-mail"></i>
+              @php
+                $unreadNotifications = \App\Models\Notification::where('receiver_id', Auth::id())
+                ->where('is_read', 0)
+                ->count();
+              @endphp
+              @if($unreadNotifications > 0)
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
+                {{ $unreadNotifications }}
+                <span class="visually-hidden">unread messages</span>
+                </span>
+              @endif
+              </span>
+              <span class="pc-mtext">Kotak Pesan</span>
             </a>
           </li>
           <li class="pc-item">
@@ -259,11 +278,20 @@
             </a>
           </li>
           <li class="pc-item">
-            <a href="" class="pc-link">
+            <a href="{{ route('complain') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-mailbox"></i></span>
-                <span class="pc-mtext">Complain</span>
+                <span class="pc-mtext">Complains</span>
             </a>
           </li>
+          <li class="pc-item">
+            <a href="#" class="pc-link bg-transparent" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <span class="pc-micon"><i class="ti ti-power text-danger"></i></span>
+                <span class="pc-mtext text-danger">Logout</span>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+          </li>        
           @endif
 
           {{-- <li class="pc-item pc-caption">

@@ -26,7 +26,7 @@
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-8">
               <h3 class="m-b-10">Edit Profile</h3>
-                <form action="/profile/edit/perform" method="POST" enctype="multipart/form-data">
+                <form action="/profile/customer/edit/perform" method="POST" id="updateProfileForm" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                 <div class="card">
@@ -114,7 +114,7 @@
   
                           <div class="row">
                               <div class="col text-end">
-                                <button class="btn btn-primary" type="submit">Update</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Update</button>
                               </div>
                           </div>
                       </form> 
@@ -124,6 +124,32 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              Apakah Anda yakin melakukan perubahan ini?
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+              <button type="button" class="btn btn-primary" id="submitFormButton">Update</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('submitFormButton').addEventListener('click', function () {
+      // Submit the form
+      document.getElementById('updateProfileForm').submit();
+  });
+</script>
 
 <script>
     const togglePassword = document.querySelector("#togglePassword");

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('origin');
             $table->string('destination');
-            $table->string('shipmentType');
-            $table->string('shipmentMode');
+            $table->enum('shipmentMode', ['D2D', 'D2P', 'P2D', 'P2P']);
+            $table->enum('shipmentType', ['FCL', 'LCL']);
             $table->date('shippingDate');
             $table->date('deadline');
             $table->integer('weight');
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('commodities');
             $table->string('status');
             $table->text('description')->nullable();
+            $table->text('address');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('userName');
         });

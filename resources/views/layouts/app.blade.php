@@ -49,10 +49,15 @@
       }
 
     </style>
+    
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
+
+    @yield('style')
 </head>
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
     @include('../layouts.navbars.sidenav')
-    @include('../layouts.navbars.topnav')
+    {{-- @include('../layouts.navbars.topnav') --}}
     @yield('content')
     {{-- @guest
         @yield('content')
@@ -76,6 +81,7 @@
       <div class="loader-fill"></div>
     </div>
   </div>
+  
 
   <!-- [Page Specific JS] start -->
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/apexcharts.min.js') }}"></script>

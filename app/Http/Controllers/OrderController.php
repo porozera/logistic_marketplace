@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\offersModel;
 use App\Models\Order;
 use App\Models\Service;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
 {
@@ -17,7 +19,12 @@ class OrderController extends Controller
     {
         $offer = offersModel::find($id);
         $services = Service::all();
-        return view('pages.customer.orders.index', compact('offer','services'));
+        $categories = Category::all();
+        $order = null;
+        if ($offer && isset($offer->noOffer)) { 
+            $order = Order::where('noOffer', $offer->noOffer)->first() ?? null;
+        }
+        return view('pages.customer.orders.index', compact('offer','services','categories','order'));
     }
 
     public function order(Request $request)
@@ -51,7 +58,21 @@ class OrderController extends Controller
             'is_for_customer' => 'required',
             'is_for_lsp' => 'required',
             'status' => 'required',
+            'address' => 'required',
+            'lsp_id' => 'required',
         ]);
+
+        if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
+            throw ValidationException::withMessages([
+                'total_cbm' => 'Total CBM yang harus dibeli melebihi sisa volume yang tersedia.',
+            ]);
+        }
+        
+        if ($attributes['weight'] > $attributes['remainingWeight']) {
+            throw ValidationException::withMessages([
+                'weight' => 'Berat melebihi sisa berat yang tersedia.',
+            ]);
+        }
 
         $order = Order::where('noOffer', $attributes['noOffer'])->first();
 
@@ -69,13 +90,16 @@ class OrderController extends Controller
                 "maxWeight" => $attributes['maxWeight'],
                 "maxVolume" => $attributes['maxVolume'],
                 "commodities" => $attributes['commodities'],
-                "status" => "Menunggu Tanggal Muat",
+                // "status" => "Loading Item",
                 "remainingWeight" => $attributes['remainingWeight'] - $attributes['weight'],
                 "remainingVolume" => $attributes['remainingVolume'] - $attributes['total_cbm'],
                 "price" => $attributes['price'],
                 "totalAmount" => $attributes['total_price'],
                 "paidAmount" => 0,
                 "remainingAmount" => $attributes['total_price'],
+                "remainingAmount" => $attributes['total_price'],
+                "address" => $attributes['address'],
+                "lsp_id" => $attributes['lsp_id'],
                 "paymentStatus" => "Belum Lunas"
             ]);
         } else {
@@ -97,6 +121,7 @@ class OrderController extends Controller
                 "totalAmount" => $order->totalAmount + $attributes['total_price'],
                 "remainingAmount" => $order->remainingAmount + $attributes['total_price'],
                 "commodities" => $updatedCommodities,
+                "paymentStatus" => "Belum Lunas"
             ]);
         }
         
@@ -114,6 +139,7 @@ class OrderController extends Controller
             "commodities" => $attributes['commodities'],
             "services" => $attributes['selected_services'] ?? "",
             "payment_token" => Str::uuid(),
+            "expires_at" => Carbon::now()->addMinutes(30),
         ]);
 
         // Set your Merchant Server Key
@@ -130,7 +156,7 @@ class OrderController extends Controller
         $params = array(
             'transaction_details' => array(
                 // 'order_id' => rand(),
-                'order_id' => $userOrder->id,
+                'order_id' => $userOrder->id. '-' . time(),
                 'gross_amount' => $attributes['total_price'],
             ),
             'customer_details' => array(
@@ -176,7 +202,7 @@ class OrderController extends Controller
 
         }     
 
-        return redirect('/payment/' . $userOrder->id);
+        return redirect('/payment/' . $userOrder->payment_token);
     }    
       
 }

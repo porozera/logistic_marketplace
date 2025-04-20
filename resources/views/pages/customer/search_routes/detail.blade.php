@@ -35,19 +35,22 @@
                     <div class="row align-items-center">
                         <div class="col-md-6 d-flex align-items-center">
                             <div class="me-2">
-                                <img src="{{ asset('template/mantis/dist/assets/images/user/avatar-2.jpg') }}" 
-                                     alt="profile-lsp" 
-                                     class="user-avtar wid-35 rounded-circle">
+                                <a href="/profile/lsp/{{ $offer->user->id }}" class="me-2">
+                                    <img src="{{ $offer->user->profilePicture ? asset('storage/' . $offer->user->profilePicture) : asset('default-profile.jpg') }}" 
+                                        alt="profile-lsp" 
+                                        class="user-avtar border wid-35 rounded-circle" 
+                                        style="object-fit: cover; width: 35px; height: 35px;">
+                                </a>
                             </div>
                             <div class="d-flex align-items-center gap-2">
-                                <h5 class="mb-0 fw-bold">{{ $offer['lspName']}}</h5>
+                                <h5 class="mb-0 fw-bold">{{ $offer->user->companyName}}</h5>
                                 <i class="fas fa-star text-warning"></i>
                                 <h5 class="mb-0 fw-bold">5.0</h5>
                             </div>
                         </div>
             
                         <div class="col-md-4 d-flex justify-content-center gap-2">
-                            @if ($offer['shipmentMode'] == 'laut')
+                            {{-- @if ($offer['shipmentMode'] == 'laut')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                     <i class="ti ti-sailboat me-1"></i> Laut
                                 </button>   
@@ -58,14 +61,14 @@
                             @endif
 
                             @if ($offer['shipmentType'] == 'LCL')
-                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                <button type="button" class="btn btn-success d-flex align-items-center rounded-pill">
                                     <i class="ti ti-box me-1"></i> LCL
                                 </button> 
                             @else
-                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                <button type="button" class="btn btn-success d-flex align-items-center rounded-pill">
                                     <i class="ti ti-box me-1"></i> FCL
                                 </button> 
-                            @endif
+                            @endif --}}
                         
                                                                     
                         </div>
@@ -94,8 +97,13 @@
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
+                                @if ($offer['shipmentType'] == 'FCL')
+                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
+                                <h5 class="mb-0 ms-2">/Container</h5>
+                                @else
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
                                 <h5 class="mb-0 ms-2">/CBM</h5>
+                                @endif
                             </div>
                             <a href="/order/{{$offer['id']}}" class="btn btn-primary w-50">Pesan Sekarang</a>
                         </div>
@@ -125,12 +133,20 @@
                         <div class="row mb-2">
                             <div class="col">Mode Pengiriman</div>
                             <div class="col text-end">
-                                <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i>
-                                {{ $offer['shipmentMode'] == 'laut' ? 'Laut' : 'Darat' }}
+                                {{-- <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i> --}}
+                                @if ($offer['shipmentMode'] == 'D2D')
+                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Door    
+                                @elseif ($offer['shipmentMode'] == 'D2P')
+                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Port
+                                @elseif ($offer['shipmentMode'] == 'P2D')
+                                <i class="ti ti-truck-delivery text-primary me-1"></i> Port to Door   
+                                @elseif ($offer['shipmentMode'] == 'P2P')
+                                <i class="ti ti-sailboat text-primary me-1"></i> Port to Port
+                                @endif
                             </div>
                         </div>
         
-                        <div class="row mb-3">
+                        <div class="row">
                             <div class="col">Tipe Pengiriman</div>
                             <div class="col text-end">
                                 <button type="button" class="btn btn-success rounded-pill">
@@ -138,26 +154,37 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="row">
+                            <strong>Alamat Tujuan:</strong> 
+                            <span class="text-primary">{{ optional($order)->address ?? '-' }}</span>
+                        </div>
         
                         <hr>
         
                         <h5 class="mb-1">Asal Pengiriman</h5>
-                        <p>{{ $offer['origin'] }}</p>
+                        <p class="text-primary">{{ $offer['origin'] }}</p>
         
                         <h5 class="mb-1">Tujuan Pengiriman</h5>
-                        <p>{{ $offer['destination'] }}</p>
+                        <p class="text-primary">{{ $offer['destination'] }}</p>
         
                         <div class="row mb-3">
                             <div class="col">
-                                <h5 class="mb-1">Tanggal Muat</h5>
-                                <p>{{ $offer['loading_date_formatted'] }}</p>
+                                <h5 class="mb-1">Tanggal Muat Barang</h5>
+                                <p class="text-primary">{{ $offer['loading_date_formatted'] }}</p>
                             </div>
                         </div>
         
                         <div class="row mb-3">
                             <div class="col">
                                 <h5 class="mb-1">Tanggal Pengiriman</h5>
-                                <p>{{ $offer['shipping_date_formatted'] }}</p>
+                                <p class="text-primary">{{ $offer['shipping_date_formatted'] }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <h5 class="mb-1">Estmasi Tanggal Tiba</h5>
+                                <p class="text-primary">{{ $offer['estimation_date_formatted'] }}</p>
                             </div>
                             <div class="col text-end">
                                 <h5 class="mb-1">Estimasi Pengiriman</h5>
@@ -179,7 +206,7 @@
                         </div>
         
                         <div class="mb-2">
-                            <strong>Tipe Barang:</strong> {{ $offer['commodities'] }}
+                            <strong>Tipe Barang:</strong> <span class="text-primary">{{ $offer['commodities'] }}</span>
                         </div>
                     </div>
                 </div>
@@ -194,7 +221,7 @@
                         <div class="row">
                             <div class="col-5 text-end">
                                 <i class="ti ti-building-warehouse text-primary"></i>
-                                <p class="mb-0">{{ $offer['origin'] }}</p>
+                                <p class="mb-0 fw-medium">{{ $offer['origin'] }}</p>
                                 <p class="text-sm text-gray-500">Kota Asal</p>
                             </div>
                             <div class="col-2 text-center">
@@ -203,7 +230,7 @@
                             </div>
                             <div class="col-5">
                                 <div class="bg-teal-100 p-3 rounded">
-                                    <p class="font-semibold text-teal-700 mb-1">Tanggal Muat</p>
+                                    <p class="font-semibold text-teal-700 mb-1">Tanggal Muat Barang</p>
                                     <p class="text-sm mb-0">{{ $offer['loading_date_formatted'] }}</p>
                                 </div>
                             </div>
@@ -212,7 +239,7 @@
                         <div class="row">
                             <div class="col-5 text-end">
                                 <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} text-primary"></i>
-                                <p class="mb-0">{{ $offer['shipmentMode'] == 'laut' ? 'Pengiriman Kapal' : 'Pengiriman Truk' }}</p>
+                                <p class="mb-0 fw-medium">{{ $offer['shipmentMode'] == 'laut' ? 'Pengiriman Kapal' : 'Pengiriman Truk' }}</p>
                             </div>
                             <div class="col-2 text-center">
                                 <div class="rounded-circle border border-2 border-primary mx-auto" style="width: 16px; height: 16px;"></div>
@@ -229,7 +256,7 @@
                         <div class="row">
                             <div class="col-5 text-end">
                                 <i class="ti ti-building-warehouse text-primary"></i>
-                                <p class="mb-0">{{ $offer['destination'] }}</p>
+                                <p class="mb-0 fw-medium">{{ $offer['destination'] }}</p>
                                 <p class="text-sm text-gray-500">Kota Tujuan</p>
                             </div>
                             <div class="col-2 text-center">
@@ -252,6 +279,7 @@
                         @foreach ($services as $item)
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="{{ $item['serviceName'] }}" id="flexCheckDefault" checked>
+                                <i class="{{$item->icon}} me-1"></i>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     {{ $item['serviceName'] }}
                                 </label>

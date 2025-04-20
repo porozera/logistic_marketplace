@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Category;
 use App\Models\RequestRoute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,8 +12,9 @@ class RequestRouteController extends Controller
 {
     public function index()
     {
-        $list_request = RequestRoute::where('user_id',Auth::id())->paginate(10);
-        return view('pages.customer.request_routes.index',compact('list_request'));
+        $list_request = RequestRoute::where('user_id',Auth::id())->orderBy('created_at', 'desc')->paginate(10);
+        $categories = Category::all();
+        return view('pages.customer.request_routes.index',compact('list_request','categories'));
     }
 
     public function store(Request $request)
@@ -28,6 +31,7 @@ class RequestRouteController extends Controller
             'width' => 'required',
             'height' => 'required',
             'commodities' => 'required',
+            'address' => 'required',
         ]);
 
         $requestRoute = RequestRoute::create([
@@ -38,15 +42,17 @@ class RequestRouteController extends Controller
             "shipmentType" => $attributes['shipmentType'],
             "description" => $attributes['description'],
             "weight" => $attributes['weight'],
-            "volume" => $attributes['length'] * $attributes['width'] * $attributes['height'],
+            "volume" => ($attributes['length']/100) * ($attributes['width']/100) * ($attributes['height']/100),
             "commodities" => $attributes['commodities'],
-            "status" => "Open",
+            "address" => $attributes['address'],
+            "status" => "active",
             "user_id" => Auth::id(),
             "username" => Auth::user()->username,
             "deadline" => Carbon::now()->addDays(7)->toDateString()
         ]);
         $deadline = Carbon::now()->addDays(7)->toDateString();
-        return redirect("/request-routes/success?deadline=$deadline")->with('success', 'Permintaan rute berhasil dikrimkan!');
+        // return redirect("/request-routes/success?deadline=$deadline")->with('success', 'Permintaan rute berhasil dikrimkan!');
+        return redirect("/request-routes")->with('success', 'Permintaan rute berhasil dikrimkan! Silakan cek kotak pesan secara berkala');
     }
 
     public function success()

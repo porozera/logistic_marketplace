@@ -33,6 +33,8 @@ class Order extends Model
         'remainingAmount',
         'paidAmount',
         'paymentStatus',
+        'lsp_id',
+        'address',
     ];
 
     /**
@@ -68,4 +70,21 @@ class Order extends Model
     {
         return "Rp " . number_format($this->totalAmount, 2, ',', '.');
     }
+
+    public function lsp()
+    {
+        return $this->belongsTo(User::class, 'lsp_id');
+    }
+
+    public function userOrders()
+    {
+        return $this->hasMany(UserOrder::class);
+    }
+
+    public function offer()
+    {
+        return $this->belongsTo(offersModel::class, 'noOffer', 'noOffer');
+    }
+
+
 }
