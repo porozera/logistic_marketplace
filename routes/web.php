@@ -37,6 +37,21 @@ use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
 use App\Mail\ComplainAnswerMail;
 use App\Models\Complain;
+use App\Http\Controllers\BidController;
+use App\Http\Controllers\ComplainController;
+use App\Http\Controllers\DaftarPenawaranController;
+use App\Http\Controllers\DashboardCustomerController;
+use App\Http\Controllers\NotificationCustomerController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileCustomerController;
+use App\Http\Controllers\SearchRouteController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TrackingController;
+use App\Http\Livewire\MapLocation;
+use App\Models\City;
+use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -173,7 +188,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
-    Route::get('/lsp/dashboard', [OfferController::class, 'index']);
+    Route::get('/lsp/dashboard', [OfferController::class, 'index'])->name('lsp-dashboard');
     Route::prefix('offers')->group(function(){
         Route::get('/', [OfferController::class, 'index'])->name('offers.index');
         Route::get('search', [OfferController::class, 'search'])->name('offers.search');
@@ -211,23 +226,60 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     //SEARCH ROUTES
     Route::get('/search-routes', [SearchRouteController::class, 'index'])->name('search-route');
     Route::get('/search-routes/{id}', [SearchRouteController::class, 'detail'])->name('search-route.detail');
+    Route::get('/profile/lsp/{id}', [SearchRouteController::class, 'profile_lsp'])->name('profile-lsp');
 
     //ORDERS
     Route::get('/order/{id}', [OrderController::class, 'index'])->name('order');
     Route::post('/order/perform', [OrderController::class, 'order'])->name('order.perform');
 
     //PAYMENTS
-    Route::get('/payment/{id}', [PaymentController::class, 'index'])->name('payment');
+    Route::get('/payment/failed', [PaymentController::class, 'failed'])->name('payment.failed');
+    Route::get('/payment/{token}', [PaymentController::class, 'index'])->name('payment');
     Route::get('/payment/success/{token}', [PaymentController::class, 'success'])->name('payment.success');
     Route::get('/list-payment', [PaymentController::class, 'list_payment'])->name('list-payment');
+    Route::get('/invoice/{token}', [PaymentController::class, 'invoice'])->name('invoice');
+    Route::get('/invoice/{token}/download', [PaymentController::class, 'invoice_download'])->name('invoice.download');
+
 
     //PROFILE CUSTOMER
-    Route::get('/profile', [ProfileCustomerController::class, 'index'])->name('profile-customer');
-    Route::get('/profile/edit', [ProfileCustomerController::class, 'edit'])->name('profile-customer.edit');
-    Route::put('/profile/edit/perform', [ProfileCustomerController::class, 'update'])->name('profile-customer.update');
+    Route::get('/profile/customer', [ProfileCustomerController::class, 'index'])->name('profile-customer');
+    Route::get('/profile/customer/edit', [ProfileCustomerController::class, 'edit'])->name('profile-customer.edit');
+    Route::put('/profile/customer/edit/perform', [ProfileCustomerController::class, 'update'])->name('profile-customer.update');
 
     //FAQ
     Route::get('/FAQ-customer', [FAQCustomerController::class, 'index'])->name('FAQ-customer');
+
+    //DAFTAR PENAWARAN
+    Route::get('/list-offer', [DaftarPenawaranController::class, 'index'])->name('list-offer');
+    Route::get('/list-offer/{id}', [DaftarPenawaranController::class, 'detail'])->name('list-offer.detail');
+    Route::get('/list-offer/order/{id}', [DaftarPenawaranController::class, 'order_form'])->name('list-offer.order_form');
+    Route::post('/list-offer/order/perform', [DaftarPenawaranController::class, 'order'])->name('list-offer.order.perform');
+
+    //NOTIFICATION
+    Route::get('/notification-customer', [NotificationCustomerController::class, 'index'])->name('notification-customer');
+    Route::put('/notification-customer/update/{id}', [NotificationCustomerController::class, 'update_status'])->name('notification-customer.markAsRead');
+    Route::put('/notification-customer/markallasread', [NotificationCustomerController::class, 'markAllAsRead'])->name('notification-customer.markAllAsRead');
+    Route::delete('/notification-customer/delete/{id}', [NotificationCustomerController::class, 'destroy'])->name('notification-customer.delete');
+
+    //TRACKING
+    Route::get('/tracking', [TrackingController::class, 'index'])->name('tracking-customer');
+    Route::get('/tracking/detail/{id}', [TrackingController::class, 'detail'])->name('tracking-customer.detail');
+
+    //REVIEW
+    Route::get('/review', [ReviewController::class, 'index'])->name('review');
+    Route::post('/review/create/perform', [ReviewController::class, 'store'])->name('review.store');
+    Route::get('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
+    Route::put('/review/update/{id}/perform', [ReviewController::class, 'update'])->name('review.update');
+    Route::delete('/review/delete/{id}', [ReviewController::class, 'destroy'])->name('review.delete');
+
+    //COMPLAIN
+    Route::get('/complain', [ComplainController::class, 'index'])->name('complain');
+    Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
+    Route::get('/complain/create', [ComplainController::class, 'create'])->name('complain.create');
+    Route::post('/complain/create/perform', [ComplainController::class, 'store'])->name('complain.create.store');
+
+    //DASHBOARD
+    Route::get('/dashboard/customer', [DashboardCustomerController::class, 'index'])->name('dashboard-customer');
 });
 
 

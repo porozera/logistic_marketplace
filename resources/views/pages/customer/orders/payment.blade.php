@@ -112,6 +112,9 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
+                            <h6 class="text-end text-gray-500">Total</h6>
+                        </div>
+                        <div class="row">
                             <h3 class="text-end text-primary">Rp. {{ number_format($userOrder['totalPrice'], 0, ',', '.')}}</h3>
                         </div>
                         <br>
@@ -142,7 +145,7 @@
             },
             // Optional
             onError: function(result){
-              /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                window.location.href = '{{ route('payment.failed') }}';
             }
           });
         };

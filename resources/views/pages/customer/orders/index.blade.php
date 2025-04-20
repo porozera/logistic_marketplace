@@ -1,5 +1,37 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 @section('title', 'Pemesanan')
+@section('style')
+<style>
+  .container {
+      display: grid;
+      grid-template-columns: repeat(11, 30px); /* 11 kolom per baris */
+      gap: 5px;
+      margin: 20px;
+  }
+  .box {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 5px;
+  }
+  .available {
+      background-color: green;
+      color: white;
+  }
+  .booked {
+      background-color: red;
+      color: white;
+  }
+  .square-box {
+      width: 40px; 
+      height: 40px; 
+  }
+
+</style>
 @section('content')
  <!-- [ Main Content ] start -->
  <div class="pc-container">
@@ -35,27 +67,38 @@
                     <div class="row align-items-center">
                         <div class="col-md-6 d-flex align-items-center">
                             <div class="me-2">
-                                <img src="{{ asset('template/mantis/dist/assets/images/user/avatar-2.jpg') }}" 
-                                     alt="profile-lsp" 
-                                     class="user-avtar wid-35 rounded-circle">
+                              <a href="/profile/lsp/{{ $offer->user->id }}" class="me-2">
+                                <img src="{{ $offer->user->profilePicture ? asset('storage/' . $offer->user->profilePicture) : asset('default-profile.jpg') }}" 
+                                    alt="profile-lsp" 
+                                    class="user-avtar border wid-35 rounded-circle" 
+                                    style="object-fit: cover; width: 35px; height: 35px;">
+                            </a>
                             </div>
                             <div class="d-flex align-items-center gap-2">
-                                <h5 class="mb-0 fw-bold">{{ $offer['lspName']}}</h5>
+                                <h5 class="mb-0 fw-bold">{{ $offer->user->companyName}}</h5>
                                 <i class="fas fa-star text-warning"></i>
                                 <h5 class="mb-0 fw-bold">5.0</h5>
                             </div>
                         </div>
             
                         <div class="col-md-4 d-flex justify-content-center gap-2">
-                            @if ($offer['shipmentMode'] == 'laut')
-                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-sailboat me-1"></i> Laut
-                                </button>   
-                            @else
-                                <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-truck-delivery me-1"></i> Darat
-                                </button>
-                            @endif
+                          @if ($offer->shipmentMode == 'D2D')
+                              <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                  <i class="ti ti-truck-delivery me-1"></i> Door to Door
+                              </button>   
+                          @elseif( $offer->shipmentMode == 'D2P')
+                              <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                  <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                              </button>
+                          @elseif( $offer->shipmentMode == 'P2P')
+                              <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                  <i class="ti ti-sailboat me-1"></i> Port to Port
+                              </button>
+                          @elseif( $offer->shipmentMode == 'P2D')
+                              <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                  <i class="ti ti-truck-delivery me-1"></i> Port to Door
+                              </button>
+                          @endif
 
                             <button type="button" class="btn btn-success rounded-pill">
                               {{ $offer['shipmentType'] == 'LCL' ? 'Less Container Load' : 'Full Container Load' }}
@@ -86,8 +129,13 @@
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2">/CBM</h5>
+                              @if ($offer['shipmentType'] == 'FCL')
+                              <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
+                              <h5 class="mb-0 ms-2">/Container</h5>
+                              @else
+                              <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
+                              <h5 class="mb-0 ms-2">/CBM</h5>
+                              @endif
                             </div>
                         </div>
                     </div>                    
@@ -97,42 +145,51 @@
         </div>
 
 
+      
+      
+      
+        
+
       <form action="/order/perform" method="POST" id="orderForm">
         @csrf
         <div class="row">
             <!-- Detail Penawaran -->
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-6">
-                          <h5 class="mb-3">Tanggal Muat Barang</h5>
-                        </div>
-                        <div class="col-6 text-end">
-                          <h4 class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</h4>
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                  <div class="col-6">
+                    <h5 class="mb-3">Tanggal Muat Barang</h5>
+                  </div>
+                  <div class="col-6 text-end">
+                    <h4 class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</h4>
+                  </div>
+                  </div>
+                  <div class="row">
+                  <div class="col-6">
+                    <h5 class="mb-3">Sisa Volume :</h5>
+                  </div>
+                  <div class="col-6 text-end">
+                    <div class="d-flex justify-content-end align-items-center">
+                    <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</h5>
+                    <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxVolume'] }} CBM</p>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="row">
+                  <div class="col-6">
+                    <h5 class="mb-3">Sisa Berat :</h5>
+                  </div>
+                  <div class="col-6 text-end">
+                    <div class="d-flex justify-content-end align-items-center">
+                    <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</h5>
+                    <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
+                    </div>
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-6">
-                          <h5 class="mb-3">Sisa Volume :</h5>
-                        </div>
-                        <div class="col-6 text-end">
-                          <div class="d-flex justify-content-end align-items-center">
-                            <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</h5>
-                            <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxVolume'] }} CBM</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-6">
-                          <h5 class="mb-3">Sisa Berat :</h5>
-                        </div>
-                        <div class="col-6 text-end">
-                          <div class="d-flex justify-content-end align-items-center">
-                            <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</h5>
-                            <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
-                          </div>
-                        </div>
+                        <h5>Alamat Tujuan:</h5> 
+                            <h5 class="text-primary">{{ optional($order)->address ?? '-' }}</h5>
                       </div>
 
                       <hr>
@@ -148,6 +205,29 @@
                       </div>
                     </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                      <h5 class="mb-0">Container Availability</h5>
+                    </div>
+                    <div class="card-body d-flex justify-content-center align-items-center">
+                      <div class="col-2"></div>
+                      <div class="col-9 d-flex justify-content-center">
+                        <div class="card">
+                          <div class="container" id="container"></div>
+                        </div>
+                      </div>
+                      <div class="col-1"></div>
+                    </div>
+                    <div class="card-footer text-center">
+                  <span class="badge bg-success me-2"><i class="ti ti-check"></i> Available</span>
+                  <span class="badge bg-danger"><i class="ti ti-x"></i> Booked</span>
+                    </div>
+                </div>
+                  </div>
+              </div>
             </div>
 
             <!-- Form input -->
@@ -187,7 +267,13 @@
                         @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                       </div>
                     </div>
+
                   @else
+
+                  <input type="number" id="height" name="height" class="form-control" placeholder="cm" value="0" hidden>
+                  <input type="number" id="width" name="width" class="form-control" placeholder="cm" value="0" hidden>
+                  <input type="number" id="length" name="length" class="form-control" placeholder="cm" value="0" hidden>
+                  
                   <div class="form-group mb-3">
                     <label class="form-label">Volume (CBM)</label>
                     <input type="number" id="volume" name="volume" class="form-control" placeholder="CBM" value="{{ $offer['maxVolume'] }}" oninput="calculateCBM()" readonly>
@@ -207,9 +293,11 @@
                       <div class="form-group mb-3">
                         <label class="form-label">Tipe Barang</label>
                         <select class="form-control" name="commodities" id="commodities">
-                            <option value=""></option>
-                            <option value="Parfum">Parfum</option>
-                            <option value="Binatang">Binatang</option>
+                            @foreach ($categories as $category)
+                            <option value="{{$category->name}}">{{$category->code}} - {{$category->name}}</option>
+                            @endforeach
+                            {{-- <option value="Parfum">Parfum</option>
+                            <option value="Binatang">Binatang</option> --}}
                         </select>                            
                         @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                         </div>
@@ -232,6 +320,7 @@
                                      value="{{ $item['serviceName'] }}" 
                                      data-price="{{ $item['price'] }}"
                                      onclick="updateServices()">
+                              <i class="{{$item->icon}} me-1"></i>
                               <label class="form-check-label">
                                   {{ $item['serviceName'] }}
                               </label>
@@ -248,9 +337,18 @@
                     </div>
                   </div>
                   <div class="row">
+                    @if (optional($order)->address == null)
                     <div class="form-group mb-3">
-                      <label class="form-label">Deskripsi</label>
-                      <textarea class="form-control" name="description" rows="4" placeholder="Deskripsi">{{ old('description') }}</textarea>
+                      <label class="form-label">Alamat Tujuan</label>
+                      <textarea class="form-control" name="address" rows="4" placeholder="Alamat Tujuan">{{ old('address') }}</textarea>
+                      @error('address') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                    </div>
+                    @endif
+                  </div>
+                  <div class="row">
+                    <div class="form-group mb-3">
+                      <label class="form-label">Informasi Tambahan</label>
+                      <textarea class="form-control" name="description" rows="4" placeholder="Informasi Tambahan">{{ old('description') }}</textarea>
                       @error('description') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
@@ -284,17 +382,23 @@
                     <input type="text" id="is_for_lsp" name="is_for_lsp" class="form-control"  value="{{ $offer['is_for_lsp'] }}" hidden>
                     <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="{{ $offer['is_for_customer'] }}" hidden>
                     <input type="text" id="status" name="status" class="form-control"  value="{{ $offer['status'] }}" hidden>
+                    <input type="text" id="lsp_id" name="lsp_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
+                    @if (optional($order)->address != null)
+                    <input type="text" id="address" name="address" class="form-control"  value="{{ $order['address'] }}" hidden>
+                    @endif
                   </div>
                   <div class="row">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                    <div class="col">
+                      @if ($errors->any())
+                      <div class="alert alert-danger w-100">
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                      @endif
                     </div>
-                @endif
                   </div>
                   <div class="row">
                     <div class="col-12">
@@ -309,6 +413,7 @@
       </form>
     </div>
     </div>
+    
 
 
 
@@ -378,7 +483,7 @@
 
               let totalCBMPrice = cbmToBuy * cbmPrice;
 
-              document.getElementById("cbmResult").innerText = cbmRounded.toFixed(3);
+              document.getElementById("cbmResult").innerText = cbmRounded.toFixed();
               document.getElementById("cbmToBuy").innerText = cbmToBuy;
 
               let cbmPriceCard = document.getElementById("cbmPriceCard");
@@ -449,4 +554,34 @@
 
 
         </script>
+        <script>
+          let totalCBM = parseInt("{{ $offer['maxVolume'] }}");
+          let bookedCBM = parseInt("{{ $offer['maxVolume'] - $offer['remainingVolume'] }}");
+      
+          function renderContainer() {
+              const container = document.getElementById("container");
+              container.innerHTML = "";
+      
+              for (let i = 0; i < totalCBM; i++) {
+                  const box = document.createElement("div");
+                  box.classList.add("box", "border", "d-flex", "justify-content-center", "align-items-center");
+      
+                  let icon = document.createElement("i");
+      
+                  if (i < bookedCBM) {
+                      box.classList.add("booked", "bg-danger");
+                      icon.classList.add("ti", "ti-x", "text-white");
+                  } else {
+                      box.classList.add("available", "bg-success");
+                      icon.classList.add("ti", "ti-check", "text-white");
+                  }
+      
+                  box.appendChild(icon);
+                  container.appendChild(box);
+              }
+          }
+      
+          document.addEventListener("DOMContentLoaded", renderContainer);
+      </script>
+    
 @endsection

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\City;
 use App\Models\offersModel;
+use App\Models\Order;
+use App\Models\Review;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SearchRouteController extends Controller
@@ -41,20 +45,38 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
     
-        if ($request->has('insurance')) {
-            $query->where('commodities', 'LIKE', '%Asuransi%');
+        $categoryFilters = $request->input('category', []);
+
+        if (!empty($categoryFilters)) {
+            $query->where(function ($q) use ($categoryFilters) {
+                foreach ($categoryFilters as $category) {
+                    if ($category === 'General Cargo') {
+                        $q->orWhere('commodities', 'LIKE', '%Pakaian%')
+                        ->orWhere('commodities', 'LIKE', '%Makanan%')
+                        ->orWhere('commodities', 'LIKE', '%Alat Olah Raga%')
+                        ->orWhere('commodities', 'LIKE', '%Tas%')
+                        ->orWhere('commodities', 'LIKE', '%Peralatan Rumah Tangga%')
+                        ->orWhere('commodities', 'LIKE', '%Peralatan Kantor%')
+                        ->orWhere('commodities', 'LIKE', '%Sepatu%')
+                        ->orWhere('commodities', 'LIKE', '%Elektronik%');
+                    } elseif ($category === 'Dangerous Cargo') {
+                        $q->orWhere('commodities', 'LIKE', '%Senjata%')
+                        ->orWhere('commodities', 'LIKE', '%Cairan Kimia%')
+                        ->orWhere('commodities', 'LIKE', '%Peledak%')
+                        ->orWhere('commodities', 'LIKE', '%Petasan%')
+                        ->orWhere('commodities', 'LIKE', '%Puluru%');
+                    } elseif ($category === 'Special Cargo') {
+                        $q->orWhere('commodities', 'LIKE', '%Hewan%')
+                        ->orWhere('commodities', 'LIKE', '%Makanan Segar%')
+                        ->orWhere('commodities', 'LIKE', '%Tanaman Hias%')
+                        ->orWhere('commodities', 'LIKE', '%Emas%')
+                        ->orWhere('commodities', 'LIKE', '%Berlian%');
+                    }
+                }
+            });
             $searchPerformed = true;
         }
-    
-        if ($request->has('storage')) {
-            $query->where('commodities', 'LIKE', '%Tempat penyimpanan%');
-            $searchPerformed = true;
-        }
-    
-        if ($request->has('fragile')) {
-            $query->where('commodities', 'LIKE', '%Barang pecah belah%');
-            $searchPerformed = true;
-        }
+
     
         if ($request->has('maxTime') && $request->maxTime != '') {
             $query->whereRaw("DATEDIFF(estimationDate, shippingDate) <= ?", [$request->maxTime]);
@@ -70,16 +92,29 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
 
-        $offers = $query->get();
+        $offers = $query->orderBy('created_at', 'desc')->get();
+        $services = Service::all();
+        $categories = Category::distinct('type')->pluck('type')->toArray();
         $cities = City::pluck('name')->toArray();
     
-        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed', 'cities'));
+        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed', 'cities','services','categories'));
     }
     
     public function detail($id)
     {
-        $offer = offersModel::find($id);
+        $offer = offersModel::with('user')->find($id);
         $services = Service::all();
-        return view('pages.customer.search_routes.detail', compact('offer','services'));
+        $order = null;
+        if ($offer && isset($offer->noOffer)) { 
+            $order = Order::where('noOffer', $offer->noOffer)->first() ?? null;
+        }
+        return view('pages.customer.search_routes.detail', compact('offer','services','order'));
+    }
+
+    public function profile_lsp($id){
+        $lsp = User::find($id);
+        $totalUlasan = Review::where('lsp_id', $lsp->id)->count();
+        $reviews = Review::where('lsp_id', $lsp->id)->with('customer')->orderBy('created_at', 'desc')->take(3)->get();
+        return view('pages.customer.search_routes.profile_lsp', compact('lsp', 'totalUlasan', 'reviews'));
     }
 }

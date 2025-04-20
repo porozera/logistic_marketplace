@@ -9,11 +9,7 @@
                     <div class="col-md-12">
                         <div class="page-header-title">
                             
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
+                            
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
@@ -29,8 +25,23 @@
                 <div class="card">
                     <div class="card-body">
                       <div class="row">
+                        <div class="col">
+                          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                          @if(session('success'))
+                          <script>
+                              Swal.fire({
+                                  title: 'Sukses!',
+                                  text: '{{ session('success') }}',
+                                  icon: 'success',
+                                  confirmButtonText: 'OK'
+                              });
+                          </script>
+                          @endif
+                        </div>
+                      </div>
+                      <div class="row">
                         <div class="col text-end">
-                          <a href="/profile/edit" class="btn btn-primary"><i class="ti ti-edit"></i><span class="ms-2">Edit</span></a>
+                          <a href="/profile/customer/edit" class="btn btn-primary"><i class="ti ti-edit"></i><span class="ms-2">Edit</span></a>
                         </div>
                       </div>
                       <div class="row">
@@ -116,13 +127,20 @@
   const password = document.querySelector("#password");
 
   togglePassword.addEventListener("click", function () {
-  
-  // toggle the type attribute
-  const type = password.getAttribute("type") === "password" ? "text" : "password";
-  password.setAttribute("type", type);
-  // toggle the eye icon
-  this.classList.toggle('ti-eye');
-  this.classList.toggle('ti-eye-off');
+    const type = password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    this.classList.toggle('ti-eye');
+    this.classList.toggle('ti-eye-off');
   });
+</script>
+<script>
+  setTimeout(function () {
+      const alert = document.getElementById('success-alert');
+      if (alert) {
+          alert.style.transition = 'opacity 0.5s ease';
+          alert.style.opacity = '0';
+          setTimeout(() => alert.remove(), 500);
+      }
+  }, 5000);
 </script>
 @endsection

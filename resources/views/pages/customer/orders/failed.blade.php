@@ -31,8 +31,8 @@
               <img src="{{ asset('template/mantis/dist/assets/images/warning.png') }}">
               <br>
               <br>  
-              <h4 class="mb-2">Pembayaran Gagal</h4>
-              <h7>Mohon untuk melakukan pembayaran ulang!</h7>
+              <h4 class="mb-2">Pembayaran Gagal!</h4>
+              <h7>Mohon untuk melakukan pembayaran atau pemesanan ulang.</h7>
 
               <hr>
               <div class="row">

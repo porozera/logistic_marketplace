@@ -10,10 +10,16 @@
           <div class="row align-items-center">
             <div class="col-md-12">
               <div class="page-header-title">
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
+                <script>
+                    Swal.fire({
+                        title: 'Sukses!',
+                        text: '{{ session('success') }}',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                </script>
                 @endif
               </div>
                 <ul class="breadcrumb">
@@ -29,7 +35,7 @@
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-12 col-xl-12">
-            <h3 class="m-b-10">Permintaan Rute</h3>
+            <h3 class="m-b-10">Buat Permintaan Rute</h3>
           <div class="card">
             <div class="card-body">
               <h4 class="mb-2">Detail Pengiriman</h4>
@@ -40,15 +46,15 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label class="form-label">Lokasi Asal</label>
-                                <input type="text" name="origin" class="form-control" placeholder="Lokasi Asal" value="{{ old('origin') }}">
+                                <label class="form-label">Kota Asal</label>
+                                <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ old('origin') }}">
                                 @error('origin') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label class="form-label">Lokasi Tujuan</label>
-                                <input type="text" name="destination" class="form-control" placeholder="Lokasi Tujuan" value="{{ old('destination') }}">
+                                <label class="form-label">Kota Tujuan</label>
+                                <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ old('destination') }}">
                                 @error('destination') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
@@ -64,10 +70,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label class="form-label">Tipe Pengiriman</label>
-                                <select class="form-control" name="shipmentType" id="shipmentType">
-                                    <option value="FCL">FCL</option>
-                                    <option value="LCL">LCL</option>
-                                </select>
+                                <input type="text" class="form-control" name="shipmentType" id="shipmentType" value="FCL" readonly>
                                 @error('shipmentType') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
@@ -75,11 +78,20 @@
                             <div class="form-group mb-3">
                             <label class="form-label">Mode Pengiriman</label>
                             <select class="form-control" name="shipmentMode" id="shipmentMode">
-                                <option value="Laut">Laut</option>
-                                <option value="Darat">Darat</option>
+                                <option value="D2D">Door to Door (D2D)</option>
+                                <option value="D2P">Door to Port (D2P)</option>
+                                <option value="P2P">Port to Port (P2P)</option>
+                                <option value="P2D">Port to Door (P2D)</option>
                             </select>                            
                             @error('shipmentMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Alamat Tujuan Pengiriman</label>
+                            <textarea class="form-control" name="address" rows="4" placeholder="Alamat Tujuan Pengiriman">{{ old('address') }}</textarea>
+                            @error('address') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                         </div>
                     </div>
                     <br>
@@ -120,8 +132,9 @@
                             <div class="form-group mb-3">
                                 <label class="form-label">Kategori</label>
                                 <select class="form-control" name="commodities" id="commodities">
-                                    <option value="General Cargo">General Cargo</option>
-                                    <option value="Special Cargo">Special Cargo</option>
+                                    @foreach ($categories as $item)
+                                        <option value="{{ $item->name }}">{{ $item->code }} - {{ $item->name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
@@ -146,60 +159,68 @@
             </div>
           </div>
 
-        <div class="card">
+            <div class="card">
             <div class="card-body">
-                <h4 class="mb-2">List Permintaan Rute</h4>
+            <h4 class="mb-2">List Permintaan Rute</h4>
+            <div class="table-responsive" style="overflow-x: auto;">
                 <table class="table table-hover" id="pc-dt-simple">
                     <thead>
                         <tr>
-                          <th>No</th>
-                          <th>Asal</th>
-                          <th>Tujuan</th>
-                          <th>Tipe</th>
-                          <th>Moda</th>
-                          <th>Berat</th>
-                          <th>Volume</th> 
-                          <th>Jenis Barang</th> 
-                          <th>Tangal Pengiriman</th>
-                          <th>Deadline</th>
-                          <th>Status</th>
-                          {{-- <th class="text-center">Actions</th> --}}
+                            <th>No</th>
+                            <th>Asal</th>
+                            <th>Tujuan</th>
+                            <th>Alamat Tujuan</th>
+                            <th>Tipe</th>
+                            <th>Moda</th>
+                            <th>Berat</th>
+                            <th>Volume</th> 
+                            <th>Jenis Barang</th> 
+                            <th>Tangal Pengiriman</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
-                            $no = ($list_request->currentPage() - 1) * $list_request->perPage() + 1
+                        $no = ($list_request->currentPage() - 1) * $list_request->perPage() + 1
                         @endphp
                         @foreach ( $list_request as $item)
                         <tr>
                             <td>{{$no++}}</td>
                             <td>{{$item['origin']}}</td>
                             <td>{{$item['destination']}}</td>
+                            <td>{{ Str::limit($item['address'], 25, '...') }}</td>
                             <td>{{$item['shipmentType']}}</td>
                             <td>{{$item['shipmentMode']}}</td>
-                            <td>{{$item['weight']}}</td>
-                            <td>{{$item['volume']}}</td>
+                            <td>{{$item['weight']}} kg</td>
+                            <td>{{$item['volume']}} CBM</td>
                             <td>{{$item['commodities']}}</td>
                             <td>{{$item['shippingDate']}}</td>
                             <td>{{$item['deadline']}}</td>
-                            
+                    
                             <td>
-                                @if ($item['status'] == "Open")
-                                <span class="badge rounded-pill text-bg-warning">In Bidding</span>
-                                @else
-                                <span class="badge rounded-pill text-bg-danger">Close</span>
-                                @endif
+                            @if ($item['status'] == "active")
+                            <span class="badge rounded-pill text-bg-warning">In Bidding</span>
+                            @else
+                            <span class="badge rounded-pill text-bg-success">Close</span>
+                            @endif
+                            </td>
+                            <td class="text-center">
+                            <a href="/list-offer">Lihat Penawaran</a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                </div>
                 <div class="d-flex justify-content-center mt-4">
-                    {{ $list_request->links('pagination::bootstrap-4') }}
+                {{ $list_request->links('pagination::bootstrap-4') }}
                 </div> 
+                </div>
+                </div>
             </div>
-        </div>
-        </div>
+
       </div>
     </div>
   </div>
@@ -229,5 +250,11 @@
                 // Submit the form
                 document.getElementById('requestRouteAddForm').submit();
             });
+        </script>
+
+        <script>
+            setTimeout(function() {
+                document.getElementById('success-alert').style.display = 'none';
+            }, 3000);
         </script>
 @endsection

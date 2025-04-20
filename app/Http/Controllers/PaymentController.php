@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\offersModel;
 use App\Models\Order;
+use App\Models\Tracking;
 use App\Models\UserOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class PaymentController extends Controller
 {
-    public function index($id)
+    public function index($token)
     {
-        $userOrder = UserOrder::find($id);
+        $userOrder = UserOrder::where('payment_token', $token)->firstOrFail();
         $order = Order::find($userOrder->order_id);
-        return view('pages.customer.orders.payment', compact('userOrder','order'));
+        return view('pages.customer.orders.payment', compact('userOrder', 'order'));
+    }
+
+    public function failed(){
+        return view('pages.customer.orders.failed');
     }
 
     public function success($token)
@@ -24,26 +32,55 @@ class PaymentController extends Controller
             return redirect()->route('home')->with('error', 'Akses tidak sah!');
         }
     
-        $userOrder->paymentStatus = 'Lunas';
-        $userOrder->save();
+        if ($userOrder->paymentStatus !== 'Lunas') {
+            $userOrder->paymentStatus = 'Lunas';
+            $userOrder->save();
     
-        $order = Order::find($userOrder->order_id);
+            $order = Order::find($userOrder->order_id);
     
-        if ($order) {
-            $order->remainingAmount -= $userOrder->totalPrice;
-            $order->paidAmount += $userOrder->totalPrice;
+            if ($order) {
+                $totalPaid = UserOrder::where('order_id', $order->id)
+                                ->where('paymentStatus', 'Lunas')
+                                ->sum('totalPrice');
     
-            if ($order->remainingAmount == 0 || $order->paidAmount == $order->totalAmount){
-                $order->paymentStatus = 'Lunas'; 
+                $order->paidAmount = $totalPaid;
+                $order->remainingAmount = $order->totalAmount - $totalPaid;
+    
+                $countPaid = UserOrder::where('order_id', $order->id)
+                                ->where('paymentStatus', 'Lunas')
+                                ->count();
+    
+                if ($countPaid === 1) {
+                    $order->status = 'Loading Item';
+    
+                    if (!Tracking::where('order_id', $order->id)->exists()) {
+                        Tracking::create([
+                            'order_id' => $order->id,
+                            'currentLocation' => 'Warehouse',
+                            'currentVehicle' => 'Truck',
+                            'status' => 'Loading Item',
+                            'description' => 'Sedang tahap loading muatan.',
+                            'longitude' => null,
+                            'latitude' => null,
+                        ]);
+                    }
+                }
+    
+                if ($order->remainingAmount <= 0) {
+                    $order->paymentStatus = 'Lunas';
+                }
+    
+                $order->save();
             }
-    
-            $order->save();
         }
-
-        $userOrderItem = UserOrder::where('payment_token', $token)->first();
+    
+        $userOrderItem = $userOrder;
         $orderItem = Order::find($userOrder->order_id);
-        return view('pages.customer.orders.success',compact('userOrderItem','orderItem'));
+    
+        return view('pages.customer.orders.success', compact('userOrderItem', 'orderItem'));
     }
+    
+
     
     public function list_payment(){
         $userOrders = UserOrder::where('user_id', Auth::id())
@@ -52,4 +89,32 @@ class PaymentController extends Controller
                         ->paginate(10);
         return view('pages.customer.orders.list-payment', compact('userOrders'));
     }
+
+    public function invoice($token){
+        $userOrder = UserOrder::where('payment_token', $token)->first();
+        if (!$userOrder) {
+            return redirect('/')->with('error', 'Order not found.');
+        }
+        $order = Order::find($userOrder->order_id);
+        $offer = offersModel::where('noOffer', $order->noOffer)->first();
+        return view('pages.customer.orders.invoice', compact('userOrder','order','offer'));
+    }
+
+    public function invoice_download($token)
+    {
+        $userOrder = UserOrder::with('order')->where('payment_token', $token)->first();
+    
+        if (!$userOrder) {
+            abort(404, 'Invoice tidak ditemukan');
+        }
+    
+        $order = $userOrder->order; // sudah eager-loaded
+        $offer = offersModel::where('noOffer', $order->noOffer)->first();
+    
+        $pdf = Pdf::loadView('invoices.pdf', compact('userOrder'))
+                  ->setPaper('A4', 'portrait');
+    
+        return $pdf->download('invoice-' . $order->noOffer . '.pdf');
+    }
+    
 }
