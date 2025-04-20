@@ -73,8 +73,12 @@ class offerController extends Controller
 
         public function create()
     {
-        $trucks = Truck::all(); // Ambil semua data truck
+        // $trucks = Truck::all(); // Ambil semua data truck
+        $trucks = Truck::with('user')
+            ->where('user_id', Auth::id())
+            ->get();
         return view('pages.lsp.kelola-rute.create', compact('trucks'));
+
     }
 
     public function store(Request $request)
@@ -83,7 +87,7 @@ class offerController extends Controller
             // 'noOffer' => 'required|unique:offers,noOffer',
             'origin' => 'required|string',
             'destination' => 'required|string',
-            'shipmentMode' => 'required|in:laut,darat',
+            'shipmentMode' => 'required|in:D2D,D2P,P2D,P2P',
             'shipmentType' => 'required|in:FCL,LCL',
             'maxWeight' => 'required|integer',
             'maxVolume' => 'required|integer',
@@ -95,7 +99,8 @@ class offerController extends Controller
             'estimationDate' => 'required|date',
             'remainingWeight' => 'nullable|integer',
             'remainingVolume' => 'nullable|integer',
-            'truck_id' => 'required|exists:trucks,id',
+            'truck_first_id' => 'required|exists:trucks,id',
+            'truck_second_id' => 'required|exists:trucks,id',
         ]);
         // dd($attributes);
         $noOffer = 'OFR-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
@@ -120,9 +125,11 @@ class offerController extends Controller
             'status' => $attributes['status'],
             'price' => $attributes['price'],
             'user_id' =>Auth::id(),
-            'is_for_lsp' => false,
-            'is_for_customer' => true,
-            'truck_id' => $attributes['truck_id'],
+            // 'truck_id' => $attributes['truck_id'],
+            'truck_first_id' => $attributes['truck_first_id'],
+            'truck_second_id' => $attributes['truck_second_id'],
+            'is_for_customer' => 1,
+            'is_for_lsp' => $attributes['shipmentType'] === 'LCL' ? 1 : 0,
             'timestamp' => now(),
         ]);
         return redirect()->route('offers.index')->with('success', 'Route successfully created!');
@@ -145,15 +152,17 @@ class offerController extends Controller
     {
         // Validasi input
         $request->validate([
-            'noOffer' => 'required|string|unique:offers,noOffer,' . $id,
+            // 'noOffer' => 'required|string|unique:offers,noOffer,' . $id,
             'origin' => 'required|string',
             'destination' => 'required|string',
-            'shipmentMode' => 'required|in:laut,darat',
+            'shipmentMode' => 'required|in:D2D,D2P,P2D,P2P',
             'shipmentType' => 'required|in:FCL,LCL',
             'maxWeight' => 'required|integer',
             'maxVolume' => 'required|integer',
+            'commodities' => 'nullable|string',
             'price' => 'required|numeric',
-            'truck_id' => 'required|exists:trucks,id',
+            'truck_first_id' => 'required|exists:trucks,id',
+            'truck_second_id' => 'required|exists:trucks,id',
             'status' => 'required|in:active,deactive',
         ]);
 
@@ -162,15 +171,18 @@ class offerController extends Controller
 
         // Update data
         $offer->update([
-            'noOffer' => $request->noOffer,
+            // 'noOffer' => $request->noOffer,
             'origin' => $request->origin,
             'destination' => $request->destination,
             'shipmentMode' => $request->shipmentMode,
             'shipmentType' => $request->shipmentType,
             'maxWeight' => $request->maxWeight,
             'maxVolume' => $request->maxVolume,
+            'commodities' => $request->commodities,
             'price' => $request->price,
-            'truck_id' => $request['truck_id'],
+            // 'truck_id' => $request['truck_id'],
+            'truck_first_id' => $request['truck_first_id'],
+            'truck_second_id' => $request['truck_second_id'],
             'status' => $request->status,
         ]);
 

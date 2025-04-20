@@ -9,7 +9,19 @@
             <div class="page-block">
                 <div class="row align-items-center">
                     <div class="col-md-12">
-                        <h1>Kelola Rute</h1>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Kelola Rute</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <h2>Kelola Rute</h2>
                     </div>
                 </div>
             </div>
@@ -22,12 +34,13 @@
                         <div class="table-responsive">
                             <h3 class="mb-3">Daftar Rute</h3>
                             @if (session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
-                             @endif
+                                <div class="alert alert-success">{{ session('success') }}</div>
+                            @endif
                             <div style="display: flex; justify-content:space-between" class="mb-2">
                                 <li class="pc-h-item d-none d-md-inline-flex" style="align-items: center">
                                     <i data-feather="search" class="icon-search" style="margin-right: 10px"></i>
-                                    <input id="search" type="text" class="form-control" placeholder="Search . . ." style="width:500px">
+                                    <input id="search" type="text" class="form-control" placeholder="Search . . ."
+                                        style="width:500px">
                                     {{-- <button class="btn" style="margin-left: 10px; border: solid 0.5px; border-color: #F1F1F1">Filter<i class="ti ti-filter"></i></button> --}}
                                     <!-- Tombol Filter -->
                                     <div style="position: relative; margin-left:5px">
@@ -36,7 +49,8 @@
                                         </button>
 
                                         <!-- Dropdown Filter -->
-                                        <div id="filterDropdown" style="
+                                        <div id="filterDropdown"
+                                            style="
                                             display: none;
                                             position: absolute;
                                             top: 100%;
@@ -53,25 +67,29 @@
                                                     <label for="originFilter">Lokasi Asal</label>
                                                     <select id="originFilter" name="origin" class="form-control">
                                                         <option value="">Semua</option>
-                                                        @foreach($origins as $origin)
-                                                            <option value="{{ $origin }}">{{ $origin }}</option>
+                                                        @foreach ($origins as $origin)
+                                                            <option value="{{ $origin }}">{{ $origin }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
 
                                                 <div class="mb-2">
                                                     <label for="destinationFilter">Lokasi Tujuan</label>
-                                                    <select id="destinationFilter" name="destination" class="form-control">
+                                                    <select id="destinationFilter" name="destination"
+                                                        class="form-control">
                                                         <option value="">Semua</option>
-                                                        @foreach($destinations as $destination)
-                                                            <option value="{{ $destination }}">{{ $destination }}</option>
+                                                        @foreach ($destinations as $destination)
+                                                            <option value="{{ $destination }}">{{ $destination }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
 
                                                 <div class="mb-2">
                                                     <label for="shipmentTypeFilter">Shipment Type</label>
-                                                    <select id="shipmentTypeFilter" name="shipmentType" class="form-control">
+                                                    <select id="shipmentTypeFilter" name="shipmentType"
+                                                        class="form-control">
                                                         <option value="">Semua</option>
                                                         <option value="FCL">FCL</option>
                                                         <option value="LCL">LCL</option>
@@ -85,7 +103,8 @@
 
                                 </li>
                                 {{-- <button class="btn btn-primary"><a href="/offers/create" style="color: white">Tambah Rute</a></button> --}}
-                                <a href="/offers/create" class="btn btn-primary" style="align-content: center">Tambah Rute</a>
+                                <a href="/offers/create" class="btn btn-primary" style="align-content: center">Tambah
+                                    Rute</a>
                             </div>
 
                             <table class="table table-bordered">
@@ -105,7 +124,8 @@
                                             <td>{{ $offer->origin }}</td>
                                             <td>{{ $offer->destination }}</td>
                                             <td>{{ $offer->shipmentType }}</td>
-                                            <td class="text-end"><a href="{{ route('offers.show', $offer->id) }}">Lihat Detail</a></td>
+                                            <td class="text-end"><a href="{{ route('offers.show', $offer->id) }}">Lihat
+                                                    Detail</a></td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -115,13 +135,16 @@
                                 </tbody>
                             </table>
 
-                            <div class="pagination-container mt-5" style="display: flex; justify-content: space-between">
+                            <div class="pagination-container mt-5"
+                                style="display: flex; justify-content: space-between">
                                 <div class="pagination-info">
                                     <p>Showing 10 of 10</p>
                                 </div>
                                 <div class="pagination-number">
                                     <ul class="pagination">
-                                        <li class="page-item"><a href="#" class="page-link"><<</a></li>
+                                        <li class="page-item"><a href="#" class="page-link">
+                                                <<< /a>
+                                        </li>
                                         <li class="page-item"><a href="#" class="page-link">1</a></li>
                                         <li class="page-item"><a href="#" class="page-link">2</a></li>
                                         <li class="page-item"><a href="#" class="page-link">3</a></li>
@@ -145,7 +168,9 @@
         $.ajax({
             url: "{{ route('offers.search') }}",
             type: "GET",
-            data: { search: query },
+            data: {
+                search: query
+            },
             success: function(data) {
                 $('#offers-table').html(data);
             }
@@ -154,23 +179,23 @@
 </script>
 <script>
     document.getElementById('filterButton').addEventListener('click', function() {
-    const dropdown = document.getElementById('filterDropdown');
-    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-});
+        const dropdown = document.getElementById('filterDropdown');
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    });
 
-document.getElementById('filterForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+    document.getElementById('filterForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    const origin = document.getElementById('originFilter').value;
-    const destination = document.getElementById('destinationFilter').value;
-    const shipmentType = document.getElementById('shipmentTypeFilter').value;
+        const origin = document.getElementById('originFilter').value;
+        const destination = document.getElementById('destinationFilter').value;
+        const shipmentType = document.getElementById('shipmentTypeFilter').value;
 
-    fetch("{{ route('offers.index') }}?origin=" + origin + "&destination=" + destination + "&shipmentType=" + shipmentType)
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('offersTable').innerHTML = data;
-        });
-});
-
+        fetch("{{ route('offers.index') }}?origin=" + origin + "&destination=" + destination +
+                "&shipmentType=" + shipmentType)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('offersTable').innerHTML = data;
+            });
+    });
 </script>
 @endsection

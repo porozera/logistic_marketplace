@@ -30,7 +30,7 @@
             <div class="card-body">
               <img src="{{ asset('template/mantis/dist/assets/images/success-img.svg') }}">
               <br>
-              <br>  
+              <br>
               <h4 class="mb-2">Pembayaran Berhasil</h4>
               <h7>Terima kasih atas pembayaran anda!</h7>
               <hr>
@@ -68,7 +68,7 @@
                   <a href="/invoice/{{$userOrderItem->payment_token}}" class="btn btn-primary w-100">Lihat Invoice</a>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                  <a href="/tracking/detail/{{$userOrderItem->id}}" class="btn btn-secondary w-100">Track Order </a>
+                  <a href="/tracking/detail/{{$userOrderItem->id}}" class="btn btn-secondary w-100">Track Order</a>
                 </div>
               </div>
             <div class="col-md-4 text-center col-xl-4">
