@@ -37,21 +37,13 @@ use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
 use App\Mail\ComplainAnswerMail;
 use App\Models\Complain;
-use App\Http\Controllers\BidController;
-use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\DaftarPenawaranController;
 use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\NotificationCustomerController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProfileCustomerController;
-use App\Http\Controllers\SearchRouteController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Livewire\MapLocation;
-use App\Models\City;
-use Illuminate\Http\Request;
+
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -273,7 +265,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::delete('/review/delete/{id}', [ReviewController::class, 'destroy'])->name('review.delete');
 
     //COMPLAIN
-    Route::get('/complain', [ComplainController::class, 'index'])->name('complain');
+    Route::get('/complain', [ComplainController::class, 'index_customer'])->name('complain-customer');
     Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
     Route::get('/complain/create', [ComplainController::class, 'create'])->name('complain.create');
     Route::post('/complain/create/perform', [ComplainController::class, 'store'])->name('complain.create.store');

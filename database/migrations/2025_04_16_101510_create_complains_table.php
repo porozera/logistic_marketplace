@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('username');
             $table->text('description');
-            $table->text('answer')->nullable();
-            $table->string('header');
             $table->string('email');
-            $table->boolean('is_answered')->default(false);
+            $table->enum('status', ['Solved', 'Pending']);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

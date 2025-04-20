@@ -72,8 +72,8 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h4>{{$item->header}}</h4>
-                                <a href="/complain/detail/{{$item->id}}" class="btn btn-icon btn-light-primary"><i class="ti ti-arrow-narrow-right"></i></a>
+                                <h5>{{$item->description}}</h5>
+                                {{-- <a href="/complain/detail/{{$item->id}}" class="btn btn-icon btn-light-primary"><i class="ti ti-arrow-narrow-right"></i></a> --}}
                             </div>
                         </div>
                         
@@ -82,7 +82,7 @@
                         <div class="row">
                             <div class="d-flex">
                                 <p class="me-3 mt-2 text-primary">{{$item->created_at}}</p>
-                                @if ($item->is_answered == false)
+                                @if ($item->status == "Pending")
                                 <div>
                                     <button type="button" class="btn btn-warning d-inline-flex rounded-pill w-10"><i class="ti ti-clock me-1"></i> Pending</button>
                                 </div>

@@ -68,7 +68,8 @@ class ComplainController extends Controller
     ]);
 
     return back()->with('success', 'Pesan Anda telah dikirim! Kami akan segera menanggapi.');
-    
+    }   
+
     public function index_customer() {
         $complains = Complain::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
         return view('pages.customer.complains.index', compact('complains'));
@@ -82,22 +83,21 @@ class ComplainController extends Controller
     public function store(Request $request) {
         $attributes = $request->validate([
             'description' => 'required',
-            'header' => 'required',
             'email' => 'required|email',
             'user_id' => 'required',
         ]);
         $complain = Complain::create([
             'description' => $attributes['description'],
-            'header' => $attributes['header'],
             'email' => $attributes['email'],
             'user_id' => $attributes['user_id'],
-            'is_answered' => false,
+            'username' => Auth::user()->username,
+            'status' => 'Pending',
         ]);
 
-        return redirect()->route('complain')->with('success', 'Complain submitted successfully.');
+        return redirect()->route('complain-customer')->with('success', 'Complain submitted successfully.');
     }
 
-    public function detail($id) {
+    public function detail_customer($id) {
         $complain = Complain::findOrFail($id);
         return view('pages.customer.complains.detail', compact('complain'));
     }

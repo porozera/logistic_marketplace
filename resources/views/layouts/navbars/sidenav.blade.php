@@ -287,7 +287,7 @@
             </a>
           </li>
           <li class="pc-item">
-            <a href="{{ route('complain') }}" class="pc-link">
+            <a href="{{ route('complain-customer') }}" class="pc-link">
                 <span class="pc-micon"><i class="ti ti-mailbox"></i></span>
                 <span class="pc-mtext">Complains</span>
             </a>

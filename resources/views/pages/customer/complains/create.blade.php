@@ -36,11 +36,11 @@
                         <form action="/complain/create/perform" method="POST" id="complainAddForm">
                             @csrf
                             @method('POST')
-                            <div class="form-group mb-3">
+                            {{-- <div class="form-group mb-3">
                                 <label class="form-label">Header</label>
                                 <input type="text" name="header" class="form-control" placeholder="Contoh: Barang belum sampai" value="{{ old('header') }}">
                                 @error('header') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
+                            </div> --}}
                             <div class="form-group mb-3">
                                 <label class="form-label">Deskripsi</label>
                                 <textarea class="form-control" name="description" rows="4" placeholder="Jelaskan masalah yang Anda alami...">{{ old('description') }}</textarea>

@@ -19,10 +19,6 @@ class Complain extends Model
         'description'
     ];
 
-    protected $casts = [
-        'is_answered' => 'boolean',
-    ];
-
     /**
      * Relasi ke model User.
      */
