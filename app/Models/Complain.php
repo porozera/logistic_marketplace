@@ -13,11 +13,10 @@ class Complain extends Model
 
     protected $fillable = [
         'user_id',
-        'description',
-        'header',
-        'answer',
         'email',
-        'is_answered',
+        'username',
+        'status',
+        'description'
     ];
 
     protected $casts = [

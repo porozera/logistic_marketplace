@@ -31,8 +31,9 @@ class User extends Authenticatable
         'address',
         'companyName',
         'bannerPicture',
+        'permitNumber',
         'accountName',
-        'accountNumber',
+        'accountNumber'
     ];
 
     /**

@@ -3,7 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="container" style="padding-left: 250px; padding-top:80px;">
+<div class="pc-container">
+  <div class="pc-content">
     <!-- [ breadcrumb ] start -->
     <div class="page-header">
         <div class="page-block">
@@ -43,7 +44,7 @@
                       <th>Tipe</th>
                       <th>Pertanyaan</th>
                       <th>Deskripsi</th>
-                      <th class="text-center">Actions</th>
+                      <th class="text-center">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -75,9 +76,7 @@
                       </td>
                     </tr>
                     @endforeach
-
-
-                    
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -87,6 +86,7 @@
       </div>
       <!-- [ Main Content ] end -->
     
+  </div>
 </div>
 <!-- Modal Konfirmasi Delete -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">

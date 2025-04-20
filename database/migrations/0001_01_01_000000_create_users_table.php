@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('bannerPicture')->nullable();
             $table->string('accountNumber')->nullable();
             $table->string('accountName')->nullable();
+            $table->string('permitNumber')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

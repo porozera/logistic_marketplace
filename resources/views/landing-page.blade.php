@@ -115,10 +115,10 @@
                                     <a href="services.html" class="nav-link text-left">Services</a>
                                 </li>
                                 <li>
-                                    <a href="landing-faq" class="nav-link text-left">Faq</a>
+                                    <a href="{{'landing-faq'}}" class="nav-link text-left">Faq</a>
                                 </li>
                                 <li>
-                                    <a href="blog.html" class="nav-link text-left">Contact</a>
+                                    <a href="{{'landing-contact'}}" class="nav-link text-left">Contact</a>
                                 </li>
                                 <li>
                                   @guest
