@@ -73,11 +73,11 @@ class offersModel extends Model
 
     public function truck_first()
     {
-        return $this->belongsTo(Truck::class);
+        return $this->belongsTo(Truck::class, 'truck_first_id');
     }
 
     public function truck_second()
     {
-        return $this->belongsTo(Truck::class);
+        return $this->belongsTo(Truck::class, 'truck_second_id');
     }
 }

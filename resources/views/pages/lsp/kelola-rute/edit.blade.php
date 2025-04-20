@@ -16,24 +16,35 @@
 
                         <div class="mb-3">
                             <label for="noOffer" class="form-label">No Offer</label>
-                            <input type="text" class="form-control" id="noOffer" name="noOffer" value="{{ $offer->noOffer }}" required>
+                            <input type="text" class="form-control" id="noOffer" name="noOffer"
+                                value="{{ $offer->noOffer }}" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="origin" class="form-label">Origin</label>
-                            <input type="text" class="form-control" id="origin" name="origin" value="{{ $offer->origin }}" required>
+                            <input type="text" class="form-control" id="origin" name="origin"
+                                value="{{ $offer->origin }}" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="destination" class="form-label">Destination</label>
-                            <input type="text" class="form-control" id="destination" name="destination" value="{{ $offer->destination }}" required>
+                            <input type="text" class="form-control" id="destination" name="destination"
+                                value="{{ $offer->destination }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="commodities" class="form-label">Commodities</label>
+                            <input type="text" class="form-control" id="commodities" name="commodities"
+                                value="{{ $offer->commodities }}" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="shipmentMode" class="form-label">Shipment Mode</label>
                             <select class="form-select" id="shipmentMode" name="shipmentMode" required>
-                                <option value="laut" {{ $offer->shipmentMode == 'laut' ? 'selected' : '' }}>Laut</option>
-                                <option value="darat" {{ $offer->shipmentMode == 'darat' ? 'selected' : '' }}>Darat</option>
+                                <option value="D2D" {{ $offer->shipmentMode == 'D2D' ? 'selected' : '' }}>D2D</option>
+                                <option value="D2P" {{ $offer->shipmentMode == 'D2P' ? 'selected' : '' }}>D2P</option>
+                                <option value="P2D" {{ $offer->shipmentMode == 'P2D' ? 'selected' : '' }}>P2D</option>
+                                <option value="P2P" {{ $offer->shipmentMode == 'P2P' ? 'selected' : '' }}>P2P</option>
                             </select>
                         </div>
 
@@ -47,24 +58,41 @@
 
                         <div class="mb-3">
                             <label for="maxWeight" class="form-label">Max Weight</label>
-                            <input type="number" class="form-control" id="maxWeight" name="maxWeight" value="{{ $offer->maxWeight }}" required>
+                            <input type="number" class="form-control" id="maxWeight" name="maxWeight"
+                                value="{{ $offer->maxWeight }}" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="maxVolume" class="form-label">Max Volume</label>
-                            <input type="number" class="form-control" id="maxVolume" name="maxVolume" value="{{ $offer->maxVolume }}" required>
+                            <input type="number" class="form-control" id="maxVolume" name="maxVolume"
+                                value="{{ $offer->maxVolume }}" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="price" class="form-label">Price</label>
-                            <input type="text" class="form-control" id="price" name="price" value="{{ $offer->price }}" required>
+                            <input type="text" class="form-control" id="price" name="price"
+                                value="{{ $offer->price }}" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="truck_id" class="form-label">Jenis Truk</label>
-                            <select class="form-select" name="truck_id" id="truck_id" required>
-                                @foreach($trucks as $truck)
-                                    <option value="{{ $truck->id }}" {{ $offer->truck_id == $truck->id ? 'selected' : '' }}>{{ $truck->type }} - {{$truck->brand}} - {{ $truck->plateNumber }} ({{$truck->driverName}}) </option>
+                            <label for="truck_first_id" class="form-label">First Truck</label>
+                            <select class="form-select" name="truck_first_id" id="truck_first_id" required>
+                                @foreach ($trucks as $truck)
+                                    <option value="{{ $truck->id }}"
+                                        {{ $offer->truck_id == $truck->id ? 'selected' : '' }}>{{ $truck->type }} -
+                                        {{ $truck->brand }} - {{ $truck->plateNumber }} ({{ $truck->driverName }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="truck_second_id" class="form-label">Second Truck</label>
+                            <select class="form-select" name="truck_second_id" id="truck_second_id" required>
+                                @foreach ($trucks as $truck)
+                                    <option value="{{ $truck->id }}"
+                                        {{ $offer->truck_id == $truck->id ? 'selected' : '' }}>{{ $truck->type }} -
+                                        {{ $truck->brand }} - {{ $truck->plateNumber }} ({{ $truck->driverName }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -74,7 +102,8 @@
                             <label for="status" class="form-label">Status</label>
                             <select class="form-select" id="status" name="status" required>
                                 <option value="active" {{ $offer->status == 'active' ? 'selected' : '' }}>Active</option>
-                                <option value="deactive" {{ $offer->status == 'deactive' ? 'selected' : '' }}>Deactive</option>
+                                <option value="deactive" {{ $offer->status == 'deactive' ? 'selected' : '' }}>Deactive
+                                </option>
                             </select>
                         </div>
 
