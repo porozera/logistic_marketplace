@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Approval')
 
 @section('content')
   <div class="pc-container">

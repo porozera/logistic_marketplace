@@ -99,6 +99,12 @@
                             <span class="pc-mtext">FAQs Data</span>
                         </a>
                     </li>
+                    <li class="pc-item {{ Request::is('admin/notifications*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.notifications') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-zoom-question"></i></span>
+                            <span class="pc-mtext">Notifikasi</span>
+                        </a>
+                    </li>
                     <li class="pc-item">
                         <a href="#" class="pc-link"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Layanan')
+@section('title', 'FAQ')
 
 @section('content')
 <div class="container" style="padding-left: 250px; padding-top:80px;">

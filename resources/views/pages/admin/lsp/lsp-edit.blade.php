@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit LSP')
+@section('title', 'LSP')
 
 @section('content')
 <div class="pc-container">
