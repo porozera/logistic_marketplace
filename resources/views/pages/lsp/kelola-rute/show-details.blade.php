@@ -40,6 +40,10 @@
                             <td>{{ $offer->shipmentType }}</td>
                         </tr>
                         <tr>
+                            <th>Tipe Container</th>
+                            <td>{{ $offer->container->name }}</td>
+                        </tr>
+                        <tr>
                             <th>Max Weight</th>
                             <td>{{ $offer->maxWeight }}</td>
                         </tr>
