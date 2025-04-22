@@ -290,11 +290,11 @@
                                 @endif
                                 @if ($item['shipmentType'] == 'LCL')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-box me-1"></i> LCL 20' Container
+                                        <i class="ti ti-box me-1"></i> LCL
                                     </button> 
                                 @else
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-box me-1"></i> FCL 20' Container
+                                        <i class="ti ti-box me-1"></i> FCL
                                     </button> 
                                 @endif
                                 {{-- <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
@@ -316,46 +316,46 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-1 d-flex align-items-start justify-content-start">
-                                <h5 style="font-weight: normal;">Asal</h5>
+                                <p style="font-weight: normal;">Asal</p>
                             </div>
                             <div class="col-1">
                                 <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
-                                <div class="bg-primary mx-auto" style="width: 1px; height: 40px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 50px;"></div>
                             </div>
                             <div class="col-2">
-                                <h5 class="fw-bold text-primary">{{$item->origin}}</h5>
+                                <p class="fw-bold text-primary">{{$item->origin}}</p>
                             </div>
                             <div class="col-2">
-                                <h5 style="font-weight: normal;">Tanggal Pengiriman</h5>
+                                <p style="font-weight: normal;">Tanggal Pengiriman</p>
                             </div>
                             <div class="col-3">
-                                <h5 class="text-primary fw-bold">{{$item->loading_date_formatted}}</h5>
+                                <p class="text-primary fw-bold">{{$item->loading_date_formatted}}</p>
                             </div>
                             <div class="col-3 d-flex align-items-start justify-content-end ">
                                 @if ($item['shipmentType'] == 'FCL')
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2 mt-1">/Container</h5>
+                                <p class="mb-0 ms-2 mt-1">/Container</p>
                                 @else
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2 mt-1">/CBM</h5>
+                                <p class="mb-0 ms-2 mt-1">/CBM</p>
                                 @endif
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-1 d-flex align-items-start justify-content-start">
-                                <h5 style="font-weight: normal;">Tujuan</h5>
+                                <p style="font-weight: normal;">Tujuan</p>
                             </div>
                             <div class="col-1">
                                 <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
                             </div>
                             <div class="col-2">
-                                <h5 class="fw-bold text-primary">{{$item->destination}}</h5>
+                                <p class="fw-bold text-primary">{{$item->destination}}</p>
                             </div>
                             <div class="col-2">
-                                <h5 class="mb-0" style="font-weight: normal;">Estimasi Tiba</h5>
+                                <p class="mb-0" style="font-weight: normal;">Estimasi Tiba</p>
                             </div>
                             <div class="col-3">
-                                <h5 class="text-primary fw-bold">{{$item->estimation_date_formatted}}</h5>
+                                <p class="text-primary fw-bold">{{$item->estimation_date_formatted}}</p>
                             </div>
                             <div class="col-3 d-flex align-items-start justify-content-end">
                                 <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50 w-md-50">Lihat detail<i class="ti ti-chevron-right ms-1"></i></a>

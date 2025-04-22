@@ -93,10 +93,10 @@
                         </div>
                         <div class="col-1">
                             <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
-                            <div class="bg-primary mx-auto" style="width: 1px; height: 40px;"></div>
+                            <div class="bg-primary mx-auto" style="width: 1px; height: 50px;"></div>
                         </div>
                         <div class="col-2">
-                            <p><b>{{$item->order->origin}}</b></p>
+                            <h6>{{$item->order->origin}}</h6>
                         </div>
                         <div class="col-2">
                             Tanggal Pengiriman
@@ -118,7 +118,7 @@
                             <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
                         </div>
                         <div class="col-2">
-                            <p><b>{{$item->order->destination}}</b></p>
+                            <h6>{{$item->order->destination}}</h6>
                         </div>
                         <div class="col-2">
                             Estimasi Tiba

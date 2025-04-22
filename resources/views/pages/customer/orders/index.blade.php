@@ -108,7 +108,7 @@
                         </div>
             
                         <div class="col-md-2 text-end">
-                          <h4 class="m-b-10 text-primary">ID : {{ $offer['noOffer'] }}</h4>
+                          <p class="m-b-10 text-primary">ID : {{ $offer['noOffer'] }}</p>
                         </div>
                     </div> 
 
@@ -116,25 +116,25 @@
             
                     <div class="row align-items-center">
                         <div class="col-md-8 d-flex align-items-center justify-content-start mt-2">
-                            <h5 class="mb-0 fw-bold">{{ $offer['origin']}}</h5>                      
+                            <p class="mb-0 fw-bold">{{ $offer['origin']}}</p>                      
                             <div class="d-flex align-items-center mx-4">
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-2" style="width: 200px; height: 1px;"></div>
-                                <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</h5> 
-                                <div class="bg-primary mx-2" style="width: 200px; height: 1px;"></div>
+                                <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
+                                <i class="ti ti-clock mx text-primary"></i> <p class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</p> 
+                                <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                             </div>
-                            <h5 class="mb-0 fw-bold">{{ $offer['destination']}}</h5>
+                            <p class="mb-0 fw-bold">{{ $offer['destination']}}</p>
                         </div>
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
                               @if ($offer['shipmentType'] == 'FCL')
                               <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
-                              <h5 class="mb-0 ms-2">/Container</h5>
+                              <p class="mb-0 ms-2">/Container</p>
                               @else
                               <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
-                              <h5 class="mb-0 ms-2">/CBM</h5>
+                              <p class="mb-0 ms-2">/CBM</p>
                               @endif
                             </div>
                         </div>
@@ -159,37 +159,37 @@
                 <div class="card-body">
                   <div class="row">
                   <div class="col-6">
-                    <h5 class="mb-3">Tanggal Muat Barang</h5>
+                    <p class="mb-3">Tanggal Muat Barang</p>
                   </div>
                   <div class="col-6 text-end">
-                    <h4 class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</h4>
+                    <p class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</p>
                   </div>
                   </div>
                   <div class="row">
                   <div class="col-6">
-                    <h5 class="mb-3">Sisa Volume :</h5>
+                    <p class="mb-3">Sisa Volume :</p>
                   </div>
                   <div class="col-6 text-end">
                     <div class="d-flex justify-content-end align-items-center">
-                    <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</h5>
+                    <p class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</p>
                     <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxVolume'] }} CBM</p>
                     </div>
                   </div>
                   </div>
                   <div class="row">
                   <div class="col-6">
-                    <h5 class="mb-3">Sisa Berat :</h5>
+                    <p class="mb-3">Sisa Berat :</p>
                   </div>
                   <div class="col-6 text-end">
                     <div class="d-flex justify-content-end align-items-center">
-                    <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</h5>
+                    <p class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</p>
                     <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
                     </div>
                         </div>
                       </div>
                       <div class="row">
-                        <h5>Alamat Tujuan:</h5> 
-                            <h5 class="text-primary">{{ optional($order)->address ?? '-' }}</h5>
+                        <p>Alamat Tujuan:</p> 
+                            <p class="text-primary">{{ optional($order)->address ?? '-' }}</p>
                       </div>
 
                       <hr>
@@ -200,8 +200,8 @@
                       <hr>
 
                       <div class="text-end">
-                        <h5 class="mb-3 text-gray-500">Total</h5>
-                        <h4 class="mb-3 text-danger" id="totalPrice">Rp. 0</h4>
+                        <p class="mb-3 text-gray-500">Total</p>
+                        <h5 class="mb-3 text-danger" id="totalPrice">Rp. 0</h5>
                       </div>
                     </div>
                 </div>
@@ -300,7 +300,7 @@
                             <option value="Binatang">Binatang</option> --}}
                         </select>                            
                         @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -385,6 +385,7 @@
                     <input type="text" id="lsp_id" name="lsp_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
                     <input type="text" id="truck_second_id" name="truck_second_id" class="form-control"  value="{{ $offer['truck_second_id'] }}" hidden>
                     <input type="text" id="truck_first_id" name="truck_first_id" class="form-control"  value="{{ $offer['truck_first_id'] }}" hidden>
+                    <input type="text" id="cargoType" name="cargoType" class="form-control"  value="{{ $offer['cargoType'] }}" hidden>
                     @if (optional($order)->address != null)
                     <input type="text" id="address" name="address" class="form-control"  value="{{ $order['address'] }}" hidden>
                     @endif
@@ -494,10 +495,10 @@
                       <div class="card-body p-3">
                           <div class="row">
                               <div class="col-6">
-                                  <h5 class="mb-0">Total CBM: ${cbmToBuy}</h5>
+                                  <p class="mb-0 text-black">Total CBM: ${cbmToBuy}</p>
                               </div>
                               <div class="col-6 text-end">
-                                  <h5 class="mb-0">Rp. ${totalCBMPrice.toLocaleString("id-ID")}</h5>
+                                  <p class="mb-0 text-black">Rp. ${totalCBMPrice.toLocaleString("id-ID")}</p>
                               </div>
                           </div>
                       </div>
@@ -537,10 +538,10 @@
                         <div class="card-body p-3">
                             <div class="row">
                                 <div class="col-6">
-                                    <h5 class="mb-0">${serviceName}</h5>
+                                    <p class="mb-0 text-black">${serviceName}</p>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <h5 class="mb-0">Rp. ${formattedPrice}</h5>
+                                    <p class="mb-0 text-black">Rp. ${formattedPrice}</p>
                                 </div>
                             </div>
                         </div>

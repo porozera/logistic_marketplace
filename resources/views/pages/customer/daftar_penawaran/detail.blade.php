@@ -84,21 +84,21 @@
             
                     <div class="row align-items-center">
                         <div class="col-md-8 d-flex align-items-center justify-content-start mt-2">
-                            <h5 class="mb-0 fw-bold">{{ $offer['origin']}}</h5>                      
+                            <p class="mb-0 ">{{ $offer['origin']}}</p>                      
                             <div class="d-flex align-items-center mx-4">
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-2" style="width: 200px; height: 1px;"></div>
-                                <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</h5> 
-                                <div class="bg-primary mx-2" style="width: 200px; height: 1px;"></div>
+                                <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
+                                <i class="ti ti-clock mx text-primary"></i> <p class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</p> 
+                                <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                             </div>
-                            <h5 class="mb-0 fw-bold">{{ $offer['destination']}}</h5>
+                            <p class="mb-0 ">{{ $offer['destination']}}</p>
                         </div>
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2 mt-1">/Container</h5>
+                                <p class="mb-0 ms-2 mt-1">/Container</p>
                             </div>
                             <a href="/list-offer/order/{{$offer['id']}}" class="btn btn-primary w-50">Pesan Sekarang</a>
                         </div>
@@ -121,8 +121,8 @@
                         </div>
         
                         <div class="mb-3">
-                            <h5 class="fw-bold text-primary d-inline">ID: </h5>
-                            <h5 class="text-primary d-inline">{{ $offer['noOffer'] }}</h5>
+                            <p class="fw-bold text-primary d-inline">ID: </p>
+                            <p class="text-primary d-inline">{{ $offer['noOffer'] }}</p>
                         </div>
         
                         <div class="row mb-2">

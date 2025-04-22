@@ -39,6 +39,7 @@ class Order extends Model
         'truck_first_id',
         'truck_second_id',
         'address',
+        'cargoType'
     ];
 
     /**

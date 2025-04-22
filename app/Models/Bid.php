@@ -34,6 +34,7 @@ class Bid extends Model
         'requestOffer_id',
         'truck_first_id',
         'truck_second_id',
+        'cargoType'
     ];
 
     public function user()

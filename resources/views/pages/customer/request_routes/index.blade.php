@@ -168,19 +168,30 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label class="form-label">Berat (kg)</label>
                                 <input type="number" name="weight" class="form-control" placeholder="kg" value="{{ old('weight') }}">
                                 @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label class="form-label">Kategori</label>
+                                <label class="form-label">Kategori Barang</label>
                                 <select class="form-control" name="commodities" id="commodities">
                                     @foreach ($categories as $item)
                                         <option value="{{ $item->name }}">{{ $item->code }} - {{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Tipe Kontainer</label>
+                                <select class="form-control" name="container_id" id="container_id">
+                                    @foreach ($containers as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
@@ -216,14 +227,12 @@
                             <th>No</th>
                             <th>Asal</th>
                             <th>Tujuan</th>
-                            <th>Alamat Tujuan</th>
                             <th>Tipe</th>
                             <th>Moda</th>
                             <th>Berat</th>
                             <th>Volume</th> 
                             <th>Jenis Barang</th> 
                             <th>Tangal Pengiriman</th>
-                            <th>Deadline</th>
                             <th>Status</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -232,32 +241,37 @@
                         @php
                         $no = ($list_request->currentPage() - 1) * $list_request->perPage() + 1
                         @endphp
-                        @foreach ( $list_request as $item)
+                        @if ($list_request->isEmpty())
                         <tr>
-                            <td>{{$no++}}</td>
-                            <td>{{$item['origin']}}</td>
-                            <td>{{$item['destination']}}</td>
-                            <td>{{ Str::limit($item['address'], 25, '...') }}</td>
-                            <td>{{$item['shipmentType']}}</td>
-                            <td>{{$item['shipmentMode']}}</td>
-                            <td>{{$item['weight']}} kg</td>
-                            <td>{{$item['volume']}} CBM</td>
-                            <td>{{$item['commodities']}}</td>
-                            <td>{{$item['shippingDate']}}</td>
-                            <td>{{$item['deadline']}}</td>
-                    
-                            <td>
-                            @if ($item['status'] == "active")
-                            <span class="badge rounded-pill text-bg-warning">In Bidding</span>
-                            @else
-                            <span class="badge rounded-pill text-bg-success">Close</span>
-                            @endif
-                            </td>
-                            <td class="text-center">
-                            <a href="/list-offer">Lihat Penawaran</a>
-                            </td>
+                            <td colspan="11" class="text-center">Tidak Ada Data Pengiriman</td>
                         </tr>
-                        @endforeach
+                        @else
+                            @foreach ( $list_request as $item)
+                            <tr>
+                                <td>{{$no++}}</td>
+                                <td>{{$item['origin']}}</td>
+                                <td>{{$item['destination']}}</td>
+                                <td>{{ Str::limit($item['address'], 25, '...') }}</td>
+                                <td>{{$item['shipmentType']}}</td>
+                                <td>{{$item['shipmentMode']}}</td>
+                                <td>{{$item['weight']}} kg</td>
+                                <td>{{$item['volume']}} CBM</td>
+                                <td>{{$item['commodities']}}</td>
+                                <td>{{$item['shippingDate']}}</td>
+                        
+                                <td>
+                                @if ($item['status'] == "active")
+                                <span class="badge rounded-pill text-bg-warning">In Bidding</span>
+                                @else
+                                <span class="badge rounded-pill text-bg-success">Close</span>
+                                @endif
+                                </td>
+                                <td class="text-center">
+                                <a href="/list-offer">Lihat Penawaran</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
                 </div>

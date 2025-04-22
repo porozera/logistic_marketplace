@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->integer('remainingWeight')->nullable();
             $table->integer('remainingVolume')->nullable();
             $table->text('commodities')->nullable();
+            $table->enum('cargoType', ['General Cargo', 'Special Cargo', 'Dangerous Cargo'])->nullable();
             $table->enum('status', ['active', 'deactive']);
             $table->decimal('price', 15, 2);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

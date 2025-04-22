@@ -37,6 +37,7 @@ class offersModel extends Model
         'truck_second_id',
         'truck_id',
         'timestamp',
+        'cargoType'
     ];
 
     // protected $attributes = [

@@ -19,7 +19,7 @@ class OrderController extends Controller
     {
         $offer = offersModel::find($id);
         $services = Service::all();
-        $categories = Category::all();
+        $categories = Category::where('type', $offer->cargoType)->get();
         $order = null;
         if ($offer && isset($offer->noOffer)) { 
             $order = Order::where('noOffer', $offer->noOffer)->first() ?? null;
@@ -62,6 +62,7 @@ class OrderController extends Controller
             'lsp_id' => 'required',
             'truck_first_id' => 'nullable',
             'truck_second_id' => 'nullable',
+            'cargoType' => 'nullable',
         ]);
 
         if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
@@ -105,6 +106,7 @@ class OrderController extends Controller
                 "paymentStatus" => "Belum Lunas",
                 "truck_first_id" => $attributes['truck_first_id'],
                 "truck_second_id" => $attributes['truck_second_id'],
+                "cargoType" => $attributes['cargoType'],
             ]);
         } else {
             $remainingWeight = $order->remainingWeight - $attributes['weight'];

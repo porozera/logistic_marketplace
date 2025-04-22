@@ -292,12 +292,12 @@
                             <span class="pc-mtext">Kotak Pesan</span>
                         </a>
                     </li>
-                    <li class="pc-item">
+                    {{-- <li class="pc-item">
                         <a href="../dashboard/index.html" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-message-circle"></i></span>
                             <span class="pc-mtext">Chat</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="pc-item pc-caption">
                         <label>Bantuan</label>
                         <i class="ti ti-news"></i>

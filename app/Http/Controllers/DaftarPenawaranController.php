@@ -78,6 +78,7 @@ class DaftarPenawaranController extends Controller
             'address' => 'required',
             'truck_first_id' => 'nullable',
             'truck_second_id' => 'nullable',
+            'cargoType' => 'nullable',
         ]);
 
         if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
@@ -119,6 +120,7 @@ class DaftarPenawaranController extends Controller
                 "paymentStatus" => "Belum Lunas",
                 "truck_first_id" => $attributes['truck_first_id'],
                 "truck_second_id" => $attributes['truck_second_id'],
+                "cargoType" => $attributes['cargoType'],
             ]);
         } else {
             $remainingWeight = $order->remainingWeight - $attributes['weight'];
