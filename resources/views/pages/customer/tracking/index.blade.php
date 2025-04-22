@@ -67,19 +67,19 @@
                         <div class="col-4">
                             @if ($item->order->shipmentMode == 'D2D')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-sailboat me-1"></i> Door to Door
+                                    <i class="ti ti-sailboat me-1"></i> Door To Door
                                 </button>   
                             @elseif ($item->order->shipmentMode == 'D2P')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                                    <i class="ti ti-truck-delivery me-1"></i> Door To Port
                                 </button>
                             @elseif ($item->order->shipmentMode == 'P2P')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-truck-delivery me-1"></i> Port to Port
+                                    <i class="ti ti-truck-delivery me-1"></i> Port To Port
                                 </button>
                             @elseif ($item->order->shipmentMode == 'P2D')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-truck-delivery me-1"></i> Port to Door
+                                    <i class="ti ti-truck-delivery me-1"></i> Port To Door
                                 </button>
                             @endif
                         </div>

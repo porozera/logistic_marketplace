@@ -144,19 +144,19 @@
                             <div class="col-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
                                 @if ($item->shipmentMode == 'D2D')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Door to Door
+                                        <i class="ti ti-truck-delivery me-1"></i> Door To Door
                                     </button>   
                                 @elseif( $item->shipmentMode == 'D2P')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                                        <i class="ti ti-truck-delivery me-1"></i> Door To Port
                                     </button>
                                 @elseif( $item->shipmentMode == 'P2P')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-sailboat me-1"></i> Port to Port
+                                        <i class="ti ti-sailboat me-1"></i> Port To Port
                                     </button>
                                 @elseif( $item->shipmentMode == 'P2D')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Port to Door
+                                        <i class="ti ti-truck-delivery me-1"></i> Port To Door
                                     </button>
                                 @endif
                                 @if ($item['shipmentType'] == 'LCL')

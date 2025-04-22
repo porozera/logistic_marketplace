@@ -84,19 +84,19 @@
                         <div class="col-md-4 d-flex justify-content-center gap-2">
                           @if ($offer->shipmentMode == 'D2D')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-truck-delivery me-1"></i> Door to Door
+                                  <i class="ti ti-truck-delivery me-1"></i> Door To Door
                               </button>   
                           @elseif( $offer->shipmentMode == 'D2P')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                                  <i class="ti ti-truck-delivery me-1"></i> Door To Port
                               </button>
                           @elseif( $offer->shipmentMode == 'P2P')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-sailboat me-1"></i> Port to Port
+                                  <i class="ti ti-sailboat me-1"></i> Port To Port
                               </button>
                           @elseif( $offer->shipmentMode == 'P2D')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-truck-delivery me-1"></i> Port to Door
+                                  <i class="ti ti-truck-delivery me-1"></i> Port To Door
                               </button>
                           @endif
 

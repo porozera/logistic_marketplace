@@ -12,7 +12,7 @@ class ContainerSeeder extends Seeder
         DB::table('containers')->insert([
             [
                 'code' => '20GP',
-                'name' => '20 Feet General Purpose',
+                'name' => '20" General Purpose',
                 'weight' => 2250, // berat kosong dalam kg
                 'volume' => 33,    // volume dalam m³ (approx)
                 'description' => 'Kontainer 20 kaki standar untuk muatan general cargo',
@@ -21,7 +21,7 @@ class ContainerSeeder extends Seeder
             ],
             [
                 'code' => '40GP',
-                'name' => '40 Feet General Purpose',
+                'name' => '40" General Purpose',
                 'weight' => 3800,
                 'volume' => 67,
                 'description' => 'Kontainer 40 kaki standar untuk muatan general cargo',
@@ -30,7 +30,7 @@ class ContainerSeeder extends Seeder
             ],
             [
                 'code' => '40HC',
-                'name' => '40 Feet High Cube',
+                'name' => '40" High Cube',
                 'weight' => 3900,
                 'volume' => 76,
                 'description' => 'Kontainer 40 kaki dengan tinggi lebih (High Cube)',
@@ -39,7 +39,7 @@ class ContainerSeeder extends Seeder
             ],
             [
                 'code' => '20RF',
-                'name' => '20 Feet Reefer',
+                'name' => '20" Reefer',
                 'weight' => 3000,
                 'volume' => 28,
                 'description' => 'Kontainer pendingin 20 kaki (Reefer)',
@@ -48,7 +48,7 @@ class ContainerSeeder extends Seeder
             ],
             [
                 'code' => '40RF',
-                'name' => '40 Feet Reefer',
+                'name' => '40" Reefer',
                 'weight' => 4500,
                 'volume' => 67,
                 'description' => 'Kontainer pendingin 40 kaki (Reefer)',

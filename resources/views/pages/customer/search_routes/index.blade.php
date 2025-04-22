@@ -114,25 +114,25 @@
                         </div>
                     @endforeach
 
+                    <hr>
 
-                    {{-- <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="insurance" id="insurance" {{ request('insurance') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="insurance">
-                          Asuransi
-                        </label>
-                    </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="storage" id="storage" {{ request('storage') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="storage">
-                          Tempat penyimpanan
-                        </label>
-                    </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="fragile" id="fragile" {{ request('fragile') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="fragile">
-                          Barang pecah belah
-                        </label>
-                    </div> --}}
+                    <h5>Jenis Kontainer</h5>
+                    @foreach ($containers as $container)
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="category[]"
+                                id="category-{{ Str::slug($container) }}"
+                                value="{{ $container }}"
+                                {{ in_array($container, (array) request('container')) ? 'checked' : '' }}
+                            >
+                            <label class="form-check-label" for="container-{{ Str::slug($container) }}">
+                                {{ $container }}
+                            </label>
+                        </div>
+                    @endforeach
+
                     <hr>
 
                     <h5>Harga Maksimal</h5>
@@ -273,19 +273,19 @@
                             <div class="col-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
                                 @if ($item['shipmentMode'] == 'D2D')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Door to Door
+                                        <i class="ti ti-truck-delivery me-1"></i> Door To Door
                                     </button>   
                                 @elseif( $item['shipmentMode'] == 'D2P')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                                        <i class="ti ti-truck-delivery me-1"></i> Door To Port
                                     </button>
                                 @elseif( $item['shipmentMode'] == 'P2P')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-sailboat me-1"></i> Port to Port
+                                        <i class="ti ti-sailboat me-1"></i> Port To Port
                                     </button>
                                 @elseif( $item['shipmentMode'] == 'P2D')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Port to Door
+                                        <i class="ti ti-truck-delivery me-1"></i> Port To Door
                                     </button>
                                 @endif
                                 @if ($item['shipmentType'] == 'LCL')

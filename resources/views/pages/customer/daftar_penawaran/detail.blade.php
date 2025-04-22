@@ -130,13 +130,13 @@
                             <div class="col text-end">
                                 <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i>
                                 @if ($offer['shipmentMode'] == 'D2D')
-                                    Door to Door    
+                                    Door To Door    
                                 @elseif ($offer['shipmentMode'] == 'D2P')
-                                    Door to Port
+                                    Door To Port
                                 @elseif ($offer['shipmentMode'] == 'P2D')
-                                    Port to Door   
+                                    Port To Door   
                                 @elseif ($offer['shipmentMode'] == 'P2P')
-                                    Port to Port
+                                    Port To Port
                                 @endif
                                 {{-- {{ $offer['shipmentMode'] == 'laut' ? 'Laut' : 'Darat' }} --}}
                             </div>
@@ -153,33 +153,33 @@
         
                         <hr>
         
-                        <h5 class="mb-1">Asal Pengiriman</h5>
+                        <p class="mb-1">Asal Pengiriman</p>
                         <p class="text-primary ">{{ $offer['origin'] }}</p>
         
-                        <h5 class="mb-1">Tujuan Pengiriman</h5>
+                        <p class="mb-1">Tujuan Pengiriman</p>
                         <p class="text-primary ">{{ $offer['destination'] }}</p>
         
                         <div class="row mb-3">
                             <div class="col">
-                                <h5 class="mb-1">Tanggal Muat</h5>
+                                <p class="mb-1">Tanggal Muat</p>
                                 <p class="text-primary ">{{ $offer['loading_date_formatted'] }}</p>
                             </div>
                         </div>
         
                         <div class="row mb-3">
                             <div class="col">
-                                <h5 class="mb-1">Tanggal Pengiriman</h5>
+                                <p class="mb-1">Tanggal Pengiriman</p>
                                 <p class="text-primary ">{{ $offer['shipping_date_formatted'] }}</p>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col">
-                                <h5 class="mb-1">Estmasi Tanggal Tiba</h5>
+                                <p class="mb-1">Estmasi Tanggal Tiba</p>
                                 <p class="text-primary">{{ $offer['estimation_date_formatted'] }}</p>
                             </div>
                             <div class="col text-end">
-                                <h5 class="mb-1">Estimasi Pengiriman</h5>
+                                <p class="mb-1">Estimasi Pengiriman</p>
                                 <p class="text-primary fw-bold">{{ $offer['estimated_days'] }} Hari</p>
                             </div>
                         </div>
@@ -187,18 +187,48 @@
                         <hr>
         
                         <h4 class="mb-3">Detail Kontainer</h4>
-                        <div class="mb-2">
-                            <strong>Sisa Kapasitas Berat:</strong> 
-                            <span class="text-danger fw-bold">{{ $offer['remainingWeight'] }}</span> / {{ $offer['maxWeight'] }} kg
+                        <div class="row">
+                            <div class="col">
+                                <p>Tipe Kontainer:</p>
+                            </div>
+                            <div class="col text-end">
+                                <span class="text-primary">{{ $offer['cargoType'] }}</span>
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>Sisa Kapasitas Berat:</p> 
+                            </div>
+                            <div class="col text-end">
+                                <span class="text-danger fw-bold">{{ $offer['remainingWeight'] }}</span> / {{ $offer['maxWeight'] }} kg
+                            </div>                           
                         </div>
         
-                        <div class="mb-2">
-                            <strong>Sisa Kapasitas Volume:</strong> 
-                            <span class="text-danger fw-bold">{{ $offer['remainingVolume'] }}</span> / {{ $offer['maxVolume'] }} CBM
+                        <div class="row">
+                            <div class="col">
+                                <p>Sisa Kapasitas Volume:</p> 
+                            </div>
+                            <div class="col text-end">
+                                {{-- <p class="text-danger fw-bold">{{ $offer['remainingVolume'] }}</p> --}}
+                                <span class="text-danger fw-bold">{{ $offer['remainingVolume'] }}</span> / {{ $offer['maxVolume'] }} CBM
+                            </div>
                         </div>
         
-                        <div class="mb-2">
-                            <strong>Tipe Barang:</strong> <span class="text-primary">{{ $offer['commodities'] }}</span>
+                        <div class="row">
+                            <div class="col">
+                                <p>Tipe Barang:</p>
+                            </div>
+                            <div class="col text-end">
+                                <span class="text-primary">{{ $offer['cargoType'] }}</span>
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>Commodities:</p>
+                            </div>
+                            <div class="col text-end">
+                                <span class="text-primary">{{ $offer['commodities'] }}</span>
+                            </div>  
                         </div>
                     </div>
                 </div>

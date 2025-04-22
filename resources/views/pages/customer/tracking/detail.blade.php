@@ -173,13 +173,13 @@
                                 <div class="col"><strong>Mode Pengiriman</strong></div>
                                 <div class="col text-end">
                                     @if ($userOrder->order->shipmentMode == 'D2D')
-                                    <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Door    
+                                    <i class="ti ti-truck-delivery text-primary me-1"></i> Door To Door    
                                     @elseif ($userOrder->order->shipmentMode == 'D2P')
-                                    <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Port
+                                    <i class="ti ti-truck-delivery text-primary me-1"></i> Door To Port
                                     @elseif ($userOrder->order->shipmentMode == 'P2D')
-                                    <i class="ti ti-truck-delivery text-primary me-1"></i> Port to Door   
+                                    <i class="ti ti-truck-delivery text-primary me-1"></i> Port To Door   
                                     @elseif ($userOrder->order->shipmentMode == 'P2P')
-                                    <i class="ti ti-sailboat text-primary me-1"></i> Port to Port
+                                    <i class="ti ti-sailboat text-primary me-1"></i> Port To Port
                                     @endif
                                 </div>
                             </div>
