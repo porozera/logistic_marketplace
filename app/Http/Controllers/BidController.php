@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Bid;
 use App\Models\Category;
+use App\Models\Container;
 use App\Models\RequestRoute;
 use App\Models\Notification;
+use App\Models\Truck;
 use Illuminate\Support\Facades\Auth;
 
 class BidController extends Controller
@@ -59,7 +61,9 @@ class BidController extends Controller
     public function create($id)
     {
         $requestRoute = RequestRoute::findOrFail($id);
-        return view('pages.lsp.request_routes.bid', compact('requestRoute'));
+        $containers = Container::all();
+        $trucks = Truck::all();
+        return view('pages.lsp.request_routes.bid', compact('requestRoute','containers','trucks'));
     }
 
     public function store(Request $request)
@@ -71,6 +75,9 @@ class BidController extends Controller
         'maxWeight' => 'required|integer',
         'maxVolume' => 'required|integer',
         'price' => 'required|numeric',
+        'container_id' => 'required',
+        'truck_first_id' => 'required',
+        'truck_second_id' => 'required',
     ]);
     $category = Category::where('name', $request['commodities'])->first();
         // dd($attributes['commodities'], $category);
@@ -95,6 +102,9 @@ class BidController extends Controller
         'lspName' => auth()->user()->companyName,
         'user_id' => auth()->id(),
         'cargoType' => $cargoType,
+        'container_id' => $validated['container_id'],
+        'truck_first_id' => $validated['truck_first_id'],
+        'truck_second_id' => $validated['truck_second_id'],
     ]);
 
 

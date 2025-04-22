@@ -63,6 +63,7 @@ class OrderController extends Controller
             'truck_first_id' => 'nullable',
             'truck_second_id' => 'nullable',
             'cargoType' => 'nullable',
+            'container_id' => 'nullable',
         ]);
 
         if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
@@ -107,6 +108,7 @@ class OrderController extends Controller
                 "truck_first_id" => $attributes['truck_first_id'],
                 "truck_second_id" => $attributes['truck_second_id'],
                 "cargoType" => $attributes['cargoType'],
+                "container_id" => $attributes['container_id'],
             ]);
         } else {
             $remainingWeight = $order->remainingWeight - $attributes['weight'];

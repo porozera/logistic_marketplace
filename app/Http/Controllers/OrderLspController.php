@@ -95,6 +95,10 @@ $rules = [
     'is_for_lsp' => 'required',
     'status' => 'required',
     'lsp_id' => 'required',
+    'truck_first_id' => 'nullable',
+    'truck_second_id' => 'nullable',
+    'cargoType' => 'nullable',
+    'container_id' => 'nullable',
 ];
 
 // Kondisi tambahan: address hanya required kalau shipmentType bukan LCL atau ini user pertama
@@ -130,7 +134,11 @@ $attributes = $request->validate($rules);
                 "remainingAmount" => $attributes['total_price'],
                 "address" => $attributes['address'],
                 "lsp_id" => $attributes['lsp_id'],
-                "paymentStatus" => "Belum Lunas"
+                "paymentStatus" => "Belum Lunas",
+                "truck_first_id" => $attributes['truck_first_id'],
+                "truck_second_id" => $attributes['truck_second_id'],
+                "cargoType" => $attributes['cargoType'],
+                "container_id" => $attributes['container_id'],
             ]);
         } else {
             $remainingWeight = $order->remainingWeight - $attributes['weight'];

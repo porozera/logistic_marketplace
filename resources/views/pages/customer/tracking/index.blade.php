@@ -84,7 +84,7 @@
                             @endif
                         </div>
                         <div class="col-4 d-flex align-items-center justify-content-end">
-                            <h5 class="text-primary">ID: {{$item->order->noOffer}}</h5>
+                            <p class="text-primary">ID: {{$item->order->noOffer}}</p>
                         </div>
                     </div>
                     <div class="row mt-3">

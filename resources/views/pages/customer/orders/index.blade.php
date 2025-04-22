@@ -158,59 +158,66 @@
               <div class="card">
                 <div class="card-body">
                   <div class="row">
-                  <div class="col-6">
-                    <p class="mb-3">Tanggal Muat Barang</p>
-                  </div>
-                  <div class="col-6 text-end">
-                    <p class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</p>
-                  </div>
-                  </div>
-                  <div class="row">
-                  <div class="col-6">
-                    <p class="mb-3">Sisa Volume :</p>
-                  </div>
-                  <div class="col-6 text-end">
-                    <div class="d-flex justify-content-end align-items-center">
-                    <p class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</p>
-                    <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxVolume'] }} CBM</p>
+                    <div class="col-6">
+                      <p class="mb-3">Tanggal Muat Barang</p>
+                    </div>
+                    <div class="col-6 text-end">
+                      <p class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</p>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <p class="mb-3">Sisa Volume :</p>
+                    </div>
+                    <div class="col-6 text-end">
+                      <div class="d-flex justify-content-end align-items-center">
+                        <p class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</p>
+                        <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxVolume'] }} CBM</p>
+                      </div>
+                    </div>
                   </div>
                   <div class="row">
-                  <div class="col-6">
-                    <p class="mb-3">Sisa Berat :</p>
-                  </div>
-                  <div class="col-6 text-end">
-                    <div class="d-flex justify-content-end align-items-center">
-                    <p class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</p>
-                    <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
+                    <div class="col-6">
+                      <p class="mb-3">Sisa Berat :</p>
                     </div>
+                    <div class="col-6 text-end">
+                      <div class="d-flex justify-content-end align-items-center">
+                        <p class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</p>
+                        <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <p>Alamat Tujuan:</p>
+                    <p class="text-primary">{{ optional($order)->address ?? '-' }}</p>
+                  </div>
+
+                  <hr>
+
+                  <div id="cbmPriceCard"></div>
+                  <div id="servicePriceList"></div>
+
+                  <hr>
+
+                  <div class="text-end">
+                    <p class="mb-3 text-gray-500">Total</p>
+                    <h5 class="mb-3 text-danger" id="totalPrice">Rp. 0</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="row">
+                        <div class="col">
+                          <h5 class="mb-0">Container Availability</h5>
+                        </div>
+                        <div class="col text-end">
+                          <h5 class="text-primary">{{$offer->container->name}}</h5>
                         </div>
                       </div>
-                      <div class="row">
-                        <p>Alamat Tujuan:</p> 
-                            <p class="text-primary">{{ optional($order)->address ?? '-' }}</p>
-                      </div>
-
-                      <hr>
-
-                      <div id="cbmPriceCard"></div> 
-                      <div id="servicePriceList"></div>
-
-                      <hr>
-
-                      <div class="text-end">
-                        <p class="mb-3 text-gray-500">Total</p>
-                        <h5 class="mb-3 text-danger" id="totalPrice">Rp. 0</h5>
-                      </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                      <h5 class="mb-0">Container Availability</h5>
                     </div>
                     <div class="card-body d-flex justify-content-center align-items-center">
                       <div class="col-2"></div>
@@ -222,11 +229,11 @@
                       <div class="col-1"></div>
                     </div>
                     <div class="card-footer text-center">
-                  <span class="badge bg-success me-2"><i class="ti ti-check"></i> Available</span>
-                  <span class="badge bg-danger"><i class="ti ti-x"></i> Booked</span>
+                      <span class="badge bg-success me-2"><i class="ti ti-check"></i> Available</span>
+                      <span class="badge bg-danger"><i class="ti ti-x"></i> Booked</span>
                     </div>
-                </div>
                   </div>
+                </div>
               </div>
             </div>
 
@@ -386,6 +393,7 @@
                     <input type="text" id="truck_second_id" name="truck_second_id" class="form-control"  value="{{ $offer['truck_second_id'] }}" hidden>
                     <input type="text" id="truck_first_id" name="truck_first_id" class="form-control"  value="{{ $offer['truck_first_id'] }}" hidden>
                     <input type="text" id="cargoType" name="cargoType" class="form-control"  value="{{ $offer['cargoType'] }}" hidden>
+                    <input type="text" id="container_id" name="container_id" class="form-control"  value="{{ $offer['container_id'] }}" hidden>
                     @if (optional($order)->address != null)
                     <input type="text" id="address" name="address" class="form-control"  value="{{ $order['address'] }}" hidden>
                     @endif
@@ -585,6 +593,6 @@
           }
       
           document.addEventListener("DOMContentLoaded", renderContainer);
-      </script>
+        </script>
     
 @endsection

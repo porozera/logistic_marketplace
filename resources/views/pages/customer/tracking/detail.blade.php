@@ -267,6 +267,13 @@
                                     <p class="text-primary">{{ $userOrder->volume }} CBM</p>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col"><strong>Tipe Kontainer</strong></div>
+                                <div class="col">
+                                    <p class="text-primary">{{ $userOrder->order->container->name }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -110,6 +110,9 @@ class offerController extends Controller
         ]);
         // dd($attributes);
         $noOffer = 'OFR-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
+        $category = Category::where('name', $attributes['commodities'])->first();
+        // dd($attributes['commodities'], $category);
+        $cargoType = $category->type ?? null;
 
         // offersModel::create($request->all());
         $offer = offersModel::create([
@@ -138,6 +141,7 @@ class offerController extends Controller
             'is_for_customer' => 1,
             'is_for_lsp' => $attributes['shipmentType'] === 'LCL' ? 1 : 0,
             'timestamp' => now(),
+            'cargoType' => $cargoType,
         ]);
         return redirect()->route('offers.index')->with('success', 'Route successfully created!');
     }
@@ -178,6 +182,9 @@ class offerController extends Controller
 
         // Cari offer berdasarkan ID
         $offer = offersModel::findOrFail($id);
+        $category = Category::where('name', $request['commodities'])->first();
+        // dd($attributes['commodities'], $category);
+        $cargoType = $category->type ?? null;
 
         // Update data
         $offer->update([
@@ -195,6 +202,7 @@ class offerController extends Controller
             'truck_second_id' => $request['truck_second_id'],
             'container_id' => $request['container_id'],
             'status' => $request->status,
+            'cargoType' => $cargoType,
         ]);
 
         // Redirect dengan pesan sukses

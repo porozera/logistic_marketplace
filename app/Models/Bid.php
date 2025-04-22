@@ -34,7 +34,8 @@ class Bid extends Model
         'requestOffer_id',
         'truck_first_id',
         'truck_second_id',
-        'cargoType'
+        'cargoType',
+        'container_id',
     ];
 
     public function user()
@@ -78,6 +79,10 @@ class Bid extends Model
     {
         return Carbon::parse($this->estimationDate)->translatedFormat('d F Y');
     }
-
+    public function container()
+    {
+        // return $this->belongsTo(Truck::class, 'truck_second_id');
+        return $this->belongsTo(Container::class, 'container_id');
+    }
 }
 

@@ -1,5 +1,37 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 @section('title', 'Pemesanan')
+@section('style')
+<style>
+  .container {
+      display: grid;
+      grid-template-columns: repeat(11, 30px); /* 11 kolom per baris */
+      gap: 5px;
+      margin: 20px;
+  }
+  .box {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 5px;
+  }
+  .available {
+      background-color: green;
+      color: white;
+  }
+  .booked {
+      background-color: red;
+      color: white;
+  }
+  .square-box {
+      width: 40px; 
+      height: 40px; 
+  }
+
+</style>
 @section('content')
  <!-- [ Main Content ] start -->
  <div class="pc-container">
@@ -163,7 +195,37 @@
                       </div>
                     </div>
                 </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col">
+                            <h5 class="mb-0">Container Availability</h5>
+                          </div>
+                          <div class="col text-end">
+                            <h5 class="text-primary">{{$offer->container->name}}</h5>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body d-flex justify-content-center align-items-center">
+                        <div class="col-2"></div>
+                        <div class="col-9 d-flex justify-content-center">
+                          <div class="card">
+                            <div class="container" id="container"></div>
+                          </div>
+                        </div>
+                        <div class="col-1"></div>
+                      </div>
+                      <div class="card-footer text-center">
+                        <span class="badge bg-success me-2"><i class="ti ti-check"></i> Available</span>
+                        <span class="badge bg-danger"><i class="ti ti-x"></i> Booked</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
+            
 
             <!-- Form input -->
             <div class="col-md-6">
@@ -318,6 +380,7 @@
                     <input type="text" id="truck_second_id" name="truck_second_id" class="form-control"  value="{{ $offer['truck_second_id'] }}" hidden>
                     <input type="text" id="truck_first_id" name="truck_first_id" class="form-control"  value="{{ $offer['truck_first_id'] }}" hidden>
                     <input type="text" id="cargoType" name="cargoType" class="form-control"  value="{{ $offer['cargoType'] }}" hidden>
+                    <input type="text" id="container_id" name="container_id" class="form-control"  value="{{ $offer['container_id'] }}" hidden>
                   </div>
                   <div class="row">
                     <div class="col">
@@ -484,5 +547,34 @@
           });
 
 
+        </script>
+        <script>
+          let totalCBM = parseInt("{{ $offer['maxVolume'] }}");
+          let bookedCBM = parseInt("{{ $offer['maxVolume'] - $offer['remainingVolume'] }}");
+      
+          function renderContainer() {
+              const container = document.getElementById("container");
+              container.innerHTML = "";
+      
+              for (let i = 0; i < totalCBM; i++) {
+                  const box = document.createElement("div");
+                  box.classList.add("box", "border", "d-flex", "justify-content-center", "align-items-center");
+      
+                  let icon = document.createElement("i");
+      
+                  if (i < bookedCBM) {
+                      box.classList.add("booked", "bg-danger");
+                      icon.classList.add("ti", "ti-x", "text-white");
+                  } else {
+                      box.classList.add("available", "bg-success");
+                      icon.classList.add("ti", "ti-check", "text-white");
+                  }
+      
+                  box.appendChild(icon);
+                  container.appendChild(box);
+              }
+          }
+      
+          document.addEventListener("DOMContentLoaded", renderContainer);
         </script>
 @endsection

@@ -29,7 +29,7 @@
     <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-12 col-xl-12">
-            <h4 class="m-b-10 text-primary">ID Penawaran {{ $offer['noOffer'] }}</h4>
+            <h4 class="m-b-10 text-primary">{{ $offer['noOffer'] }}</h4>
             <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -200,7 +200,7 @@
                                 <p>Tipe Kontainer:</p>
                             </div>
                             <div class="col text-end">
-                                <span class="text-primary">{{ $offer['cargoType'] }}</span>
+                                <span class="text-primary">{{ $offer->container->name }}</span>
                             </div>  
                         </div>
                         <div class="row">

@@ -227,6 +227,7 @@
                             <th>No</th>
                             <th>Asal</th>
                             <th>Tujuan</th>
+                            <th>Alamat Tujuan</th>
                             <th>Tipe</th>
                             <th>Moda</th>
                             <th>Berat</th>

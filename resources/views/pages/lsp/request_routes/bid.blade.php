@@ -42,6 +42,38 @@
                     <input type="date" class="form-control" name="estimationDate" required>
                 </div>
                 <div class="mb-3">
+                    <label for="truck_first_id" class="form-label">First Truck</label>
+                    <select class="form-select" name="truck_first_id" id="truck_first_id" required>
+                        <option value="">-- Pilih Truk --</option>
+                        @foreach ($trucks as $truck)
+                            <option value="{{ $truck->id }}">{{ $truck->type }} - {{ $truck->brand }} -
+                                {{ $truck->plateNumber }} ({{ $truck->driverName }}) </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="truck_second_id" class="form-label">Second Truck</label>
+                    <select class="form-select" name="truck_second_id" id="truck_second_id" required>
+                        <option value="">-- Pilih Truk --</option>
+                        @foreach ($trucks as $truck)
+                            <option value="{{ $truck->id }}">{{ $truck->type }} - {{ $truck->brand }} -
+                                {{ $truck->plateNumber }} ({{ $truck->driverName }}) </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Tipe Kontainer</label>
+                        <select class="form-control" name="container_id" id="container_id">
+                            @foreach ($containers as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                    </div>
+                </div>
+                <div class="mb-3">
                     <label for="maxWeight" class="form-label">Max Weight (Kg)</label>
                     <input type="number" class="form-control" name="maxWeight" required>
                 </div>

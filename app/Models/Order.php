@@ -39,7 +39,7 @@ class Order extends Model
         'truck_first_id',
         'truck_second_id',
         'address',
-        'cargoType'
+        'cargoType',
     ];
 
     /**
@@ -100,5 +100,11 @@ class Order extends Model
     public function truck_second()
     {
         return $this->belongsTo(Truck::class);
+    }
+
+    public function container()
+    {
+        // return $this->belongsTo(Truck::class, 'truck_second_id');
+        return $this->belongsTo(Container::class, 'container_id');
     }
 }
