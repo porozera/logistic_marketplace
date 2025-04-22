@@ -95,7 +95,7 @@
                         <i class="ti ti-map-pin text-danger ms-2 mb-2"></i>
                     </div>
 
-                    {{-- <div id="map" style="width: 100%; height: 600px;"></div> --}}
+                    <div id="map" style="width: 100%; height: 600px;"></div>
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';
@@ -120,6 +120,7 @@
                                         {
                                             lng: {{ $lng }},
                                             lat: {{ $lat }},
+                                            vehicle: "{{ strtolower($location->currentVehicle) }}",
                                             popup: `<strong>No Pengiriman:</strong> {{ $location->order->noOffer }}<br><strong>Location:</strong> {{ $location->currentLocation }}<br><strong>Vehicle:</strong> {{ $location->currentVehicle }}`
                                         },
                                     @endif
@@ -130,23 +131,35 @@
                                 markers.forEach(function(coord) {
                                     const el = document.createElement('div');
                                     el.className = 'custom-marker';
-                                    el.style.backgroundImage = "url('{{ asset('images/truck-icon3.png') }}')";
+
+                                    let iconUrl = '';
+
+                                    if (coord.vehicle === 'truck' || coord.vehicle === 'truk') {
+                                        iconUrl = "{{ asset('images/truck-icon3.png') }}";
+                                    } else if (coord.vehicle === 'ship' || coord.vehicle === 'kapal') {
+                                        iconUrl = "{{ asset('images/ship-icon.png') }}";
+                                    } else {
+                                        iconUrl = "{{ asset('images/ship-icon.png') }}"; 
+                                    }
+
+                                    el.style.backgroundImage = `url('${iconUrl}')`;
                                     el.style.width = '50px';
                                     el.style.height = '50px';
                                     el.style.backgroundSize = 'cover';
-                    
+
                                     new mapboxgl.Marker(el)
                                         .setLngLat([coord.lng, coord.lat])
                                         .setPopup(new mapboxgl.Popup().setHTML(coord.popup))
                                         .addTo(map);
-                    
+
                                     bounds.extend([coord.lng, coord.lat]);
                                 });
-                    
+
                                 if (!bounds.isEmpty()) {
                                     map.fitBounds(bounds, { padding: 70, maxZoom: 12 });
                                 }
                             }
+
                     
                             createMarker();
                         });

@@ -39,42 +39,82 @@
           <div class="card">
             <div class="card-body">
               <h4 class="mb-2">Detail Pengiriman</h4>
-
               <br>
+              {{-- <small class="text-muted text-small">*Masukan provinsi asal dan tujuan, lalu masukan kota asal dan tujuan.</small> --}}
+
                 <form action="/request-routes/perform" method="POST" id="requestRouteAddForm">
                     @csrf
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Provinsi Asal</label>
+                                <select id="origin_province" class="form-control"></select>
+                            </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Kota Asal</label>
-                                <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ old('origin') }}">
+                                <select name="origin" id="origin_city" class="form-control"></select>
                                 @error('origin') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Provinsi Tujuan</label>
+                                <select id="destination_province" class="form-control"></select>
+                            </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Kota Tujuan</label>
-                                <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ old('destination') }}">
+                                <select name="destination" id="destination_city" class="form-control"></select>
                                 @error('destination') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Tanggal Pengiriman</label>
-                                <input type="date" name="shippingDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ old('shippingDate') }}">
-                                @error('shippingDate') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
-                        </div>
+                        
+                        <script>
+                            // Load provinsi saat halaman pertama kali dibuka
+                            const loadProvinces = async (selectId) => {
+                                const res = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`);
+                                const provinces = await res.json();
+                                const select = document.getElementById(selectId);
+                                select.innerHTML = `<option value="">Pilih Provinsi</option>`;
+                                provinces.forEach(p => {
+                                    select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
+                                });
+                            }
+                        
+                            // Load kota/kabupaten berdasarkan provinsi
+                            const loadCities = async (provinceId, targetSelectId) => {
+                                const res = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`);
+                                const cities = await res.json();
+                                const select = document.getElementById(targetSelectId);
+                                select.innerHTML = `<option value="">Pilih Kota/Kabupaten</option>`;
+                                cities.forEach(c => {
+                                    select.innerHTML += `<option value="${c.name}">${c.name}</option>`;
+                                });
+                            }
+                        
+                            // Load provinsi saat awal
+                            loadProvinces("origin_province");
+                            loadProvinces("destination_province");
+                        
+                            // Event Listener untuk load kota berdasarkan provinsi
+                            document.getElementById("origin_province").addEventListener("change", function () {
+                                loadCities(this.value, "origin_city");
+                            });
+                        
+                            document.getElementById("destination_province").addEventListener("change", function () {
+                                loadCities(this.value, "destination_city");
+                            });
+                        </script>                        
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label class="form-label">Tipe Pengiriman</label>
                                 <input type="text" class="form-control" name="shipmentType" id="shipmentType" value="FCL" readonly>
                                 @error('shipmentType') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
                             <label class="form-label">Mode Pengiriman</label>
                             <select class="form-control" name="shipmentMode" id="shipmentMode">
@@ -84,6 +124,13 @@
                                 <option value="P2D">Port to Door (P2D)</option>
                             </select>                            
                             @error('shipmentMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Tanggal Pengiriman</label>
+                                <input type="date" name="shippingDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ old('shippingDate') }}">
+                                @error('shippingDate') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
                     </div>
@@ -121,19 +168,30 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label class="form-label">Berat (kg)</label>
                                 <input type="number" name="weight" class="form-control" placeholder="kg" value="{{ old('weight') }}">
                                 @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label class="form-label">Kategori</label>
+                                <label class="form-label">Kategori Barang</label>
                                 <select class="form-control" name="commodities" id="commodities">
                                     @foreach ($categories as $item)
                                         <option value="{{ $item->name }}">{{ $item->code }} - {{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Tipe Kontainer</label>
+                                <select class="form-control" name="container_id" id="container_id">
+                                    @foreach ($containers as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
@@ -169,14 +227,12 @@
                             <th>No</th>
                             <th>Asal</th>
                             <th>Tujuan</th>
-                            <th>Alamat Tujuan</th>
                             <th>Tipe</th>
                             <th>Moda</th>
                             <th>Berat</th>
                             <th>Volume</th> 
                             <th>Jenis Barang</th> 
                             <th>Tangal Pengiriman</th>
-                            <th>Deadline</th>
                             <th>Status</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -185,32 +241,37 @@
                         @php
                         $no = ($list_request->currentPage() - 1) * $list_request->perPage() + 1
                         @endphp
-                        @foreach ( $list_request as $item)
+                        @if ($list_request->isEmpty())
                         <tr>
-                            <td>{{$no++}}</td>
-                            <td>{{$item['origin']}}</td>
-                            <td>{{$item['destination']}}</td>
-                            <td>{{ Str::limit($item['address'], 25, '...') }}</td>
-                            <td>{{$item['shipmentType']}}</td>
-                            <td>{{$item['shipmentMode']}}</td>
-                            <td>{{$item['weight']}} kg</td>
-                            <td>{{$item['volume']}} CBM</td>
-                            <td>{{$item['commodities']}}</td>
-                            <td>{{$item['shippingDate']}}</td>
-                            <td>{{$item['deadline']}}</td>
-                    
-                            <td>
-                            @if ($item['status'] == "active")
-                            <span class="badge rounded-pill text-bg-warning">In Bidding</span>
-                            @else
-                            <span class="badge rounded-pill text-bg-success">Close</span>
-                            @endif
-                            </td>
-                            <td class="text-center">
-                            <a href="/list-offer">Lihat Penawaran</a>
-                            </td>
+                            <td colspan="11" class="text-center">Tidak Ada Data Pengiriman</td>
                         </tr>
-                        @endforeach
+                        @else
+                            @foreach ( $list_request as $item)
+                            <tr>
+                                <td>{{$no++}}</td>
+                                <td>{{$item['origin']}}</td>
+                                <td>{{$item['destination']}}</td>
+                                <td>{{ Str::limit($item['address'], 25, '...') }}</td>
+                                <td>{{$item['shipmentType']}}</td>
+                                <td>{{$item['shipmentMode']}}</td>
+                                <td>{{$item['weight']}} kg</td>
+                                <td>{{$item['volume']}} CBM</td>
+                                <td>{{$item['commodities']}}</td>
+                                <td>{{$item['shippingDate']}}</td>
+                        
+                                <td>
+                                @if ($item['status'] == "active")
+                                <span class="badge rounded-pill text-bg-warning">In Bidding</span>
+                                @else
+                                <span class="badge rounded-pill text-bg-success">Close</span>
+                                @endif
+                                </td>
+                                <td class="text-center">
+                                <a href="/list-offer">Lihat Penawaran</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
                 </div>

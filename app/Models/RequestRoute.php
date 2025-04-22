@@ -22,7 +22,9 @@ class RequestRoute extends Model
         'description',
         'status',
         'deadline',
-        'address'
+        'address',
+        'cargoType',
+        'container_id'
     ];
 
     public function user()

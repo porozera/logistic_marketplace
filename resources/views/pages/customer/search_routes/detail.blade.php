@@ -84,25 +84,25 @@
             
                     <div class="row align-items-center">
                         <div class="col-md-8 d-flex align-items-center justify-content-start mt-2">
-                            <h5 class="mb-0 fw-bold">{{ $offer['origin']}}</h5>                      
+                            <p class="mb-0 fw-bold">{{ $offer['origin']}}</p>                      
                             <div class="d-flex align-items-center mx-4">
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-2" style="width: 200px; height: 1px;"></div>
-                                <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</h5> 
-                                <div class="bg-primary mx-2" style="width: 200px; height: 1px;"></div>
+                                <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
+                                <i class="ti ti-clock mx text-primary"></i> <p class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</p> 
+                                <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                             </div>
-                            <h5 class="mb-0 fw-bold">{{ $offer['destination']}}</h5>
+                            <p class="mb-0 fw-bold">{{ $offer['destination']}}</p>
                         </div>
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
                                 @if ($offer['shipmentType'] == 'FCL')
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2">/Container</h5>
+                                <p class="mb-0 ms-2">/Container</p>
                                 @else
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2">/CBM</h5>
+                                <p class="mb-0 ms-2">/CBM</p>
                                 @endif
                             </div>
                             <a href="/order/{{$offer['id']}}" class="btn btn-primary w-50">Pesan Sekarang</a>
@@ -126,8 +126,8 @@
                         </div>
         
                         <div class="mb-3">
-                            <h5 class="fw-bold text-primary d-inline">ID: </h5>
-                            <h5 class="text-primary d-inline">{{ $offer['noOffer'] }}</h5>
+                            <p class="text-primary d-inline">ID: </p>
+                            <p class="text-primary d-inline">{{ $offer['noOffer'] }}</p>
                         </div>
         
                         <div class="row mb-2">
@@ -135,13 +135,13 @@
                             <div class="col text-end">
                                 {{-- <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1 text-primary"></i> --}}
                                 @if ($offer['shipmentMode'] == 'D2D')
-                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Door    
+                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door To Door    
                                 @elseif ($offer['shipmentMode'] == 'D2P')
-                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door to Port
+                                <i class="ti ti-truck-delivery text-primary me-1"></i> Door To Port
                                 @elseif ($offer['shipmentMode'] == 'P2D')
-                                <i class="ti ti-truck-delivery text-primary me-1"></i> Port to Door   
+                                <i class="ti ti-truck-delivery text-primary me-1"></i> Port To Door   
                                 @elseif ($offer['shipmentMode'] == 'P2P')
-                                <i class="ti ti-sailboat text-primary me-1"></i> Port to Port
+                                <i class="ti ti-sailboat text-primary me-1"></i> Port To Port
                                 @endif
                             </div>
                         </div>
@@ -155,39 +155,39 @@
                             </div>
                         </div>
                         <div class="row">
-                            <strong>Alamat Tujuan:</strong> 
+                            <p>Alamat Tujuan:</p> 
                             <span class="text-primary">{{ optional($order)->address ?? '-' }}</span>
                         </div>
         
                         <hr>
         
-                        <h5 class="mb-1">Asal Pengiriman</h5>
+                        <p class="mb-1">Asal Pengiriman</p>
                         <p class="text-primary">{{ $offer['origin'] }}</p>
         
-                        <h5 class="mb-1">Tujuan Pengiriman</h5>
+                        <p class="mb-1">Tujuan Pengiriman</p>
                         <p class="text-primary">{{ $offer['destination'] }}</p>
         
                         <div class="row mb-3">
                             <div class="col">
-                                <h5 class="mb-1">Tanggal Muat Barang</h5>
+                                <p class="mb-1">Tanggal Muat Barang</p>
                                 <p class="text-primary">{{ $offer['loading_date_formatted'] }}</p>
                             </div>
                         </div>
         
                         <div class="row mb-3">
                             <div class="col">
-                                <h5 class="mb-1">Tanggal Pengiriman</h5>
+                                <p class="mb-1">Tanggal Pengiriman</p>
                                 <p class="text-primary">{{ $offer['shipping_date_formatted'] }}</p>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col">
-                                <h5 class="mb-1">Estmasi Tanggal Tiba</h5>
+                                <p class="mb-1">Estmasi Tanggal Tiba</p>
                                 <p class="text-primary">{{ $offer['estimation_date_formatted'] }}</p>
                             </div>
                             <div class="col text-end">
-                                <h5 class="mb-1">Estimasi Pengiriman</h5>
+                                <p class="mb-1">Estimasi Pengiriman</p>
                                 <p class="text-primary fw-bold">{{ $offer['estimated_days'] }} Hari</p>
                             </div>
                         </div>
@@ -195,18 +195,51 @@
                         <hr>
         
                         <h4 class="mb-3">Detail Kontainer</h4>
-                        <div class="mb-2">
-                            <strong>Sisa Kapasitas Berat:</strong> 
-                            <span class="text-danger fw-bold">{{ $offer['remainingWeight'] }}</span> / {{ $offer['maxWeight'] }} kg
+                        <div class="row">
+                            <div class="col">
+                                <p>Tipe Kontainer:</p>
+                            </div>
+                            <div class="col text-end">
+                                <span class="text-primary">{{ $offer['cargoType'] }}</span>
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p>Sisa Kapasitas Berat:</p> 
+                            </div>
+                            <div class="col text-end">
+                                <span class="text-danger fw-bold">{{ $offer['remainingWeight'] }}</span> / {{ $offer['maxWeight'] }} kg
+                            </div>
                         </div>
         
-                        <div class="mb-2">
-                            <strong>Sisa Kapasitas Volume:</strong> 
-                            <span class="text-danger fw-bold">{{ $offer['remainingVolume'] }}</span> / {{ $offer['maxVolume'] }} CBM
+                        <div class="row">
+                            <div class="col">
+                                <p>Sisa Kapasitas Volume:</p> 
+                            </div>
+                            <div class="col text-end">
+                                <span class="text-danger fw-bold">{{ $offer['remainingVolume'] }}</span> / {{ $offer['maxVolume'] }} CBM
+                            </div>
+                            
                         </div>
         
-                        <div class="mb-2">
-                            <strong>Tipe Barang:</strong> <span class="text-primary">{{ $offer['commodities'] }}</span>
+                        <div class="row">
+                            <div class="col">
+                                <p>Tipe Barang:</p>
+                            </div>
+                            <div class="col text-end">
+                                <span class="text-primary">{{ $offer['cargoType'] }}</span>
+                            </div>  
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <p>Commodities:</p>
+                            </div>
+                            <div class="col text-end">
+                                {{-- <span class="text-primary">{{ $offer['commodities'] }}</span> --}}
+                                {{-- <span class="text-primary">{{ $offer['commodities'] }}</span> --}}
+                                <span class="text-primary">{{ $offer['commodities'] }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -217,7 +250,289 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-3">Detail Rute</h4>
+                        @if ($offer->shipmentMode == "D2D")
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-building-warehouse text-primary"></i>
+                                <p class="mb-0 fw-medium">{{ $offer['origin'] }}</p>
+                                <p class="text-sm text-gray-500">Kota Asal</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="bg-teal-100 p-3 rounded">
+                                    <p class="font-semibold text-teal-700 mb-1">Tanggal Muat Barang</p>
+                                    <p class="text-sm mb-0">{{ $offer['loading_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} text-primary"></i>
+                                <p class="mb-0 fw-medium">Pengiriman Truck</p>
+                                @if ($offer->truck_first != null)
+                                    <p class="text-sm text-gray-500">{{$offer->truck_first->type}}</p>
+                                @elseif ($offer->truck_first == null && $offer->truck_second != null)
+                                    <p class="text-sm text-gray-500">{{$offer->truck_second->type}}</p>
+                                @else
+                                    <p class="text-sm text-gray-500">Tidak ada informasi truk</p>
+                                @endif
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle border border-2 border-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="p-3 rounded border">
+                                    <p class="font-semibold mb-1">Tanggal Pengiriman</p>
+                                    <p class="text-sm mb-0">{{ $offer['shipping_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-ship text-primary"></i>
+                                <p class="mb-0 fw-medium">Pengiriman Kapal</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti {{ $offer['shipmentMode'] == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} text-primary"></i>
+                                <p class="mb-0 fw-medium">Pengiriman Truck</p>
+                                @if ($offer->truck_second != null)
+                                    <p class="text-sm text-gray-500">{{$offer->truck_second->type}}</p>
+                                @elseif ($offer->truck_second == null && $offer->truck_first != null)
+                                    <p class="text-sm text-gray-500">{{$offer->truck_first->type}}</p>
+                                @else
+                                    <p class="text-sm text-gray-500">Tidak ada informasi</p>
+                                @endif
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle border border-2 border-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-building-warehouse text-primary"></i>
+                                <p class="mb-0 fw-medium">{{ $offer['destination'] }}</p>
+                                <p class="text-sm text-gray-500">Kota Tujuan</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="bg-teal-100 p-3 rounded">
+                                    <p class="font-semibold text-teal-700 mb-1">Estimasi Tanggal Sampai</p>
+                                    <p class="text-sm mb-0">{{ $offer['estimation_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        @elseif ($offer->shipmentMode == "P2P")
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-anchor text-primary"></i>
+                                <p class="mb-0 fw-medium">{{ $offer['origin'] }}</p>
+                                <p class="text-sm text-gray-500">Pelabuhan Asal</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="bg-teal-100 p-3 rounded">
+                                    <p class="font-semibold text-teal-700 mb-1">Tanggal Muat Barang</p>
+                                    <p class="text-sm mb-0">{{ $offer['loading_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
         
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-ship text-primary"></i>
+                                <p class="mb-0 fw-medium">Pengiriman Kapal</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle border border-2 border-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="p-3 rounded border">
+                                    <p class="font-semibold mb-1">Tanggal Pengiriman</p>
+                                    <p class="text-sm mb-0">{{ $offer['shipping_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-anchor text-primary"></i>
+                                <p class="mb-0 fw-medium">{{ $offer['destination'] }}</p>
+                                <p class="text-sm text-gray-500">Pelabuhan Tujuan</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="bg-teal-100 p-3 rounded">
+                                    <p class="font-semibold text-teal-700 mb-1">Estimasi Tanggal Sampai</p>
+                                    <p class="text-sm mb-0">{{ $offer['estimation_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        @elseif ($offer->shipmentMode == "D2P")
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-building-warehouse text-primary"></i>
+                                <p class="mb-0 fw-medium">{{ $offer['origin'] }}</p>
+                                <p class="text-sm text-gray-500">Kota Asal</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="bg-teal-100 p-3 rounded">
+                                    <p class="font-semibold text-teal-700 mb-1">Tanggal Muat Barang</p>
+                                    <p class="text-sm mb-0">{{ $offer['loading_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-truck-delivery text-primary"></i>
+                                <p class="mb-0 fw-medium">Pengiriman Truck</p>
+                                @if ($offer->truck_first)
+                                    <p class="text-sm text-gray-500">{{ $offer->truck_first->type }}</p>
+                                @elseif ($offer->truck_second)
+                                    <p class="text-sm text-gray-500">{{ $offer->truck_second->type }}</p>
+                                @else
+                                    <p class="text-sm text-gray-500">Tidak ada informasi truk</p>
+                                @endif
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle border border-2 border-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="p-3 rounded border">
+                                    <p class="font-semibold mb-1">Tanggal Pengiriman</p>
+                                    <p class="text-sm mb-0">{{ $offer['shipping_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-ship text-primary"></i>
+                                <p class="mb-0 fw-medium">Pengiriman Kapal</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle border border-2 border-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-anchor text-primary"></i>
+                                <p class="mb-0 fw-medium">{{ $offer['destination'] }}</p>
+                                <p class="text-sm text-gray-500">Pelabuhan Tujuan</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="bg-teal-100 p-3 rounded">
+                                    <p class="font-semibold text-teal-700 mb-1">Estimasi Tanggal Sampai</p>
+                                    <p class="text-sm mb-0">{{ $offer['estimation_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3 mb-0 pb-0">
+                            <div class="col-12">
+                                <p class="text-sm text-gray-700" style="margin-bottom: 0;">*Jika pengiriman dilakukan dalam satu kota yang sama, pengiriman menggunakan kapal tidak diperlukan. </p>
+                            </div>
+                        </div>
+
+                        @elseif ($offer->shipmentMode == "P2D")
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-anchor text-primary"></i>
+                                <p class="mb-0 fw-medium">{{ $offer['origin'] }}</p>
+                                <p class="text-sm text-gray-500">Pelabuhan Asal</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="bg-teal-100 p-3 rounded">
+                                    <p class="font-semibold text-teal-700 mb-1">Tanggal Muat Barang</p>
+                                    <p class="text-sm mb-0">{{ $offer['loading_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-truck-delivery text-primary"></i>
+                                <p class="mb-0 fw-medium">Pengiriman Truck</p>
+                                @if ($offer->truck_first)
+                                    <p class="text-sm text-gray-500">{{ $offer->truck_first->type }}</p>
+                                @elseif ($offer->truck_second)
+                                    <p class="text-sm text-gray-500">{{ $offer->truck_second->type }}</p>
+                                @else
+                                    <p class="text-sm text-gray-500">Tidak ada informasi truk</p>
+                                @endif
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle border border-2 border-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="p-3 rounded border">
+                                    <p class="font-semibold mb-1">Tanggal Pengiriman</p>
+                                    <p class="text-sm mb-0">{{ $offer['shipping_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5 text-end">
+                                <i class="ti ti-building-warehouse text-primary"></i>
+                                <p class="mb-0 fw-medium">{{ $offer['destination'] }}</p>
+                                <p class="text-sm text-gray-500">Kota Tujuan</p>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="rounded-circle bg-primary mx-auto" style="width: 16px; height: 16px;"></div>
+                            </div>
+                            <div class="col-5">
+                                <div class="bg-teal-100 p-3 rounded">
+                                    <p class="font-semibold text-teal-700 mb-1">Estimasi Tanggal Sampai</p>
+                                    <p class="text-sm mb-0">{{ $offer['estimation_date_formatted'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        @else
                         <div class="row">
                             <div class="col-5 text-end">
                                 <i class="ti ti-building-warehouse text-primary"></i>
@@ -252,7 +567,7 @@
                                 </div>
                             </div>
                         </div>
-        
+
                         <div class="row">
                             <div class="col-5 text-end">
                                 <i class="ti ti-building-warehouse text-primary"></i>
@@ -269,6 +584,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
         

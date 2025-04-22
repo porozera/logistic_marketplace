@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('remainingWeight')->nullable();
             $table->integer('remainingVolume')->nullable();
             $table->text('commodities')->nullable();
+            $table->enum('cargoType', ['General Cargo', 'Special Cargo', 'Dangerous Cargo'])->nullable();
             $table->text('address')->nullable();
             $table->enum('status', ['Loading Item', 'On The Way', 'Finished'])->nullable();
             $table->decimal('price', 15, 2);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Bid;
+use App\Models\Category;
 use App\Models\RequestRoute;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -71,7 +72,9 @@ class BidController extends Controller
         'maxVolume' => 'required|integer',
         'price' => 'required|numeric',
     ]);
-
+    $category = Category::where('name', $request['commodities'])->first();
+        // dd($attributes['commodities'], $category);
+    $cargoType = $category->type ?? null;
     Bid::create([
         'noOffer' => 'BID-' . strtoupper(uniqid()), // Pastikan 'noOffer' memiliki nilai unik
         'requestOffer_id' => $validated['requestOffer_id'],
@@ -91,6 +94,7 @@ class BidController extends Controller
         'status' => 'active',
         'lspName' => auth()->user()->companyName,
         'user_id' => auth()->id(),
+        'cargoType' => $cargoType,
     ]);
 
 

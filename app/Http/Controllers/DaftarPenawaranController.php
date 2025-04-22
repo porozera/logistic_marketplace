@@ -76,6 +76,9 @@ class DaftarPenawaranController extends Controller
             'status' => 'required',
             'lsp_id' => 'required',
             'address' => 'required',
+            'truck_first_id' => 'nullable',
+            'truck_second_id' => 'nullable',
+            'cargoType' => 'nullable',
         ]);
 
         if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
@@ -114,7 +117,10 @@ class DaftarPenawaranController extends Controller
                 "remainingAmount" => $attributes['total_price'],
                 "address" => $attributes['address'],
                 "lsp_id" => $attributes['lsp_id'],
-                "paymentStatus" => "Belum Lunas"
+                "paymentStatus" => "Belum Lunas",
+                "truck_first_id" => $attributes['truck_first_id'],
+                "truck_second_id" => $attributes['truck_second_id'],
+                "cargoType" => $attributes['cargoType'],
             ]);
         } else {
             $remainingWeight = $order->remainingWeight - $attributes['weight'];
@@ -207,6 +213,8 @@ class DaftarPenawaranController extends Controller
             "is_for_lsp" => $attributes['is_for_lsp'],
             "is_for_customer" => $attributes['is_for_customer'],
             "timestamp" => now(),
+            "truck_first_id" => $attributes['truck_first_id'],
+            "truck_second_id" => $attributes['truck_second_id'],
         ]);
 
         $bid = Bid::where('noOffer', $attributes['noOffer'])->first();

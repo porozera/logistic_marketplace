@@ -67,19 +67,19 @@
                         <div class="col-4">
                             @if ($item->order->shipmentMode == 'D2D')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-sailboat me-1"></i> Door to Door
+                                    <i class="ti ti-sailboat me-1"></i> Door To Door
                                 </button>   
                             @elseif ($item->order->shipmentMode == 'D2P')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                                    <i class="ti ti-truck-delivery me-1"></i> Door To Port
                                 </button>
                             @elseif ($item->order->shipmentMode == 'P2P')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-truck-delivery me-1"></i> Port to Port
+                                    <i class="ti ti-truck-delivery me-1"></i> Port To Port
                                 </button>
                             @elseif ($item->order->shipmentMode == 'P2D')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                    <i class="ti ti-truck-delivery me-1"></i> Port to Door
+                                    <i class="ti ti-truck-delivery me-1"></i> Port To Door
                                 </button>
                             @endif
                         </div>
@@ -93,10 +93,10 @@
                         </div>
                         <div class="col-1">
                             <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
-                            <div class="bg-primary mx-auto" style="width: 1px; height: 40px;"></div>
+                            <div class="bg-primary mx-auto" style="width: 1px; height: 50px;"></div>
                         </div>
                         <div class="col-2">
-                            <p><b>{{$item->order->origin}}</b></p>
+                            <h6>{{$item->order->origin}}</h6>
                         </div>
                         <div class="col-2">
                             Tanggal Pengiriman
@@ -118,7 +118,7 @@
                             <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
                         </div>
                         <div class="col-2">
-                            <p><b>{{$item->order->destination}}</b></p>
+                            <h6>{{$item->order->destination}}</h6>
                         </div>
                         <div class="col-2">
                             Estimasi Tiba
