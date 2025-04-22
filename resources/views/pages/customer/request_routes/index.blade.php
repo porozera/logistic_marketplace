@@ -39,42 +39,82 @@
           <div class="card">
             <div class="card-body">
               <h4 class="mb-2">Detail Pengiriman</h4>
-
               <br>
+              {{-- <small class="text-muted text-small">*Masukan provinsi asal dan tujuan, lalu masukan kota asal dan tujuan.</small> --}}
+
                 <form action="/request-routes/perform" method="POST" id="requestRouteAddForm">
                     @csrf
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Provinsi Asal</label>
+                                <select id="origin_province" class="form-control"></select>
+                            </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Kota Asal</label>
-                                <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ old('origin') }}">
+                                <select name="origin" id="origin_city" class="form-control"></select>
                                 @error('origin') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Provinsi Tujuan</label>
+                                <select id="destination_province" class="form-control"></select>
+                            </div>
                             <div class="form-group mb-3">
                                 <label class="form-label">Kota Tujuan</label>
-                                <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ old('destination') }}">
+                                <select name="destination" id="destination_city" class="form-control"></select>
                                 @error('destination') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Tanggal Pengiriman</label>
-                                <input type="date" name="shippingDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ old('shippingDate') }}">
-                                @error('shippingDate') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
-                        </div>
+                        
+                        <script>
+                            // Load provinsi saat halaman pertama kali dibuka
+                            const loadProvinces = async (selectId) => {
+                                const res = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`);
+                                const provinces = await res.json();
+                                const select = document.getElementById(selectId);
+                                select.innerHTML = `<option value="">Pilih Provinsi</option>`;
+                                provinces.forEach(p => {
+                                    select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
+                                });
+                            }
+                        
+                            // Load kota/kabupaten berdasarkan provinsi
+                            const loadCities = async (provinceId, targetSelectId) => {
+                                const res = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`);
+                                const cities = await res.json();
+                                const select = document.getElementById(targetSelectId);
+                                select.innerHTML = `<option value="">Pilih Kota/Kabupaten</option>`;
+                                cities.forEach(c => {
+                                    select.innerHTML += `<option value="${c.name}">${c.name}</option>`;
+                                });
+                            }
+                        
+                            // Load provinsi saat awal
+                            loadProvinces("origin_province");
+                            loadProvinces("destination_province");
+                        
+                            // Event Listener untuk load kota berdasarkan provinsi
+                            document.getElementById("origin_province").addEventListener("change", function () {
+                                loadCities(this.value, "origin_city");
+                            });
+                        
+                            document.getElementById("destination_province").addEventListener("change", function () {
+                                loadCities(this.value, "destination_city");
+                            });
+                        </script>                        
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label class="form-label">Tipe Pengiriman</label>
                                 <input type="text" class="form-control" name="shipmentType" id="shipmentType" value="FCL" readonly>
                                 @error('shipmentType') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group mb-3">
                             <label class="form-label">Mode Pengiriman</label>
                             <select class="form-control" name="shipmentMode" id="shipmentMode">
@@ -84,6 +124,13 @@
                                 <option value="P2D">Port to Door (P2D)</option>
                             </select>                            
                             @error('shipmentMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Tanggal Pengiriman</label>
+                                <input type="date" name="shippingDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ old('shippingDate') }}">
+                                @error('shippingDate') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
                     </div>
