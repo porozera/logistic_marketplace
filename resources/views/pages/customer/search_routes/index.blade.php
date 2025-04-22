@@ -71,7 +71,7 @@
                             <b>Filter</b>
                         </div>
                         <div class="col-6 text-end">
-                            Clear
+                            <a href="/search-routes">Clear</a>
                         </div>
                     </div>
                     <br>
@@ -87,16 +87,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    {{-- <h5>Layanan</h5>
-                    @foreach ($services as $service)
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="insurance" id="insurance" {{ request('insurance') ? 'checked' : '' }}>
-                        <i class="{{$service->icon}} me-1"></i>
-                        <label class="form-check-label" for="insurance">
-                          {{$service->serviceName}}
-                        </label>
-                    </div>
-                    @endforeach --}}
                     <h5>Jenis Barang</h5>
                     @foreach ($categories as $category)
                         <div class="form-check">
@@ -122,13 +112,13 @@
                             <input
                                 class="form-check-input"
                                 type="checkbox"
-                                name="category[]"
-                                id="category-{{ Str::slug($container) }}"
-                                value="{{ $container }}"
-                                {{ in_array($container, (array) request('container')) ? 'checked' : '' }}
+                                name="container[]"
+                                id="container-{{ $container->id }}"
+                                value="{{ $container->id }}"
+                                {{ in_array($container->id, (array) request('container')) ? 'checked' : '' }}
                             >
-                            <label class="form-check-label" for="container-{{ Str::slug($container) }}">
-                                {{ $container }}
+                            <label class="form-check-label" for="container-{{ $container->id }}">
+                                {{ $container->name }}
                             </label>
                         </div>
                     @endforeach
@@ -329,7 +319,7 @@
                                 <p style="font-weight: normal;">Tanggal Pengiriman</p>
                             </div>
                             <div class="col-3">
-                                <p class="text-primary fw-bold">{{$item->loading_date_formatted}}</p>
+                                <p class="text-primary fw-bold">{{$item->shipping_date_formatted}}</p>
                             </div>
                             <div class="col-3 d-flex align-items-start justify-content-end ">
                                 @if ($item['shipmentType'] == 'FCL')
