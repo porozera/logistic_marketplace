@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bid;
 use App\Models\Category;
+use App\Models\Container;
 use App\Models\offersModel;
 use App\Models\Order;
 use App\Models\RequestRoute;
@@ -17,11 +18,30 @@ use Carbon\Carbon;
 
 class DaftarPenawaranController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $query = Bid::where('status', "active");
+        if ($request->has('btn_radio1')) {
+            if ($request->btn_radio1 == 'Murah') {
+                $query->orderBy('price', 'asc');
+            } elseif ($request->btn_radio1 == 'Cepat') {
+                $query->orderByRaw("DATEDIFF(estimationDate, shippingDate) asc");
+            }
+            $searchPerformed = true;
+        }
+        if ($request->has('maxPrice') && $request->maxPrice != '') {
+            $query->where('price', '<=', $request->maxPrice);
+            $searchPerformed = true;
+        }
+        if ($request->has('maxTime') && $request->maxTime != '') {
+            $query->whereRaw("DATEDIFF(estimationDate, shippingDate) <= ?", [$request->maxTime]);
+            $searchPerformed = true;
+        }
         $bids = $query->get();
-        return view('pages.customer.daftar_penawaran.index',compact('bids'));
+        $services = Service::all();
+        $categories = Category::distinct('type')->pluck('type')->toArray();
+        $containers = Container::all();
+        return view('pages.customer.daftar_penawaran.index',compact('bids', 'services', 'categories', 'containers'));
     }
 
     public function detail($id)
