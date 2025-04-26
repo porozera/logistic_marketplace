@@ -187,7 +187,7 @@
                         <i class="ti ti-news"></i>
                     </li>
                     <li class="pc-item">
-                        <a href="../dashboard/index.html" class="pc-link">
+                        <a href="/notification-lsp" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-mail"></i></span>
                             <span class="pc-mtext">Kotak Pesan</span>
                         </a>

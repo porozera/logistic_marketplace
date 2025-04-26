@@ -46,6 +46,7 @@ use App\Http\Controllers\OpenContainerController;
 use App\Http\Controllers\TruckController;
 use App\Http\Controllers\TrackingLspController;
 use App\Http\Controllers\NotificationCustomerController;
+use App\Http\Controllers\NotificationLspController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Livewire\MapLocation;
@@ -259,6 +260,13 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
     Route::prefix('trackings')->group(function () {
         Route::get('/', [TrackingLspController::class, 'index'])->name('tracking-lsp.index');
         Route::get('/{id}', [TrackingLspController::class, 'detail'])->name('tracking-lsp.detail');
+    });
+
+    Route::prefix('notification-lsp')->group(function () {
+        Route::get('/', [NotificationLspController::class, 'index'])->name('notification-customer');
+        Route::put('/update/{id}', [NotificationLspController::class, 'update_status'])->name('notification-lsp.markAsRead');
+        Route::put('/markallasread', [NotificationLspController::class, 'markAllAsRead'])->name('notification-lsp.markAllAsRead');
+        Route::delete('//delete/{id}', [NotificationLspController::class, 'destroy'])->name('notification-lsp.delete');
     });
 
 });
