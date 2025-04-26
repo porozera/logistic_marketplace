@@ -174,10 +174,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::get('/complain-detail/{id}', [ComplainController::class, 'detail'])->name('admin.complain.detail');
 
         //Notifikasi
-        Route::get('/admin/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');
-        Route::put('/admin/notifications/mark-as-read/{id}', [AdminNotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
-        Route::put('/admin/notifications/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
-        Route::delete('/admin/notifications/delete/{id}', [AdminNotificationController::class, 'delete'])->name('admin.notifications.delete');
+        Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');
+        Route::put('/notifications/mark-as-read/{id}', [AdminNotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
+        Route::put('/notifications/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
+        Route::delete('/notifications/delete/{id}', [AdminNotificationController::class, 'delete'])->name('admin.notifications.delete');
     });
     
     // approve akun
