@@ -34,7 +34,7 @@
           <div class="card">
             <div class="card-body">
                 <form action="{{ route('search-route') }}">
-                    <div class="row mb-0 mt-0">
+                    <div class="row">
                         <div class="col-sm-12 col-md-3">
                             <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ request('origin') }}">
                         </div>
@@ -51,7 +51,7 @@
                             </select>
                         </div>
                         <div class="col-sm-12 col-md-1">
-                            <button type="submit" class="btn btn-primary">Cari</button>
+                            <button type="submit" class="btn btn-primary h-100"><i class="ti ti-search mt-4 me-2"></i> <span class="mb-2">Cari</span></button>
                         </div>
                     </div>
                 </form>
