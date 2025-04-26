@@ -100,7 +100,7 @@
             <div class="col-sm-12 col-md-12 col-xl-12">
                 <div class="card">
                     <div class="card-body">
-                        <div id='map' style='width: 100%; height: 600px;'></div>
+                        <div id='map' style='width: 100%; height: 400px;'></div>
                         @php
                             $lng = $location->longitude ?? 0;
                             $lat = $location->latitude ?? 0;
@@ -271,7 +271,7 @@
                             <div class="row">
                                 <div class="col"><strong>Tipe Kontainer</strong></div>
                                 <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->container->name }}</p>
+                                    <p class="text-primary">{{ $userOrder->order->container->name ?? 'Tidak ada tipe kontainer' }}</p>
                                 </div>
                             </div>
                         </div>

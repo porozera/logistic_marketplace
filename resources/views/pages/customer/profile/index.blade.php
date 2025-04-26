@@ -21,7 +21,7 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-8">
-              <h3 class="m-b-10">Profil Pengguna</h3>
+              <h4 class="m-b-10">Profil Pengguna</h4>
                 <div class="card">
                     <div class="card-body">
                       <div class="row">

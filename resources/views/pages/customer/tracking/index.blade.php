@@ -29,12 +29,12 @@
                 <span class="input-group-text"><i class="ti ti-search"></i></span>
                 <input type="text" name="origin" class="form-control" placeholder="Cari nomor pelacakan..." value=""> 
             </div> --}}
-            <div class="input-group mb-3">
+            {{-- <div class="input-group mb-3">
                 <input type="text" class="form-control" id="" name="" placeholder="Cari nomor pelacakan..." value="">
                 <span class="input-group-text bg-primary">
                   <i class="ti ti-search" style="cursor: pointer; color: white;"></i>
                 </span>
-            </div>
+            </div> --}}
             @if ($userOrder->isEmpty())
             <div style="display: flex; justify-content: center; align-items: center;">
                 <div class="card text-center p-4 w-100">
@@ -51,21 +51,21 @@
             <div class="card card-hover">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-4 d-flex align-items-center">
+                        <div class="col-7 d-flex align-items-center">
                             <div class="me-4">
-                                <a href="/profile/lsp/{{ $item->order->lsp->id }}" class="me-4">
+                                <a href="/profile/lsp/{{ $item->order->lsp->id }}" class="me-1">
                                     <img src="{{ $item->order->lsp->profilePicture ? asset('storage/' . $item->order->lsp->profilePicture) : asset('default-profile.jpg') }}" 
                                         alt="profile-lsp" 
                                         class="user-avtar border wid-35 rounded-circle" 
-                                        style="object-fit: cover; width: 35px; height: 35px;">
+                                        style="object-fit: cover; width: 25px; height: 25px;">
                                 </a>
                             </div>
                             <div>
-                                <h5 class="mb-0 fw-bold">{{ $item->order->lsp->companyName }}</h5>
+                                <p class="mb-0 fw-bold">{{ $item->order->lsp->companyName }}</p>
                             </div>
                         </div>
-                        <div class="col-4">
-                            @if ($item->order->shipmentMode == 'D2D')
+                        <div class="col-1">
+                            {{-- @if ($item->order->shipmentMode == 'D2D')
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                     <i class="ti ti-sailboat me-1"></i> Door To Door
                                 </button>   
@@ -81,7 +81,7 @@
                                 <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                     <i class="ti ti-truck-delivery me-1"></i> Port To Door
                                 </button>
-                            @endif
+                            @endif --}}
                         </div>
                         <div class="col-4 d-flex align-items-center justify-content-end">
                             <p class="text-primary">ID: {{$item->order->noOffer}}</p>
@@ -95,16 +95,10 @@
                             <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
                             <div class="bg-primary mx-auto" style="width: 1px; height: 50px;"></div>
                         </div>
-                        <div class="col-2">
-                            <h6>{{$item->order->origin}}</h6>
+                        <div class="col-6">
+                            <p>{{$item->order->origin}}</p>
                         </div>
-                        <div class="col-2">
-                            Tanggal Pengiriman
-                        </div>
-                        <div class="col-3">
-                            <h6 class="text-primary">{{$item->order->loading_date_formatted}}</h6>
-                        </div>
-                        <div class="col-3 d-flex align-items-start justify-content-end ">
+                        <div class="col-4 d-flex align-items-start justify-content-end ">
                             <button type="button" class="btn btn-success rounded-pill">
                                 {{ $item->order->shipmentType == 'LCL' ? 'Less Container Load' : 'Full Container Load' }}
                             </button>
@@ -117,16 +111,19 @@
                         <div class="col-1">
                             <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
                         </div>
-                        <div class="col-2">
-                            <h6>{{$item->order->destination}}</h6>
+                        <div class="col-7">
+                            <p>{{$item->order->destination}}</p>
                         </div>
-                        <div class="col-2">
-                            Estimasi Tiba
+                        
+                    </div>
+                    <div class="row d-flex justify-content-between align-items-end">
+                        <div class="col-3 d-flex align-items-end justify-content-start">
+                            <p class="mb-0">Estimasi Tiba</p>
                         </div>
-                        <div class="col-3">
-                            <h6 class="text-primary">{{$item->order->estimation_date_formatted}}</h6>
+                        <div class="col-6 d-flex align-items-end justify-content-start">
+                            <p class="text-primary mb-0">{{$item->order->estimation_date_formatted}}</p>
                         </div>
-                        <div class="col-3 d-flex align-items-start justify-content-end">
+                        <div class="col-3 d-flex align-items-end justify-content-end">
                             <a href="/tracking/detail/{{$item->id}}" class="btn btn-primary d-inline-flex">Lihat detail <i class="ti ti-chevron-right ms-1"></i></a>
                         </div>
                     </div>
@@ -142,14 +139,14 @@
                         <h4>Map Interaktif</h4>
                         <i class="ti ti-map-pin text-danger ms-2 mb-2"></i>
                     </div>
-                    <div id='map' style='width: 100%; height: 800px;'></div>
+                    <div id='map' style='width: 100%; height: 700px;'></div>
                     <script>
                         mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';
                         const map = new mapboxgl.Map({
                             container: 'map', // container ID
                             style: 'mapbox://styles/aufarnugratamaps/cm91i1s4m00al01s43z35bik2', // style URL
                             center: [116.534, -0.032], // starting position [lng, lat]
-                            zoom: 2, // starting zoom
+                            zoom: 1, // starting zoom
                         });
 
                         // Adjust map size when the window is resized

@@ -5,7 +5,7 @@
             <div class="text-center">
                 <img src="{{ Auth::user()->profilePicture ? asset('storage/' . Auth::user()->profilePicture) : asset('default-profile.jpg') }}" alt="Profile Picture"
                       class="rounded-circle border border-light-secondary"
-                      style="width: 80px; height: 80px; object-fit: cover;">
+                      style="width: 60px; height: 60px; object-fit: cover;">
                 <h5 class="mt-2 text-primary">{{ Auth::user()->username }}</h5>
                 <small class="text-muted">{{ Auth::user()->role }}</small>
             </div>

@@ -35,7 +35,7 @@
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-12 col-xl-12">
-            <h3 class="m-b-10">Buat Permintaan Rute</h3>
+            <h4 class="m-b-10">Buat Permintaan Rute</h4>
           <div class="card">
             <div class="card-body">
               <h4 class="mb-2">Detail Pengiriman</h4>
@@ -230,9 +230,9 @@
                             <th>Alamat Tujuan</th>
                             <th>Tipe</th>
                             <th>Moda</th>
-                            <th>Berat</th>
+                            {{-- <th>Berat</th>
                             <th>Volume</th> 
-                            <th>Jenis Barang</th> 
+                            <th>Jenis Barang</th>  --}}
                             <th>Tangal Pengiriman</th>
                             <th>Status</th>
                             <th class="text-center">Actions</th>
@@ -244,7 +244,7 @@
                         @endphp
                         @if ($list_request->isEmpty())
                         <tr>
-                            <td colspan="11" class="text-center">Tidak Ada Data Pengiriman</td>
+                            <td colspan="9" class="text-center">Tidak Ada Data Pengiriman</td>
                         </tr>
                         @else
                             @foreach ( $list_request as $item)
@@ -255,9 +255,9 @@
                                 <td>{{ Str::limit($item['address'], 25, '...') }}</td>
                                 <td>{{$item['shipmentType']}}</td>
                                 <td>{{$item['shipmentMode']}}</td>
-                                <td>{{$item['weight']}} kg</td>
+                                {{-- <td>{{$item['weight']}} kg</td>
                                 <td>{{$item['volume']}} CBM</td>
-                                <td>{{$item['commodities']}}</td>
+                                <td>{{$item['commodities']}}</td> --}}
                                 <td>{{$item['shippingDate']}}</td>
                         
                                 <td>

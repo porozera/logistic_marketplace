@@ -30,7 +30,7 @@
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-sm-12 col-md-12 col-xl-12">
-        <h3 class="m-b-10">Cari Rute</h3>
+        <h4 class="m-b-10">Cari Rute</h4>
           <div class="card">
             <div class="card-body">
                 <form action="{{ route('search-route') }}">
@@ -46,12 +46,12 @@
                         </div>
                         <div class="col-sm-12 col-md-2">
                             <select class="form-control" name="shipmentType" id="shipmentType">
-                                <option value="FCL" {{ request('shipmentType') == 'FCL' ? 'selected' : '' }}>Full Container Load</option>
-                                <option value="LCL" {{ request('shipmentType') == 'LCL' ? 'selected' : '' }}>Less Container Load</option>
+                                <option value="FCL" {{ request('shipmentType') == 'FCL' ? 'selected' : '' }}>FCL</option>
+                                <option value="LCL" {{ request('shipmentType') == 'LCL' ? 'selected' : '' }}>LCL</option>
                             </select>
                         </div>
                         <div class="col-sm-12 col-md-1">
-                            <button type="submit" class="btn btn-primary h-100"><i class="ti ti-search mt-4 me-2"></i> <span class="mb-2">Cari</span></button>
+                            <button type="submit" class="btn btn-primary h-100"><i class="ti ti-search mt-4"></i></button>
                         </div>
                     </div>
                 </form>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5>Jenis Barang</h5>
+                    <p class="fw-bold">Jenis Barang</p>
                     @foreach ($categories as $category)
                         <div class="form-check">
                             <input
@@ -106,7 +106,7 @@
 
                     <hr>
 
-                    <h5>Jenis Kontainer</h5>
+                    <p class="fw-bold">Jenis Kontainer</p>
                     @foreach ($containers as $container)
                         <div class="form-check">
                             <input
@@ -125,11 +125,11 @@
 
                     <hr>
 
-                    <h5>Harga Maksimal</h5>
+                    <p class="fw-bold">Harga Maksimal</p>
                     <input type="number" name="maxPrice" class="form-control" placeholder="Rp." value="{{ request('maxPrice') }}">
                     <hr>
 
-                    <h5>Waktu Maksimal</h5>
+                    <p class="fw-bold">Waktu Maksimal</p>
                     <input type="number" name="maxTime" class="form-control" placeholder="Rp." value="{{ request('maxTime') }}">
                     <hr>
 
@@ -252,12 +252,12 @@
                                     <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
                                         alt="profile-lsp" 
                                         class="user-avtar border wid-35 rounded-circle" 
-                                        style="object-fit: cover; width: 35px; height: 35px;">
+                                        style="object-fit: cover; width: 25px; height: 25px;">
                                 </a>
                                 <div class="d-flex align-items-center gap-2">
-                                    <h5 class="mb-0 fw-bold">{{ $item->user->companyName }}</h5>
+                                    <p class="mb-0 fw-bold">{{ $item->user->companyName }}</p>
                                     <i class="fas fa-star text-warning ms-2"></i>
-                                    <h5 class="mb-0 fw-bold">{{$item->user->rating}}</h5>
+                                    <p class="mb-0 fw-bold">{{$item->user->rating}}</p>
                                 </div>
                             </div>
                             <div class="col-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
@@ -321,15 +321,20 @@
                             <div class="col-3">
                                 <p class="text-primary fw-bold">{{$item->shipping_date_formatted}}</p>
                             </div>
-                            <div class="col-3 d-flex align-items-start justify-content-end ">
+                            <div class="col-3 d-flex flex-column flex-sm-row align-items-start justify-content-end">
                                 @if ($item['shipmentType'] == 'FCL')
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
-                                <p class="mb-0 ms-2 mt-1">/Container</p>
+                                    <div class="d-flex flex-column align-items-end">
+                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
+                                        <p class="mb-0 ms-sm-2 mt-sm-1 p">/Container</p>
+                                    </div>
                                 @else
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
-                                <p class="mb-0 ms-2 mt-1">/CBM</p>
+                                    <div class="d-flex flex-column align-items-end">
+                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
+                                        <p class="mb-0 ms-sm-2 mt-sm-1 p">/CBM</p>
+                                    </div>
                                 @endif
                             </div>
+                            
                         </div>
                         <div class="row">
                             <div class="col-1 d-flex align-items-start justify-content-start">
@@ -347,8 +352,8 @@
                             <div class="col-3">
                                 <p class="text-primary fw-bold">{{$item->estimation_date_formatted}}</p>
                             </div>
-                            <div class="col-3 d-flex align-items-start justify-content-end">
-                                <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50 w-md-50">Lihat detail<i class="ti ti-chevron-right ms-1"></i></a>
+                            <div class="col-3 text-end">
+                                <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50 w-md-50"><span class="mb-2">Pilih</span></a>
                             </div>
                         </div>
                     </div>

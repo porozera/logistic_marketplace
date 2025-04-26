@@ -25,7 +25,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-sm-12 col-md-12 col-xl-12">
-                <h3 class="">Daftar Penawaran</h3>
+                <h4 class="">Daftar Penawaran</h4>
             </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
@@ -58,11 +58,11 @@
                             <div class="card-body">
                                 
             
-                                <h5>Harga Maksimal</h5>
+                                <p class="fw-bold">Harga Maksimal</p>
                                 <input type="number" name="maxPrice" class="form-control" placeholder="Rp." value="{{ request('maxPrice') }}">
                                 <hr>
             
-                                <h5>Waktu Maksimal</h5>
+                                <p class="fw-bold">Waktu Maksimal</p>
                                 <input type="number" name="maxTime" class="form-control" placeholder="Rp." value="{{ request('maxTime') }}">
                                 <hr>
             
@@ -98,13 +98,13 @@
                                                     <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
                                                         alt="profile-lsp" 
                                                         class="user-avtar border wid-35 rounded-circle" 
-                                                        style="object-fit: cover; width: 35px; height: 35px;">
+                                                        style="object-fit: cover; width: 25px; height: 25px;">
                                                 </a>
                                             </div>
                                             <div class="d-flex align-items-center gap-2">
-                                                <h5 class="mb-0 fw-bold">{{ $item->lspName }}</h5>
+                                                <p class="mb-0 fw-bold">{{ $item->lspName }}</p>
                                                 <i class="fas fa-star text-warning ms-2"></i>
-                                                <h5 class="mb-0 fw-bold">{{$item->user->rating}}</h5>
+                                                <p class="mb-0 fw-bold">{{$item->user->rating}}</p>
                                             </div>
                                         </div>
                                         <div class="col-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
@@ -156,9 +156,9 @@
                                         <div class="col-3">
                                             <p class="fw-bold text-primary">{{$item->shipping_date_formatted}}</p>
                                         </div>
-                                        <div class="col-3 d-flex align-items-start justify-content-end ">
+                                        <div class="col-3 d-flex flex-column align-items-end">
                                             <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
-                                            <p class="mb-0 ms-2 mt-1">/Container</p>
+                                            <p class="mb-0 ms-sm-2 mt-sm-1 p">/Container</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -178,7 +178,7 @@
                                             <p class="fw-bold text-primary">{{$item->estimation_date_formatted}}</p>
                                         </div>
                                         <div class="col-3 d-flex align-items-start justify-content-end">
-                                            <a href="/list-offer/{{$item['id']}}" class="btn btn-primary w-50 w-md-50">Lihat detail<i class="ti ti-chevron-right ms-1"></i></a>
+                                            <a href="/list-offer/{{$item['id']}}" class="btn btn-primary w-50 w-md-50">Pilih</a>
                                         </div>
                                     </div>
                                 </div>

@@ -28,18 +28,17 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
+
                         <div class="row">
                             <div class="col-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
-                                            <h4 class="mt-2 text-primary">Total Pemesanan</h4> 
+                                            <h5 class="mt-2 text-primary">Total Pemesanan</h5> 
                                             <i class="ti ti-package ms-2 text-primary" style="font-size: 24px;"></i>
                                         </div>
                                         <br>
-                                        <h3>{{$totalPengiriman}}</h3>
+                                        <h4>{{$totalPengiriman}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -47,11 +46,11 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
-                                            <h4 class="mt-2 text-success">Pemesanan Aktif</h4> 
+                                            <h5 class="mt-2 text-success">Pemesanan Aktif</h5> 
                                             <i class="ti ti-truck-delivery ms-2 text-success" style="font-size: 24px;"></i>
                                         </div> 
                                         <br>
-                                        <h3>{{$pengirimanBerjalan}}</h3>
+                                        <h4>{{$pengirimanBerjalan}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -59,25 +58,24 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
-                                            <h4 class="mt-2 text-warning">Pembayaran Tertunda</h4> 
+                                            <h5 class="mt-2 text-warning">Pembayaran Tertunda</h5> 
                                             <i class="ti ti-clock ms-2 text-warning" style="font-size: 24px;"></i>
                                         </div> 
                                         <br>
-                                        <h3>{{$pembayaranTertunda}}</h3>
+                                        <h4>{{$pembayaranTertunda}}</h4>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                            <p class="mt-4">Dapatkan harga kompetitif di pengiriman mu.</p>
+                                            <p class="">Dapatkan harga kompetitif di pengiriman mu.</p>
                                             <a href="/search-routes" class="btn btn-primary">Cari Rute Sekarang</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                   
             </div>
         </div>
         
@@ -95,7 +93,7 @@
                         <i class="ti ti-map-pin text-danger ms-2 mb-2"></i>
                     </div>
 
-                    <div id="map" style="width: 100%; height: 600px;"></div>
+                    <div id="map" style="width: 100%; height: 400px;"></div>
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';

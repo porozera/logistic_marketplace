@@ -25,69 +25,71 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-12">
-              <h3 class="m-b-10">Payment History</h3>
+              <h4 class="m-b-10">Payment History</h4>
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-hover" id="pc-dt-simple">
-                            <thead>
-                                <tr>
-                                  <th>No</th>
-                                  <th>Asal</th>
-                                  <th>Tujuan</th>
-                                  <th>Tipe</th>
-                                  <th>Moda</th>
-                                  <th>Jenis Barang</th>
-                                  <th>Berat</th>
-                                  <th>Volume</th>
-                                  <th>Tanggal Pengiriman</th>
-                                  <th>Total Harga</th>
-                                  <th>Status</th>
-                                  <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($userOrders->isEmpty())
-                                <tr>
-                                    <td colspan="12" class="text-center">No Payment History</td>
-                                </tr>
-                                @else
-                                @php
-                                   $no = ($userOrders->currentPage() - 1) * $userOrders->perPage() + 1
-                                @endphp
-                                @foreach ($userOrders as $userOrder)
-                                <tr>
-                                    <td>{{ $no++ }}</td>
-                                    <td>{{ $userOrder->order->origin }}</td>
-                                    <td>{{ $userOrder->order->destination }}</td>
-                                    <td>{{ $userOrder->order->shipmentType }}</td>
-                                    <td>{{ $userOrder->order->shipmentMode }}</td>
-                                    <td>{{ $userOrder->commodities }}</td>
-                                    <td>{{ $userOrder->weight }} kg</td>
-                                    <td>{{ $userOrder->volume }} CBM</td>
-                                    <td>{{ $userOrder->order->shippingDate }}</td>
-                                    <td>Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</td>
-                                    
-                                    <td>
-                                        @if ($userOrder['paymentStatus'] == "Belum Lunas")
-                                        <span class="badge rounded-pill text-bg-danger">Belum Lunas</span>
-                                        @else
-                                        <span class="badge rounded-pill text-bg-success">Lunas</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($userOrder['paymentStatus'] == "Belum Lunas")
-                                        {{-- <a href="" class="btn btn-icon btn-light-warning"><i class="ti ti-cash"></i></a> --}}
-                                        <a href="/payment/{{$userOrder->payment_token}}">Bayar</a>
-                                        @else
-                                        {{-- <a href="" class="btn btn-icon btn-light-primary"><i class="ti ti-compass"></i></a> --}}
-                                        <a href="/invoice/{{$userOrder->payment_token}}">Invoice</a>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @endforeach
-                                @endif
-                            </tbody>                         
-                        </table>  
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="pc-dt-simple">
+                                <thead>
+                                    <tr>
+                                      <th>No</th>
+                                      <th>Asal</th>
+                                      <th>Tujuan</th>
+                                      <th>Tipe</th>
+                                      <th>Moda</th>
+                                      <th>Jenis Barang</th>
+                                      <th>Berat</th>
+                                      <th>Volume</th>
+                                      <th>Tanggal Pengiriman</th>
+                                      <th>Total Harga</th>
+                                      <th>Status</th>
+                                      <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($userOrders->isEmpty())
+                                    <tr>
+                                        <td colspan="12" class="text-center">No Payment History</td>
+                                    </tr>
+                                    @else
+                                    @php
+                                       $no = ($userOrders->currentPage() - 1) * $userOrders->perPage() + 1
+                                    @endphp
+                                    @foreach ($userOrders as $userOrder)
+                                    <tr>
+                                        <td>{{ $no++ }}</td>
+                                        <td>{{ $userOrder->order->origin }}</td>
+                                        <td>{{ $userOrder->order->destination }}</td>
+                                        <td>{{ $userOrder->order->shipmentType }}</td>
+                                        <td>{{ $userOrder->order->shipmentMode }}</td>
+                                        <td>{{ $userOrder->commodities }}</td>
+                                        <td>{{ $userOrder->weight }} kg</td>
+                                        <td>{{ $userOrder->volume }} CBM</td>
+                                        <td>{{ $userOrder->order->shippingDate }}</td>
+                                        <td>Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</td>
+                                        
+                                        <td>
+                                            @if ($userOrder['paymentStatus'] == "Belum Lunas")
+                                            <span class="badge rounded-pill text-bg-danger">Belum Lunas</span>
+                                            @else
+                                            <span class="badge rounded-pill text-bg-success">Lunas</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($userOrder['paymentStatus'] == "Belum Lunas")
+                                            {{-- <a href="" class="btn btn-icon btn-light-warning"><i class="ti ti-cash"></i></a> --}}
+                                            <a href="/payment/{{$userOrder->payment_token}}">Bayar</a>
+                                            @else
+                                            {{-- <a href="" class="btn btn-icon btn-light-primary"><i class="ti ti-compass"></i></a> --}}
+                                            <a href="/invoice/{{$userOrder->payment_token}}">Invoice</a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    @endif
+                                </tbody>                         
+                            </table>  
+                        </div>
                         <div class="d-flex justify-content-center mt-4">
                             {{ $userOrders->links('pagination::bootstrap-4') }}
                         </div>                                                
