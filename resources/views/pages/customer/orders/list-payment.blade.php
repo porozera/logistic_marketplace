@@ -29,21 +29,21 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover" id="pc-dt-simple">
+                            <table class="table table-hover" id="pc-dt-simple" style="min-width: 1200px;">
                                 <thead>
                                     <tr>
-                                      <th>No</th>
-                                      <th>Asal</th>
-                                      <th>Tujuan</th>
-                                      <th>Tipe</th>
-                                      <th>Moda</th>
-                                      <th>Jenis Barang</th>
-                                      <th>Berat</th>
-                                      <th>Volume</th>
-                                      <th>Tanggal Pengiriman</th>
-                                      <th>Total Harga</th>
-                                      <th>Status</th>
-                                      <th>Actions</th>
+                                      <th><small>No</small></th>
+                                      <th><small>Asal</small></th>
+                                      <th><small>Tujuan</small></th>
+                                      <th><small>Tipe</small></th>
+                                      <th><small>Moda</small></th>
+                                      <th><small>Jenis Barang</small></th>
+                                      <th><small>Berat</small></th>
+                                      <th><small>Volume</small></th>
+                                      <th><small>Tanggal Pengiriman</small></th>
+                                      <th><small>Total Harga</small></th>
+                                      <th><small>Status</small></th>
+                                      <th><small>Actions</small></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,16 +57,16 @@
                                     @endphp
                                     @foreach ($userOrders as $userOrder)
                                     <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $userOrder->order->origin }}</td>
-                                        <td>{{ $userOrder->order->destination }}</td>
-                                        <td>{{ $userOrder->order->shipmentType }}</td>
-                                        <td>{{ $userOrder->order->shipmentMode }}</td>
-                                        <td>{{ $userOrder->commodities }}</td>
-                                        <td>{{ $userOrder->weight }} kg</td>
-                                        <td>{{ $userOrder->volume }} CBM</td>
-                                        <td>{{ $userOrder->order->shippingDate }}</td>
-                                        <td>Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</td>
+                                        <td><small>{{ $no++ }}</small></td>
+                                        <td><small>{{ $userOrder->order->origin }}</small></td>
+                                        <td><small>{{ $userOrder->order->destination }}</small></td>
+                                        <td><small>{{ $userOrder->order->shipmentType }}</small></td>
+                                        <td><small>{{ $userOrder->order->shipmentMode }}</small></td>
+                                        <td><small>{{ $userOrder->commodities }}</small></td>
+                                        <td><small>{{ $userOrder->weight }} kg</small></td>
+                                        <td><small>{{ $userOrder->volume }} CBM</small></td>
+                                        <td><small>{{ $userOrder->order->shippingDate }}</small></td>
+                                        <td><small>Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</small></td>
                                         
                                         <td>
                                             @if ($userOrder['paymentStatus'] == "Belum Lunas")
@@ -78,10 +78,10 @@
                                         <td>
                                             @if ($userOrder['paymentStatus'] == "Belum Lunas")
                                             {{-- <a href="" class="btn btn-icon btn-light-warning"><i class="ti ti-cash"></i></a> --}}
-                                            <a href="/payment/{{$userOrder->payment_token}}">Bayar</a>
+                                            <a href="/payment/{{$userOrder->payment_token}}"><small>Bayar</small></a>
                                             @else
                                             {{-- <a href="" class="btn btn-icon btn-light-primary"><i class="ti ti-compass"></i></a> --}}
-                                            <a href="/invoice/{{$userOrder->payment_token}}">Invoice</a>
+                                            <a href="/invoice/{{$userOrder->payment_token}}"><small>Invoice</small></a>
                                             @endif
                                         </td>
                                     </tr>

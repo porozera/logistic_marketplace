@@ -61,7 +61,7 @@
     <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-12 col-xl-12">
-          <h3 class="m-b-10">Detail Pemesanan</h3>
+          <h4 class="m-b-10">Detail Pemesanan</h4>
             <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -120,7 +120,8 @@
                             <div class="d-flex align-items-center mx-4">
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                                 <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
-                                <i class="ti ti-clock mx text-primary"></i> <p class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</p> 
+                                {{-- <i class="ti ti-clock mx text-primary"></i>  --}}
+                                <p class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</p> 
                                 <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
                                 <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                             </div>

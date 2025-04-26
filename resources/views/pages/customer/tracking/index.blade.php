@@ -117,10 +117,10 @@
                         
                     </div>
                     <div class="row d-flex justify-content-between align-items-end">
-                        <div class="col-3 d-flex align-items-end justify-content-start">
-                            <p class="mb-0">Estimasi Tiba</p>
+                        <div class="col-2 d-flex align-items-end justify-content-start">
+                            <p class="mb-0">Estimasi</p>
                         </div>
-                        <div class="col-6 d-flex align-items-end justify-content-start">
+                        <div class="col-7 d-flex align-items-end justify-content-start">
                             <p class="text-primary mb-0">{{$item->order->estimation_date_formatted}}</p>
                         </div>
                         <div class="col-3 d-flex align-items-end justify-content-end">

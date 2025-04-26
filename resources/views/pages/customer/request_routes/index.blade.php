@@ -221,21 +221,21 @@
             <div class="card-body">
             <h4 class="mb-2">List Permintaan Rute</h4>
             <div class="table-responsive" style="overflow-x: auto;">
-                <table class="table table-hover" id="pc-dt-simple">
+                <table class="table table-hover" id="pc-dt-simple" style="min-width: 1200px;">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Asal</th>
-                            <th>Tujuan</th>
-                            <th>Alamat Tujuan</th>
-                            <th>Tipe</th>
-                            <th>Moda</th>
+                            <th><small>No</small></th>
+                            <th><small>Asal</small></th>
+                            <th><small>Tujuan</small></th>
+                            <th><small>Alamat Tujuan</small></th>
+                            <th><small>Tipe</small></th>
+                            <th><small>Moda</small></th>
                             {{-- <th>Berat</th>
                             <th>Volume</th> 
                             <th>Jenis Barang</th>  --}}
-                            <th>Tangal Pengiriman</th>
-                            <th>Status</th>
-                            <th class="text-center">Actions</th>
+                            <th><small>Tangal Pengiriman</small></th>
+                            <th><small>Status</small></th>
+                            <th class="text-center"><small>Actions</small></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -249,16 +249,16 @@
                         @else
                             @foreach ( $list_request as $item)
                             <tr>
-                                <td>{{$no++}}</td>
-                                <td>{{$item['origin']}}</td>
-                                <td>{{$item['destination']}}</td>
-                                <td>{{ Str::limit($item['address'], 25, '...') }}</td>
-                                <td>{{$item['shipmentType']}}</td>
-                                <td>{{$item['shipmentMode']}}</td>
+                                <td><small>{{$no++}}</small></td>
+                                <td><small>{{$item['origin']}}</small></td>
+                                <td><small>{{$item['destination']}}</small></td>
+                                <td><small>{{ Str::limit($item['address'], 25, '...') }}</small></td>
+                                <td><small>{{$item['shipmentType']}}</small></td>
+                                <td><small>{{$item['shipmentMode']}}</small></td>
                                 {{-- <td>{{$item['weight']}} kg</td>
                                 <td>{{$item['volume']}} CBM</td>
                                 <td>{{$item['commodities']}}</td> --}}
-                                <td>{{$item['shippingDate']}}</td>
+                                <td><small>{{$item['shippingDate']}}</small></td>
                         
                                 <td>
                                 @if ($item['status'] == "active")
@@ -268,7 +268,7 @@
                                 @endif
                                 </td>
                                 <td class="text-center">
-                                <a href="/list-offer">Lihat Penawaran</a>
+                                <a href="/list-offer"><small>Lihat Penawaran</small></a>
                                 </td>
                             </tr>
                             @endforeach

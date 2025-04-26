@@ -178,14 +178,14 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Nomor Pengiriman</th>
-                                        <th class="text-center">LSP</th>
-                                        <th class="text-center">Asal</th>
-                                        <th class="text-center">Tujuan</th>
-                                        <th class="text-center">Berat</th>
-                                        <th class="text-center">Volume</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center">Action</th>
+                                        <th class="text-center"><small>Nomor Pengiriman</small></th>
+                                        <th class="text-center"><small>LSP</small></th>
+                                        <th class="text-center"><small>Asal</small></th>
+                                        <th class="text-center"><small>Tujuan</small></th>
+                                        <th class="text-center"><small>Berat</small></th>
+                                        <th class="text-center"><small>Volume</small></th>
+                                        <th class="text-center"><small>Status</small></th>
+                                        <th class="text-center"><small>Action</small></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -196,12 +196,12 @@
                                     @else
                                         @foreach ($userOrder as $item)
                                         <tr>
-                                            <td class="text-center text-primary">{{$item->order->noOffer}}</td>
-                                            <td class="text-center">{{$item->order->lspName}}</td>
-                                            <td class="text-center">{{$item->order->origin}}</td>
-                                            <td class="text-center">{{$item->order->destination}}</td>
-                                            <td class="text-center">{{$item->weight}} Kg</td>
-                                            <td class="text-center">{{$item->volume}} CBM</td>
+                                            <td class="text-center text-primary"><small>{{$item->order->noOffer}}</small></td>
+                                            <td class="text-center"><small>{{$item->order->lspName}}</small></td>
+                                            <td class="text-center"><small>{{$item->order->origin}}</small></td>
+                                            <td class="text-center"><small>{{$item->order->destination}}</small></td>
+                                            <td class="text-center"><small>{{$item->weight}} Kg</small></td>
+                                            <td class="text-center"><small>{{$item->volume}} CBM</small></td>
                                             <td class="text-center">
                                                 @if ($item->order->status == "Loading Item")
                                                 <span class="badge rounded-pill text-bg-warning" style="font-size: 14px;">Loading Item</span>
@@ -213,7 +213,7 @@
                                                 {{$item->order->status}}
                                                 @endif
                                             </td>
-                                            <td class="text-center"><a href="/tracking/detail/{{$item->id}}">Track</a></td>
+                                            <td class="text-center"><a href="/tracking/detail/{{$item->id}}"><small>Track</small></a></td>
                                         </tr>
                                         @endforeach
                                     @endif
