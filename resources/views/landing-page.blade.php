@@ -109,10 +109,7 @@
                                     <a href="#" class="nav-link text-left">Home</a>
                                 </li>
                                 <li>
-                                    <a href="about.html" class="nav-link text-left">Price Calculator</a>
-                                </li>
-                                <li>
-                                    <a href="services.html" class="nav-link text-left">Services</a>
+                                    <a href="/landing-page/search-route" class="nav-link text-left">Cari Rute</a>
                                 </li>
                                 <li>
                                     <a href="{{'landing-faq'}}" class="nav-link text-left">Faq</a>
@@ -162,7 +159,7 @@
                         <h1>Optimalkan Pengiriman Anda dengan <span class="text-warning">Platform Kami</span></h1>
                         <p>Kami hadir untuk membantu bisnis dan individu dalam mengoptimalkan pengiriman barang menggunakan sistem berbagi kontainer dengan biaya lebih hemat dan proses lebih cepat.</p>
                         <p>
-                            <a href="#" class="btn btn-primary py-3 px-5">Pelajari Lebih Lanjut</a>
+                            <a href="/landing-page/search-route" class="btn btn-primary py-3 px-5">Cari Rute Sekarang!</a>
                         </p>
                     </div>
                 </div>
@@ -418,146 +415,34 @@
           </div>
         </div>
         <div class="row">
+          @foreach ($offers as $offer)
           <div class="col-md-6 col-lg-4 mb-4">
             <div class="service-39381" style="border-radius: 8px;">
               <div class="p-4">
                 <div class="ml-auto text-right">
-                  <h3 class="d-inline-block text-black" style="text-align: right; background-color: #f5f4f4; padding: 8px; border-radius: 8px;"><i class="bi bi-box"></i>  FCL . 20'</h3>
+                  <h3 class="d-inline-block text-black" style="text-align: right; background-color: #f5f4f4; padding: 8px; border-radius: 8px;"><i class="bi bi-box"></i>  {{$offer->shipmentType}}</h3>
                 </div>
-                <h3><a href="#"><span class="icon-room mr-1 text-primary"></span> Bandung &mdash; Jakarta</a></h3>
+                <h3><a href="/search-routes/{{$offer['id']}}"><span><p>Departure: </p></span> <p class="text-primary">{{$offer->origin}}</p></a></h3>
+                <h3><a href="/search-routes/{{$offer['id']}}"><span><p>Arival: </p></span> <p class="text-primary">{{$offer->destination}}</p></a></h3>
                 <div class="">
                   <div class="mr-auto pb-3">
                     <span class="icon-date_range"></span>
-                    Sep. 05 &mdash; Oct. 15
+                    {{$offer->shipping_date_formatted}}
                   </div>
                   <div class="ml-auto price d-flex text-black">
-                    <h3>Mulai dari</h3>
-                    <h3 class="mx-2" style="font-size: 30px;">RP600.000</h3>
+                    <h3 class="mx-2" style="font-size: 30px;">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h3>
                   </div>
                   
                 </div>
               </div>
             </div>
           </div>
-          
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="service-39381" style="border-radius: 8px;">
-              <div class="p-4">
-                <div class="ml-auto text-right">
-                  <h3 class="d-inline-block text-black" style="text-align: right; background-color: #f5f4f4; padding: 8px; border-radius: 8px;"><i class="bi bi-box"></i>  FCL . 20'</h3>
-                </div>
-                <h3><a href="#"><span class="icon-room mr-1 text-primary"></span> Bandung &mdash; Jakarta</a></h3>
-                <div class="">
-                  <div class="mr-auto pb-3">
-                    <span class="icon-date_range"></span>
-                    Sep. 05 &mdash; Oct. 15
-                  </div>
-                  <div class="ml-auto price d-flex text-black">
-                    <h3>Mulai dari</h3>
-                    <h3 class="mx-2" style="font-size: 30px;">RP600.000</h3>
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="service-39381" style="border-radius: 8px;">
-              <div class="p-4">
-                <div class="ml-auto text-right">
-                  <h3 class="d-inline-block text-black" style="text-align: right; background-color: #f5f4f4; padding: 8px; border-radius: 8px;"><i class="bi bi-box"></i>  FCL . 20'</h3>
-                </div>
-                <h3><a href="#"><span class="icon-room mr-1 text-primary"></span> Bandung &mdash; Jakarta</a></h3>
-                <div class="">
-                  <div class="mr-auto pb-3">
-                    <span class="icon-date_range"></span>
-                    Sep. 05 &mdash; Oct. 15
-                  </div>
-                  <div class="ml-auto price d-flex text-black">
-                    <h3>Mulai dari</h3>
-                    <h3 class="mx-2" style="font-size: 30px;">RP600.000</h3>
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="service-39381" style="border-radius: 8px;">
-              <div class="p-4">
-                <div class="ml-auto text-right">
-                  <h3 class="d-inline-block text-black" style="text-align: right; background-color: #f5f4f4; padding: 8px; border-radius: 8px;"><i class="bi bi-box"></i>  FCL . 20'</h3>
-                </div>
-                <h3><a href="#"><span class="icon-room mr-1 text-primary"></span> Bandung &mdash; Jakarta</a></h3>
-                <div class="">
-                  <div class="mr-auto pb-3">
-                    <span class="icon-date_range"></span>
-                    Sep. 05 &mdash; Oct. 15
-                  </div>
-                  <div class="ml-auto price d-flex text-black">
-                    <h3>Mulai dari</h3>
-                    <h3 class="mx-2" style="font-size: 30px;">RP600.000</h3>
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="service-39381" style="border-radius: 8px;">
-              <div class="p-4">
-                <div class="ml-auto text-right">
-                  <h3 class="d-inline-block text-black" style="text-align: right; background-color: #f5f4f4; padding: 8px; border-radius: 8px;"><i class="bi bi-box"></i>  FCL . 20'</h3>
-                </div>
-                <h3><a href="#"><span class="icon-room mr-1 text-primary"></span> Bandung &mdash; Jakarta</a></h3>
-                <div class="">
-                  <div class="mr-auto pb-3">
-                    <span class="icon-date_range"></span>
-                    Sep. 05 &mdash; Oct. 15
-                  </div>
-                  <div class="ml-auto price d-flex text-black">
-                    <h3>Mulai dari</h3>
-                    <h3 class="mx-2" style="font-size: 30px;">RP600.000</h3>
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4 mb-4">
-            <div class="service-39381" style="border-radius: 8px;">
-              <div class="p-4">
-                <div class="ml-auto text-right">
-                  <h3 class="d-inline-block text-black" style="text-align: right; background-color: #f5f4f4; padding: 8px; border-radius: 8px;"><i class="bi bi-box"></i>  FCL . 20'</h3>
-                </div>
-                <h3><a href="#"><span class="icon-room mr-1 text-primary"></span> Bandung &mdash; Jakarta</a></h3>
-                <div class="">
-                  <div class="mr-auto pb-3">
-                    <span class="icon-date_range"></span>
-                    Sep. 05 &mdash; Oct. 15
-                  </div>
-                  <div class="ml-auto price d-flex text-black">
-                    <h3>Mulai dari</h3>
-                    <h3 class="mx-2" style="font-size: 30px;">RP600.000</h3>
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-          
+          @endforeach
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-7 text-center">
+          <p class="mb-0 pt-3"><a href="/landing-page/search-route" class="btn btn-primary py-3 px-5 text-white">Cari Pengiriman</a></p>
         </div>
-
-        <div class="row justify-content-center">
-          <div class="col-md-7 text-center">
-            <p class="mb-0 pt-3"><a href="#" class="btn btn-primary py-3 px-5 text-white">Cari Pengiriman</a></p>
-          </div>
-        </div>
-
       </div>
     </div>
 
