@@ -200,7 +200,11 @@
                                 <p>Tipe Kontainer:</p>
                             </div>
                             <div class="col text-end">
-                                <span class="text-primary">{{ $offer->container->name }}</span>
+                                @if ($offer->container)
+                                    <span class="text-primary">{{ $offer->container->name }}</span>
+                                @else
+                                    <span class="text-muted text-primary">Tidak ada detail kontainer</span>
+                                @endif
                             </div>  
                         </div>
                         <div class="row">

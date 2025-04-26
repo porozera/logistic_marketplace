@@ -1,16 +1,21 @@
 <!-- [ Sidebar Menu ] start -->
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
-        <div class="m-header">
-            <a href="" class="b-brand text-primary">
-                <!-- ========   Change your logo from here   ============ -->
-                <img src="{{ asset('template/mantis/dist/assets/images/logo-dark.svg') }}" class="img-fluid logo-lg"
-                    alt="logo">
-            </a>
+        <div class="navbar-header mt-3">
+            <div class="text-center">
+                <img src="{{ Auth::user()->profilePicture ? asset('storage/' . Auth::user()->profilePicture) : asset('default-profile.jpg') }}" alt="Profile Picture"
+                      class="rounded-circle border border-light-secondary"
+                      style="width: 80px; height: 80px; object-fit: cover;">
+                <h5 class="mt-2 text-primary">{{ Auth::user()->username }}</h5>
+                <small class="text-muted">{{ Auth::user()->role }}</small>
+            </div>
         </div>
         <div class="navbar-content">
 
             <ul class="pc-navbar">
+                    <li class="pc-item">
+                        
+                    </li>
                 @if (Auth::user()->role === 'admin')
                     <li class="pc-item">
                         <a href="{{ route('admin.dashboard') }}" class="pc-link">

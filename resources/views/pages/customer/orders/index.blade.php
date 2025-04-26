@@ -215,8 +215,12 @@
                           <h5 class="mb-0">Container Availability</h5>
                         </div>
                         <div class="col text-end">
-                          <h5 class="text-primary">{{$offer->container->name}}</h5>
-                        </div>
+                          @if ($offer->container)
+                              <span class="text-primary">{{ $offer->container->name }}</span>
+                          @else
+                              <span class="text-muted text-primary">Tidak ada detail kontainer</span>
+                          @endif
+                      </div> 
                       </div>
                     </div>
                     <div class="card-body d-flex justify-content-center align-items-center">
