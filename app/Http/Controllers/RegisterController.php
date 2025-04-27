@@ -73,7 +73,7 @@ class RegisterController extends Controller
                 'email' => $attributes['email'],
                 'telpNumber' => $attributes['telpNumber'],
                 'address' => $attributes['address'],
-                'status' => "Butuh di Approve",
+                'status' => "Requested",
             ]);
             // Notifikasi ke semua admin
             // $admins = User::where('role', 'admin')->get();

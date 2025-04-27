@@ -40,7 +40,7 @@
                     Halaman ini digunakan untuk mengelola data layanan, termasuk penambahan, pengeditan, dan penghapusan informasi layanan
                   </p>
                 </div>
-                <a href="/admin/category-add" class="btn btn-primary d-inline-flex align-items-center ms-3">
+                <a href="/admin/service-add" class="btn btn-primary d-inline-flex align-items-center ms-3">
                   <i class="ti ti-plus f-18 me-2"></i> Tambah Data
                 </a>
               </div>

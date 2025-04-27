@@ -31,8 +31,16 @@
         <div class="col-sm-12">
           <div class="card table-card">
             <div class="card-body">
-              <div class="text-end p-4 pb-0">
-                <a href="/admin/faq-add" class="btn btn-primary d-inline-flex align-item-center">
+              <div class="d-flex justify-content-between align-items-center p-4">
+                <div class="flex-grow-1" style="max-width: 80%;">
+                  <h4 class="mb-2 mb-md-2">
+                    FAQs Data
+                  </h4>
+                  <p class="mb-0">
+                    Halaman ini digunakan untuk mengelola data frequently asked question, termasuk penambahan, pengeditan, dan penghapusan informasi datanya.
+                  </p>
+                </div>
+                <a href="/admin/faq-add" class="btn btn-primary d-inline-flex align-items-center ms-3">
                   <i class="ti ti-plus f-18 me-2"></i> Tambah Data
                 </a>
               </div>

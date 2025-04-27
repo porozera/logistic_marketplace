@@ -34,13 +34,13 @@
               <div class="d-flex justify-content-between align-items-center p-4">
                 <div class="flex-grow-1" style="max-width: 80%;">
                   <h5 class="mb-2 mb-md-2">
-                    Master Data Layanan
+                    Master Data Kontainer
                   </h5>
                   <p class="mb-0">
-                    Halaman ini digunakan untuk mengelola data layanan, termasuk penambahan, pengeditan, dan penghapusan informasi layanan
+                    Halaman ini digunakan untuk mengelola data kontainer, termasuk penambahan, pengeditan, dan penghapusan informasi kontainer
                   </p>
                 </div>
-                <a href="/admin/category-add" class="btn btn-primary d-inline-flex align-items-center ms-3">
+                <a href="/admin/container-add" class="btn btn-primary d-inline-flex align-items-center ms-3">
                   <i class="ti ti-plus f-18 me-2"></i> Tambah Data
                 </a>
               </div>
