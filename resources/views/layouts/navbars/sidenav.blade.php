@@ -88,7 +88,7 @@
                     <li class="pc-item {{ Request::is('admin/report-customer*') ? 'active' : '' }}">
                         <a href="{{ route('admin.customer.index') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-users"></i></span>
-                            <span class="pc-mtext">Pengguna</span>
+                            <span class="pc-mtext">Customer</span>
                         </a>
                     </li>
                     <li class="pc-item {{ Request::is('admin/report-lsp*') ? 'active' : '' }}">

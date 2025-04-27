@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pengguna')
+@section('title', 'Customer')
 
 @section('content')
 <div class="pc-container">
@@ -12,13 +12,13 @@
                     <div class="col-md-12">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ url('/admin/report-customer') }}">Pengguna</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/admin/report-customer') }}">Customer</a></li>
                             <li class="breadcrumb-item" aria-current="page">Detail Data</li>
                         </ul>
                     </div>
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h2 class="mb-0">Detail Data Pengguna</h2>
+                            <h2 class="mb-0">Detail Data Customer</h2>
                         </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
 
         <div class="card">
             <div class="card-header">
-                <h5>Informasi Pengguna</h5>
+                <h5>Informasi Customer</h5>
             </div>
             <div class="card-body">
                 <div class="row">

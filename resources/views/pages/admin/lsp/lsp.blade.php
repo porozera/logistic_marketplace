@@ -31,10 +31,9 @@
           <div class="col-sm-12">
             <div class="card">
               <div class="card-header table-card-header">
-                <h5>HTML5 Export Buttons</h5>
-                <small
-                  >This example demonstrates these four button types with their default options. The other examples in this section
-                  demonstrate some of the options available.</small
+                <h4>Data Akun LSP</h4>
+                <p
+                  >Halaman ini digunakan untuk mengelola data LSP, termasuk melihat detail akun, pengeditan, dan penghapusan informasi LSP.</p
                 >
               </div>
               <div class="card-body">
