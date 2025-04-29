@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-8">
+            <div class="col-sm-12 col-md-8">
               <h4 class="m-b-10">Edit Profile</h4>
                 <form action="/profile/customer/edit/perform" method="POST" id="updateProfileForm" enctype="multipart/form-data">
                     @csrf
