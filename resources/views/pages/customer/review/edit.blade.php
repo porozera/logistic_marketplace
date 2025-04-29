@@ -72,6 +72,7 @@
                                     @endif
                                 </div>
                             </div>
+                            <br>
                             <div class="row justify-content-end">
                                 <div class="col-md-4 text-end">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Edit Ulasan</button>

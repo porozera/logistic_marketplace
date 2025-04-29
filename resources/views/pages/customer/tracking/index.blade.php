@@ -146,7 +146,7 @@
                             container: 'map', // container ID
                             style: 'mapbox://styles/aufarnugratamaps/cm91i1s4m00al01s43z35bik2', // style URL
                             center: [116.534, -0.032], // starting position [lng, lat]
-                            zoom: 1, // starting zoom
+                            zoom: 2.8, // starting zoom
                         });
 
                         // Adjust map size when the window is resized

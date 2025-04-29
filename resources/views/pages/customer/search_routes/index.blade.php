@@ -130,7 +130,7 @@
                     <hr>
 
                     <p class="fw-bold">Waktu Maksimal</p>
-                    <input type="number" name="maxTime" class="form-control" placeholder="Rp." value="{{ request('maxTime') }}">
+                    <input type="number" name="maxTime" class="form-control" placeholder="Hari" value="{{ request('maxTime') }}">
                     <hr>
 
                     <div class="row ">
@@ -316,7 +316,7 @@
                                 <p class="fw-bold text-primary">{{$item->origin}}</p>
                             </div>
                             <div class="col-2">
-                                <p style="font-weight: normal;">Tanggal Pengiriman</p>
+                                <p style="font-weight: normal;">Departure</p>
                             </div>
                             <div class="col-3">
                                 <p class="text-primary fw-bold">{{$item->shipping_date_formatted}}</p>
@@ -347,7 +347,7 @@
                                 <p class="fw-bold text-primary">{{$item->destination}}</p>
                             </div>
                             <div class="col-2">
-                                <p class="mb-0" style="font-weight: normal;">Estimasi Tiba</p>
+                                <p class="mb-0" style="font-weight: normal;">Est. Arrival</p>
                             </div>
                             <div class="col-3">
                                 <p class="text-primary fw-bold">{{$item->estimation_date_formatted}}</p>

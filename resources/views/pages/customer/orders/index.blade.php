@@ -417,7 +417,7 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 text-end">
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Pesan Sekarang</button>
                     </div>
                   </div>

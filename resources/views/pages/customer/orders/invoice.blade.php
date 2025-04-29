@@ -92,7 +92,7 @@
         <div class="row d-flex justify-content-center align-items-center mb-3">
             <div class="col-6 text-end">
                 <a href="{{ route('invoice.download', $userOrder->payment_token) }}" class="btn btn-success mt-3">
-                    <i class="fas fa-file-download"></i> Download PDF
+                    <i class="ti ti-file-download me-1 mt-2"></i> Download PDF
                 </a>
             </div>
         </div>

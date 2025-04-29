@@ -133,7 +133,7 @@
                                       <a href="{{ $dashboardUrl }}" class="nav-link text-left">Dashboard</a>
                                   @endguest
                               </li>
-                              <li>
+                              {{-- <li>
                                 <a href="#" class="pc-link bg-transparent" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                   <span class="pc-micon"><i class="ti ti-power text-danger"></i></span>
                                   <span class="pc-mtext text-danger">Logout</span>
@@ -141,7 +141,7 @@
                               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                   @csrf
                               </form>
-                              </li>
+                              </li> --}}
                               
                             </ul>
                         </nav>

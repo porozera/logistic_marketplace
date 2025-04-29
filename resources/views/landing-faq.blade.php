@@ -39,11 +39,8 @@
                             <li>
                                 <a href="landing-page" class="nav-link text-left">Home</a>
                             </li>
-                            <li>
-                                <a href="about.html" class="nav-link text-left">Price Calculator</a>
-                            </li>
-                            <li>
-                                <a href="services.html" class="nav-link text-left">Services</a>
+                            <li class="">
+                                <a href="/landing-page/search-route" class="nav-link text-left">Cari Rute</a>
                             </li>
                             <li class="active">
                                 <a href="testimonials.html" class="nav-link text-left">Faq</a>

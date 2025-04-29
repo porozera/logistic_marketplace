@@ -227,7 +227,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col"><strong>Estmasi Tanggal Tiba</strong></div>
+                                <div class="col"><strong>Estimasi Tanggal Tiba</strong></div>
                                 <div class="col">
                                     <p class="text-primary">{{ $userOrder->order->estimation_date_formatted }}</p>
                                 </div>
