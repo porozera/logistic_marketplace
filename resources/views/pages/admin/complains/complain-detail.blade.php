@@ -12,6 +12,7 @@
                 <div class="col-md-12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="../dashboard/index.html">Manajemen Komplain</a></li>
                     <li class="breadcrumb-item" aria-current="page">Detail Komplain</li>
                 </ul>
                 </div>
@@ -39,7 +40,7 @@
                   <input type="text" class="form-control" value="{{ $complain->username }}" readonly>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label">Deskripsi Keluhan</label>
+                  <label class="form-label">Deskripsi Komplain / Keluhan</label>
                   <textarea class="form-control" rows="5" readonly>{{ $complain->description }}</textarea>
                 </div>
                 <div class="mb-3">

@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ url('/admin/dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ url('/admin/report-customer') }}">Pengguna</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/admin/report-customer') }}">Approval LSP</a></li>
                             <li class="breadcrumb-item" aria-current="page">Detail Data</li>
                         </ul>
                     </div>
