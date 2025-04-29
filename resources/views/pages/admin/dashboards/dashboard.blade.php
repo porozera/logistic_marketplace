@@ -304,7 +304,7 @@
                   <div class="row align-items-center">
                     <div class="col-8">
                       <h3 class="mb-1">{{ $totalOrder }}</h3>
-                      <p class="text-muted mb-0">Total Pengiriman</p>
+                      <p class="text-muted mb-0">Total Pesanan</p>
                     </div>
                     <div class="col-4 text-end">
                       <i class="ti ti-truck-delivery text-success f-36"></i>
