@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-8">
+            <div class="col-sm-12 col-md-8">
               <h4 class="m-b-10">Profil Pengguna</h4>
                 <div class="card">
                     <div class="card-body">

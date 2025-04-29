@@ -28,9 +28,8 @@
         </div>
         <div class="row">
             <div class="col-12">
-
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-sm-12 col-md">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
@@ -42,7 +41,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-sm-12 col-md">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
@@ -54,7 +53,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-sm-12 col-md">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center">
@@ -66,7 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-sm-12 col-md">
                                 <div class="card">
                                     <div class="card-body text-center">
                                             <p class="">Dapatkan harga kompetitif di pengiriman mu.</p>

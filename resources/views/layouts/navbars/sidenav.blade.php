@@ -1,7 +1,7 @@
 <!-- [ Sidebar Menu ] start -->
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
-        <div class="navbar-header mt-3">
+        <div class="navbar-header mt-4">
             <div class="text-center">
                 <img src="{{ Auth::user()->profilePicture ? asset('storage/' . Auth::user()->profilePicture) : asset('default-profile.jpg') }}" alt="Profile Picture"
                       class="rounded-circle border border-light-secondary"
@@ -427,6 +427,9 @@
             class="btn btn-success">Buy Now</a>
           </div>
         </div> --}}
+            <div class="text-center mt-3">
+                <img src=" {{ asset('images/Logo_SentraLogiX.png') }}" alt="Logo" class="img-fluid" style="height: 50px;">
+            </div>
         </div>
     </div>
 </nav>
