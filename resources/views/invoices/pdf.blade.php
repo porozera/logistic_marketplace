@@ -71,7 +71,7 @@
     <div class="invoice-box">
         <div class="header">
             <h2>INVOICE</h2>
-            <p>Nama Perusahaan | Alamat | Kontak</p>
+            <p class="">SentraLogiX |  Jl. Telekomunikasi No. 1, Bandung Terusan Buahbatu | 08128035211</p>
         </div>
         <hr>
         <table>
