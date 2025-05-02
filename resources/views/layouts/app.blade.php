@@ -9,7 +9,7 @@
     <meta name="description" content="@yield('meta_description', 'Mantis is made using Bootstrap 5 design framework. Download the free admin template & use it for your project.')">
     <meta name="keywords" content="@yield('meta_keywords', 'Mantis, Dashboard UI Kit, Bootstrap 5, Admin Template, Admin Dashboard, CRM, CMS, Bootstrap Admin Template')">
     <meta name="author" content="CodedThemes">
-
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <!-- [Favicon] icon -->
     <link rel="icon" href="{{ asset('template/mantis/dist/assets/images/favicon.svg') }}" type="image/x-icon">
 
@@ -49,7 +49,7 @@
       }
 
     </style>
-    
+
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
 
@@ -81,7 +81,7 @@
       <div class="loader-fill"></div>
     </div>
   </div>
-  
+
 
   <!-- [Page Specific JS] start -->
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/apexcharts.min.js') }}"></script>
