@@ -39,6 +39,9 @@
                     <label for="code" class="form-label">Kode</label>
                     <input type="text" class="form-control" name="code" id="code" placeholder="Masukkan kode layanan" value="{{ old('code') }}" required>
                     <small class="form-text text-muted">Contoh : SRV001</small>
+                    @error('code')
+                        <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div>
@@ -46,6 +49,9 @@
                     <label for="serviceName" class="form-label">Nama Layanan</label>
                     <input type="text" class="form-control" name="serviceName" id="serviceName" placeholder="Masukkan nama layanan" value="{{ old('serviceName') }}" required>
                     <small class="form-text text-muted">Contoh : Inspeksi Sebelum Pengiriman</small>
+                    @error('serviceName')
+                        <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div>
@@ -53,6 +59,9 @@
                     <label for="price" class="form-label">Harga</label>
                     <input type="number" class="form-control" name="price" id="price" placeholder="Masukkan harga layanan" value="{{ old('price') }}" required>
                     {{-- <small class="form-text text-muted">Please enter your Password</small> --}}
+                    @error('price')
+                        <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div>
@@ -60,11 +69,17 @@
                     <label for="icon" class="form-label">Icon</label>
                     <input type="text" class="form-control" name="icon" id="icon" placeholder="Masukkan class icon" value="{{ old('icon') }}" required>
                     {{-- <small class="form-text text-muted">Please enter your Password</small> --}}
+                    @error('icon')
+                        <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div class="form-group">
                 <label class="form-label" for="description">Deskripsi</label>
                 <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi layanan" value="{{ old('description') }}" required></textarea>
+                @error('description')
+                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="card-footer text-end">

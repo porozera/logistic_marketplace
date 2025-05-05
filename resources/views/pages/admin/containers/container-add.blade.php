@@ -41,6 +41,9 @@
                   <label for="name" class="form-label">Nama Kontainer:</label>
                   <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama kontainer" value="{{ old('name') }}" required>
                   <small class="form-text text-muted">Contoh : 20' Standard</small>
+                  @error('name')
+                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                  @enderror
                 </div>
               </div>
               <div class="col-lg-6">
@@ -48,6 +51,9 @@
                   <label for="code" class="form-label">Kode:</label>
                   <input type="text" class="form-control" name="code" id="code" placeholder="Masukkan kode kontainer" value="{{ old('code') }}" required>
                   <small class="form-text text-muted">Contoh : CT-20STD</small>
+                  @error('code')
+                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                  @enderror
                 </div>
               </div>
             </div>
@@ -56,13 +62,19 @@
                 <div class="form-group">
                   <label for="weight" class="form-label">Berat Maksimal (kg)</label>
                   <input type="number" class="form-control" name="weight" id="weight" placeholder="Masukkan berat maksimal dalam satuan kilogram" value="{{ old('weight') }}" required>
+                  @error('weight')
+                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                  @enderror
                   {{-- <small class="form-text text-muted">Please enter your Password</small> --}}
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label for="volume" class="form-label">Volume (CBM):</label>
-                    <input type="number" class="form-control" name="volume" id="volume" placeholder="Masukkan volume" value="{{ old('volume') }}" required>
+                  <input type="number" class="form-control" name="volume" id="volume" placeholder="Masukkan volume" value="{{ old('volume') }}" required>
+                  @error('volume')
+                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                  @enderror
                   {{-- <small class="form-text text-muted">Please enter your Profile URL</small> --}}
                 </div>
               </div>
@@ -70,6 +82,9 @@
             <div class="form-group">
                 <label class="form-label" for="description">Deskripsi</label>
                 <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi kontainer" value="{{ old('description') }}" required></textarea>
+                @error('description')
+                  <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="card-footer text-end">
