@@ -43,12 +43,18 @@
                             <option value="Harga & Pembayaran" {{ old('type', $faq->type) == 'Harga & Pembayaran' ? 'selected' : '' }}>Harga & Pembayaran</option>
                             <option value="Pengiriman" {{ old('type', $faq->type) == 'Pengiriman' ? 'selected' : '' }}>Pengiriman</option>
                         </select>
+                        @error('type')
+                            <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div>
                     <div class="form-group">
                         <label for="header" class="form-label">Pertanyaan</label>
                         <input type="text" name="header" id="header" class="form-control" value="{{ $faq->header }}" required>
+                        @error('header')
+                            <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
@@ -56,6 +62,9 @@
                     <div class="form-group">
                         <label for="description" class="form-label">Deskripsi</label>
                         <textarea name="description" id="description" class="form-control" rows="5" required>{{ $faq->description }}</textarea>
+                        @error('description')
+                            <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="card-footer text-end">

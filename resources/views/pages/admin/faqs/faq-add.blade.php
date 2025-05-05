@@ -52,10 +52,10 @@
                 <div class="form-group">
                     <label for="header" class="form-label">Pertanyaan</label>
                     <input type="text" class="form-control" name="header" id="header" placeholder="Masukkan pertanyaan" value="{{ old('header') }}" required>
+                    <small class="form-text text-muted">Contoh : SRV001</small>
                     @error('header')
                         <p class="text-danger text-xs pt-1">{{ $message }}</p>
                     @enderror
-                    <small class="form-text text-muted">Contoh : SRV001</small>
                 </div>
             </div>
             <div class="form-group">

@@ -20,7 +20,7 @@ class ContainerController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             'code' => 'required|unique:containers|max:255',
-            'name' => 'required|max:255',
+            'name' => 'required|unique:containers|max:255',
             'weight' => 'required|numeric',
             'volume' => 'required|numeric',
             'description' => 'required'

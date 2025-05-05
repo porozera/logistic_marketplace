@@ -20,7 +20,7 @@ class FaqController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             'type' => 'required',
-            'header' => 'required|max:255',
+            'header' => 'required|unique:faqs|max:255',
             'description' => 'required'
         ]);
 
