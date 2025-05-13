@@ -266,7 +266,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::get('/', [NotificationLspController::class, 'index'])->name('notification-customer');
         Route::put('/update/{id}', [NotificationLspController::class, 'update_status'])->name('notification-lsp.markAsRead');
         Route::put('/markallasread', [NotificationLspController::class, 'markAllAsRead'])->name('notification-lsp.markAllAsRead');
-        Route::delete('//delete/{id}', [NotificationLspController::class, 'destroy'])->name('notification-lsp.delete');
+        Route::delete('/delete/{id}', [NotificationLspController::class, 'destroy'])->name('notification-lsp.delete');
     });
 
 });
