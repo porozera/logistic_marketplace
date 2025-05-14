@@ -17,25 +17,25 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-    
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-    
+
             $user = Auth::user();
-    
+
             return match ($user->role) {
                 'admin' => redirect()->intended('/dashboard'),
-                'lsp' => redirect()->intended('/dashboard'),
+                'lsp' => redirect()->intended('/dashboard/lsp'),
                 'customer' => redirect()->intended('/dashboard/customer'),
                 default => abort(403, 'Unauthorized role.')
             };
         }
-    
+
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->withInput();
     }
-    
+
 
     public function logout(Request $request)
     {

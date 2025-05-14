@@ -50,7 +50,7 @@
       }
 
     </style>
-    
+
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
 
@@ -86,7 +86,7 @@
       <div class="loader-fill"></div>
     </div>
   </div>
-  
+
 
   <!-- [Page Specific JS] start -->
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/apexcharts.min.js') }}"></script>
