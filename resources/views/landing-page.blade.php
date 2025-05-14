@@ -423,7 +423,7 @@
                   <h3 class="d-inline-block text-black" style="text-align: right; background-color: #f5f4f4; padding: 8px; border-radius: 8px;"><i class="bi bi-box"></i>  {{$offer->shipmentType}}</h3>
                 </div>
                 <h3><a href="/search-routes/{{$offer['id']}}"><span><p>Departure: </p></span> <p class="text-primary">{{$offer->origin}}</p></a></h3>
-                <h3><a href="/search-routes/{{$offer['id']}}"><span><p>Arival: </p></span> <p class="text-primary">{{$offer->destination}}</p></a></h3>
+                <h3><a href="/search-routes/{{$offer['id']}}"><span><p>Arrival: </p></span> <p class="text-primary">{{$offer->destination}}</p></a></h3>
                 <div class="">
                   <div class="mr-auto pb-3">
                     <span class="icon-date_range"></span>
