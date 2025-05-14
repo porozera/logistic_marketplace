@@ -24,11 +24,11 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-4">
-                <h3 class="m-b-10">Pembayaran</h3>
+            <div class="col-6">
+                <h4 class="m-b-10">Pembayaran</h4>
                 <div class="card">
                     <div class="card-header">
-                        <h4>Detail Pemesanan</h4>
+                        <h5>Detail Pemesanan</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -115,7 +115,7 @@
                             <h6 class="text-end text-gray-500">Total</h6>
                         </div>
                         <div class="row">
-                            <h3 class="text-end text-primary">Rp. {{ number_format($userOrder['totalPrice'], 0, ',', '.')}}</h3>
+                            <h4 class="text-end text-primary">Rp. {{ number_format($userOrder['totalPrice'], 0, ',', '.')}}</h4>
                         </div>
                         <br>
                         <div class="row">

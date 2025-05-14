@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->integer('remainingWeight')->nullable();
             $table->integer('remainingVolume')->nullable();
             $table->string('commodities')->nullable();
+            $table->enum('cargoType', ['General Cargo', 'Special Cargo', 'Dangerous Cargo'])->nullable();
             $table->enum('status', ['active', 'deactive']);
             // $table->integer('size')->comment('CBM');
             $table->decimal('price', 15, 2);
@@ -32,6 +33,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('truck_second_id')->nullable();
             $table->foreign('truck_first_id')->references('id')->on('trucks')->onDelete('cascade');
             $table->foreign('truck_second_id')->references('id')->on('trucks')->onDelete('cascade');
+            $table->unsignedBigInteger('container_id')->nullable();
+            $table->foreign('container_id')->references('id')->on('containers')->onDelete('cascade');
             $table->timestamps();
         });
     }

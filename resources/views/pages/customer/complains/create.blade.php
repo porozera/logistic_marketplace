@@ -24,7 +24,7 @@
         <div class="row justify-content-center mb-3">
             <div class="col-sm-12 col-md-8 col-xl-8">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">Buat Complain</h3>
+                    <h4 class="mb-0">Buat Complain</h4>
                 </div>
             </div>
         </div>
@@ -46,12 +46,12 @@
                                 <textarea class="form-control" name="description" rows="4" placeholder="Jelaskan masalah yang Anda alami...">{{ old('description') }}</textarea>
                                 @error('description') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
-                            <p class="text-muted">
+                            <small class="text-muted">
                                 *Silakan isi formulir di atas untuk menyampaikan keluhan atau masukan Anda terkait layanan kami. Tim kami akan segera meninjau dan memberikan tanggapan secepat mungkin.
-                            </p>
+                            </small>
                             <input type="text" name="email" class="form-control" value="{{ $user->email }}" hidden>
                             <input type="number" name="user_id" class="form-control" value="{{ $user->id }}" hidden>
-                            <div class="d-flex justify-content-end">
+                            <div class="d-flex justify-content-end mt-2">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Kirim Complain</button>
                             </div>
                         </form>

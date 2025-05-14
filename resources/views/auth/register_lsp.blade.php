@@ -11,6 +11,7 @@
   <meta name="description" content="Mantis is made using Bootstrap 5 design framework. Download the free admin template & use it for your project.">
   <meta name="keywords" content="Mantis, Dashboard UI Kit, Bootstrap 5, Admin Template, Admin Dashboard, CRM, CMS, Bootstrap Admin Template">
   <meta name="author" content="CodedThemes">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
   <!-- [Favicon] icon -->
   <link rel="icon" href="{{ asset('template/mantis/dist/assets/images/favicon.svg') }}" type="image/x-icon">
@@ -53,7 +54,7 @@
     <div class="auth-wrapper v3">
       <div class="auth-form">
         <div class="auth-header">
-          <a href="/login"><img src="{{ asset('template/mantis/dist/assets/images/logo-dark.svg') }}" alt="img"></a>
+          <a href="/login"><img src=" {{ asset('images/Logo_SentraLogiX.png') }}" alt="Logo" class="img-fluid" style="height: 50px;"></a>
         </div>
         <div class="card my-5">
           <div class="card-body">
@@ -124,7 +125,7 @@
         <div class="auth-footer row">
           <!-- <div class=""> -->
             <div class="col my-1">
-              <p class="m-0">Copyright © <a href="#">Codedthemes</a></p>
+              <p class="m-0">Made with &#9829; by AGA.</p>
             </div>
             <div class="col-auto my-1">
               <ul class="list-inline footer-link mb-0">

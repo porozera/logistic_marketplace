@@ -42,6 +42,7 @@ use App\Models\Complain;
 use App\Http\Controllers\DaftarPenawaranController;
 use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\DashboardLspController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\OpenContainerController;
 use App\Http\Controllers\TruckController;
 use App\Http\Controllers\TrackingLspController;
@@ -56,14 +57,18 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 
-Route::get('/', function () {
-    return view('landing-page');
-});
+// Route::get('/', function () {
+//     return view('landing-page');
+// });
 
 
-Route::get('/landing-page', function () {
-    return view('landing-page');
-});
+// Route::get('/landing-page', function () {
+//     return view('landing-page');
+// });
+
+Route::get('/', [LandingPageController::class, 'index']);
+Route::get('/landing-page', [LandingPageController::class, 'index']);
+Route::get('/landing-page/search-route', [LandingPageController::class, 'search_route'])->name('landing-page.search-route');
 
 Route::get('/landing-faq', [DashboardController::class, 'faq_category'])->name('landing-faq');
 Route::get('/landing-faq/faq-general', [DashboardController::class, 'show_faq_general']);

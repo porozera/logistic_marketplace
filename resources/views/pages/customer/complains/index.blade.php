@@ -26,7 +26,7 @@
         @if ($complains->isEmpty())
         <div class="row justify-content-center">
             <div class="col-sm-12 col-md-6 col-xl-6">
-                <h3 class="">Complains</h3>
+                <h4 class="">Complains</h4>
             </div>
         </div>
         @else
@@ -72,7 +72,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5>{{$item->description}}</h5>
+                                <p>{{$item->description}}</p>
                                 {{-- <a href="/complain/detail/{{$item->id}}" class="btn btn-icon btn-light-primary"><i class="ti ti-arrow-narrow-right"></i></a> --}}
                             </div>
                         </div>

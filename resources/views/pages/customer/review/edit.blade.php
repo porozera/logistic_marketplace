@@ -25,7 +25,7 @@
             <!-- [ Main Content ] start -->
         <div class="row justify-content-center">
             <div class="col-sm-12 col-md-8 col-xl-8">
-                <h3 class="">Edit Ulasan</h3>
+                <h4 class="">Edit Ulasan</h4>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
@@ -72,6 +72,7 @@
                                     @endif
                                 </div>
                             </div>
+                            <br>
                             <div class="row justify-content-end">
                                 <div class="col-md-4 text-end">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Edit Ulasan</button>

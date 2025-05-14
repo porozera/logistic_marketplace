@@ -34,8 +34,11 @@
                     <div class="position-relative" style="background: url('{{ asset('storage/' . $lsp->bannerPicture) }}') no-repeat center center; background-size: cover; height: 250px;">
                         <!-- Profile Picture -->
                         <div class="position-absolute top-50 start-50 translate-middle">
-                            <img src="{{ asset('storage/' . $lsp->profilePicture) }}" alt="Profile Picture"
+                            {{-- <img src="{{ asset('storage/' . $lsp->profilePicture) }}" alt="Profile Picture"
                                 class="rounded-circle border border-white"
+                                style="width: 150px; height: 150px; object-fit: cover;"> --}}
+                                <img src="{{ $lsp->profilePicture ? asset('storage/' . $lsp->profilePicture) : asset('default-profile.jpg') }}" alt="Profile Picture"
+                                class="rounded-circle border border-light-secondary"
                                 style="width: 150px; height: 150px; object-fit: cover;">
                         </div>
                     </div>
@@ -122,6 +125,7 @@
                         <br>
                         
                         <div class="row mt-4">
+                            @if ($reviews && $reviews->isNotEmpty())
                             @foreach ($reviews as $item)
                             <div class="col-4 text-center">
                                 <div class="d-flex justify-content-center align-items-center">
@@ -156,6 +160,12 @@
                                 </div>
                             </div>
                             @endforeach
+                            @else
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="alert alert-warning">Belum Ada Ulasan</div>
+                            </div>
+                            @endif
+                            
                         </div>
                     </div>
                 </div>

@@ -41,6 +41,7 @@
                     <label for="estimationDate" class="form-label">Estimation Date</label>
                     <input type="date" class="form-control" name="estimationDate" required>
                 </div>
+
                 {{-- <div class="mb-3">
                     <label for="maxWeight" class="form-label">Max Weight (Kg)</label>
                     <input type="number" class="form-control" name="maxWeight" required>

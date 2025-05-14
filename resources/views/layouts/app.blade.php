@@ -10,6 +10,7 @@
     <meta name="keywords" content="@yield('meta_keywords', 'Mantis, Dashboard UI Kit, Bootstrap 5, Admin Template, Admin Dashboard, CRM, CMS, Bootstrap Admin Template')">
     <meta name="author" content="CodedThemes">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
     <!-- [Favicon] icon -->
     <link rel="icon" href="{{ asset('template/mantis/dist/assets/images/favicon.svg') }}" type="image/x-icon">
 
@@ -56,8 +57,12 @@
     @yield('style')
 </head>
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
+    
     @include('../layouts.navbars.sidenav')
     {{-- @include('../layouts.navbars.topnav') --}}
+    <a href="#" class="pc-head-link ms-4 mt-4 d-block d-md-none" id="mobile-collapse">
+      <i class="ti ti-menu-2"></i>
+    </a>
     @yield('content')
     {{-- @guest
         @yield('content')

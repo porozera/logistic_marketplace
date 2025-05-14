@@ -26,10 +26,10 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-8">
-                <h2 class="m-b-10">General FAQs</h2>
+                <h3 class="m-b-10">General FAQs</h3>
                 <p class="text-gray-700">General FAQs adalah bagian yang dirancang untuk memberikan jawaban atas pertanyaan umum yang sering diajukan pengguna.</p>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="" name="" placeholder="Cari bantuan..." value="">
+                    <input type="search" class="form-control" id="" name="" placeholder="Cari bantuan..." value="">
                     <span class="input-group-text bg-primary">
                       <i class="ti ti-search" style="cursor: pointer; color: white;"></i>
                     </span>

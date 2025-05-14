@@ -4,6 +4,7 @@
     <title>Logistic Marketplace</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
     <link href="https://fonts.googleapis.com/css?family=Oswald:400,700|Dancing+Script:400,700|Muli:300,400" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('template/waterboat/fonts/icomoon/style.css') }}">
@@ -30,7 +31,7 @@
             <div class="d-flex align-items-center">
                 {{-- logo --}}
                 <div class="site-logo">
-                    <img src=" {{ asset('template/waterboat/images/logo.png') }}" alt="Logo" class="img-fluid" style="height: 50px;">
+                    <img src=" {{ asset('images/Logo_SentraLogiX.png') }}" alt="Logo" class="img-fluid" style="height: 50px;">
                 </div>
                 {{-- navbar --}}
                 <div class="ml-auto">
@@ -39,11 +40,8 @@
                             <li>
                                 <a href="landing-page" class="nav-link text-left">Home</a>
                             </li>
-                            <li>
-                                <a href="about.html" class="nav-link text-left">Price Calculator</a>
-                            </li>
-                            <li>
-                                <a href="services.html" class="nav-link text-left">Services</a>
+                            <li class="">
+                                <a href="/landing-page/search-route" class="nav-link text-left">Cari Rute</a>
                             </li>
                             <li>
                                 <a href="{{'landing-faq'}}" class="nav-link text-left">Faq</a>
@@ -107,7 +105,7 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-3">
-              <p class="mb-4"><img src="{{ asset('template/waterboat/images/logo.png') }}" alt="Image" class="img-fluid"></p>
+              <p class="mb-4"><img src="{{ asset('images/Logo_SentraLogiX.png') }}" alt="Image" class="img-fluid"></p>
               <p style="text-align: justify; margin-right: 10px;">Platform digital yang menghubungkan pengirim dan penyedia jasa logistik untuk mendapatkan penawaran terbaik dalam pengiriman barang.</p>  
               <p><a href="#">Learn More</a></p>
             </div>

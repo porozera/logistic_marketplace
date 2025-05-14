@@ -1,16 +1,21 @@
 <!-- [ Sidebar Menu ] start -->
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
-        <div class="m-header">
-            <a href="" class="b-brand text-primary">
-                <!-- ========   Change your logo from here   ============ -->
-                <img src="{{ asset('template/mantis/dist/assets/images/logo-dark.svg') }}" class="img-fluid logo-lg"
-                    alt="logo">
-            </a>
+        <div class="navbar-header mt-4">
+            <div class="text-center">
+                <img src="{{ Auth::user()->profilePicture ? asset('storage/' . Auth::user()->profilePicture) : asset('default-profile.jpg') }}" alt="Profile Picture"
+                      class="rounded-circle border border-light-secondary"
+                      style="width: 60px; height: 60px; object-fit: cover;">
+                <h5 class="mt-2 text-primary">{{ Auth::user()->username }}</h5>
+                <small class="text-muted">{{ Auth::user()->role }}</small>
+            </div>
         </div>
         <div class="navbar-content">
 
             <ul class="pc-navbar">
+                    <li class="pc-item">
+                        
+                    </li>
                 @if (Auth::user()->role === 'admin')
                     <li class="pc-item">
                         <a href="{{ route('admin.dashboard') }}" class="pc-link">
@@ -292,12 +297,12 @@
                             <span class="pc-mtext">Kotak Pesan</span>
                         </a>
                     </li>
-                    <li class="pc-item">
+                    {{-- <li class="pc-item">
                         <a href="../dashboard/index.html" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-message-circle"></i></span>
                             <span class="pc-mtext">Chat</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="pc-item pc-caption">
                         <label>Bantuan</label>
                         <i class="ti ti-news"></i>
@@ -422,6 +427,9 @@
             class="btn btn-success">Buy Now</a>
           </div>
         </div> --}}
+            <div class="text-center mt-3">
+                <img src=" {{ asset('images/Logo_SentraLogiX.png') }}" alt="Logo" class="img-fluid" style="height: 50px;">
+            </div>
         </div>
     </div>
 </nav>
