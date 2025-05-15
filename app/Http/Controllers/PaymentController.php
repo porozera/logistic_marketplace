@@ -60,8 +60,8 @@ class PaymentController extends Controller
                             'currentVehicle' => 'Truck',
                             'status' => 'Loading Item',
                             'description' => 'Sedang tahap loading muatan.',
-                            'longitude' => null,
-                            'latitude' => null,
+                            'longitude' => 106.816666,
+                            'latitude' => -6.200000,
                         ]);
                     }
                 }

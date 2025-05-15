@@ -7,8 +7,6 @@ use App\Models\Bid;
 use App\Models\Category;
 use App\Models\Container;
 use App\Models\RequestRoute;
-use App\Models\Truck;
-use App\Models\Container;
 use App\Models\Notification;
 use App\Models\Truck;
 use Illuminate\Support\Facades\Auth;
