@@ -2,34 +2,40 @@
 @section('title', 'Pemesanan')
 @section('style')
 <style>
-  .container {
-      display: grid;
-      grid-template-columns: repeat(11, 30px); /* 11 kolom per baris */
-      gap: 5px;
-      margin: 20px;
-  }
-  .box {
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: bold;
-      border-radius: 5px;
-  }
-  .available {
-      background-color: green;
-      color: white;
-  }
-  .booked {
-      background-color: red;
-      color: white;
-  }
-  .square-box {
-      width: 40px; 
-      height: 40px; 
-  }
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr)); /* otomatis menyesuaikan lebar */
+    gap: 5px;
+    padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    justify-items: center;
+    align-items: center;
+}
+
+.box {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.available {
+    background-color: green;
+    color: white;
+}
+
+.booked {
+    background-color: red;
+    color: white;
+}
+
 
 </style>
 @section('content')
@@ -84,19 +90,19 @@
                         <div class="col-md-4 d-flex justify-content-center gap-2">
                           @if ($offer->shipmentMode == 'D2D')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-truck-delivery me-1"></i> Door To Door
+                                  <i class="ti ti-truck-delivery me-1"></i> D2D
                               </button>   
                           @elseif( $offer->shipmentMode == 'D2P')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-truck-delivery me-1"></i> Door To Port
+                                  <i class="ti ti-truck-delivery me-1"></i> D2P
                               </button>
                           @elseif( $offer->shipmentMode == 'P2P')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-sailboat me-1"></i> Port To Port
+                                  <i class="ti ti-sailboat me-1"></i> P2P
                               </button>
                           @elseif( $offer->shipmentMode == 'P2D')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-truck-delivery me-1"></i> Port To Door
+                                  <i class="ti ti-truck-delivery me-1"></i> P2D
                               </button>
                           @endif
 
@@ -118,12 +124,12 @@
                         <div class="col-md-8 d-flex align-items-center justify-content-start mt-2">
                             <p class="mb-0 fw-bold">{{ $offer['origin']}}</p>                      
                             <div class="d-flex align-items-center mx-4">
-                                <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
+                                <div class="rounded-circle bg-primary" style="width: 10px; height: 10px;"></div>
+                                <div class="bg-primary mx-2" style="width: 50px; height: 1px;"></div>
                                 {{-- <i class="ti ti-clock mx text-primary"></i> --}}
                                  <p class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</p> 
-                                <div class="bg-primary mx-2" style="width: 100px; height: 1px;"></div>
-                                <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
+                                <div class="bg-primary mx-2" style="width: 50px; height: 1px;"></div>
+                                <div class="rounded-circle bg-primary" style="width: 10px; height: 10px;"></div>
                             </div>
                             <p class="mb-0 fw-bold">{{ $offer['destination']}}</p>
                         </div>
@@ -208,38 +214,40 @@
               </div>
 
               <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="row">
-                        <div class="col">
-                          <h5 class="mb-0">Container Availability</h5>
-                        </div>
-                        <div class="col text-end">
-                          @if ($offer->container)
-                              <span class="text-primary">{{ $offer->container->name }}</span>
-                          @else
-                              <span class="text-muted text-primary">Tidak ada detail kontainer</span>
-                          @endif
-                      </div> 
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="mb-0">Container Availability</h5>
+                      </div>
+                      <div class="col text-end">
+                        @if ($offer->container)
+                          <span class="text-primary">{{ $offer->container->name }}</span>
+                        @else
+                          <span class="text-muted text-primary">Tidak ada detail kontainer</span>
+                        @endif
                       </div>
                     </div>
-                    <div class="card-body d-flex justify-content-center align-items-center">
-                      <div class="col-2"></div>
-                      <div class="col-9 d-flex justify-content-center">
-                        <div class="card">
+                  </div>
+
+                  <div class="card-body">
+                    <div class="row justify-content-center align-items-center">
+                      <div class="col-md-10 col-lg-8">
+                        <div class="card w-100">
                           <div class="container" id="container"></div>
                         </div>
                       </div>
-                      <div class="col-1"></div>
                     </div>
-                    <div class="card-footer text-center">
-                      <span class="badge bg-success me-2"><i class="ti ti-check"></i> Available</span>
-                      <span class="badge bg-danger"><i class="ti ti-x"></i> Booked</span>
-                    </div>
+                  </div>
+
+                  <div class="card-footer text-center">
+                    <span class="badge bg-success me-2"><i class="ti ti-check"></i> Available</span>
+                    <span class="badge bg-danger"><i class="ti ti-x"></i> Booked</span>
                   </div>
                 </div>
               </div>
+            </div>
             </div>
 
             <!-- Form input -->
