@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Pengguna')
 
 @section('content')
   <div class="pc-container">
@@ -12,12 +12,12 @@
               <div class="col-md-12">
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                  <li class="breadcrumb-item" aria-current="page">Pengguna</li>
+                  <li class="breadcrumb-item" aria-current="page">Customer</li>
                 </ul>
               </div>
               <div class="col-md-12">
                 <div class="page-header-title">
-                  <h2 class="mb-0">Pengguna</h2>
+                  <h2 class="mb-0">Customer</h2>
                 </div>
               </div>
             </div>
@@ -31,11 +31,9 @@
           <div class="col-sm-12">
             <div class="card">
               <div class="card-header table-card-header">
-                <h5>HTML5 Export Buttons</h5>
-                <small
-                  >This example demonstrates these four button types with their default options. The other examples in this section
-                  demonstrate some of the options available.</small
-                >
+                <h4>Data Akun Customer</h4>
+                <p
+                  >Halaman ini digunakan untuk mengelola data customer, termasuk melihat detail akun, pengeditan, dan penghapusan informasi customer.</p>
               </div>
               <div class="card-body">
                 <div class="dt-responsive table-responsive">

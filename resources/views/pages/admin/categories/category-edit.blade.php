@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Layanan')
+@section('title', 'Kategori Barang')
 
 @section('content')
 <div class="pc-container">
@@ -40,12 +40,18 @@
                     <div class="form-group">
                         <label for="code" class="form-label">Kode</label>
                         <input type="text" name="code" id="code" class="form-control" value="{{ $category->code }}" required>
+                        @error('code')
+                            <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div>
                     <div class="form-group">
                         <label for="name" class="form-label">Nama Barang</label>
                         <input type="text" name="name" id="name" class="form-control" value="{{ $category->name }}" required>
+                        @error('name')
+                            <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div>
@@ -57,12 +63,18 @@
                             <option value="Irregularity Cargo" {{ old('type', $category->type) == 'Irregularity Cargo' ? 'selected' : '' }}>Irregularity Cargo</option>
                             <option value="Dangerous Cargo" {{ old('type', $category->type) == 'Dangerous Cargo' ? 'selected' : '' }}>Dangerous Cargo</option>
                         </select>
+                        @error('type')
+                            <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="description" class="form-label">Deskripsi</label>
                         <textarea name="description" id="description" class="form-control" rows="5" required>{{ $category->description }}</textarea>
+                        @error('description')
+                            <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="card-footer text-end">

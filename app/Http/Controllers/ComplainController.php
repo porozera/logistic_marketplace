@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Complain;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Mail\ComplainAnswerMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
 class ComplainController extends Controller
 {
@@ -66,6 +68,18 @@ class ComplainController extends Controller
         'description' => $request->pesan,
         'status' => 'Pending',
     ]);
+    
+     // Kirim notifikasi ke admin
+    //  $admins = User::where('role', 'admin')->get(); // asumsi role = 'admin'
+    
+     Notification::create([
+        'sender_id' => 1,
+        'receiver_id' => 1,
+        'header' => 'Komplain Baru Diterima',
+        'description' => "Komplain dari {$request->username} telah diterima dan menunggu peninjauan.",
+        'is_read' => false,
+    ]);
+    
 
     return back()->with('success', 'Pesan Anda telah dikirim! Kami akan segera menanggapi.');
     }   

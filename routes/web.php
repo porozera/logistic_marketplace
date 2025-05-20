@@ -4,9 +4,12 @@
 use App\Models\City;
 use App\Models\Service;
 use App\Models\Category;
+use App\Models\Complain;
 use App\Mail\SendingEmail;
 use Illuminate\Http\Request;
+use App\Mail\ComplainAnswerMail;
 use App\Mail\ApprovedAccountMail;
+use App\Http\Livewire\MapLocation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BidController;
@@ -16,6 +19,8 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\offerController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TruckController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
@@ -23,23 +28,25 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComplainController;
+use App\Http\Controllers\OrderLspController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LspReportController;
-use App\Http\Controllers\OrderLspController;
+use App\Http\Controllers\PaymentLspController;
 use App\Http\Controllers\FAQCustomerController;
 use App\Http\Controllers\SearchRouteController;
+use App\Http\Controllers\TrackingLspController;
 use App\Http\Controllers\RequestRouteController;
+use App\Http\Controllers\OpenContainerController;
 use App\Http\Controllers\CustomerReportController;
 use App\Http\Controllers\ShipmentReportController;
-use App\Http\Controllers\PaymentLspController;
+use App\Http\Controllers\DaftarPenawaranController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
-use App\Mail\ComplainAnswerMail;
-use App\Models\Complain;
-use App\Http\Controllers\DaftarPenawaranController;
+use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\DashboardLspController;
 use App\Http\Controllers\LandingPageController;
@@ -52,6 +59,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Livewire\MapLocation;
 
+use App\Http\Controllers\NotificationCustomerController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -179,6 +187,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::get('/complain', [ComplainController::class, 'index'])->name('admin.complain.index');
         Route::get('/complain-detail/{id}', [ComplainController::class, 'detail'])->name('admin.complain.detail');
 
+        //Notifikasi
+        Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');
+        Route::put('/notifications/mark-as-read/{id}', [AdminNotificationController::class, 'markAsRead'])->name('admin.notifications.markAsRead');
+        Route::put('/notifications/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
+        Route::delete('/notifications/delete/{id}', [AdminNotificationController::class, 'delete'])->name('admin.notifications.delete');
     });
 
     // approve akun

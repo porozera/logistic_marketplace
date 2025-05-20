@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Layanan')
+@section('title', 'Komplain')
 
 @section('content')
 <div class="pc-container">
@@ -12,13 +12,13 @@
                 <div class="col-md-12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0)">FAQs Data</a></li>
-                    <li class="breadcrumb-item" aria-current="page">Edit Data</li>
+                    <li class="breadcrumb-item"><a href="../dashboard/index.html">Manajemen Komplain</a></li>
+                    <li class="breadcrumb-item" aria-current="page">Detail Komplain</li>
                 </ul>
                 </div>
                 <div class="col-md-12">
                 <div class="page-header-title">
-                    <h2 class="mb-0">Edit Frequently Asked Questions</h2>
+                    <h2 class="mb-0">Detail Komplain</h2>
                 </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
 
         <div class="card">
             <div class="card-header">
-            <h5>Form Edit Data Frequently Asked Questions</h5>
+            <h5>Detail Informasi Komplain</h5>
             </div>
             <div class="card-body">
                 <div class="mb-3">
@@ -40,7 +40,7 @@
                   <input type="text" class="form-control" value="{{ $complain->username }}" readonly>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label">Deskripsi Keluhan</label>
+                  <label class="form-label">Deskripsi Komplain / Keluhan</label>
                   <textarea class="form-control" rows="5" readonly>{{ $complain->description }}</textarea>
                 </div>
                 <div class="mb-3">

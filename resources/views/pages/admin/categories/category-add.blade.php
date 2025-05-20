@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Kategori Barang')
 
 @section('content')
 <div class="pc-container">
@@ -38,6 +38,9 @@
                     <label for="code" class="form-label">Kode</label>
                     <input type="text" class="form-control" name="code" id="code" placeholder="Masukkan kode barang" value="{{ old('code') }}" required>
                     <small class="form-text text-muted">Contoh : CG001</small>
+                    @error('code')
+                        <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div>
@@ -45,6 +48,9 @@
                     <label for="name" class="form-label">Nama Barang</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama barang" value="{{ old('name') }}" required>
                     <small class="form-text text-muted">Contoh : Peralatan Kantor</small>
+                    @error('name')
+                        <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div>
@@ -57,11 +63,17 @@
                         <option>Irregularity Cargo</option>
                         <option>Dangerous Cargo</option>
                     </select>
+                    @error('type')
+                        <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div class="form-group">
                 <label class="form-label" for="description" required>Deskripsi</label>
                 <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi" value="{{ old('description') }}"></textarea>
+                @error('description')
+                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                @enderror
             </div>
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'FAQ')
 
 @section('content')
 <div class="container" style="padding-left: 250px; padding-top:80px;">
@@ -43,6 +43,9 @@
                         <option>Harga & Pembayaran</option>
                         <option>Pengiriman</option>
                     </select>
+                    @error('type')
+                        <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div>
@@ -50,11 +53,17 @@
                     <label for="header" class="form-label">Pertanyaan</label>
                     <input type="text" class="form-control" name="header" id="header" placeholder="Masukkan pertanyaan" value="{{ old('header') }}" required>
                     <small class="form-text text-muted">Contoh : SRV001</small>
+                    @error('header')
+                        <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div class="form-group">
                 <label class="form-label" for="description">Deskripsi</label>
                 <textarea class="form-control" id="description" name="description" rows="5" placeholder="Masukkan deskripsi" value="{{ old('description') }}" required></textarea>
+                @error('description')
+                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                @enderror
             </div>
             <div class="card-footer text-end">
                 <button class="btn btn-primary me-2">Submit</button>

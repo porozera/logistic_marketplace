@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RequestUser;
 use App\Models\User;
+use App\Models\RequestUser;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -72,8 +73,19 @@ class RegisterController extends Controller
                 'email' => $attributes['email'],
                 'telpNumber' => $attributes['telpNumber'],
                 'address' => $attributes['address'],
-                'status' => "Butuh di Approve",
+                'status' => "Requested",
             ]);
+            // Notifikasi ke semua admin
+            // $admins = User::where('role', 'admin')->get();
+
+            Notification::create([
+                'sender_id' => 1,
+                'receiver_id' => 1,
+                'header' => 'Pendaftaran LSP Baru',
+                'description' => "Permintaan pendaftaran dari perusahaan {$request->companyName} telah diterima dan menunggu peninjauan.",
+                'is_read' => false,
+            ]);
+            
     
             return redirect('/login')->with('success', 'Registrasi berhasil! Tunggu sesaat untuk mendapatkan email dari Admin.');
     

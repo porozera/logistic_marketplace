@@ -2,59 +2,92 @@
 
 namespace Database\Seeders;
 
+use App\Models\Container;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ContainerSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        DB::table('containers')->insert([
+        $containers = [
             [
-                'code' => '20GP',
-                'name' => '20" General Purpose',
-                'weight' => 2250, // berat kosong dalam kg
-                'volume' => 33,    // volume dalam m³ (approx)
-                'description' => 'Kontainer 20 kaki standar untuk muatan general cargo',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'code' => 'CNT001',
+                'name' => "20' Standard",
+                'weight' => 24000,
+                'volume' => 33,
+                'description' => 'Kontainer 20 kaki standar untuk kargo umum.'
             ],
             [
-                'code' => '40GP',
-                'name' => '40" General Purpose',
-                'weight' => 3800,
+                'code' => 'CNT002',
+                'name' => "40' Standard",
+                'weight' => 30000,
                 'volume' => 67,
-                'description' => 'Kontainer 40 kaki standar untuk muatan general cargo',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'description' => 'Kontainer 40 kaki standar untuk pengiriman skala besar.'
             ],
             [
-                'code' => '40HC',
-                'name' => '40" High Cube',
-                'weight' => 3900,
+                'code' => 'CNT003',
+                'name' => "40' High Cube",
+                'weight' => 30000,
                 'volume' => 76,
-                'description' => 'Kontainer 40 kaki dengan tinggi lebih (High Cube)',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'description' => 'Kontainer 40 kaki high cube, lebih tinggi untuk volume ekstra.'
             ],
             [
-                'code' => '20RF',
-                'name' => '20" Reefer',
-                'weight' => 3000,
-                'volume' => 28,
-                'description' => 'Kontainer pendingin 20 kaki (Reefer)',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'code' => '40RF',
-                'name' => '40" Reefer',
-                'weight' => 4500,
+                'code' => 'CNT004',
+                'name' => "40' Refrigerated",
+                'weight' => 29000,
                 'volume' => 67,
-                'description' => 'Kontainer pendingin 40 kaki (Reefer)',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
+                'description' => 'Kontainer berpendingin untuk produk makanan dan farmasi.'
+            ],
+            [
+                'code' => 'CNT005',
+                'name' => "20' Flatrack Collapsible",
+                'weight' => 25000,
+                'volume' => 32,
+                'description' => 'Kontainer flat rack untuk kargo berat dan berukuran besar.'
+            ],
+            [
+                'code' => 'CNT006',
+                'name' => "20' Bulk",
+                'weight' => 24000,
+                'volume' => 33,
+                'description' => 'Kontainer bulk untuk material curah seperti biji-bijian.'
+            ],
+            [
+                'code' => 'CNT007',
+                'name' => "40' Open Top",
+                'weight' => 30000,
+                'volume' => 65,
+                'description' => 'Kontainer open top untuk muatan tinggi atau mesin besar.'
+            ],
+            [
+                'code' => 'CNT008',
+                'name' => "20' Open Top",
+                'weight' => 24000,
+                'volume' => 32,
+                'description' => 'Kontainer open top 20 kaki untuk akses atas.'
+            ],
+            [
+                'code' => 'CNT009',
+                'name' => "20' Refrigerated",
+                'weight' => 22000,
+                'volume' => 28,
+                'description' => 'Kontainer pendingin 20 kaki untuk makanan segar.'
+            ],
+            [
+                'code' => 'CNT010',
+                'name' => "45' High Cube",
+                'weight' => 32000,
+                'volume' => 86,
+                'description' => 'Kontainer 45 kaki high cube untuk volume ekstra besar.'
+            ],
+        ];
+
+        foreach ($containers as $container) {
+            Container::create($container);
+        }
     }
 }

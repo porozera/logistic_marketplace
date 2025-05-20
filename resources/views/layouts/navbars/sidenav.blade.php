@@ -24,6 +24,26 @@
                         </a>
                     </li>
 
+                    <li class="pc-item {{ Request::is('admin/notifications*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.notifications') }}" class="pc-link">
+                            <span class="pc-micon position-relative">
+                                <i class="ti ti-notification"></i>
+                                @php
+                                    $unreadNotifications = \App\Models\Notification::where('receiver_id', Auth::id())
+                                        ->where('is_read', 0)
+                                        ->count();
+                                @endphp
+                                @if ($unreadNotifications > 0)
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
+                                        {{ $unreadNotifications }}
+                                        <span class="visually-hidden">unread notifications</span>
+                                    </span>
+                                @endif
+                            </span>
+                            <span class="pc-mtext">Notifikasi</span>
+                        </a>
+                    </li>
+
                     <li class="pc-item {{ Request::is('admin/approval-lsp*') ? 'active' : '' }}">
                         <a href="{{ route('admin.approval-lsp') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-checkbox"></i></span>
@@ -73,7 +93,7 @@
                     <li class="pc-item {{ Request::is('admin/report-customer*') ? 'active' : '' }}">
                         <a href="{{ route('admin.customer.index') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-users"></i></span>
-                            <span class="pc-mtext">Pengguna</span>
+                            <span class="pc-mtext">Customer</span>
                         </a>
                     </li>
                     <li class="pc-item {{ Request::is('admin/report-lsp*') ? 'active' : '' }}">
@@ -85,7 +105,7 @@
                     <li class="pc-item {{ Request::is('admin/report-shipment*') ? 'active' : '' }}">
                         <a href="{{ route('admin.shipment.index') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-truck-delivery"></i></span>
-                            <span class="pc-mtext">Pengiriman</span>
+                            <span class="pc-mtext">Pemesanan</span>
                         </a>
                     </li>
                     <li class="pc-item pc-caption">
@@ -104,6 +124,7 @@
                             <span class="pc-mtext">FAQs Data</span>
                         </a>
                     </li>
+                    
                     <li class="pc-item">
                         <a href="#" class="pc-link"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

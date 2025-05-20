@@ -62,7 +62,13 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ServiceSeeder::class);
         $this->call(CategoriesSeeder::class);
-        $this->call(ContainerSeeder::class);
+        $this->call([
+            ContainerSeeder::class,
+        ]);
+        $this->call([
+            OrderSeeder::class, 
+        ]);
+
     }
 
 }

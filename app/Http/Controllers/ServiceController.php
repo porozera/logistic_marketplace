@@ -21,7 +21,7 @@ class ServiceController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             'code' => 'required|unique:services|max:255',
-            'serviceName' => 'required|max:255',
+            'serviceName' => 'required|unique:services|max:255',
             'description' => 'required',
             'price' => 'required|numeric',
             'icon' => 'required'

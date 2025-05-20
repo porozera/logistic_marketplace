@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Kontainer')
+@section('title', 'Kontainer')
 
 @section('content')
 <div class="pc-container">
@@ -39,14 +39,20 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="code" class="form-label">Kode Kontainer</label>
-                                <input type="text" name="code" id="code" class="form-control" value="{{ $container->code }}" required>
+                                <label for="name" class="form-label">Nama Kontainer</label>
+                                <input type="text" name="name" id="name" class="form-control" value="{{ $container->name }}" required>
+                                @error('name')
+                                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="name" class="form-label">Nama Kontainer</label>
-                                <input type="text" name="name" id="name" class="form-control" value="{{ $container->name }}" required>
+                                <label for="code" class="form-label">Kode Kontainer</label>
+                                <input type="text" name="code" id="code" class="form-control" value="{{ $container->code }}" required>
+                                @error('code')
+                                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -56,12 +62,18 @@
                             <div class="form-group">
                                 <label for="weight" class="form-label">Berat Maksimal (kg)</label>
                                 <input type="number" name="weight" id="weight" class="form-control" value="{{ $container->weight }}" required>
+                                @error('weight')
+                                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="volume" class="form-label">Volume (CBM)</label>
                                 <input type="number" name="volume" id="volume" class="form-control" value="{{ $container->volume }}" required>
+                                @error('volume')
+                                    <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -71,6 +83,9 @@
                             <div class="form-group">
                                 <label for="description" class="form-label">Deskripsi</label>
                                 <textarea name="description" id="description" class="form-control" rows="5" required>{{ $container->description }}</textarea>
+                                @error('description')
+                                <p class="text-danger text-xs pt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
