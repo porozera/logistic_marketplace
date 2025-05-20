@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\offersModel;
 use App\Models\Truck;
+use App\Models\Container;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -77,7 +79,10 @@ class offerController extends Controller
         $trucks = Truck::with('user')
             ->where('user_id', Auth::id())
             ->get();
-        return view('pages.lsp.kelola-rute.create', compact('trucks'));
+
+        $containers = Container::all(); // Ambil semua data container
+        $commodities = Category::all();
+        return view('pages.lsp.kelola-rute.create', compact('trucks', 'containers', 'commodities'));
 
     }
 
@@ -91,7 +96,7 @@ class offerController extends Controller
             'shipmentType' => 'required|in:FCL,LCL',
             'maxWeight' => 'required|integer',
             'maxVolume' => 'required|integer',
-            'commodities' => 'nullable|string',
+            'commodities' => 'required|string',
             'status' => 'required|in:active,deactive',
             'price' => 'required|numeric',
             'loadingDate' => 'required|date',
@@ -99,11 +104,15 @@ class offerController extends Controller
             'estimationDate' => 'required|date',
             'remainingWeight' => 'nullable|integer',
             'remainingVolume' => 'nullable|integer',
+            'container_id' => 'required|exists:containers,id',
             'truck_first_id' => 'required|exists:trucks,id',
             'truck_second_id' => 'required|exists:trucks,id',
         ]);
         // dd($attributes);
         $noOffer = 'OFR-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
+        $category = Category::where('name', $attributes['commodities'])->first();
+        // dd($attributes['commodities'], $category);
+        $cargoType = $category->type ?? null;
 
         // offersModel::create($request->all());
         $offer = offersModel::create([
@@ -126,11 +135,13 @@ class offerController extends Controller
             'price' => $attributes['price'],
             'user_id' =>Auth::id(),
             // 'truck_id' => $attributes['truck_id'],
+            'container_id' => $attributes['container_id'],
             'truck_first_id' => $attributes['truck_first_id'],
             'truck_second_id' => $attributes['truck_second_id'],
             'is_for_customer' => 1,
             'is_for_lsp' => $attributes['shipmentType'] === 'LCL' ? 1 : 0,
             'timestamp' => now(),
+            'cargoType' => $cargoType,
         ]);
         return redirect()->route('offers.index')->with('success', 'Route successfully created!');
     }
@@ -145,7 +156,9 @@ class offerController extends Controller
     {
         $offer = offersModel::findOrFail($id);
         $trucks = Truck::all();
-        return view('pages.lsp.kelola-rute.edit', compact('offer', 'trucks'));
+        $containers= Container::all();
+        $commodities = Category::all();
+        return view('pages.lsp.kelola-rute.edit', compact('offer', 'trucks', 'containers', 'commodities'));
     }
 
     public function update(Request $request, $id)
@@ -153,37 +166,43 @@ class offerController extends Controller
         // Validasi input
         $request->validate([
             // 'noOffer' => 'required|string|unique:offers,noOffer,' . $id,
-            'origin' => 'required|string',
-            'destination' => 'required|string',
+            // 'origin' => 'required|string',
+            // 'destination' => 'required|string',
             'shipmentMode' => 'required|in:D2D,D2P,P2D,P2P',
             'shipmentType' => 'required|in:FCL,LCL',
-            'maxWeight' => 'required|integer',
-            'maxVolume' => 'required|integer',
-            'commodities' => 'nullable|string',
+            // 'maxWeight' => 'required|integer',
+            // 'maxVolume' => 'required|integer',
+            'commodities' => 'required|string',
             'price' => 'required|numeric',
             'truck_first_id' => 'required|exists:trucks,id',
             'truck_second_id' => 'required|exists:trucks,id',
+            'container_id' => 'required|exists:containers,id',
             'status' => 'required|in:active,deactive',
         ]);
 
         // Cari offer berdasarkan ID
         $offer = offersModel::findOrFail($id);
+        $category = Category::where('name', $request['commodities'])->first();
+        // dd($attributes['commodities'], $category);
+        $cargoType = $category->type ?? null;
 
         // Update data
         $offer->update([
             // 'noOffer' => $request->noOffer,
-            'origin' => $request->origin,
-            'destination' => $request->destination,
+            // 'origin' => $request->origin,
+            // 'destination' => $request->destination,
             'shipmentMode' => $request->shipmentMode,
             'shipmentType' => $request->shipmentType,
-            'maxWeight' => $request->maxWeight,
-            'maxVolume' => $request->maxVolume,
+            // 'maxWeight' => $request->maxWeight,
+            // 'maxVolume' => $request->maxVolume,
             'commodities' => $request->commodities,
             'price' => $request->price,
             // 'truck_id' => $request['truck_id'],
             'truck_first_id' => $request['truck_first_id'],
             'truck_second_id' => $request['truck_second_id'],
+            'container_id' => $request['container_id'],
             'status' => $request->status,
+            'cargoType' => $cargoType,
         ]);
 
         // Redirect dengan pesan sukses

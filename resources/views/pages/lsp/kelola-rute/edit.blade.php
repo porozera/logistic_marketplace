@@ -17,25 +17,56 @@
                         <div class="mb-3">
                             <label for="noOffer" class="form-label">No Offer</label>
                             <input type="text" class="form-control" id="noOffer" name="noOffer"
-                                value="{{ $offer->noOffer }}" required>
+                                value="{{ $offer->noOffer }}" disabled>
                         </div>
 
                         <div class="mb-3">
                             <label for="origin" class="form-label">Origin</label>
                             <input type="text" class="form-control" id="origin" name="origin"
-                                value="{{ $offer->origin }}" required>
+                                value="{{ $offer->origin }}" disabled>
                         </div>
 
                         <div class="mb-3">
                             <label for="destination" class="form-label">Destination</label>
                             <input type="text" class="form-control" id="destination" name="destination"
-                                value="{{ $offer->destination }}" required>
+                                value="{{ $offer->destination }}" disabled>
                         </div>
 
                         <div class="mb-3">
+                            <label for="container">Pilih Jenis Container</label>
+                            <select name="container_id" class="form-control" id="container_id" required>
+                                <option disabled selected>-- Pilih --</option>
+                                @foreach ($containers as $container)
+                                    <option value="{{ $container->id }}"
+                                        data-weight="{{ $container->weight }}"
+                                        data-volume="{{ $container->volume }}"
+                                        {{ $offer->container_id == $container->id ? 'selected' : '' }}>
+                                        {{ $container->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{-- Preview Container Info --}}
+                        <div id="container-info" class="mt-3" style="{{ $offer->container_id ? '' : 'display:none;' }}">
+                            <p><strong>Berat Maksimal:</strong> <span id="weight-preview">{{ $offer->container->weight ?? '' }}</span> Kg</p>
+                            <p><strong>Volume Maksimal:</strong> <span id="volume-preview">{{ $offer->container->volume ?? '' }}</span> CBM</p>
+                        </div>
+
+
+                        <div class="mb-3">
                             <label for="commodities" class="form-label">Commodities</label>
-                            <input type="text" class="form-control" id="commodities" name="commodities"
-                                value="{{ $offer->commodities }}" required>
+                            {{-- <input type="text" class="form-control" id="commodities" name="commodities"
+                                value="{{ $offer->commodities }}" required> --}}
+                                <select class="form-select" name="commodities" id="commodities">
+                                    @foreach ($commodities as $commodities)
+                                        <option value="{{ $commodities->name }}"
+                                            {{ $offer->commodities == $commodities->name ? 'selected' : '' }}>
+                                            {{ $commodities->name }}
+                                        </option>
+
+                                    @endforeach
+                                </select>
                         </div>
 
                         <div class="mb-3">
@@ -56,7 +87,7 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="maxWeight" class="form-label">Max Weight</label>
                             <input type="number" class="form-control" id="maxWeight" name="maxWeight"
                                 value="{{ $offer->maxWeight }}" required>
@@ -66,12 +97,14 @@
                             <label for="maxVolume" class="form-label">Max Volume</label>
                             <input type="number" class="form-control" id="maxVolume" name="maxVolume"
                                 value="{{ $offer->maxVolume }}" required>
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="price" class="form-label">Price</label>
-                            <input type="text" class="form-control" id="price" name="price"
-                                value="{{ $offer->price }}" required>
+                            {{-- <input type="text" class="form-control" id="price" name="price"
+                                value="{{ $offer->price }}" required> --}}
+                            <input type="text" class="form-control" id="price_display" value="{{ number_format((float) $offer->price, 0, ',', '.') }}">
+                            <input type="hidden" name="price" id="price" value="{{ $offer->price }}">
                         </div>
 
                         <div class="mb-3">
@@ -113,4 +146,48 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('container').addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const weight = selectedOption.getAttribute('data-weight');
+            const volume = selectedOption.getAttribute('data-volume');
+
+            document.getElementById('weight-preview').textContent = weight;
+            document.getElementById('volume-preview').textContent = volume;
+
+            document.getElementById('container-info').style.display = 'block';
+        });
+    </script>
+
+    <script>
+        // Format angka pada saat pertama kali tampil (edit form)
+        window.addEventListener("DOMContentLoaded", () => {
+            let display = document.getElementById("price_display");
+            let value = document.getElementById("price").value;
+            display.value = formatRupiah(value);
+        });
+
+        document.getElementById("price_display").addEventListener("input", function(e) {
+            let input = this.value.replace(/\D/g, ''); // hanya angka
+            this.value = formatRupiah(input);
+            document.getElementById("price").value = input;
+        });
+
+        function formatRupiah(angka) {
+            let number_string = angka.toString(),
+                sisa = number_string.length % 3,
+                rupiah = number_string.substr(0, sisa),
+                ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            return rupiah;
+        }
+</script>
+
+
 @endsection

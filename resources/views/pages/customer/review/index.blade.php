@@ -26,13 +26,13 @@
         @if ($reviews->isEmpty())
         <div class="row justify-content-center">
             <div class="col-sm-12 col-md-6 col-xl-6">
-                <h3 class="">Daftar Ulasan Anda</h3>
+                <h4 class="">Daftar Ulasan Anda</h4>
             </div>
         </div>
         @else
         <div class="row justify-content-center">
             <div class="col-sm-12 col-md-8 col-xl-8">
-                <h3 class="">Daftar Ulasan Anda</h3>
+                <h4 class="">Daftar Ulasan Anda</h4>
             </div>
         </div>
         @endif

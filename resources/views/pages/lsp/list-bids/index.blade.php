@@ -45,6 +45,12 @@
                                     @php
                                         $no = 1;
                                     @endphp
+                                    @if ($bids->isEmpty())
+                                        <tr>
+                                            <td colspan="11" class="text-center">Belum ada penawaran.
+                                            </td>
+                                        </tr>
+                                    @endif
                                     @foreach ($bids as $bid)
                                         <tr>
                                             <td>{{ $no++ }}</td>

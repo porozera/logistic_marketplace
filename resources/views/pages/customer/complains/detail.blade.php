@@ -24,7 +24,7 @@
         <div class="row justify-content-center mb-3">
             <div class="col-sm-12 col-md-8 col-xl-8">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">Detail Complain</h3>
+                    <h4 class="mb-0">Detail Complain</h4>
                 </div>
             </div>
         </div>
@@ -37,9 +37,9 @@
                             <div class="col">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <p class="text-primary mt-2">{{$complain->created_at}}</p>
-                                    @if ($complain->is_answered == false)
+                                    @if ($complain->status == 'Pending')
                                     <div>
-                                        <button type="button" class="btn btn-warning d-inline-flex rounded-pill w-10"><i class="ti ti-clock me-1"></i> Pending</button>
+                                        <button type="button" class="btn btn-primary d-inline-flex rounded-pill w-10"><i class="ti ti-clock me-1"></i> Pending</button>
                                     </div>
                                     @else
                                     <div>

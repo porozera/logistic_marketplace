@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('order_id');
-            $table->string('currentLocation');
-            $table->string('currentVehicle');
-            $table->enum('status', ['Loading Item', 'On The Way', 'Finished'])->nullable();
-            $table->text('description')->nullable();
-            $table->decimal('longitude', 10, 8)->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
+            $table->string('currentLocation')->nullable();
+            $table->string('currentVehicle')->nullable();
+            $table->enum('status', ['Loading Item', 'On The Way', 'Finished']);
+            $table->text('description');
+            $table->decimal('longitude', 11, 8)->nullable();
+            $table->decimal('latitude', 11, 8)->nullable();
             
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });

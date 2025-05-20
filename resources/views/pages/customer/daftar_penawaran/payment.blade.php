@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-4">
+            <div class="col-6">
                 <h3 class="m-b-10">Pembayaran</h3>
                 <div class="card">
                     <div class="card-header">

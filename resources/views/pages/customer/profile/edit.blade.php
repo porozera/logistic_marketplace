@@ -24,8 +24,8 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-8">
-              <h3 class="m-b-10">Edit Profile</h3>
+            <div class="col-sm-12 col-md-8">
+              <h4 class="m-b-10">Edit Profile</h4>
                 <form action="/profile/customer/edit/perform" method="POST" id="updateProfileForm" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -33,7 +33,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="text-center">
-                                <img src="{{ $user->profilePicture ? asset('storage/' . $user->profilePicture) : asset('default-profile.jpg') }}" alt="profile_picture" width="150" class="img-thumbnail">
+                                {{-- <img src="{{ $user->profilePicture ? asset('storage/' . $user->profilePicture) : asset('default-profile.jpg') }}" alt="profile_picture" width="150" class="img-thumbnail"> --}}
+                                <img src="{{ $user->profilePicture ? asset('storage/' . $user->profilePicture) : asset('default-profile.jpg') }}" alt="Profile Picture"
+                                class="rounded-circle border border-light-secondary"
+                                style="width: 150px; height: 150px; object-fit: cover;">
                             </div>
                         </div>
                         <div class="row">

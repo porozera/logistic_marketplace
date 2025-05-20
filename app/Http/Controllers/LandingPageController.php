@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\City;
-use App\Models\Container;
 use App\Models\offersModel;
-use App\Models\Order;
-use App\Models\Review;
-use App\Models\Service;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
-class SearchRouteController extends Controller
+class LandingPageController extends Controller
 {
-    public function index(Request $request)
+    public function index()
+    {
+        $offers = offersModel::latest()->take(6)->get();
+        return view('landing-page',compact('offers'));
+    }
+
+    public function search_route(Request $request)
     {
         $query = offersModel::where('is_for_customer', true)
             ->where('status', "active")
@@ -77,29 +76,7 @@ class SearchRouteController extends Controller
         }
 
         $offers = $query->orderBy('created_at', 'desc')->get();
-        $services = Service::all();
-        $categories = Category::distinct('type')->pluck('type')->toArray();
-        $containers = Container::all();
-        $cities = City::pluck('name')->toArray();
     
-        return view('pages.customer.search_routes.index', compact('offers', 'searchPerformed', 'cities','services','categories','containers'));
-    }
-    
-    public function detail($id)
-    {
-        $offer = offersModel::with('user')->find($id);
-        $services = Service::all();
-        $order = null;
-        if ($offer && isset($offer->noOffer)) { 
-            $order = Order::where('noOffer', $offer->noOffer)->first() ?? null;
-        }
-        return view('pages.customer.search_routes.detail', compact('offer','services','order'));
-    }
-
-    public function profile_lsp($id){
-        $lsp = User::find($id);
-        $totalUlasan = Review::where('lsp_id', $lsp->id)->count();
-        $reviews = Review::where('lsp_id', $lsp->id)->with('customer')->orderBy('created_at', 'desc')->take(3)->get();
-        return view('pages.customer.search_routes.profile_lsp', compact('lsp', 'totalUlasan', 'reviews'));
+        return view('landing-search-route', compact('offers', 'searchPerformed'));
     }
 }

@@ -40,6 +40,10 @@
                             <td>{{ $offer->shipmentType }}</td>
                         </tr>
                         <tr>
+                            <th>Tipe Container</th>
+                            <td>{{ $offer->container->name }}</td>
+                        </tr>
+                        <tr>
                             <th>Max Weight</th>
                             <td>{{ $offer->maxWeight }}</td>
                         </tr>
@@ -53,7 +57,7 @@
                         </tr>
                         <tr>
                             <th>Price</th>
-                            <td>{{ $offer->price }}</td>
+                            <td>Rp. {{ number_format($offer->price, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
                             <th>Loading Date</th>

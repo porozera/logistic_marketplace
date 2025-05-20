@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Container;
 use App\Models\RequestRoute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,8 @@ class RequestRouteController extends Controller
     {
         $list_request = RequestRoute::where('user_id',Auth::id())->orderBy('created_at', 'desc')->paginate(10);
         $categories = Category::all();
-        return view('pages.customer.request_routes.index',compact('list_request','categories'));
+        $containers = Container::all();
+        return view('pages.customer.request_routes.index',compact('list_request','categories','containers'));
     }
 
     public function store(Request $request)
@@ -32,7 +34,12 @@ class RequestRouteController extends Controller
             'height' => 'required',
             'commodities' => 'required',
             'address' => 'required',
+            'container_id' => 'nullable',
         ]);
+
+        $category = Category::where('name', $attributes['commodities'])->first();
+        // dd($attributes['commodities'], $category);
+        $cargoType = $category->type ?? null;
 
         $requestRoute = RequestRoute::create([
             "origin" => $attributes['origin'],
@@ -48,7 +55,9 @@ class RequestRouteController extends Controller
             "status" => "active",
             "user_id" => Auth::id(),
             "username" => Auth::user()->username,
-            "deadline" => Carbon::now()->addDays(7)->toDateString()
+            "deadline" => Carbon::now()->addDays(7)->toDateString(),
+            "cargoType" => $cargoType,
+            "container_id" => $attributes['container_id'],
         ]);
         $deadline = Carbon::now()->addDays(7)->toDateString();
         // return redirect("/request-routes/success?deadline=$deadline")->with('success', 'Permintaan rute berhasil dikrimkan!');

@@ -23,10 +23,13 @@ return new class extends Migration
             $table->integer('weight');
             $table->integer('volume');
             $table->string('commodities');
+            $table->enum('cargoType', ['General Cargo', 'Special Cargo', 'Dangerous Cargo'])->nullable();
             $table->string('status');
             $table->text('description')->nullable();
             $table->text('address');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('container_id')->nullable();
+            $table->foreign('container_id')->references('id')->on('containers')->onDelete('cascade');
             $table->string('userName');
         });
     }

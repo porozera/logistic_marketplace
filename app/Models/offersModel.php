@@ -37,6 +37,7 @@ class offersModel extends Model
         'truck_second_id',
         'truck_id',
         'timestamp',
+        'cargoType'
     ];
 
     // protected $attributes = [
@@ -79,5 +80,15 @@ class offersModel extends Model
     public function truck_second()
     {
         return $this->belongsTo(Truck::class, 'truck_second_id');
+    }
+
+    public function container()
+    {
+        return $this->belongsTo(Container::class, 'container_id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Category::class, 'commodities');
     }
 }

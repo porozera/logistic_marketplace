@@ -22,7 +22,7 @@
             <h2 class="mb-4">Order Management</h2>
 
             @if ($orders->isEmpty())
-                <div class="alert alert-info">Belum ada kontainer yang dipesan.</div>
+                <div class="text-center alert alert-info">Belum ada kontainer yang dipesan.</div>
             @endif
 
             @foreach ($orders as $order)

@@ -30,11 +30,11 @@
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-sm-12 col-md-12 col-xl-12">
-        <h3 class="m-b-10">Cari Rute</h3>
+        <h4 class="m-b-10">Cari Rute</h4>
           <div class="card">
             <div class="card-body">
                 <form action="{{ route('search-route') }}">
-                    <div class="row mb-0 mt-0">
+                    <div class="row">
                         <div class="col-sm-12 col-md-3">
                             <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ request('origin') }}">
                         </div>
@@ -46,12 +46,12 @@
                         </div>
                         <div class="col-sm-12 col-md-2">
                             <select class="form-control" name="shipmentType" id="shipmentType">
-                                <option value="FCL" {{ request('shipmentType') == 'FCL' ? 'selected' : '' }}>Full Container Load</option>
-                                <option value="LCL" {{ request('shipmentType') == 'LCL' ? 'selected' : '' }}>Less Container Load</option>
+                                <option value="FCL" {{ request('shipmentType') == 'FCL' ? 'selected' : '' }}>FCL</option>
+                                <option value="LCL" {{ request('shipmentType') == 'LCL' ? 'selected' : '' }}>LCL</option>
                             </select>
                         </div>
                         <div class="col-sm-12 col-md-1">
-                            <button type="submit" class="btn btn-primary">Cari</button>
+                            <button type="submit" class="btn btn-primary h-100"><i class="ti ti-search mt-4"></i></button>
                         </div>
                     </div>
                 </form>
@@ -71,7 +71,7 @@
                             <b>Filter</b>
                         </div>
                         <div class="col-6 text-end">
-                            Clear
+                            <a href="/search-routes">Clear</a>
                         </div>
                     </div>
                     <br>
@@ -87,17 +87,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    {{-- <h5>Layanan</h5>
-                    @foreach ($services as $service)
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="insurance" id="insurance" {{ request('insurance') ? 'checked' : '' }}>
-                        <i class="{{$service->icon}} me-1"></i>
-                        <label class="form-check-label" for="insurance">
-                          {{$service->serviceName}}
-                        </label>
-                    </div>
-                    @endforeach --}}
-                    <h5>Jenis Barang</h5>
+                    <p class="fw-bold">Jenis Barang</p>
                     @foreach ($categories as $category)
                         <div class="form-check">
                             <input
@@ -114,33 +104,33 @@
                         </div>
                     @endforeach
 
-
-                    {{-- <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="insurance" id="insurance" {{ request('insurance') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="insurance">
-                          Asuransi
-                        </label>
-                    </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="storage" id="storage" {{ request('storage') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="storage">
-                          Tempat penyimpanan
-                        </label>
-                    </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="fragile" id="fragile" {{ request('fragile') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="fragile">
-                          Barang pecah belah
-                        </label>
-                    </div> --}}
                     <hr>
 
-                    <h5>Harga Maksimal</h5>
+                    <p class="fw-bold">Jenis Kontainer</p>
+                    @foreach ($containers as $container)
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="container[]"
+                                id="container-{{ $container->id }}"
+                                value="{{ $container->id }}"
+                                {{ in_array($container->id, (array) request('container')) ? 'checked' : '' }}
+                            >
+                            <label class="form-check-label" for="container-{{ $container->id }}">
+                                {{ $container->name }}
+                            </label>
+                        </div>
+                    @endforeach
+
+                    <hr>
+
+                    <p class="fw-bold">Harga Maksimal</p>
                     <input type="number" name="maxPrice" class="form-control" placeholder="Rp." value="{{ request('maxPrice') }}">
                     <hr>
 
-                    <h5>Waktu Maksimal</h5>
-                    <input type="number" name="maxTime" class="form-control" placeholder="Rp." value="{{ request('maxTime') }}">
+                    <p class="fw-bold">Waktu Maksimal</p>
+                    <input type="number" name="maxTime" class="form-control" placeholder="Hari" value="{{ request('maxTime') }}">
                     <hr>
 
                     <div class="row ">
@@ -262,39 +252,39 @@
                                     <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}" 
                                         alt="profile-lsp" 
                                         class="user-avtar border wid-35 rounded-circle" 
-                                        style="object-fit: cover; width: 35px; height: 35px;">
+                                        style="object-fit: cover; width: 25px; height: 25px;">
                                 </a>
                                 <div class="d-flex align-items-center gap-2">
-                                    <h5 class="mb-0 fw-bold">{{ $item->user->companyName }}</h5>
+                                    <p class="mb-0 fw-bold">{{ $item->user->companyName }}</p>
                                     <i class="fas fa-star text-warning ms-2"></i>
-                                    <h5 class="mb-0 fw-bold">{{$item->user->rating}}</h5>
+                                    <p class="mb-0 fw-bold">{{$item->user->rating}}</p>
                                 </div>
                             </div>
                             <div class="col-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
                                 @if ($item['shipmentMode'] == 'D2D')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Door to Door
+                                        <i class="ti ti-truck-delivery me-1"></i> D2D
                                     </button>   
                                 @elseif( $item['shipmentMode'] == 'D2P')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                                        <i class="ti ti-truck-delivery me-1"></i> D2P
                                     </button>
                                 @elseif( $item['shipmentMode'] == 'P2P')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-sailboat me-1"></i> Port to Port
+                                        <i class="ti ti-sailboat me-1"></i> P2P
                                     </button>
                                 @elseif( $item['shipmentMode'] == 'P2D')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-truck-delivery me-1"></i> Port to Door
+                                        <i class="ti ti-truck-delivery me-1"></i> P2D
                                     </button>
                                 @endif
                                 @if ($item['shipmentType'] == 'LCL')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-box me-1"></i> LCL 20' Container
+                                        <i class="ti ti-box me-1"></i> LCL
                                     </button> 
                                 @else
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-box me-1"></i> FCL 20' Container
+                                        <i class="ti ti-box me-1"></i> FCL
                                     </button> 
                                 @endif
                                 {{-- <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
@@ -316,49 +306,54 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-1 d-flex align-items-start justify-content-start">
-                                <h5 style="font-weight: normal;">Asal</h5>
+                                <p style="font-weight: normal;">Asal</p>
                             </div>
-                            <div class="col-1">
+                            {{-- <div class="col-1">
                                 <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
-                                <div class="bg-primary mx-auto" style="width: 1px; height: 40px;"></div>
+                                <div class="bg-primary mx-auto" style="width: 1px; height: 50px;"></div>
+                            </div> --}}
+                            <div class="col-2">
+                                <p class="fw-bold text-primary">{{$item->origin}}</p>
                             </div>
                             <div class="col-2">
-                                <h5 class="fw-bold text-primary">{{$item->origin}}</h5>
-                            </div>
-                            <div class="col-2">
-                                <h5 style="font-weight: normal;">Tanggal Pengiriman</h5>
+                                <p style="font-weight: normal;">Departure</p>
                             </div>
                             <div class="col-3">
-                                <h5 class="text-primary fw-bold">{{$item->loading_date_formatted}}</h5>
+                                <p class="text-primary fw-bold">{{$item->shipping_date_formatted}}</p>
                             </div>
-                            <div class="col-3 d-flex align-items-start justify-content-end ">
+                            <div class="col-4 d-flex flex-column flex-sm-row align-items-start justify-content-end">
                                 @if ($item['shipmentType'] == 'FCL')
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2 mt-1">/Container</h5>
+                                    <div class="d-flex flex-column align-items-end">
+                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
+                                        <p class="mb-0 ms-sm-2 mt-sm-1 p">/Container</p>
+                                    </div>
                                 @else
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
-                                <h5 class="mb-0 ms-2 mt-1">/CBM</h5>
+                                    <div class="d-flex flex-column align-items-end">
+                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
+                                        <p class="mb-0 ms-sm-2 mt-sm-1 p">/CBM</p>
+                                    </div>
                                 @endif
                             </div>
+                            
                         </div>
                         <div class="row">
                             <div class="col-1 d-flex align-items-start justify-content-start">
-                                <h5 style="font-weight: normal;">Tujuan</h5>
+                                <p style="font-weight: normal;">Tujuan</p>
                             </div>
-                            <div class="col-1">
+                            {{-- <div class="col-1">
                                 <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
+                            </div> --}}
+                            <div class="col-2">
+                                <p class="fw-bold text-primary">{{$item->destination}}</p>
                             </div>
                             <div class="col-2">
-                                <h5 class="fw-bold text-primary">{{$item->destination}}</h5>
-                            </div>
-                            <div class="col-2">
-                                <h5 class="mb-0" style="font-weight: normal;">Estimasi Tiba</h5>
+                                <p class="mb-0" style="font-weight: normal;">Est. Arrival</p>
                             </div>
                             <div class="col-3">
-                                <h5 class="text-primary fw-bold">{{$item->estimation_date_formatted}}</h5>
+                                <p class="text-primary fw-bold">{{$item->estimation_date_formatted}}</p>
                             </div>
-                            <div class="col-3 d-flex align-items-start justify-content-end">
-                                <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50 w-md-50">Lihat detail<i class="ti ti-chevron-right ms-1"></i></a>
+                            <div class="col-4 text-end">
+                                <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50 w-md-50"><span class="mb-2">Pilih</span></a>
                             </div>
                         </div>
                     </div>

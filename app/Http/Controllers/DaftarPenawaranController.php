@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bid;
 use App\Models\Category;
+use App\Models\Container;
 use App\Models\offersModel;
 use App\Models\Order;
 use App\Models\RequestRoute;
@@ -17,11 +18,30 @@ use Carbon\Carbon;
 
 class DaftarPenawaranController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $query = Bid::where('status', "active");
+        if ($request->has('btn_radio1')) {
+            if ($request->btn_radio1 == 'Murah') {
+                $query->orderBy('price', 'asc');
+            } elseif ($request->btn_radio1 == 'Cepat') {
+                $query->orderByRaw("DATEDIFF(estimationDate, shippingDate) asc");
+            }
+            $searchPerformed = true;
+        }
+        if ($request->has('maxPrice') && $request->maxPrice != '') {
+            $query->where('price', '<=', $request->maxPrice);
+            $searchPerformed = true;
+        }
+        if ($request->has('maxTime') && $request->maxTime != '') {
+            $query->whereRaw("DATEDIFF(estimationDate, shippingDate) <= ?", [$request->maxTime]);
+            $searchPerformed = true;
+        }
         $bids = $query->get();
-        return view('pages.customer.daftar_penawaran.index',compact('bids'));
+        $services = Service::all();
+        $categories = Category::distinct('type')->pluck('type')->toArray();
+        $containers = Container::all();
+        return view('pages.customer.daftar_penawaran.index',compact('bids', 'services', 'categories', 'containers'));
     }
 
     public function detail($id)
@@ -76,6 +96,10 @@ class DaftarPenawaranController extends Controller
             'status' => 'required',
             'lsp_id' => 'required',
             'address' => 'required',
+            'truck_first_id' => 'nullable',
+            'truck_second_id' => 'nullable',
+            'cargoType' => 'nullable',
+            'container_id' => 'nullable',
         ]);
 
         if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
@@ -114,7 +138,11 @@ class DaftarPenawaranController extends Controller
                 "remainingAmount" => $attributes['total_price'],
                 "address" => $attributes['address'],
                 "lsp_id" => $attributes['lsp_id'],
-                "paymentStatus" => "Belum Lunas"
+                "paymentStatus" => "Belum Lunas",
+                "truck_first_id" => $attributes['truck_first_id'],
+                "truck_second_id" => $attributes['truck_second_id'],
+                "cargoType" => $attributes['cargoType'],
+                "container_id" => $attributes['container_id'],
             ]);
         } else {
             $remainingWeight = $order->remainingWeight - $attributes['weight'];
@@ -207,6 +235,8 @@ class DaftarPenawaranController extends Controller
             "is_for_lsp" => $attributes['is_for_lsp'],
             "is_for_customer" => $attributes['is_for_customer'],
             "timestamp" => now(),
+            "truck_first_id" => $attributes['truck_first_id'],
+            "truck_second_id" => $attributes['truck_second_id'],
         ]);
 
         $bid = Bid::where('noOffer', $attributes['noOffer'])->first();

@@ -48,6 +48,16 @@ use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
 use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\DashboardCustomerController;
+use App\Http\Controllers\DashboardLspController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\OpenContainerController;
+use App\Http\Controllers\TruckController;
+use App\Http\Controllers\TrackingLspController;
+use App\Http\Controllers\NotificationCustomerController;
+use App\Http\Controllers\NotificationLspController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TrackingController;
+use App\Http\Livewire\MapLocation;
 
 use App\Http\Controllers\NotificationCustomerController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -55,14 +65,18 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 
-Route::get('/', function () {
-    return view('landing-page');
-});
+// Route::get('/', function () {
+//     return view('landing-page');
+// });
 
 
-Route::get('/landing-page', function () {
-    return view('landing-page');
-});
+// Route::get('/landing-page', function () {
+//     return view('landing-page');
+// });
+
+Route::get('/', [LandingPageController::class, 'index']);
+Route::get('/landing-page', [LandingPageController::class, 'index']);
+Route::get('/landing-page/search-route', [LandingPageController::class, 'search_route'])->name('landing-page.search-route');
 
 Route::get('/landing-faq', [DashboardController::class, 'faq_category'])->name('landing-faq');
 Route::get('/landing-faq/faq-general', [DashboardController::class, 'show_faq_general']);
@@ -134,7 +148,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         // Route::get('/admin/province/{id}/edit', [ProvinceController::class, 'edit']);
         // Route::put('/admin/province/{id}', [ProvinceController::class, 'update']);
         // Route::delete('/admin/province/{id}', [ProvinceController::class, 'destroy'])->name('province.destroy');
-        
+
         //City
         // Route::get('/admin/city', [CityController::class, 'index']);
         // Route::get('/admin/city-add', [CityController::class, 'add']);
@@ -164,11 +178,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::put('/report-customer/{id}', [CustomerReportController::class, 'update'])->name('admin.customer.update');
         Route::get('/report-customer/{id}', [CustomerReportController::class, 'show'])->name('admin.customer.show');
         Route::delete('/report-customer/{id}', [CustomerReportController::class, 'destroy'])->name('admin.customer.destroy');
-        
+
         //Shipment
         Route::get('/report-shipment', [ShipmentReportController::class, 'index'])->name('admin.shipment.index');
         Route::get('/report-shipment/{id}', [ShipmentReportController::class, 'show'])->name('admin.shipment.show');
-        
+
         //Manajemen Komplain
         Route::get('/complain', [ComplainController::class, 'index'])->name('admin.complain.index');
         Route::get('/complain-detail/{id}', [ComplainController::class, 'detail'])->name('admin.complain.detail');
@@ -179,19 +193,19 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         Route::put('/notifications/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
         Route::delete('/notifications/delete/{id}', [AdminNotificationController::class, 'delete'])->name('admin.notifications.delete');
     });
-    
+
     // approve akun
     Route::post('/send-approve-email', [ApprovalController::class, 'sendApproveEmail'])->name('approval.sendEmail');
     Route::post('/send-reject-email', [ApprovalController::class, 'sendRejectEmail'])->name('rejected.sendEmail');
     Route::post('/send-confirmation-email', [ApprovalController::class, 'sendConfirmationEmail'])->name('confirmation.sendEmail');
-    
+
     //email complain answer
     Route::post('/send-answer-email', [ComplainController::class, 'sendAnswer'])->name('complain.sendAnswer');
 
 });
 
 Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
-    Route::get('/lsp/dashboard', [OfferController::class, 'index'])->name('lsp-dashboard');
+    Route::get('/dashboard/lsp', [DashboardLspController::class, 'index'])->name('lsp-dashboard');
     Route::prefix('offers')->group(function(){
         Route::get('/', [OfferController::class, 'index'])->name('offers.index');
         Route::get('search', [OfferController::class, 'search'])->name('offers.search');
@@ -264,6 +278,13 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
     Route::prefix('trackings')->group(function () {
         Route::get('/', [TrackingLspController::class, 'index'])->name('tracking-lsp.index');
         Route::get('/{id}', [TrackingLspController::class, 'detail'])->name('tracking-lsp.detail');
+    });
+
+    Route::prefix('notification-lsp')->group(function () {
+        Route::get('/', [NotificationLspController::class, 'index'])->name('notification-customer');
+        Route::put('/update/{id}', [NotificationLspController::class, 'update_status'])->name('notification-lsp.markAsRead');
+        Route::put('/markallasread', [NotificationLspController::class, 'markAllAsRead'])->name('notification-lsp.markAllAsRead');
+        Route::delete('/delete/{id}', [NotificationLspController::class, 'destroy'])->name('notification-lsp.delete');
     });
 
 });

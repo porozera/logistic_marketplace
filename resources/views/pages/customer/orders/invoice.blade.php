@@ -92,7 +92,7 @@
         <div class="row d-flex justify-content-center align-items-center mb-3">
             <div class="col-6 text-end">
                 <a href="{{ route('invoice.download', $userOrder->payment_token) }}" class="btn btn-success mt-3">
-                    <i class="fas fa-file-download"></i> Download PDF
+                    <i class="ti ti-file-download me-1 mt-2"></i> Download PDF
                 </a>
             </div>
         </div>
@@ -103,7 +103,7 @@
                 <div class="invoice-box">
                     <div class="header">
                         <h2>INVOICE</h2>
-                        <p>Nama Perusahaan | Alamat | Kontak</p>
+                        <p class="">SentraLogiX |  Jl. Telekomunikasi No. 1, Bandung Terusan Buahbatu | 08128035211</p>
                     </div>
                     <hr>
                     <table>

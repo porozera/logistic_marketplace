@@ -2,34 +2,40 @@
 @section('title', 'Pemesanan')
 @section('style')
 <style>
-  .container {
-      display: grid;
-      grid-template-columns: repeat(11, 30px); /* 11 kolom per baris */
-      gap: 5px;
-      margin: 20px;
-  }
-  .box {
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: bold;
-      border-radius: 5px;
-  }
-  .available {
-      background-color: green;
-      color: white;
-  }
-  .booked {
-      background-color: red;
-      color: white;
-  }
-  .square-box {
-      width: 40px; 
-      height: 40px; 
-  }
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr)); /* otomatis menyesuaikan lebar */
+    gap: 5px;
+    padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    justify-items: center;
+    align-items: center;
+}
+
+.box {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.available {
+    background-color: green;
+    color: white;
+}
+
+.booked {
+    background-color: red;
+    color: white;
+}
+
 
 </style>
 @section('content')
@@ -61,7 +67,7 @@
     <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-12 col-xl-12">
-          <h3 class="m-b-10">Detail Pemesanan</h3>
+          <h4 class="m-b-10">Detail Pemesanan</h4>
             <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -84,19 +90,19 @@
                         <div class="col-md-4 d-flex justify-content-center gap-2">
                           @if ($offer->shipmentMode == 'D2D')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-truck-delivery me-1"></i> Door to Door
+                                  <i class="ti ti-truck-delivery me-1"></i> D2D
                               </button>   
                           @elseif( $offer->shipmentMode == 'D2P')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-truck-delivery me-1"></i> Door to Port
+                                  <i class="ti ti-truck-delivery me-1"></i> D2P
                               </button>
                           @elseif( $offer->shipmentMode == 'P2P')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-sailboat me-1"></i> Port to Port
+                                  <i class="ti ti-sailboat me-1"></i> P2P
                               </button>
                           @elseif( $offer->shipmentMode == 'P2D')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                  <i class="ti ti-truck-delivery me-1"></i> Port to Door
+                                  <i class="ti ti-truck-delivery me-1"></i> P2D
                               </button>
                           @endif
 
@@ -108,7 +114,7 @@
                         </div>
             
                         <div class="col-md-2 text-end">
-                          <h4 class="m-b-10 text-primary">ID : {{ $offer['noOffer'] }}</h4>
+                          <p class="m-b-10 text-primary">ID : {{ $offer['noOffer'] }}</p>
                         </div>
                     </div> 
 
@@ -116,25 +122,26 @@
             
                     <div class="row align-items-center">
                         <div class="col-md-8 d-flex align-items-center justify-content-start mt-2">
-                            <h5 class="mb-0 fw-bold">{{ $offer['origin']}}</h5>                      
+                            <p class="mb-0 fw-bold">{{ $offer['origin']}}</p>                      
                             <div class="d-flex align-items-center mx-4">
-                                <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
-                                <div class="bg-primary mx-2" style="width: 200px; height: 1px;"></div>
-                                <i class="ti ti-clock mx text-primary"></i> <h5 class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</h5> 
-                                <div class="bg-primary mx-2" style="width: 200px; height: 1px;"></div>
-                                <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
+                                <div class="rounded-circle bg-primary" style="width: 10px; height: 10px;"></div>
+                                <div class="bg-primary mx-2" style="width: 50px; height: 1px;"></div>
+                                {{-- <i class="ti ti-clock mx text-primary"></i> --}}
+                                 <p class="mb-0 mx-2 text-primary">{{ $offer['estimated_days']}} Hari</p> 
+                                <div class="bg-primary mx-2" style="width: 50px; height: 1px;"></div>
+                                <div class="rounded-circle bg-primary" style="width: 10px; height: 10px;"></div>
                             </div>
-                            <h5 class="mb-0 fw-bold">{{ $offer['destination']}}</h5>
+                            <p class="mb-0 fw-bold">{{ $offer['destination']}}</p>
                         </div>
 
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
                               @if ($offer['shipmentType'] == 'FCL')
                               <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
-                              <h5 class="mb-0 ms-2">/Container</h5>
+                              <p class="mb-0 ms-2">/Container</p>
                               @else
                               <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
-                              <h5 class="mb-0 ms-2">/CBM</h5>
+                              <p class="mb-0 ms-2">/CBM</p>
                               @endif
                             </div>
                         </div>
@@ -158,76 +165,89 @@
               <div class="card">
                 <div class="card-body">
                   <div class="row">
-                  <div class="col-6">
-                    <h5 class="mb-3">Tanggal Muat Barang</h5>
-                  </div>
-                  <div class="col-6 text-end">
-                    <h4 class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</h4>
-                  </div>
+                    <div class="col-6">
+                      <p class="mb-3">Tanggal Muat Barang</p>
+                    </div>
+                    <div class="col-6 text-end">
+                      <p class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</p>
+                    </div>
                   </div>
                   <div class="row">
-                  <div class="col-6">
-                    <h5 class="mb-3">Sisa Volume :</h5>
-                  </div>
-                  <div class="col-6 text-end">
-                    <div class="d-flex justify-content-end align-items-center">
-                    <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</h5>
-                    <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxVolume'] }} CBM</p>
+                    <div class="col-6">
+                      <p class="mb-3">Sisa Volume :</p>
                     </div>
-                  </div>
+                    <div class="col-6 text-end">
+                      <div class="d-flex justify-content-end align-items-center">
+                        <p class="text-danger fw-bold mb-0">{{ $offer['remainingVolume'] }}</p>
+                        <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxVolume'] }} CBM</p>
+                      </div>
+                    </div>
                   </div>
                   <div class="row">
-                  <div class="col-6">
-                    <h5 class="mb-3">Sisa Berat :</h5>
+                    <div class="col-6">
+                      <p class="mb-3">Sisa Berat :</p>
+                    </div>
+                    <div class="col-6 text-end">
+                      <div class="d-flex justify-content-end align-items-center">
+                        <p class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</p>
+                        <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-6 text-end">
-                    <div class="d-flex justify-content-end align-items-center">
-                    <h5 class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</h5>
-                    <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
-                    </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <h5>Alamat Tujuan:</h5> 
-                            <h5 class="text-primary">{{ optional($order)->address ?? '-' }}</h5>
-                      </div>
+                  <div class="row">
+                    <p>Alamat Tujuan:</p>
+                    <p class="text-primary">{{ optional($order)->address ?? '-' }}</p>
+                  </div>
 
-                      <hr>
+                  <hr>
 
-                      <div id="cbmPriceCard"></div> 
-                      <div id="servicePriceList"></div>
+                  <div id="cbmPriceCard"></div>
+                  <div id="servicePriceList"></div>
 
-                      <hr>
+                  <hr>
 
-                      <div class="text-end">
-                        <h5 class="mb-3 text-gray-500">Total</h5>
-                        <h4 class="mb-3 text-danger" id="totalPrice">Rp. 0</h4>
-                      </div>
-                    </div>
+                  <div class="text-end">
+                    <p class="mb-3 text-gray-500">Total</p>
+                    <h5 class="mb-3 text-danger" id="totalPrice">Rp. 0</h5>
+                  </div>
                 </div>
+              </div>
 
-                <div class="row">
-                  <div class="col-12">
+              <div class="row">
+              <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                      <h5 class="mb-0">Container Availability</h5>
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="mb-0">Container Availability</h5>
+                      </div>
+                      <div class="col text-end">
+                        @if ($offer->container)
+                          <span class="text-primary">{{ $offer->container->name }}</span>
+                        @else
+                          <span class="text-muted text-primary">Tidak ada detail kontainer</span>
+                        @endif
+                      </div>
                     </div>
-                    <div class="card-body d-flex justify-content-center align-items-center">
-                      <div class="col-2"></div>
-                      <div class="col-9 d-flex justify-content-center">
-                        <div class="card">
+                  </div>
+
+                  <div class="card-body">
+                    <div class="row justify-content-center align-items-center">
+                      <div class="col-md-10 col-lg-8">
+                        <div class="card w-100">
                           <div class="container" id="container"></div>
                         </div>
                       </div>
-                      <div class="col-1"></div>
                     </div>
-                    <div class="card-footer text-center">
-                  <span class="badge bg-success me-2"><i class="ti ti-check"></i> Available</span>
-                  <span class="badge bg-danger"><i class="ti ti-x"></i> Booked</span>
-                    </div>
-                </div>
                   </div>
+
+                  <div class="card-footer text-center">
+                    <span class="badge bg-success me-2"><i class="ti ti-check"></i> Available</span>
+                    <span class="badge bg-danger"><i class="ti ti-x"></i> Booked</span>
+                  </div>
+                </div>
               </div>
+            </div>
             </div>
 
             <!-- Form input -->
@@ -300,7 +320,7 @@
                             <option value="Binatang">Binatang</option> --}}
                         </select>                            
                         @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -383,6 +403,10 @@
                     <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="{{ $offer['is_for_customer'] }}" hidden>
                     <input type="text" id="status" name="status" class="form-control"  value="{{ $offer['status'] }}" hidden>
                     <input type="text" id="lsp_id" name="lsp_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
+                    <input type="text" id="truck_second_id" name="truck_second_id" class="form-control"  value="{{ $offer['truck_second_id'] }}" hidden>
+                    <input type="text" id="truck_first_id" name="truck_first_id" class="form-control"  value="{{ $offer['truck_first_id'] }}" hidden>
+                    <input type="text" id="cargoType" name="cargoType" class="form-control"  value="{{ $offer['cargoType'] }}" hidden>
+                    <input type="text" id="container_id" name="container_id" class="form-control"  value="{{ $offer['container_id'] }}" hidden>
                     @if (optional($order)->address != null)
                     <input type="text" id="address" name="address" class="form-control"  value="{{ $order['address'] }}" hidden>
                     @endif
@@ -401,7 +425,7 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 text-end">
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Pesan Sekarang</button>
                     </div>
                   </div>
@@ -492,10 +516,10 @@
                       <div class="card-body p-3">
                           <div class="row">
                               <div class="col-6">
-                                  <h5 class="mb-0">Total CBM: ${cbmToBuy}</h5>
+                                  <p class="mb-0 text-black">Total CBM: ${cbmToBuy}</p>
                               </div>
                               <div class="col-6 text-end">
-                                  <h5 class="mb-0">Rp. ${totalCBMPrice.toLocaleString("id-ID")}</h5>
+                                  <p class="mb-0 text-black">Rp. ${totalCBMPrice.toLocaleString("id-ID")}</p>
                               </div>
                           </div>
                       </div>
@@ -535,10 +559,10 @@
                         <div class="card-body p-3">
                             <div class="row">
                                 <div class="col-6">
-                                    <h5 class="mb-0">${serviceName}</h5>
+                                    <p class="mb-0 text-black">${serviceName}</p>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <h5 class="mb-0">Rp. ${formattedPrice}</h5>
+                                    <p class="mb-0 text-black">Rp. ${formattedPrice}</p>
                                 </div>
                             </div>
                         </div>
@@ -582,6 +606,6 @@
           }
       
           document.addEventListener("DOMContentLoaded", renderContainer);
-      </script>
+        </script>
     
 @endsection
