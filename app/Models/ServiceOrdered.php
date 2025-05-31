@@ -10,7 +10,7 @@ class ServiceOrdered extends Model
 {
    use HasFactory;
 
-    protected $table = 'service_ordered';
+    protected $table = 'services_ordered';
     public $timestamps = true;
     protected $fillable = [
         'userOrder_id',

@@ -6,7 +6,9 @@ use App\Models\Category;
 use App\Models\offersModel;
 use App\Models\Order;
 use App\Models\Service;
+use App\Models\ServiceOrdered;
 use App\Models\UserOrder;
+use App\Models\UserOrderItem;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,52 +32,68 @@ class OrderController extends Controller
     public function order(Request $request)
     {
         $attributes = $request->validate([
-            'weight' => 'required',
-            'width' => 'required',
-            'height' => 'required',
-            'length' => 'required',
-            'commodities' => 'required',
-            'telpNumber' => 'required',
+            'items' => 'required|array|min:1',
+            'items.*.weight' => 'required|numeric|min:0',
+            'items.*.width' => 'required|numeric|min:0',
+            'items.*.height' => 'required|numeric|min:0',
+            'items.*.length' => 'required|numeric|min:0',
+            'items.*.volume' => 'required|numeric|min:0',
+            'items.*.qty' => 'required|numeric|min:1',
+            'items.*.commodities' => 'required|string|max:255',
             'description' => 'required',
             'noOffer' => 'required',
-            'lspName' => 'required',
             'origin' => 'required',
             'destination' => 'required',
+            'portOrigin' => 'required',
+            'portDestination' => 'required',
             'shipmentMode' => 'required',
             'shipmentType' => 'required',
-            'loadingDate' => 'required',
-            'estimationDate' => 'required',
-            'shippingDate' => 'required',
+            'transportationMode' => 'required',
+            'pickupDate' => 'nullable',
+            'cyClosingDate' => 'nullable',
+            'etd' => 'required',
+            'eta' => 'required',
+            'deliveryDate' => 'nullable',
+            'arrivalDate' => 'required',
             'maxWeight' => 'required',
             'maxVolume' => 'required',
             'price' => 'required',
             'total_cbm' => 'required',
             'total_price' => 'required',
-            'selected_services' => 'nullable',
+            'selected_services' => 'nullable|array',
+            'selected_services.*' => 'exists:services,id',
             'remainingWeight' => 'required',
             'remainingVolume' => 'required',
             'user_id' => 'required',
             'is_for_customer' => 'required',
             'is_for_lsp' => 'required',
             'status' => 'required',
-            'address' => 'required',
+            'destinationAddress' => 'nullable',
+            'originAddress' => 'nullable',
+            'RTL_start_date'=> 'required',
+            'RTL_end_date' => 'required',
             'lsp_id' => 'required',
             'truck_first_id' => 'nullable',
             'truck_second_id' => 'nullable',
             'cargoType' => 'nullable',
             'container_id' => 'nullable',
+            'receiverName' => 'required',
+            'receiverTelpNumber' => 'required',
         ]);
 
-        if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
-            throw ValidationException::withMessages([
-                'total_cbm' => 'Total CBM yang harus dibeli melebihi sisa volume yang tersedia.',
-            ]);
-        }
-        
-        if ($attributes['weight'] > $attributes['remainingWeight']) {
-            throw ValidationException::withMessages([
-                'weight' => 'Berat melebihi sisa berat yang tersedia.',
-            ]);
+        $totalWeight = ceil(collect($attributes['items'])->sum('weight'));
+        $totalVolume = ceil(collect($attributes['items'])->sum('volume'));
+        if ($attributes['shipmentType'] === "LCL"){
+            if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
+                throw ValidationException::withMessages([
+                    'total_cbm' => 'Total CBM yang harus dibeli melebihi sisa volume yang tersedia.',
+                ]);
+            }
+            if ($totalWeight > $attributes['remainingWeight']) {
+                throw ValidationException::withMessages([
+                    'weight' => 'Total berat barang melebihi sisa berat yang tersedia.',
+                ]);
+            }
         }
 
         $order = Order::where('noOffer', $attributes['noOffer'])->first();
@@ -83,26 +101,29 @@ class OrderController extends Controller
         if (!$order) {
             $order = Order::create([
                 "noOffer" => $attributes['noOffer'],
-                "lspName" => $attributes['lspName'],
                 "origin" => $attributes['origin'],
                 "destination" => $attributes['destination'],
+                "portDestination" => $attributes['portDestination'],
+                "portOrigin" => $attributes['portOrigin'],
                 "shipmentType" => $attributes['shipmentType'],
                 "shipmentMode" => $attributes['shipmentMode'],
-                "loadingDate" => $attributes['loadingDate'],
-                "estimationDate" => $attributes['estimationDate'],
-                "shippingDate" => $attributes['shippingDate'],
+                "transportationMode" => $attributes['transportationMode'],
+                "pickupDate" => $attributes['pickupDate'],
+                "cyClosingDate" => $attributes['cyClosingDate'],
+                "etd" => $attributes['etd'],
+                "eta" => $attributes['eta'],
+                "deliveryDate" => $attributes['deliveryDate'],
+                "arrivalDate" => $attributes['arrivalDate']??$attributes['eta'],
                 "maxWeight" => $attributes['maxWeight'],
                 "maxVolume" => $attributes['maxVolume'],
-                "commodities" => $attributes['commodities'],
                 // "status" => "Loading Item",
-                "remainingWeight" => $attributes['remainingWeight'] - $attributes['weight'],
-                "remainingVolume" => $attributes['remainingVolume'] - $attributes['total_cbm'],
+                "remainingWeight" => $attributes['remainingWeight'] - $totalWeight,
+                "remainingVolume" => $attributes['remainingVolume'] - $totalVolume,
                 "price" => $attributes['price'],
                 "totalAmount" => $attributes['total_price'],
                 "paidAmount" => 0,
                 "remainingAmount" => $attributes['total_price'],
                 "remainingAmount" => $attributes['total_price'],
-                "address" => $attributes['address'],
                 "lsp_id" => $attributes['lsp_id'],
                 "paymentStatus" => "Belum Lunas",
                 "truck_first_id" => $attributes['truck_first_id'],
@@ -111,24 +132,13 @@ class OrderController extends Controller
                 "container_id" => $attributes['container_id'],
             ]);
         } else {
-            $remainingWeight = $order->remainingWeight - $attributes['weight'];
-            $remainingVolume = $order->remainingVolume - $attributes['total_cbm'];
-        
-            $existingCommodities = $order->commodities ? array_map('trim', explode(', ', $order->commodities)) : [];
-            $newCommodities = $attributes['commodities'] ? array_map('trim', explode(', ', $attributes['commodities'])) : [];
-        
-            $filteredCommodities = array_diff($newCommodities, $existingCommodities);
-        
-            $updatedCommodities = !empty($filteredCommodities) 
-                ? implode(', ', array_merge($existingCommodities, $filteredCommodities)) 
-                : $order->commodities;
-        
+            $remainingWeight = $order->remainingWeight - $totalWeight;
+            $remainingVolume = $order->remainingVolume - $totalVolume;
             $order->update([
                 "remainingWeight" => max(0, $remainingWeight),
                 "remainingVolume" => max(0, $remainingVolume),
                 "totalAmount" => $order->totalAmount + $attributes['total_price'],
                 "remainingAmount" => $order->remainingAmount + $attributes['total_price'],
-                "commodities" => $updatedCommodities,
                 "paymentStatus" => "Belum Lunas"
             ]);
         }
@@ -137,18 +147,43 @@ class OrderController extends Controller
         $userOrder = UserOrder::create([
             "user_id" => Auth::id(),
             "order_id" => $order->id,
-            "username" => Auth::user()->username,
-            "telpNumber" => $attributes['telpNumber'],
+            "receiverTelpNumber" => $attributes['receiverTelpNumber'],
+            "receiverName" => $attributes['receiverName'],
+            "RTL_start_date" => $attributes['RTL_start_date'],
+            "RTL_end_date" => $attributes['RTL_end_date'],
+            "originAddress" => $attributes['originAddress'],
+            "destinationAddress" => $attributes['destinationAddress'],
             "description" => $attributes['description'],
             "totalPrice" => $attributes['total_price'],
+            "invoiceNumber" => time(). '-' . rand(),
             "paymentStatus" => "Belum Lunas",
-            "weight" => $attributes['weight'],
-            "volume" => $attributes['total_cbm'],
-            "commodities" => $attributes['commodities'],
-            "services" => $attributes['selected_services'] ?? "",
             "payment_token" => Str::uuid(),
             "expires_at" => Carbon::now()->addMinutes(30),
         ]);
+
+        $items = $request->input('items', []);
+        foreach ($items as $item) {
+            $itemPrice = ($item['volume'] ?? 1) * ($item['price'] ?? 0) * ($item['qty'] ?? 1);
+            UserOrderItem::create([
+                "userOrder_id" => $userOrder->id,
+                "weight" => $item['weight'],
+                "width" => $item['width'] ?? 1,
+                "height" => $item['height'] ?? 1,
+                "length" => $item['length'] ?? 1,
+                "volume" => $item['volume'],
+                "qty" => $item['qty'],
+                "price" => $itemPrice,
+                "commodities" => $item['commodities'],
+            ]);  
+        }
+
+        $selectedServices = $request->input('selected_services', []);
+        foreach ($selectedServices as $serviceId) {
+            ServiceOrdered::create([
+                "userOrder_id" => $userOrder->id,
+                "service_id" => $serviceId,
+            ]);
+        }
 
         // Set your Merchant Server Key
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
@@ -178,8 +213,8 @@ class OrderController extends Controller
         $userOrder->save();
 
         if ($offer) {
-            $remainingWeight = $offer->remainingWeight - $attributes['weight'];
-            $remainingVolume = $offer->remainingVolume - $attributes['total_cbm'];
+            $remainingWeight = $offer->remainingWeight - $totalWeight;
+            $remainingVolume = $offer->remainingVolume - $totalVolume;
             $status = $offer->status; 
             
             if ($attributes['shipmentType'] === "FCL") {
@@ -189,21 +224,10 @@ class OrderController extends Controller
             if ($remainingWeight <= 0 || $remainingVolume <= 0) {
                 $status = "Deactive";
             }
-        
-            $existingCommodities = array_map('trim', explode(', ', $offer->commodities));
-            $newCommodities = array_map('trim', explode(', ', $attributes['commodities']));
-            $filteredCommodities = array_diff($newCommodities, $existingCommodities);
-
-            if (!empty($filteredCommodities)) {
-                $updatedCommodities = implode(', ', array_merge($existingCommodities, $filteredCommodities));
-            } else {
-                $updatedCommodities = $offer->commodities;
-            }
 
             $offer->update([
                 "remainingWeight" => max(0, $remainingWeight), 
                 "remainingVolume" => max(0, $remainingVolume), 
-                "commodities" => $updatedCommodities, 
                 "price" => $attributes['price'],
                 "status" => $status,
             ]);

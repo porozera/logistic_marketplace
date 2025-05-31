@@ -164,6 +164,19 @@
                       <p class="mb-3 text-primary">{{$offer->getpickup}}</p>
                     </div>
                   </div> --}}
+                  @if ($offer['shipmentType'] == 'FCL')
+                  <div class="row">
+                    <div class="col-6">
+                      <p class="mb-3">Volume :</p>
+                    </div>
+                    <div class="col-6 text-end">
+                      <div class="d-flex justify-content-end align-items-center">
+                        <p class="text-danger fw-bold mb-0">{{ $offer['maxVolume'] }} CBM</p>
+                        <p class="mb-0 ms-2 text-gray-500">/ Container</p>
+                      </div>
+                    </div>
+                  </div>  
+                  @else
                   <div class="row">
                     <div class="col-6">
                       <p class="mb-3">Sisa Volume :</p>
@@ -175,6 +188,21 @@
                       </div>
                     </div>
                   </div>
+                  @endif
+
+                  @if ($offer['shipmentType'] == 'FCL')
+                  <div class="row">
+                    <div class="col-6">
+                      <p class="mb-3">Berat :</p>
+                    </div>
+                    <div class="col-6 text-end">
+                      <div class="d-flex justify-content-end align-items-center">
+                        <p class="text-danger fw-bold mb-0">{{ $offer['maxWeight'] }} Kg</p>
+                        <p class="mb-0 ms-2 text-gray-500">/ Container</p>
+                      </div>
+                    </div>
+                  </div>
+                  @else
                   <div class="row">
                     <div class="col-6">
                       <p class="mb-3">Sisa Berat :</p>
@@ -186,6 +214,7 @@
                       </div>
                     </div>
                   </div>
+                  @endif
 
                   <hr>
 
@@ -243,6 +272,29 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="mb-3">Form Pemesanan</h4>
+                  @if ($offer['shipmentType'] == 'FCL')
+                  <div class="row">
+                    <div class="col-12">
+                        <select class="form-control" name="items[0][commodities]">
+                            @foreach ($categories as $category)
+                              <option value="{{$category->name}}">{{$category->code}} - {{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col-6">
+                      <input type="number" name="items[0][weight]" class="form-control weight" placeholder="Berat (kg)">
+                    </div>
+                    <div class="col-6">
+                      <input type="number" name="items[0][qty]" class="form-control qty" placeholder="Qty">
+                    </div>
+                  </div>
+                  <input type="number" name="items[0][length]" class="form-control length" placeholder="Panjang (cm)" value=1 hidden>
+                  <input type="number" name="items[0][width]" class="form-control width" placeholder="Lebar (cm)" value=1 hidden>
+                  <input type="number" name="items[0][height]" class="form-control height" placeholder="Tinggi (cm)" value=1 hidden>
+                  <input type="number" name="items[0][volume]" class="form-control volume" hidden value="{{ $offer['maxVolume'] }}">
+                  @else
                   <div id="itemsContainer">
                     <div class="item-row border p-3 mb-3">
                        <div class="row">
@@ -274,9 +326,8 @@
                             <input type="number" name="items[0][qty]" class="form-control qty" placeholder="Qty">
                           </div>
                         </div>
+                        <input type="number" name="items[0][volume]" class="form-control volume">
                       </div>
-
-                     
                       <div class="text-end mt-2">
                         <button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button>
                       </div>
@@ -285,6 +336,7 @@
                   <div class="text-end mb-3">
                     <button type="button" id="addItemBtn" class="btn btn-secondary">+ Tambah Barang</button>
                   </div>
+                  @endif
                   <hr>
                   <div class="row">
                     <div class="col-12">
@@ -299,7 +351,8 @@
                       @foreach ($services as $item)
                           <div class="form-check">
                               <input class="form-check-input service-checkbox" type="checkbox" 
-                                     value="{{ $item['serviceName'] }}" 
+                                     value="{{ $item->id }}" 
+                                      name="selected_services[]"
                                      data-price="{{ $item['price'] }}"
                                      onclick="updateServices()">
                               <i class="{{$item->icon}} me-1"></i>
@@ -327,6 +380,20 @@
                   </div>
                   <div class="row">
                     <div class="form-group mb-3">
+                      <div class="col-md-12">
+                        <label class="form-label">Ready To Load</label>
+                        <div class="input-group">
+                          <input type="date" name="RTL_start_date" class="form-control" value="{{ old('RTL_start_date') }}">
+                          <span class="input-group-text">s/d</span>
+                          <input type="date" name="RTL_end_date" class="form-control" value="{{ old('RTL_end_date') }}">
+                        </div>
+                        @error('RTL_start_date') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                        @error('RTL_end_date') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group mb-3">
                       <label class="form-label">Alamat Asal</label>
                       <textarea class="form-control" name="originAddress" rows="2" placeholder="Alamat Asal">{{ old('originAddress') }}</textarea>
                       @error('originAddress') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
@@ -349,22 +416,21 @@
 
                   <!-- Input Hidden-->
                   <div class="row">
-                    {{-- <input type="number" id="height" name="height" class="form-control" placeholder="cm" value="0" hidden>
-                    <input type="number" id="width" name="width" class="form-control" placeholder="cm" value="0" hidden>
-                    <input type="number" id="length" name="length" class="form-control" placeholder="cm" value="0" hidden> --}}
                     <input type="text" name="noOffer" class="form-control" value="{{ $offer['noOffer'] }}" hidden>
                     <input type="text" name="lspName" class="form-control" value="{{ $offer['lspName'] }}" hidden>
                     <input type="text" name="origin" class="form-control" value="{{ $offer['origin'] }}" hidden>
+                    <input type="text" name="portOrigin" class="form-control" value="{{ $offer['portOrigin'] }}" hidden>
                     <input type="text" name="destination" class="form-control" value="{{ $offer['destination'] }}" hidden>
+                    <input type="text" name="portDestination" class="form-control" value="{{ $offer['portDestination'] }}" hidden>
                     <input type="text" name="shipmentMode" class="form-control" value="{{ $offer['shipmentMode'] }}" hidden>
                     <input type="text" name="shipmentType" class="form-control" value="{{ $offer['shipmentType'] }}" hidden>
                     <input type="text" name="transportationMode" class="form-control" value="{{ $offer['transportationMode'] }}" hidden>
-                    <input type="date" name="pickupDate" class="form-control" value="{{ $offer['pickupDate'] }}" hidden>
-                    <input type="date" name="cyClosingDate" class="form-control" value="{{ $offer['cyClosingDate'] }}" hidden>
-                    <input type="date" name="etd" class="form-control" value="{{ $offer['etd'] }}" hidden>
-                    <input type="date" name="eta" class="form-control" value="{{ $offer['eta'] }}" hidden>
-                    <input type="date" name="deliveryDate" class="form-control" value="{{ $offer['deliveryDate'] }}" hidden>
-                    <input type="date" name="arrivalDate" class="form-control" value="{{ $offer['arrivalDate'] }}" hidden>
+                    <input type="datetime" name="pickupDate" class="form-control" value="{{ $offer['pickupDate'] }}" hidden>
+                    <input type="datetime" name="cyClosingDate" class="form-control" value="{{ $offer['cyClosingDate'] }}" hidden>
+                    <input type="datetime" name="etd" class="form-control" value="{{ $offer['etd'] }}" hidden>
+                    <input type="datetime" name="eta" class="form-control" value="{{ $offer['eta'] }}" hidden>
+                    <input type="datetime" name="deliveryDate" class="form-control" value="{{ $offer['deliveryDate'] }}" hidden>
+                    <input type="datetime" name="arrivalDate" class="form-control" value="{{ $offer['arrivalDate'] }}" hidden>
                     <input type="number" name="maxWeight" class="form-control" value="{{ $offer['maxWeight'] }}" hidden>
                     <input type="number" name="maxVolume" class="form-control" value="{{ $offer['maxVolume'] }}" hidden>
                     <input type="number" name="price" class="form-control" value="{{ $offer['price'] }}" hidden>
@@ -372,7 +438,7 @@
                     <input type="number" name="remainingVolume" class="form-control" value="{{ $offer['remainingVolume'] }}" hidden>
                     <input type="number" id="cbmInput" name="total_cbm" hidden>
                     <input type="number" id="totalPriceInput" name="total_price" hidden>
-                    <input type="text" id="selectedServicesInput" name="selected_services" class="form-control" hidden>
+                    {{-- <input type="text" id="selectedServicesInput" name="selected_services" class="form-control" hidden> --}}
                     <input type="number" id="user_id" name="user_id" class="form-control"  value="{{ $offer['user_id'] }}" hidden>
                     <input type="text" id="is_for_lsp" name="is_for_lsp" class="form-control"  value="{{ $offer['is_for_lsp'] }}" hidden>
                     <input type="text" id="is_for_customer" name="is_for_customer" class="form-control"  value="{{ $offer['is_for_customer'] }}" hidden>
@@ -445,11 +511,15 @@
               const name = input.getAttribute('name');
               const newName = name.replace(/\[\d+\]/, `[${itemIndex}]`);
               input.setAttribute('name', newName);
-              input.value = '';
+              if (input.tagName === "SELECT") {
+                input.selectedIndex = 0;
+              } else {
+                input.value = '';
+              }
             });
 
             container.appendChild(newItem);
-            registerCBMListeners(); // <-- Tambahkan ini
+            registerCBMListeners(); // 
           });
 
           // Event delegation untuk tombol hapus
@@ -458,7 +528,7 @@
               const rows = document.querySelectorAll('.item-row');
               if (rows.length > 1) {
                 e.target.closest('.item-row').remove();
-                calculateCBM(); // <-- Tambahkan ini agar card langsung update
+                calculateCBM(); 
               } else {
                 alert("Minimal harus ada satu item.");
               }
@@ -469,35 +539,58 @@
         <script>
           function registerCBMListeners() {
             document.querySelectorAll(".item input").forEach(input => {
-              input.removeEventListener("input", calculateCBM); // Hindari duplikasi
+              input.removeEventListener("input", calculateCBM);
               input.addEventListener("input", calculateCBM);
             });
-          }
-          window.onload = function() {
-            calculateCBM();
-            registerCBMListeners();
-          };
-
-
-            
+            // Tambahkan event listener untuk select kategori
+            document.querySelectorAll('.item-row select').forEach(select => {
+              select.removeEventListener("change", calculateCBM);
+              select.addEventListener("change", calculateCBM);
+            });
+          }     
             document.getElementById('submitFormButton').addEventListener('click', function () {
                 document.getElementById('orderForm').submit();
             });
 
-            function calculateCBM() {
+          function calculateCBM() {
+            let shipmentType = "{{ $offer['shipmentType'] }}";
+            let cbmPrice = parseFloat("{{ $offer['price'] }}") || 0;
+            let maxVolume = parseFloat("{{ $offer['maxVolume'] }}") || 0;
+            let maxWeightPerCBM = 600;
+
+            let cbmPriceCard = document.getElementById("cbmPriceCard");
+            let cbmCardHTML = "";
+            let totalCBMToBuy = 0;
+            let totalCBM = 0;
+
+            if (shipmentType === 'FCL') {
+              let categorySelect = document.querySelector('select[name="items[0][commodities]"]');
+              let categoryName = categorySelect ? categorySelect.options[categorySelect.selectedIndex].text : 'Barang';
+              let qty = parseFloat(document.querySelector('input[name="items[0][qty]"]')?.value) || 0;
+
+              let cbmToBuy = qty * maxVolume;
+              totalCBMToBuy = cbmToBuy;
+              totalCBM = cbmToBuy;
+
+              let subtotal = cbmToBuy * cbmPrice;
+
+              cbmCardHTML += `
+                <div class="card bg-light-primary mb-1">
+                  <div class="card-body p-3">
+                    <div class="row">
+                      <div class="col-6">
+                        <p class="mb-0 text-black">${qty}x Container : ${cbmToBuy} CBM</p>
+                      </div>
+                      <div class="col-6 text-end">
+                        <p class="mb-0 text-black">Rp. ${subtotal.toLocaleString("id-ID")}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `;
+            } else {
               const items = document.querySelectorAll(".item");
-              let totalCBMToBuy = 0;
-              let totalCBM = 0;
-              let cbmPrice = parseFloat("{{ $offer['price'] }}") || 0;
-              let shipmentType = "{{ $offer['shipmentType'] }}";
-              let maxVolume = parseFloat("{{ $offer['maxVolume'] }}") || 0;
-              let maxWeightPerCBM = 600;
-
-              let cbmPriceCard = document.getElementById("cbmPriceCard");
-              let cbmCardHTML = "";
-
               items.forEach((item, idx) => {
-                // Ambil nama kategori dari select
                 let categorySelect = item.closest('.item-row').querySelector('select[name^="items"]');
                 let categoryName = categorySelect ? categorySelect.options[categorySelect.selectedIndex].text : `Barang ${idx+1}`;
 
@@ -513,22 +606,19 @@
 
                 let cbmRounded = 0, cbmByWeight = 0, cbmByVolume = 0, cbmToBuy = 0;
 
-                if (shipmentType === 'LCL') {
-                  let cbm = lengthM * widthM * heightM;
-                  cbmRounded = Math.ceil(cbm * 1000) / 1000;
-                  cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
-                  cbmByVolume = Math.ceil(cbmRounded);
-                  let extraCBM = 0;
-                  if (length > 100) extraCBM++;
-                  if (width > 100) extraCBM++;
-                  if (height > 100) extraCBM++;
-                  cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) * qty;
-                } else {
-                  cbmToBuy = maxVolume * qty;
-                }
-
+                let cbm = lengthM * widthM * heightM;
+                cbmRounded = Math.ceil(cbm * 1000) / 1000;
+                cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
+                cbmByVolume = Math.ceil(cbmRounded);
+                let volumeInput = item.querySelector('.volume');
+                let extraCBM = 0;
+                if (length > 100) extraCBM++;
+                if (width > 100) extraCBM++;
+                if (height > 100) extraCBM++;
+                cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) * qty;
                 totalCBM += cbmRounded * qty;
                 totalCBMToBuy += cbmToBuy;
+                if (volumeInput) volumeInput.value = totalCBMToBuy;
 
                 let subtotal = cbmToBuy * cbmPrice;
 
@@ -547,18 +637,15 @@
                   </div>
                 `;
               });
-
-              cbmPriceCard.innerHTML = cbmCardHTML;
-
-              document.getElementById("cbmResult").innerText = totalCBM.toFixed(3);
-              document.getElementById("cbmToBuy").innerText = totalCBMToBuy;
-
-              updateTotalPrice();
-              console.log({
-                totalCBM,
-                totalCBMToBuy
-              });
             }
+
+            cbmPriceCard.innerHTML = cbmCardHTML;
+            document.getElementById("cbmResult").innerText = totalCBM.toFixed(3);
+            document.getElementById("cbmToBuy").innerText = totalCBMToBuy;
+
+            updateTotalPrice();
+            // console.log({ totalCBM, totalCBMToBuy });
+          }
           function updateTotalPrice() {
             let totalPrice = 0;
             let cbmToBuy = parseInt(document.getElementById("cbmToBuy").innerText) || 0;
@@ -576,7 +663,6 @@
           function updateServices() {
             let selectedServices = document.querySelectorAll(".service-checkbox:checked");
             let servicePriceList = document.getElementById("servicePriceList");
-            let selectedServicesInput = document.getElementById("selectedServicesInput");
             servicePriceList.innerHTML = ""; 
             let selectedServiceNames = []; 
 
@@ -600,7 +686,6 @@
                     </div>
                 `;
             });
-            selectedServicesInput.value = selectedServiceNames.join(", ");
             updateTotalPrice();
         }
           document.querySelectorAll(".service-checkbox").forEach(checkbox => {
@@ -637,6 +722,14 @@
           }
       
           document.addEventListener("DOMContentLoaded", renderContainer);
+          document.addEventListener("DOMContentLoaded", function() {
+            if ("{{ $offer['shipmentType'] }}" === "FCL") {
+              document.querySelector('input[name="items[0][qty]"]').addEventListener('input', calculateCBM);
+              document.querySelector('select[name="items[0][commodities]"]').addEventListener('change', calculateCBM);
+            }
+            registerCBMListeners();
+            calculateCBM();
+          });
         </script>
     
 @endsection
