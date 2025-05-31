@@ -149,14 +149,6 @@
                 </div>
               </div> 
             </div> 
-        </div>
-
-
-      
-      
-      
-        
-
       <form action="/order/perform" method="POST" id="orderForm">
         @csrf
         <div class="row">
@@ -251,86 +243,56 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="mb-3">Form Pemesanan</h4>
-                  @if ($offer['shipmentType'] == 'LCL')
-                  <div class="row">
-                    <div class="col-4">
-                        <div class="form-group mb-3">
-                            <label class="form-label">Panjang (cm)</label>
-                            <input type="number" id="length" name="length" class="form-control" placeholder="cm" value="{{ old('length') }}" oninput="calculateCBM()">
-                            @error('length') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group mb-3">
-                            <label class="form-label">Lebar (cm)</label>
-                            <input type="number" id="width" name="width" class="form-control" placeholder="cm" value="{{ old('width') }}" oninput="calculateCBM()">
-                            @error('width') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group mb-3">
-                            <label class="form-label">Tinggi (cm)</label>
-                            <input type="number" id="height" name="height" class="form-control" placeholder="cm" value="{{ old('height') }}" oninput="calculateCBM()">
-                            @error('height') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                        </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="form-group mb-3">
-                        <label class="form-label">Berat (kg)</label>
-                        <input type="number" id="weight" name="weight" class="form-control" placeholder="kg" value="{{ old('weight') }}" oninput="calculateCBM()">
-                        @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                      </div>
-                    </div>
-
-                  @else
-                  
-                  <div class="form-group mb-3">
-                    <label class="form-label">Volume (CBM)</label>
-                    <input type="number" id="volume" name="volume" class="form-control" placeholder="CBM" value="{{ $offer['maxVolume'] }}" oninput="calculateCBM()" readonly>
-                    @error('volume') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                  </div>
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="form-group mb-3">
-                        <label class="form-label">Berat (kg)</label>
-                        <input type="number" id="weight" name="weight" class="form-control" placeholder="kg" value="{{ $offer['maxWeight'] }}" oninput="calculateCBM()" readonly>
-                        @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                      </div>
-                    </div>
-                  @endif
-                    <div class="col-6">
-                      <div class="form-group mb-3">
-                        <label class="form-label">Qty</label>
-                        <input type="number" id="qty" name="qty" class="form-control" placeholder="unit" value="{{ old('qty') }}" oninput="calculateCBM()">
-                        @error('qty') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group mb-3">
-                        <label class="form-label">Tipe Barang</label>
-                        <select class="form-control" name="commodities" id="commodities">
+                  <div id="itemsContainer">
+                    <div class="item-row border p-3 mb-3">
+                       <div class="row">
+                        <div class="col-md-12">
+                          <select class="form-control" name="items[0][commodities]">
                             @foreach ($categories as $category)
-                            <option value="{{$category->name}}">{{$category->code}} - {{$category->name}}</option>
+                              <option value="{{$category->name}}">{{$category->code}} - {{$category->name}}</option>
                             @endforeach
-                            {{-- <option value="Parfum">Parfum</option>
-                            <option value="Binatang">Binatang</option> --}}
-                        </select>                            
-                        @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                          </select>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="row mt-2">
+                          <div class="col-4">
+                            <input type="number" name="items[0][length]" class="form-control length" placeholder="Panjang (cm)">
+                          </div>
+                          <div class="col-4">
+                            <input type="number" name="items[0][width]" class="form-control width" placeholder="Lebar (cm)">
+                          </div>
+                          <div class="col-4">
+                            <input type="number" name="items[0][height]" class="form-control height" placeholder="Tinggi (cm)">
+                          </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-6">
+                            <input type="number" name="items[0][weight]" class="form-control weight" placeholder="Berat (kg)">
+                          </div>
+                          <div class="col-6">
+                            <input type="number" name="items[0][qty]" class="form-control qty" placeholder="Qty">
+                          </div>
+                        </div>
+                      </div>
+
+                     
+                      <div class="text-end mt-2">
+                        <button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button>
                       </div>
                     </div>
                   </div>
-
+                  <div class="text-end mb-3">
+                    <button type="button" id="addItemBtn" class="btn btn-secondary">+ Tambah Barang</button>
+                  </div>
+                  <hr>
                   <div class="row">
                     <div class="col-12">
                         <p class="fw-bold">Volume: <span id="cbmResult">0</span> CBM</p>
                         <p class="fw-bold">CBM yang Harus Dibeli: <span id="cbmToBuy">0</span> CBM</p>
                     </div>
-                </div>
-
+                  </div>
+                  <hr>
                   <div class="row">
                     <div class="col">
                       <label class="form-label">Daftar Layanan</label>
@@ -348,7 +310,7 @@
                       @endforeach
                     </div>
                   </div>
-                  <br>
+                  <hr>
                   <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">Nama Penerima</label>
@@ -366,30 +328,30 @@
                   <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">Alamat Asal</label>
-                      <textarea class="form-control" name="originAddress" rows="4" placeholder="Alamat Asal">{{ old('originAddress') }}</textarea>
+                      <textarea class="form-control" name="originAddress" rows="2" placeholder="Alamat Asal">{{ old('originAddress') }}</textarea>
                       @error('originAddress') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
                   <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">Alamat Tujuan</label>
-                      <textarea class="form-control" name="destinationAddress" rows="4" placeholder="Alamat Tujuan">{{ old('destinationAddress') }}</textarea>
+                      <textarea class="form-control" name="destinationAddress" rows="2" placeholder="Alamat Tujuan">{{ old('destinationAddress') }}</textarea>
                       @error('destinationAddress') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
                   <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">Informasi Tambahan</label>
-                      <textarea class="form-control" name="description" rows="4" placeholder="Informasi Tambahan">{{ old('description') }}</textarea>
+                      <textarea class="form-control" name="description" rows="2" placeholder="Informasi Tambahan">{{ old('description') }}</textarea>
                       @error('description') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
 
                   <!-- Input Hidden-->
                   <div class="row">
-                    <input type="number" id="height" name="height" class="form-control" placeholder="cm" value="0" hidden>
+                    {{-- <input type="number" id="height" name="height" class="form-control" placeholder="cm" value="0" hidden>
                     <input type="number" id="width" name="width" class="form-control" placeholder="cm" value="0" hidden>
-                    <input type="number" id="length" name="length" class="form-control" placeholder="cm" value="0" hidden>
+                    <input type="number" id="length" name="length" class="form-control" placeholder="cm" value="0" hidden> --}}
                     <input type="text" name="noOffer" class="form-control" value="{{ $offer['noOffer'] }}" hidden>
                     <input type="text" name="lspName" class="form-control" value="{{ $offer['lspName'] }}" hidden>
                     <input type="text" name="origin" class="form-control" value="{{ $offer['origin'] }}" hidden>
@@ -470,75 +432,133 @@
                 </div>
             </div>
         </div>
-    
         <script>
-              window.onload = function() {
-                calculateCBM();
-            };
+          let itemIndex = 1;
+
+          document.getElementById('addItemBtn').addEventListener('click', function () {
+            const container = document.getElementById('itemsContainer');
+            const newItem = document.querySelector('.item-row').cloneNode(true);
+
+            const itemIndex = container.querySelectorAll('.item-row').length;
+
+            newItem.querySelectorAll('input, select').forEach((input) => {
+              const name = input.getAttribute('name');
+              const newName = name.replace(/\[\d+\]/, `[${itemIndex}]`);
+              input.setAttribute('name', newName);
+              input.value = '';
+            });
+
+            container.appendChild(newItem);
+            registerCBMListeners(); // <-- Tambahkan ini
+          });
+
+          // Event delegation untuk tombol hapus
+          document.getElementById('itemsContainer').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-item')) {
+              const rows = document.querySelectorAll('.item-row');
+              if (rows.length > 1) {
+                e.target.closest('.item-row').remove();
+                calculateCBM(); // <-- Tambahkan ini agar card langsung update
+              } else {
+                alert("Minimal harus ada satu item.");
+              }
+            }
+          });
+        </script>
+
+        <script>
+          function registerCBMListeners() {
+            document.querySelectorAll(".item input").forEach(input => {
+              input.removeEventListener("input", calculateCBM); // Hindari duplikasi
+              input.addEventListener("input", calculateCBM);
+            });
+          }
+          window.onload = function() {
+            calculateCBM();
+            registerCBMListeners();
+          };
+
+
+            
             document.getElementById('submitFormButton').addEventListener('click', function () {
                 document.getElementById('orderForm').submit();
             });
 
             function calculateCBM() {
-              let length = parseFloat(document.getElementById("length")?.value) || 0;
-              let width = parseFloat(document.getElementById("width")?.value) || 0;
-              let height = parseFloat(document.getElementById("height")?.value) || 0;
-              let weight = parseFloat(document.getElementById("weight")?.value) || 0;
-              let volume = parseFloat(document.getElementById("volume")?.value) || 0;
-              let qty = parseFloat(document.getElementById("qty")?.value) || 0;
-
-              let lengthM = length / 100;
-              let widthM = width / 100;
-              let heightM = height / 100;
-
-              let cbm, cbmRounded, cbmByWeight, cbmByVolume;
-              let maxWeightPerCBM = 600;
-              
+              const items = document.querySelectorAll(".item");
+              let totalCBMToBuy = 0;
+              let totalCBM = 0;
+              let cbmPrice = parseFloat("{{ $offer['price'] }}") || 0;
               let shipmentType = "{{ $offer['shipmentType'] }}";
               let maxVolume = parseFloat("{{ $offer['maxVolume'] }}") || 0;
-              let maxWeight = parseFloat("{{ $offer['maxWeight'] }}") || 0;
-              let cbmPrice = parseFloat("{{ $offer['price'] }}") || 0;
+              let maxWeightPerCBM = 600;
 
-              if (shipmentType === 'LCL') {
-                  cbm = lengthM * widthM * heightM;
+              let cbmPriceCard = document.getElementById("cbmPriceCard");
+              let cbmCardHTML = "";
+
+              items.forEach((item, idx) => {
+                // Ambil nama kategori dari select
+                let categorySelect = item.closest('.item-row').querySelector('select[name^="items"]');
+                let categoryName = categorySelect ? categorySelect.options[categorySelect.selectedIndex].text : `Barang ${idx+1}`;
+
+                let length = parseFloat(item.querySelector(".length")?.value) || 0;
+                let width = parseFloat(item.querySelector(".width")?.value) || 0;
+                let height = parseFloat(item.querySelector(".height")?.value) || 0;
+                let weight = parseFloat(item.querySelector(".weight")?.value) || 0;
+                let qty = parseFloat(item.querySelector(".qty")?.value) || 0;
+
+                let lengthM = length / 100;
+                let widthM = width / 100;
+                let heightM = height / 100;
+
+                let cbmRounded = 0, cbmByWeight = 0, cbmByVolume = 0, cbmToBuy = 0;
+
+                if (shipmentType === 'LCL') {
+                  let cbm = lengthM * widthM * heightM;
                   cbmRounded = Math.ceil(cbm * 1000) / 1000;
                   cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
                   cbmByVolume = Math.ceil(cbmRounded);
-                  extraCBM = 0;
+                  let extraCBM = 0;
                   if (length > 100) extraCBM++;
                   if (width > 100) extraCBM++;
                   if (height > 100) extraCBM++;
                   cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) * qty;
-              } else {
-                  cbmRounded = maxVolume;
-                  cbmByWeight = maxWeight;
-                  cbmByVolume = Math.ceil(cbmRounded);
+                } else {
                   cbmToBuy = maxVolume * qty;
-              }
+                }
 
-              let totalCBMPrice = cbmToBuy * cbmPrice;
+                totalCBM += cbmRounded * qty;
+                totalCBMToBuy += cbmToBuy;
 
-              document.getElementById("cbmResult").innerText = cbmRounded.toFixed();
-              document.getElementById("cbmToBuy").innerText = cbmToBuy;
+                let subtotal = cbmToBuy * cbmPrice;
 
-              let cbmPriceCard = document.getElementById("cbmPriceCard");
-              cbmPriceCard.innerHTML = `
+                cbmCardHTML += `
                   <div class="card bg-light-primary mb-1">
-                      <div class="card-body p-3">
-                          <div class="row">
-                              <div class="col-6">
-                                  <p class="mb-0 text-black">Total CBM: ${cbmToBuy}</p>
-                              </div>
-                              <div class="col-6 text-end">
-                                  <p class="mb-0 text-black">Rp. ${totalCBMPrice.toLocaleString("id-ID")}</p>
-                              </div>
-                          </div>
+                    <div class="card-body p-3">
+                      <div class="row">
+                        <div class="col-6">
+                          <p class="mb-0 text-black">${categoryName} ${cbmToBuy} CBM</p>
+                        </div>
+                        <div class="col-6 text-end">
+                          <p class="mb-0 text-black">Rp. ${subtotal.toLocaleString("id-ID")}</p>
+                        </div>
                       </div>
+                    </div>
                   </div>
-              `;
+                `;
+              });
+
+              cbmPriceCard.innerHTML = cbmCardHTML;
+
+              document.getElementById("cbmResult").innerText = totalCBM.toFixed(3);
+              document.getElementById("cbmToBuy").innerText = totalCBMToBuy;
 
               updateTotalPrice();
-          }
+              console.log({
+                totalCBM,
+                totalCBMToBuy
+              });
+            }
           function updateTotalPrice() {
             let totalPrice = 0;
             let cbmToBuy = parseInt(document.getElementById("cbmToBuy").innerText) || 0;
