@@ -19,7 +19,7 @@ class SearchRouteController extends Controller
     {
         $query = offersModel::where('is_for_customer', true)
             ->where('status', "active")
-            ->whereDate('shippingDate', '>=', Carbon::today());
+            ->whereDate('etd', '>=', Carbon::today());
     
         $searchPerformed = false;
     

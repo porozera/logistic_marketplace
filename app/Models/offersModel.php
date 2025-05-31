@@ -13,7 +13,7 @@ class offersModel extends Model
     protected $table = 'offers';
     public $timestamps = true;
     protected $fillable = [
-        'lsp_id',
+        'user_id',
         'container_id',
         'truck_first_id',
         'truck_second_id',
@@ -49,29 +49,56 @@ class offersModel extends Model
 
     public function getEstimatedDaysAttribute()
     {
-        $shippingDate = Carbon::parse($this->shippingDate);
-        $estimationDate = Carbon::parse($this->estimationDate);
-        return $shippingDate->diffInDays($estimationDate);
+        // Prioritas penentuan start date: pickupDate > etd
+        $startDate = $this->pickupDate ?? $this->etd ?? null;
+
+        // Prioritas penentuan end date: arrivalDate > deliveryDate
+        $endDate = $this->arrivalDate ?? $this->deliveryDate ?? null;
+
+        if ($startDate && $endDate) {
+            $start = Carbon::parse($startDate);
+            $end = Carbon::parse($endDate);
+
+            return $start->diffInDays($end);
+        }
+
+        // Jika tidak cukup data untuk menghitung estimasi
+        return null;
     }
 
-    public function getLoadingDateFormattedAttribute()
+    public function getETA()
     {
-        return Carbon::parse($this->loadingDate)->translatedFormat('d F Y');
+        return Carbon::parse($this->eta)->translatedFormat('d F Y');
     }
 
-    public function getShippingDateFormattedAttribute()
+    public function getETD()
     {
-        return Carbon::parse($this->shippingDate)->translatedFormat('d F Y');
+        return Carbon::parse($this->etd)->translatedFormat('d F Y');
     }
 
-    public function getEstimationDateFormattedAttribute()
+    public function getpickupDate()
     {
-        return Carbon::parse($this->estimationDate)->translatedFormat('d F Y');
+        return Carbon::parse($this->pickupDate)->translatedFormat('d F Y');
     }
 
-    public function lsp()
+    public function getcyclosingDate()
     {
-        return $this->belongsTo(User::class, 'lsp_id');
+        return Carbon::parse($this->cyClosingDate)->translatedFormat('d F Y');
+    }
+
+    public function getdeliveryDate()
+    {
+        return Carbon::parse($this->deliveryDate)->translatedFormat('d F Y');
+    }
+
+    public function getarrivalDate()
+    {
+        return Carbon::parse($this->arrivalDate)->translatedFormat('d F Y');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function truck_first()

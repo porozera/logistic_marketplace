@@ -19,7 +19,7 @@
               </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                    <li class="breadcrumb-item" aria-current="page">Cari Rute</li>
+                    <li class="breadcrumb-item" aria-current="page">Search Routes</li>
                 </ul>
             </div>
           </div>
@@ -30,7 +30,7 @@
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-sm-12 col-md-12 col-xl-12">
-        <h4 class="m-b-10">Cari Rute</h4>
+        <h4 class="m-b-10">Search Routes</h4>
           <div class="card">
             <div class="card-body">
                 <form action="{{ route('search-route') }}">
@@ -261,7 +261,7 @@
                                 </div>
                             </div>
                             <div class="col-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
-                                @if ($item['shipmentMode'] == 'D2D')
+                                {{-- @if ($item['shipmentMode'] == 'D2D')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                         <i class="ti ti-truck-delivery me-1"></i> D2D
                                     </button>   
@@ -276,6 +276,15 @@
                                 @elseif( $item['shipmentMode'] == 'P2D')
                                     <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                         <i class="ti ti-truck-delivery me-1"></i> P2D
+                                    </button>
+                                @endif --}}
+                                @if ($item['transportationMode'] == 'darat')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-truck-delivery me-1"></i> Darat
+                                    </button>   
+                                @elseif( $item['transportationMode'] == 'laut')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti ti-ship me-1"></i> Laut
                                     </button>
                                 @endif
                                 @if ($item['shipmentType'] == 'LCL')
@@ -308,23 +317,20 @@
                             <div class="col-1 d-flex align-items-start justify-content-start">
                                 <p style="font-weight: normal;">Asal</p>
                             </div>
-                            {{-- <div class="col-1">
-                                <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
-                                <div class="bg-primary mx-auto" style="width: 1px; height: 50px;"></div>
-                            </div> --}}
-                            <div class="col-2">
+                            <div class="col-3">
                                 <p class="fw-bold text-primary">{{$item->origin}}</p>
                             </div>
-                            <div class="col-2">
-                                <p style="font-weight: normal;">Departure</p>
+                             <div class="col-1 d-flex align-items-start justify-content-start">
+                                <p style="font-weight: normal;">Tujuan</p>
                             </div>
                             <div class="col-3">
-                                <p class="text-primary fw-bold">{{$item->shipping_date_formatted}}</p>
+                                <p class="fw-bold text-primary">{{$item->destination}}</p>
                             </div>
+                            
                             <div class="col-4 d-flex flex-column flex-sm-row align-items-start justify-content-end">
                                 @if ($item['shipmentType'] == 'FCL')
                                     <div class="d-flex flex-column align-items-end">
-                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
+                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
                                         <p class="mb-0 ms-sm-2 mt-sm-1 p">/Container</p>
                                     </div>
                                 @else
@@ -337,20 +343,17 @@
                             
                         </div>
                         <div class="row">
-                            <div class="col-1 d-flex align-items-start justify-content-start">
-                                <p style="font-weight: normal;">Tujuan</p>
-                            </div>
-                            {{-- <div class="col-1">
-                                <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
-                            </div> --}}
-                            <div class="col-2">
-                                <p class="fw-bold text-primary">{{$item->destination}}</p>
-                            </div>
-                            <div class="col-2">
-                                <p class="mb-0" style="font-weight: normal;">Est. Arrival</p>
+                           <div class="col-1">
+                                <p style="font-weight: normal;">ETD</p>
                             </div>
                             <div class="col-3">
-                                <p class="text-primary fw-bold">{{$item->estimation_date_formatted}}</p>
+                                <p class="text-primary">{{$item->getETD()}}</p>
+                            </div>
+                            <div class="col-1">
+                                <p class="mb-0" style="font-weight: normal;">ETA</p>
+                            </div>
+                            <div class="col-3">
+                                <p class="text-primary">{{$item->getETA()}}</p>
                             </div>
                             <div class="col-4 text-end">
                                 <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50 w-md-50"><span class="mb-2">Pilih</span></a>

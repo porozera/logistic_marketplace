@@ -9,8 +9,7 @@ return new class extends Migration {
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('lsp_id');
-            $table->foreign('lsp_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('truck_first_id')->nullable();
             $table->unsignedBigInteger('truck_second_id')->nullable();
             $table->unsignedBigInteger('container_id')->nullable();

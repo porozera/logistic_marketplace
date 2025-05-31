@@ -31,8 +31,7 @@ return new class extends Migration {
             $table->enum('cargoType', ['General Cargo', 'Special Cargo', 'Dangerous Cargo'])->nullable();
             $table->enum('status', ['active', 'deactive']);
             $table->decimal('price', 15, 2);
-            $table->unsignedBigInteger('lsp_id');
-            $table->foreign('lsp_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('requestOffer_id')->constrained('request_routes')->onDelete('cascade');
             $table->unsignedBigInteger('truck_first_id')->nullable();
             $table->unsignedBigInteger('truck_second_id')->nullable();

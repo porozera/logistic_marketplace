@@ -34,7 +34,7 @@ class Bid extends Model
         'status',
         'size',
         'price',
-        'lsp_id',
+        'user_id',
         'requestOffer_id',
         'truck_first_id',
         'truck_second_id',
@@ -42,9 +42,9 @@ class Bid extends Model
         'container_id',
     ];
 
-    public function lsp()
+        public function user()
     {
-        return $this->belongsTo(User::class, 'lsp_id');
+        return $this->belongsTo(User::class);
     }
 
     public function truck_first()
