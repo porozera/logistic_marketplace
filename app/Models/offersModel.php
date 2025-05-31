@@ -53,7 +53,7 @@ class offersModel extends Model
         $startDate = $this->pickupDate ?? $this->etd ?? null;
 
         // Prioritas penentuan end date: arrivalDate > deliveryDate
-        $endDate = $this->arrivalDate ?? $this->deliveryDate ?? null;
+        $endDate = $this->arrivalDate ?? $this->eta ?? null;
 
         if ($startDate && $endDate) {
             $start = Carbon::parse($startDate);
@@ -68,31 +68,49 @@ class offersModel extends Model
 
     public function getETA()
     {
+        if (!$this->eta) {
+        return 'Tidak ada informasi tanggal';
+        }
         return Carbon::parse($this->eta)->translatedFormat('d F Y');
     }
 
     public function getETD()
     {
+        if (!$this->etd) {
+        return 'Tidak ada informasi tanggal';
+        }
         return Carbon::parse($this->etd)->translatedFormat('d F Y');
     }
 
     public function getpickupDate()
     {
+        if (!$this->pickupDate) {
+        return 'Tidak ada informasi tanggal';
+        }
         return Carbon::parse($this->pickupDate)->translatedFormat('d F Y');
     }
 
     public function getcyclosingDate()
     {
+        if (!$this->cyClosingDate) {
+        return 'Tidak ada informasi tanggal';
+        }
         return Carbon::parse($this->cyClosingDate)->translatedFormat('d F Y');
     }
 
     public function getdeliveryDate()
     {
+        if (!$this->deliveryDate) {
+        return 'Tidak ada informasi tanggal';
+        }
         return Carbon::parse($this->deliveryDate)->translatedFormat('d F Y');
     }
 
     public function getarrivalDate()
     {
+        if (!$this->arrivalDate) {
+        return 'Tidak ada informasi tanggal';
+        }
         return Carbon::parse($this->arrivalDate)->translatedFormat('d F Y');
     }
 

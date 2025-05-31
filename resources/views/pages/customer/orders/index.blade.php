@@ -56,9 +56,9 @@
               </div>
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                  <li class="breadcrumb-item"><a href="javascript: void(0)">Cari Rute</a></li>
-                  <li class="breadcrumb-item"><a href="javascript: void(0)">Detail Rute</a></li>
-                  <li class="breadcrumb-item" aria-current="page">Detail Pemesanan</li>
+                  <li class="breadcrumb-item"><a href="javascript: void(0)">Search Routes</a></li>
+                  <li class="breadcrumb-item"><a href="javascript: void(0)">Detail Offer</a></li>
+                  <li class="breadcrumb-item" aria-current="page">Order Form</li>
                 </ul>
             </div>
           </div>
@@ -67,7 +67,7 @@
     <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-12 col-xl-12">
-          <h4 class="m-b-10">Detail Pemesanan</h4>
+          {{-- <h4 class="m-b-10">Detail Order</h4> --}}
             <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -88,7 +88,7 @@
                         </div>
             
                         <div class="col-md-4 d-flex justify-content-center gap-2">
-                          @if ($offer->shipmentMode == 'D2D')
+                          {{-- @if ($offer->shipmentMode == 'D2D')
                               <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
                                   <i class="ti ti-truck-delivery me-1"></i> D2D
                               </button>   
@@ -108,13 +108,13 @@
 
                             <button type="button" class="btn btn-success rounded-pill">
                               {{ $offer['shipmentType'] == 'LCL' ? 'Less Container Load' : 'Full Container Load' }}
-                            </button>
+                            </button> --}}
                         
                                                                     
                         </div>
             
                         <div class="col-md-2 text-end">
-                          <p class="m-b-10 text-primary">ID : {{ $offer['noOffer'] }}</p>
+                          <p class="m-b-10 text-primary">No Offer : {{ $offer['noOffer'] }}</p>
                         </div>
                     </div> 
 
@@ -164,14 +164,14 @@
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
-                  <div class="row">
+                  {{-- <div class="row">
                     <div class="col-6">
                       <p class="mb-3">Tanggal Muat Barang</p>
                     </div>
                     <div class="col-6 text-end">
-                      <p class="mb-3 text-primary">{{$offer['loading_date_formatted']}}</p>
+                      <p class="mb-3 text-primary">{{$offer->getpickup}}</p>
                     </div>
-                  </div>
+                  </div> --}}
                   <div class="row">
                     <div class="col-6">
                       <p class="mb-3">Sisa Volume :</p>
@@ -193,10 +193,6 @@
                         <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <p>Alamat Tujuan:</p>
-                    <p class="text-primary">{{ optional($order)->address ?? '-' }}</p>
                   </div>
 
                   <hr>
@@ -289,10 +285,6 @@
                     </div>
 
                   @else
-
-                  <input type="number" id="height" name="height" class="form-control" placeholder="cm" value="0" hidden>
-                  <input type="number" id="width" name="width" class="form-control" placeholder="cm" value="0" hidden>
-                  <input type="number" id="length" name="length" class="form-control" placeholder="cm" value="0" hidden>
                   
                   <div class="form-group mb-3">
                     <label class="form-label">Volume (CBM)</label>
@@ -308,8 +300,16 @@
                       </div>
                     </div>
                   @endif
-
                     <div class="col-6">
+                      <div class="form-group mb-3">
+                        <label class="form-label">Qty</label>
+                        <input type="number" id="qty" name="qty" class="form-control" placeholder="unit" value="{{ old('qty') }}" oninput="calculateCBM()">
+                        @error('qty') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
                       <div class="form-group mb-3">
                         <label class="form-label">Tipe Barang</label>
                         <select class="form-control" name="commodities" id="commodities">
@@ -351,19 +351,31 @@
                   <br>
                   <div class="row">
                     <div class="form-group mb-3">
-                      <label class="form-label">No Telepon</label>
-                      <input type="text" name="telpNumber" class="form-control" placeholder="+62" value="{{ old('telpNumber') }}">
-                      @error('telpNumber') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                      <label class="form-label">Nama Penerima</label>
+                      <input type="text" name="receiverName" class="form-control" placeholder="Nama Penerima" value="{{ old('receiverName') }}">
+                      @error('receiverName') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
                   <div class="row">
-                    @if (optional($order)->address == null)
+                    <div class="form-group mb-3">
+                      <label class="form-label">No Telepon Penerima</label>
+                      <input type="text" name="receiverTelpNumber" class="form-control" placeholder="+62" value="{{ old('receiverTelpNumber') }}">
+                      @error('receiverTelpNumber') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group mb-3">
+                      <label class="form-label">Alamat Asal</label>
+                      <textarea class="form-control" name="originAddress" rows="4" placeholder="Alamat Asal">{{ old('originAddress') }}</textarea>
+                      @error('originAddress') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                    </div>
+                  </div>
+                  <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">Alamat Tujuan</label>
-                      <textarea class="form-control" name="address" rows="4" placeholder="Alamat Tujuan">{{ old('address') }}</textarea>
-                      @error('address') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                      <textarea class="form-control" name="destinationAddress" rows="4" placeholder="Alamat Tujuan">{{ old('destinationAddress') }}</textarea>
+                      @error('destinationAddress') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
-                    @endif
                   </div>
                   <div class="row">
                     <div class="form-group mb-3">
@@ -375,21 +387,22 @@
 
                   <!-- Input Hidden-->
                   <div class="row">
+                    <input type="number" id="height" name="height" class="form-control" placeholder="cm" value="0" hidden>
+                    <input type="number" id="width" name="width" class="form-control" placeholder="cm" value="0" hidden>
+                    <input type="number" id="length" name="length" class="form-control" placeholder="cm" value="0" hidden>
                     <input type="text" name="noOffer" class="form-control" value="{{ $offer['noOffer'] }}" hidden>
                     <input type="text" name="lspName" class="form-control" value="{{ $offer['lspName'] }}" hidden>
                     <input type="text" name="origin" class="form-control" value="{{ $offer['origin'] }}" hidden>
                     <input type="text" name="destination" class="form-control" value="{{ $offer['destination'] }}" hidden>
                     <input type="text" name="shipmentMode" class="form-control" value="{{ $offer['shipmentMode'] }}" hidden>
                     <input type="text" name="shipmentType" class="form-control" value="{{ $offer['shipmentType'] }}" hidden>
-                    <input type="date" name="loadingDate" class="form-control" 
-                    value="{{ \Carbon\Carbon::parse($offer['loadingDate'])->format('Y-m-d') }}" hidden>
-             
-                    <input type="date" name="estimationDate" class="form-control" 
-                            value="{{ \Carbon\Carbon::parse($offer['estimationDate'])->format('Y-m-d') }}" hidden>
-                    
-                    <input type="date" name="shippingDate" class="form-control" 
-                            value="{{ \Carbon\Carbon::parse($offer['shippingDate'])->format('Y-m-d') }}" hidden>
-             
+                    <input type="text" name="transportationMode" class="form-control" value="{{ $offer['transportationMode'] }}" hidden>
+                    <input type="date" name="pickupDate" class="form-control" value="{{ $offer['pickupDate'] }}" hidden>
+                    <input type="date" name="cyClosingDate" class="form-control" value="{{ $offer['cyClosingDate'] }}" hidden>
+                    <input type="date" name="etd" class="form-control" value="{{ $offer['etd'] }}" hidden>
+                    <input type="date" name="eta" class="form-control" value="{{ $offer['eta'] }}" hidden>
+                    <input type="date" name="deliveryDate" class="form-control" value="{{ $offer['deliveryDate'] }}" hidden>
+                    <input type="date" name="arrivalDate" class="form-control" value="{{ $offer['arrivalDate'] }}" hidden>
                     <input type="number" name="maxWeight" class="form-control" value="{{ $offer['maxWeight'] }}" hidden>
                     <input type="number" name="maxVolume" class="form-control" value="{{ $offer['maxVolume'] }}" hidden>
                     <input type="number" name="price" class="form-control" value="{{ $offer['price'] }}" hidden>
@@ -407,9 +420,6 @@
                     <input type="text" id="truck_first_id" name="truck_first_id" class="form-control"  value="{{ $offer['truck_first_id'] }}" hidden>
                     <input type="text" id="cargoType" name="cargoType" class="form-control"  value="{{ $offer['cargoType'] }}" hidden>
                     <input type="text" id="container_id" name="container_id" class="form-control"  value="{{ $offer['container_id'] }}" hidden>
-                    @if (optional($order)->address != null)
-                    <input type="text" id="address" name="address" class="form-control"  value="{{ $order['address'] }}" hidden>
-                    @endif
                   </div>
                   <div class="row">
                     <div class="col">
@@ -475,6 +485,7 @@
               let height = parseFloat(document.getElementById("height")?.value) || 0;
               let weight = parseFloat(document.getElementById("weight")?.value) || 0;
               let volume = parseFloat(document.getElementById("volume")?.value) || 0;
+              let qty = parseFloat(document.getElementById("qty")?.value) || 0;
 
               let lengthM = length / 100;
               let widthM = width / 100;
@@ -497,12 +508,12 @@
                   if (length > 100) extraCBM++;
                   if (width > 100) extraCBM++;
                   if (height > 100) extraCBM++;
-                  cbmToBuy = Math.max(cbmByVolume, cbmByWeight) + extraCBM;
+                  cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) * qty;
               } else {
                   cbmRounded = maxVolume;
                   cbmByWeight = maxWeight;
                   cbmByVolume = Math.ceil(cbmRounded);
-                  cbmToBuy = maxVolume;
+                  cbmToBuy = maxVolume * qty;
               }
 
               let totalCBMPrice = cbmToBuy * cbmPrice;

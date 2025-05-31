@@ -72,15 +72,7 @@
                         
                                                                     
                         </div>
-            
-                        <div class="col-md-2 text-end">
-                            <button type="button" class="btn btn-icon btn-light-primary">
-                                <i class="ti ti-copy"></i>
-                            </button>
-                        </div>
-                    </div> 
-
-                    <br>            
+                    </div>    
             
                     <div class="row align-items-center">
                         <div class="col-md-8 d-flex align-items-center justify-content-start mt-2">
@@ -99,7 +91,7 @@
                         <div class="col-md-4 text-end mt-2">
                             <div class="d-flex align-items-center justify-content-end mb-2">
                                 @if ($offer['shipmentType'] == 'FCL')
-                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>
+                                <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price']*$offer['maxVolume'], 0, ',', '.')}}</h4>
                                 <p class="mb-0 ms-2">/Container</p>
                                 @else
                                 <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($offer['price'], 0, ',', '.')}}</h4>

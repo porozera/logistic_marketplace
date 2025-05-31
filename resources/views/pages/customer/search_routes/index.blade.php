@@ -330,7 +330,7 @@
                             <div class="col-4 d-flex flex-column flex-sm-row align-items-start justify-content-end">
                                 @if ($item['shipmentType'] == 'FCL')
                                     <div class="d-flex flex-column align-items-end">
-                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
+                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
                                         <p class="mb-0 ms-sm-2 mt-sm-1 p">/Container</p>
                                     </div>
                                 @else
