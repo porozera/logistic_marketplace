@@ -13,31 +13,33 @@ class offersModel extends Model
     protected $table = 'offers';
     public $timestamps = true;
     protected $fillable = [
+        'lsp_id',
+        'container_id',
+        'truck_first_id',
+        'truck_second_id',
         'noOffer',
-        'lspName',
         'origin',
         'destination',
+        'portOrigin',
+        'portDestination',
+        'transportationMode',
         'shipmentMode',
         'shipmentType',
-        'loadingDate',
-        'shippingDate',
-        'estimationDate',
         'maxWeight',
         'maxVolume',
         'remainingWeight',
         'remainingVolume',
-        'commodities',
+        'cargoType',
         'status',
         'price',
-        'user_id',
+        'pickupDate',
+        'cyClosingDate',
+        'etd',
+        'eta',
+        'deliveryDate',
+        'arrivalDate',
         'is_for_lsp',
         'is_for_customer',
-        'container_id',
-        'truck_first_id',
-        'truck_second_id',
-        'truck_id',
-        'timestamp',
-        'cargoType'
     ];
 
     // protected $attributes = [
@@ -67,9 +69,9 @@ class offersModel extends Model
         return Carbon::parse($this->estimationDate)->translatedFormat('d F Y');
     }
 
-    public function user()
+    public function lsp()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'lsp_id');
     }
 
     public function truck_first()

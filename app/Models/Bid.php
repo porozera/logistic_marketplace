@@ -14,23 +14,27 @@ class Bid extends Model
 
     protected $fillable = [
         'noOffer',
-        'lspName',
         'origin',
         'destination',
+        'portOrigin',
+        'portDestination',
         'shipmentMode',
         'shipmentType',
-        'loadingDate',
-        'shippingDate',
-        'estimationDate',
+        'transportationMode',
+        'pickupDate',
+        'cyClosingDate',
+        'etd',
+        'eta',
+        'deliveryDate',
+        'arrivalDate',
         'maxWeight',
         'maxVolume',
         'remainingWeight',
         'remainingVolume',
-        'commodities',
         'status',
         'size',
         'price',
-        'user_id',
+        'lsp_id',
         'requestOffer_id',
         'truck_first_id',
         'truck_second_id',
@@ -38,9 +42,9 @@ class Bid extends Model
         'container_id',
     ];
 
-    public function user()
+    public function lsp()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'lsp_id');
     }
 
     public function truck_first()

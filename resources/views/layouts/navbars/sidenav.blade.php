@@ -250,29 +250,49 @@
                             <span class="pc-mtext">Profile</span>
                         </a>
                     </li>
+                    <li class="pc-item">
+                        <a href="{{ route('notification-customer') }}" class="pc-link">
+                            <span class="pc-micon position-relative">
+                                <i class="ti ti-mail"></i>
+                                @php
+                                    $unreadNotifications = \App\Models\Notification::where('receiver_id', Auth::id())
+                                        ->where('is_read', 0)
+                                        ->count();
+                                @endphp
+                                @if ($unreadNotifications > 0)
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
+                                        {{ $unreadNotifications }}
+                                        <span class="visually-hidden">unread messages</span>
+                                    </span>
+                                @endif
+                            </span>
+                            <span class="pc-mtext">Inbox</span>
+                        </a>
+                    </li>
                     <li class="pc-item pc-caption">
-                        <label>Penawaran</label>
+                        <label>Offers</label>
                         <i class="ti ti-news"></i>
                     </li>
                     <li class="pc-item">
                         <a href="{{ route('search-route') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-world"></i></span>
-                            <span class="pc-mtext">Cari Rute</span>
+                            <span class="pc-mtext">Search Routes</span>
                         </a>
                     </li>
                     <li class="pc-item">
                         <a href="{{ route('request-route') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-location"></i></span>
-                            <span class="pc-mtext">Permintaan Rute</span>
+                            <span class="pc-mtext">Request Routes</span>
                         </a>
                     </li>
                     <li class="pc-item">
                         <a href="{{ route('list-offer') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
-                            <span class="pc-mtext">Daftar Penawaran</span>
+                            <span class="pc-mtext">Bidding List</span>
                         </a>
                     <li class="pc-item pc-caption">
-                        <label>Pemesanan</label>
+                        <label>Orders</label>
                         <i class="ti ti-news"></i>
                     </li>
                     </li>
@@ -291,41 +311,11 @@
                     <li class="pc-item">
                         <a href="{{ route('review') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-color-picker"></i></span>
-                            <span class="pc-mtext">Daftar Ulasan</span>
+                            <span class="pc-mtext">Review History</span>
                         </a>
                     </li>
                     <li class="pc-item pc-caption">
-                        <label>Pesan</label>
-                        <i class="ti ti-news"></i>
-                    </li>
-                    <li class="pc-item">
-                        <a href="{{ route('notification-customer') }}" class="pc-link">
-                            <span class="pc-micon position-relative">
-                                <i class="ti ti-mail"></i>
-                                @php
-                                    $unreadNotifications = \App\Models\Notification::where('receiver_id', Auth::id())
-                                        ->where('is_read', 0)
-                                        ->count();
-                                @endphp
-                                @if ($unreadNotifications > 0)
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
-                                        {{ $unreadNotifications }}
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
-                                @endif
-                            </span>
-                            <span class="pc-mtext">Kotak Pesan</span>
-                        </a>
-                    </li>
-                    {{-- <li class="pc-item">
-                        <a href="../dashboard/index.html" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-message-circle"></i></span>
-                            <span class="pc-mtext">Chat</span>
-                        </a>
-                    </li> --}}
-                    <li class="pc-item pc-caption">
-                        <label>Bantuan</label>
+                        <label>Helps</label>
                         <i class="ti ti-news"></i>
                     </li>
                     <li class="pc-item">

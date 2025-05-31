@@ -1,6 +1,9 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 @section('title', 'Permintaan Rute')
 @section('content')
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.css" type="text/css">
+
  <!-- [ Main Content ] start -->
  <div class="pc-container">
     <div class="pc-content">
@@ -44,6 +47,55 @@
 
                 <form action="/request-routes/perform" method="POST" id="requestRouteAddForm">
                     @csrf
+                    {{-- <div class="row mb-3">
+                        <div class="col-md-6 ">
+                            <label>Asal:</label>
+                            <div id="origin-geocoder" style="min-width: 300px;"></div>
+                            <input type="text" name="origin_lat" id="origin_lat">
+                            <input type="text" name="origin_lng" id="origin_lng">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Tujuan:</label>
+                            <div id="destination-geocoder" style="min-width: 300px;"></div>
+                            <input type="hidden" name="destination_lat" id="destination_lat">
+                            <input type="hidden" name="destination_lng" id="destination_lng">
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            mapboxgl.accessToken = 'pk.eyJ1IjoiYXVmYXJudWdyYXRhbWFwcyIsImEiOiJjbTkxZ2xkdW4wMHJpMmxvZTl1Z25zZWlrIn0.2pWYizs2qnqxUz6PeW7d-w';
+
+                            const originGeocoder = new MapboxGeocoder({
+                                accessToken: mapboxgl.accessToken,
+                                types: 'place',
+                                placeholder: 'Cari kota asal',
+                                mapboxgl: mapboxgl
+                            });
+
+                            const destinationGeocoder = new MapboxGeocoder({
+                                accessToken: mapboxgl.accessToken,
+                                types: 'place',
+                                placeholder: 'Cari kota tujuan',
+                                mapboxgl: mapboxgl
+                            });
+
+                            originGeocoder.addTo('#origin-geocoder');
+                            destinationGeocoder.addTo('#destination-geocoder');
+
+                            originGeocoder.on('result', function(e) {
+                                const coords = e.result.geometry.coordinates;
+                                document.getElementById('origin_lat').value = coords[1];
+                                document.getElementById('origin_lng').value = coords[0];
+                            });
+
+                            destinationGeocoder.on('result', function(e) {
+                                const coords = e.result.geometry.coordinates;
+                                document.getElementById('destination_lat').value = coords[1];
+                                document.getElementById('destination_lng').value = coords[0];
+                            });
+                        });
+                    </script> --}}
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
@@ -110,8 +162,10 @@
                         <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label class="form-label">Tipe Pengiriman</label>
-                                <input type="text" class="form-control" name="shipmentType" id="shipmentType" value="FCL" readonly>
-                                @error('shipmentType') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                                <select class="form-control" name="shipmentType" id="shipmentType">
+                                    <option value="LCL">LCL</option>
+                                    <option value="FCL">FCL</option>
+                                </select> 
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -244,7 +298,7 @@
                         @endphp
                         @if ($list_request->isEmpty())
                         <tr>
-                            <td colspan="9" class="text-center">Tidak Ada Data Pengiriman</td>
+                            <td colspan="9" class="text-center">Tidak Ada Data Permintaan</td>
                         </tr>
                         @else
                             @foreach ( $list_request as $item)

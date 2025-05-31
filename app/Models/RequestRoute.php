@@ -10,19 +10,15 @@ class RequestRoute extends Model
     public $timestamps = true;
     protected $fillable = [
         'user_id',
-        'username',
         'origin',
         'destination',
         'shipmentType',
         'shipmentMode',
-        'shippingDate',
-        'weight',
-        'volume',
-        'commodities',
+        'transportationMode',
+        'arrivalDate',
         'description',
         'status',
         'deadline',
-        'address',
         'cargoType',
         'container_id'
     ];
