@@ -158,12 +158,12 @@ class OrderController extends Controller
             "invoiceNumber" => 'INV-' . date('YmdHis') . '-' . str_pad(rand(0, 999), 3, '0', STR_PAD_LEFT),
             "paymentStatus" => "Belum Lunas",
             "payment_token" => Str::uuid(),
-            "expires_at" => Carbon::now()->addMinutes(30),
+            "expires_at" => Carbon::now()->addDays(30),
         ]);
 
         $items = $request->input('items', []);
         foreach ($items as $item) {
-            $itemPrice = ($item['volume'] ?? 1) * ($item['price'] ?? 0) * ($item['qty'] ?? 1);
+            $itemPrice = ($item['volume'] ?? 1) * ($attributes['price'] ?? 0);
             UserOrderItem::create([
                 "userOrder_id" => $userOrder->id,
                 "weight" => $item['weight'],

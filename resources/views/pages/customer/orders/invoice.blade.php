@@ -1,7 +1,7 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 @section('title', 'Invoice')
 @section('style')
-<style>
+{{-- <style>
     body {
         font-family: Arial, sans-serif;
         font-size: 14px;
@@ -21,7 +21,7 @@
         text-align: center;
         margin-bottom: 20px;
     }
-    .header h2 {
+    /* .header h2 {
         font-size: 24px;
         margin-bottom: 5px;
         color: #007bff;
@@ -29,7 +29,7 @@
     .header p {
         font-size: 14px;
         color: #666;
-    }
+    } */
     .text-right {
         text-align: right;
     }
@@ -44,6 +44,7 @@
         padding: 8px;
         vertical-align: top;
         border-bottom: 1px solid #ddd;
+        width: 50%
     }
     table tr:last-child td {
         border-bottom: none;
@@ -54,16 +55,50 @@
         color: #333;
     }
     .section-title {
-        font-size: 18px;
+        font-size: 14px;
         font-weight: bold;
         margin-bottom: 10px;
         color: #333;
     }
     .footer p {
-        font-size: 14px;
+        font-size: 12px;
         color: #666;
     }
-</style>
+</style> --}}
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .no-border {
+            border: none;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .underline {
+            text-decoration: underline;
+        }
+        .red {
+            color: red;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -98,86 +133,181 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-8">
-                
-                
-                <div class="invoice-box">
-                    <div class="header">
-                        <h2>INVOICE</h2>
-                        <p class="">SentraLogiX |  Jl. Telekomunikasi No. 1, Bandung Terusan Buahbatu | 08128035211</p>
-                    </div>
-                    <hr>
-                    <table>
-                        <tr>
-                            <td><strong>ID Penawaran:</strong></td>
-                            <td class="text-right">{{ $userOrder->order->noOffer }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tanggal Pembayaran:</strong></td>
-                            <td class="text-right">{{ $userOrder->created_at->format('d-m-Y') }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Status Pembayaran:</strong></td>
-                            <td class="text-right">{{ $userOrder->paymentStatus }}</td>
-                        </tr>
-                    </table>
-                    <div class="section-title">Detail Pengiriman</div>
-                    <table>
-                        <tr>
-                            <td><strong>Nama Penyedia Jasa:</strong></td>
-                            <td class="text-right">{{ $userOrder->order->lspName }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Asal:</strong></td>
-                            <td class="text-right">{{ $userOrder->order->origin }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tujuan:</strong></td>
-                            <td class="text-right">{{ $userOrder->order->destination }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tipe Pengiriman:</strong></td>
-                            <td class="text-right">{{ $userOrder->order->shipmentType }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Mode Pengiriman:</strong></td>
-                            <td class="text-right">{{ $userOrder->order->shipmentMode }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tanggal Pengiriman:</strong></td>
-                            <td class="text-right">{{ \Carbon\Carbon::parse($userOrder->order->shippingDate)->format('d-m-Y') }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Alamat Pengiriman:</strong></td>
-                            <td class="text-right">{{ $userOrder->order->address }}</td>
-                        </tr>
-                    </table>
-                    <div class="section-title">Detail Barang</div>
-                    <table>
-                        <tr>
-                            <td><strong>Jenis Barang:</strong></td>
-                            <td class="text-right">{{ $userOrder->commodities }}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Volume:</strong></td>
-                            <td class="text-right">{{ $userOrder->volume }} CBM</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Berat:</strong></td>
-                            <td class="text-right">{{ $userOrder->weight }} Kg</td>
-                        </tr>
-                    </table>
-                    <div class="section-title">Total Pembayaran</div>
-                    <table>
-                        <tr>
-                            <td><strong>Total:</strong></td>
-                            <td class="text-right total">Rp {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</td>
-                        </tr>
-                    </table>
-                    <div class="footer">
-                        <p>Terima kasih telah menggunakan layanan kami.</p>
-                        <a href="{{ url()->previous() }}" class="btn btn-primary mt-3 w-100">
-                            Back
-                        </a>
+                <div class="card">
+                    <div class="card-body">
+                        <body>
+                        <h4 class="text-center text-primary">INVOICE</h4>
+                        <hr>
+                        <table class="no-border" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border" style="width: 50%">
+                                    <p class="mb-0">SentraLogiX<br>
+                                    Jln Jaksa Agung No 56 Jakarta</p>
+                                </td>
+                                <td class="no-border" style="width: 50%">
+                                    <p class="mb-0">No: {{ $userOrder->invoiceNumber}}<br>
+                                    Tanggal: {{ $userOrder->getinvoicedate()}}</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="no-border mb-0" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border">
+                                <p><strong>Ditujukan Kepada</strong><br>
+                                {{ $userOrder->user->firstName}} {{ $userOrder->user->lastName}}<br>
+                                {{ $userOrder->user->address}}</p>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="no-border mb-0" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border">
+                                <p class="mb-0"><strong>Detail Pengiriman</strong></p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="text-center"><p class="mb-0">Asal</p></th>
+                                    <th class="text-center"><p class="mb-0">Tujuan</p></th>
+                                    <th class="text-center"><p class="mb-0">Tipe Pengiriman</p></th>
+                                    <th class="text-center"><p class="mb-0">Mode Pengiriman</p></th>
+                                    <th class="text-center"><p class="mb-0">ETD</p></th>
+                                    <th class="text-center"><p class="mb-0">ETA</p></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->origin}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->destination}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->shipmentType}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->shipmentMode}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->getetd()}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->geteta()}}</p></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="no-border mb-0 mt-3" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border">
+                                <p class="mb-0"><strong>Detail Muatan</strong></p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="text-center"><p class="mb-0">No</p></th>
+                                    <th class="text-center"><p class="mb-0">Muatan</p></th>
+                                    <th class="text-center"><p class="mb-0">Panjang</p></th>
+                                    <th class="text-center"><p class="mb-0">Lebar</p></th>
+                                    <th class="text-center"><p class="mb-0">Tinggi</p></th>
+                                    <th class="text-center"><p class="mb-0">Qty</p></th>
+                                    <th class="text-center"><p class="mb-0">Berat</p></th>
+                                    <th class="text-center"><p class="mb-0">Volume</p></th>
+                                    <th class="text-center"><p class="mb-0">Harga</p></th>
+                                </tr>
+                            </thead>
+                            <?php
+                            $noItem = 1;
+                            $totalPrice = 0; 
+                            $totalVolume = 0; 
+                            ?>
+                            <tbody>
+                                @foreach ($items as $item )
+                                <tr>
+                                    <td class="text-center"><p class="mb-0">{{ $noItem}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $item->commodities}}</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ (int) $item->length}} cm</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ (int) $item->width}} cm</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ (int) $item->height}} cm</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ (int) $item->qty}}</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ (int) $item->volume }} CBM</p></td>
+                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price, 0, ',', '.') }}</p></td>
+                                </tr>
+                                <?php
+                                $noItem++;
+                                $totalPrice += $item->price; 
+                                $totalVolume += $item->volume; 
+                                ?>
+                                @endforeach
+                                <tr>
+                                    <th class="text-center" colspan="6"><p class="mb-0"></p></th>
+                                    <th class="text-center"><p class="mb-0">Total</p></th>
+                                    <th class="text-end"><p class="mb-0">{{$totalVolume}} CBM</p></th>
+                                    <th class="text-end"><p class="mb-0">Rp. {{ number_format($totalPrice, 0, ',', '.') }}</p></th>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="no-border mb-0 mt-3" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border">
+                                <p class="mb-0"><strong>Detail Layanan</strong></p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="text-center"><p class="mb-0">No</p></th>
+                                    <th class="text-center"><p class="mb-0">Layanan</p></th>
+                                    <th class="text-center"><p class="mb-0">Deskripsi</p></th>
+                                    <th class="text-center"><p class="mb-0">Harga</p></th>
+                                </tr>
+                            </thead>
+                            <?php
+                            $noService = 1;
+                            $totalServicePrice = 0; 
+                            ?>
+                            <tbody>
+                                @foreach ($services as $item )
+                                <tr>
+                                    <td class="text-center"><p class="mb-0">{{ $noService}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $item->service->serviceName}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $item->service->description}}</p></td>
+                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->service->price, 0, ',', '.') }}</p></td>
+                                </tr>
+                                </tr>
+                                <?php
+                                $noService++;
+                                $totalServicePrice += $item->service->price; 
+                                ?>
+                                @endforeach
+                                <tr>
+                                    <th class="text-center" colspan="3"><p class="mb-0">Total</p></th>
+                                    <th class="text-end"><p class="mb-0">Rp. {{ number_format($totalServicePrice, 0, ',', '.') }}</p></th>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="no-border mb-0 mt-4" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border text-end">
+                                <h5 class="mb-0"><strong>Total Tagihan: Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</strong></h5>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <br><br>
+
+                        <table class="no-border" style="margin-top: 30px;">
+                            <tr>
+                                <td class="no-border"></td>
+                                <td class="no-border text-center">
+                                    <img src=" {{ asset('images/Logo_SentraLogiX.png') }}" alt="Logo" class="img-fluid" style="height: 50px;">
+                                </td>
+                            </tr>
+                        </table>
+
+                    </body>
                     </div>
                 </div>
                 

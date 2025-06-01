@@ -63,26 +63,12 @@ class UserOrder extends Model
     {
         return "Rp " . number_format($this->totalPrice, 2, ',', '.');
     }
-
-    public function getEstimatedDaysAttribute()
-    {
-        $shippingDate = Carbon::parse($this->shippingDate);
-        $estimationDate = Carbon::parse($this->estimationDate);
-        return $shippingDate->diffInDays($estimationDate);
-    }
-
-    public function getLoadingDateFormattedAttribute()
-    {
-        return Carbon::parse($this->loadingDate)->startOfDay()->translatedFormat('d F Y');
-    }
     
-    public function getShippingDateFormattedAttribute()
+    public function getInvoiceDate()
     {
-        return Carbon::parse($this->shippingDate)->startOfDay()->translatedFormat('d F Y');
+        if (!$this->created_at) {
+            return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->created_at)->translatedFormat('d F Y');
     }
-    
-    public function getEstimationDateFormattedAttribute()
-    {
-        return Carbon::parse($this->estimationDate)->startOfDay()->translatedFormat('d F Y');
-    }    
 }

@@ -109,7 +109,9 @@ class PaymentController extends Controller
         }
         $order = Order::find($userOrder->order_id);
         $offer = offersModel::where('noOffer', $order->noOffer)->first();
-        return view('pages.customer.orders.invoice', compact('userOrder','order','offer'));
+        $items = UserOrderItem::where('userOrder_id', $userOrder->id)->get();
+        $services = ServiceOrdered::with('service')->where('userOrder_id', $userOrder->id)->get();
+        return view('pages.customer.orders.invoice', compact('userOrder','order','offer','items','services'));
     }
 
     public function invoice_download($token)
