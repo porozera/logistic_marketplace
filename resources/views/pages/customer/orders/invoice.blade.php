@@ -190,7 +190,63 @@
                                 </tr>
                             </tbody>
                         </table>
+                        
+                        @if ($userOrder->order->shipmentType == 'FCL')
+                        <table class="no-border mb-0 mt-3" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border">
+                                <p class="mb-0"><strong>Detail Kontainer</strong></p>
+                                </td>
+                            </tr>
+                        </table>
 
+                        <table>
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="text-center"><p class="mb-0">No</p></th>
+                                    <th class="text-center"><p class="mb-0">Muatan</p></th>
+                                    <th class="text-center"><p class="mb-0">Berat</p></th>
+                                    <th class="text-center"><p class="mb-0">Volume</p></th>
+                                    <th class="text-center"><p class="mb-0">Qty</p></th>
+                                    <th class="text-center"><p class="mb-0">Harga</p></th>
+                                </tr>
+                            </thead>
+                            <?php
+                            $noItem = 1;
+                            $totalPrice = 0; 
+                            $totalVolume = 0; 
+                            ?>
+                            <tbody>
+                                @foreach ($items as $item )
+                                <tr>
+                                    <td class="text-center"><p class="mb-0">{{ $noItem}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $item->commodities}}</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ (int) $item->volume }} CBM</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ (int) $item->qty}}</p></td>
+                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price * $item->volume * $item->qty, 0, ',', '.') }}</p></td>
+                                </tr>
+                                <?php
+                                $noItem++;
+                                $totalPrice += $item->price * $item->volume * $item->qty; 
+                                $totalVolume += $item->volume; 
+                                ?>
+                                @endforeach
+                                <tr>
+                                    <th class="text-center" colspan="5"><p class="mb-0">Total</p></th>
+                                    <th class="text-end"><p class="mb-0">Rp. {{ number_format($totalPrice, 0, ',', '.') }}</p></th>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="no-border mb-0 mt-3" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border">
+                                <p class="mb-0"><strong>Detail Layanan</strong></p>
+                                </td>
+                            </tr>
+                        </table>
+                        @else
                         <table class="no-border mb-0 mt-3" style="margin-bottom: 20px;">
                             <tr>
                                 <td class="no-border">
@@ -207,9 +263,9 @@
                                     <th class="text-center"><p class="mb-0">Panjang</p></th>
                                     <th class="text-center"><p class="mb-0">Lebar</p></th>
                                     <th class="text-center"><p class="mb-0">Tinggi</p></th>
-                                    <th class="text-center"><p class="mb-0">Qty</p></th>
                                     <th class="text-center"><p class="mb-0">Berat</p></th>
                                     <th class="text-center"><p class="mb-0">Volume</p></th>
+                                    <th class="text-center"><p class="mb-0">Qty</p></th>
                                     <th class="text-center"><p class="mb-0">Harga</p></th>
                                 </tr>
                             </thead>
@@ -226,21 +282,19 @@
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->length}} cm</p></td>
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->width}} cm</p></td>
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->height}} cm</p></td>
-                                    <td class="text-center"><p class="mb-0">{{ (int) $item->qty}}</p></td>
                                     <td class="text-end"><p class="mb-0">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->volume }} CBM</p></td>
-                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price, 0, ',', '.') }}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ (int) $item->qty}}</p></td>
+                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price * $item->qty, 0, ',', '.') }}</p></td>
                                 </tr>
                                 <?php
                                 $noItem++;
-                                $totalPrice += $item->price; 
+                                $totalPrice += $item->price * $item->qty; 
                                 $totalVolume += $item->volume; 
                                 ?>
                                 @endforeach
                                 <tr>
-                                    <th class="text-center" colspan="6"><p class="mb-0"></p></th>
-                                    <th class="text-center"><p class="mb-0">Total</p></th>
-                                    <th class="text-end"><p class="mb-0">{{$totalVolume}} CBM</p></th>
+                                    <th class="text-center" colspan="8"><p class="mb-0">Total</p></th>
                                     <th class="text-end"><p class="mb-0">Rp. {{ number_format($totalPrice, 0, ',', '.') }}</p></th>
                                 </tr>
                             </tbody>
@@ -253,7 +307,7 @@
                                 </td>
                             </tr>
                         </table>
-
+                        @endif
                         <table>
                             <thead>
                                 <tr class="text-center">

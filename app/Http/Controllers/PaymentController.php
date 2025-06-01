@@ -124,8 +124,10 @@ class PaymentController extends Controller
     
         $order = $userOrder->order; // sudah eager-loaded
         $offer = offersModel::where('noOffer', $order->noOffer)->first();
+        $items = UserOrderItem::where('userOrder_id', $userOrder->id)->get();
+        $services = ServiceOrdered::with('service')->where('userOrder_id', $userOrder->id)->get();
     
-        $pdf = Pdf::loadView('invoices.pdf', compact('userOrder'))
+        $pdf = Pdf::loadView('invoices.pdf', compact('userOrder', 'order', 'offer', 'items', 'services'))
                   ->setPaper('A4', 'portrait');
     
         return $pdf->download('invoice-' . $order->noOffer . '.pdf');
