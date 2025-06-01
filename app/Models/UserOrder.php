@@ -51,6 +51,11 @@ class UserOrder extends Model
         return $this->belongsTo(Order::class);
     }
 
+    public function items()
+    {
+        return $this->hasMany(UserOrderItem::class);
+    }
+
     /**
      * Format total harga ke dalam Rupiah
      */

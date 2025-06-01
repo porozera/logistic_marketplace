@@ -296,43 +296,55 @@
                   <input type="number" name="items[0][volume]" class="form-control volume" hidden value="{{ $offer['maxVolume'] }}">
                   @else
                   <div id="itemsContainer">
-                    <div class="item-row border p-3 mb-3">
-                       <div class="row">
-                        <div class="col-md-12">
-                          <select class="form-control" name="items[0][commodities]">
-                            @foreach ($categories as $category)
-                              <option value="{{$category->name}}">{{$category->code}} - {{$category->name}}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="row mt-2">
-                          <div class="col-4">
-                            <input type="number" name="items[0][length]" class="form-control length" placeholder="Panjang (cm)">
-                          </div>
-                          <div class="col-4">
-                            <input type="number" name="items[0][width]" class="form-control width" placeholder="Lebar (cm)">
-                          </div>
-                          <div class="col-4">
-                            <input type="number" name="items[0][height]" class="form-control height" placeholder="Tinggi (cm)">
-                          </div>
-                        </div>
-                        <div class="row mt-2">
-                          <div class="col-6">
-                            <input type="number" name="items[0][weight]" class="form-control weight" placeholder="Berat (kg)">
-                          </div>
-                          <div class="col-6">
-                            <input type="number" name="items[0][qty]" class="form-control qty" placeholder="Qty">
-                          </div>
-                        </div>
-                        <input type="number" name="items[0][volume]" class="form-control volume">
-                      </div>
-                      <div class="text-end mt-2">
-                        <button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button>
+                  @php
+                    $oldItems = old('items', [ [] ]);
+                  @endphp
+                  @foreach ($oldItems as $i => $item)
+                  <div class="item-row border p-3 mb-3">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <select class="form-control" name="items[{{ $i }}][commodities]">
+                          @foreach ($categories as $category)
+                            <option value="{{$category->name}}" {{ (old("items.$i.commodities", $item['commodities'] ?? '') == $category->name) ? 'selected' : '' }}>
+                              {{$category->code}} - {{$category->name}}
+                            </option>
+                          @endforeach
+                        </select>
                       </div>
                     </div>
+                    <div class="item">
+                      <div class="row mt-2">
+                        <div class="col-4">
+                          <input type="number" name="items[{{ $i }}][length]" class="form-control length" placeholder="Panjang (cm)" value="{{ old("items.$i.length", $item['length'] ?? '') }}">
+                        </div>
+                        <div class="col-4">
+                          <input type="number" name="items[{{ $i }}][width]" class="form-control width" placeholder="Lebar (cm)" value="{{ old("items.$i.width", $item['width'] ?? '') }}">
+                        </div>
+                        <div class="col-4">
+                          <input type="number" name="items[{{ $i }}][height]" class="form-control height" placeholder="Tinggi (cm)" value="{{ old("items.$i.height", $item['height'] ?? '') }}">
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-6">
+                          <input type="number" name="items[{{ $i }}][weight]" class="form-control weight" placeholder="Berat (kg)" value="{{ old("items.$i.weight", $item['weight'] ?? '') }}">
+                        </div>
+                        <div class="col-3">
+                          <input type="number" name="items[{{ $i }}][qty]" class="form-control qty" placeholder="Qty" value="{{ old("items.$i.qty", $item['qty'] ?? '') }}">
+                        </div>
+                        <div class="col-3">
+                          <div class="input-group mb-3">
+                            <input type="number" name="items[{{ $i }}][volume]" class="form-control volume" value="{{ old("items.$i.volume", $item['volume'] ?? '') }}">
+                            <span class="input-group-text"> CBM</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-end mt-2">
+                      <button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button>
+                    </div>
                   </div>
+                  @endforeach
+                </div>
                   <div class="text-end mb-3">
                     <button type="button" id="addItemBtn" class="btn btn-secondary">+ Tambah Barang</button>
                   </div>
@@ -354,6 +366,7 @@
                                      value="{{ $item->id }}" 
                                       name="selected_services[]"
                                      data-price="{{ $item['price'] }}"
+                                     data-name="{{ $item['serviceName'] }}"
                                      onclick="updateServices()">
                               <i class="{{$item->icon}} me-1"></i>
                               <label class="form-check-label">
@@ -387,18 +400,26 @@
                           <span class="input-group-text">s/d</span>
                           <input type="date" name="RTL_end_date" class="form-control" value="{{ old('RTL_end_date') }}">
                         </div>
-                        @error('RTL_start_date') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                        @error('RTL_end_date') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                        <div class="row">
+                          <div class="col-6">@error('RTL_start_date') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror</div>
+                          <div class="col-6">@error('RTL_end_date') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror</div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  @if ($offer['shipmentMode'] == 'D2D' || $offer['shipmentMode'] == 'D2P')
                   <div class="row">
                     <div class="form-group mb-3">
-                      <label class="form-label">Alamat Asal</label>
-                      <textarea class="form-control" name="originAddress" rows="2" placeholder="Alamat Asal">{{ old('originAddress') }}</textarea>
+                      <label class="form-label">Alamat Pick Up</label>
+                      <textarea class="form-control" name="originAddress" rows="2" placeholder="Alamat Pick Up">{{ old('originAddress') }}</textarea>
                       @error('originAddress') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
+                  @else
+                   <input class="form-control" name="originAddress" rows="2" placeholder="Alamat Pick Up" value="" hidden></input>
+                  @endif
+
+                  @if ($offer['shipmentMode'] == 'D2D' || $offer['shipmentMode'] == 'P2D')
                   <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">Alamat Tujuan</label>
@@ -406,6 +427,9 @@
                       @error('destinationAddress') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
+                  @else
+                  <input class="form-control" name="destinationAddress" rows="2" placeholder="Alamat Tujuan" value="" hidden></input>
+                  @endif
                   <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">Informasi Tambahan</label>
@@ -449,7 +473,7 @@
                     <input type="text" id="cargoType" name="cargoType" class="form-control"  value="{{ $offer['cargoType'] }}" hidden>
                     <input type="text" id="container_id" name="container_id" class="form-control"  value="{{ $offer['container_id'] }}" hidden>
                   </div>
-                  <div class="row">
+                  {{-- <div class="row">
                     <div class="col">
                       @if ($errors->any())
                       <div class="alert alert-danger w-100">
@@ -461,7 +485,7 @@
                       </div>
                       @endif
                     </div>
-                  </div>
+                  </div> --}}
                   <div class="row">
                     <div class="col-12 text-end">
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Pesan Sekarang</button>
@@ -618,7 +642,7 @@
                 cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) * qty;
                 totalCBM += cbmRounded * qty;
                 totalCBMToBuy += cbmToBuy;
-                if (volumeInput) volumeInput.value = totalCBMToBuy;
+                if (volumeInput) volumeInput.value = cbmToBuy;
 
                 let subtotal = cbmToBuy * cbmPrice;
 
@@ -667,7 +691,8 @@
             let selectedServiceNames = []; 
 
             selectedServices.forEach(service => {
-                let serviceName = service.value;
+                let serviceId = service.value;
+                let serviceName = service.getAttribute("data-name");
                 let servicePrice = parseFloat(service.getAttribute("data-price"));
                 selectedServiceNames.push(serviceName); 
                 let formattedPrice = servicePrice.toLocaleString("id-ID");

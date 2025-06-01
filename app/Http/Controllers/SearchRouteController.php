@@ -22,7 +22,8 @@ class SearchRouteController extends Controller
             ->whereDate('etd', '>=', Carbon::today());
     
         $searchPerformed = false;
-    
+
+        // ini adalah search barnya
         if ($request->has('origin') && $request->origin != '') {
             $query->where('origin', 'LIKE', '%' . $request->origin . '%');
             $searchPerformed = true;
@@ -33,8 +34,8 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
     
-        if ($request->has('shippingDate') && $request->shippingDate != '') {
-            $query->whereDate('shippingDate', $request->shippingDate);
+        if ($request->has('arrivalDate') && $request->arrivalDate != '') {
+            $query->whereDate('arrivalDate', $request->arrivalDate);
             $searchPerformed = true;
         }
     
@@ -42,7 +43,9 @@ class SearchRouteController extends Controller
             $query->where('shipmentType', $request->shipmentType);
             $searchPerformed = true;
         }
-    
+        //search bar end
+
+        // Yang ini filter dan harusnya mem filter hasil search bar tolong perbaiki
         if ($request->has('maxPrice') && $request->maxPrice != '') {
             $query->where('price', '<=', $request->maxPrice);
             $searchPerformed = true;
@@ -63,7 +66,7 @@ class SearchRouteController extends Controller
         }
 
         if ($request->has('maxTime') && $request->maxTime != '') {
-            $query->whereRaw("DATEDIFF(estimationDate, shippingDate) <= ?", [$request->maxTime]);
+            $query->whereRaw("DATEDIFF(arrivalDate, etd) <= ?", [$request->maxTime]);
             $searchPerformed = true;
         }
     
@@ -71,7 +74,7 @@ class SearchRouteController extends Controller
             if ($request->btn_radio1 == 'Murah') {
                 $query->orderBy('price', 'asc');
             } elseif ($request->btn_radio1 == 'Cepat') {
-                $query->orderByRaw("DATEDIFF(estimationDate, shippingDate) asc");
+                $query->orderByRaw("DATEDIFF(arrivalDate, etd) asc");
             }
             $searchPerformed = true;
         }

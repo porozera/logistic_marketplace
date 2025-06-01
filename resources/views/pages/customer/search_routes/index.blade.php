@@ -42,7 +42,7 @@
                             <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ request('destination') }}">
                         </div>
                         <div class="col-sm-12 col-md-3">
-                            <input type="date" name="shippingDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ request('shippingDate') }}">
+                            <input type="date" name="arrivalDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ request('arrivalDate') }}">
                         </div>
                         <div class="col-sm-12 col-md-2">
                             <select class="form-control" name="shipmentType" id="shipmentType">
@@ -54,7 +54,7 @@
                             <button type="submit" class="btn btn-primary h-100"><i class="ti ti-search mt-4"></i></button>
                         </div>
                     </div>
-                </form>
+                
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <br>
-                    <form action="{{ route('search-route') }}">
+
                     <div class="row">
                         <div class="btn-group" role="group">
                             <input type="radio" class="btn-check" id="btnrdo1" name="btn_radio1" value="Murah" {{ request('btn_radio1') == 'Murah' ? 'checked' : '' }}> 
@@ -318,13 +318,13 @@
                                 <p style="font-weight: normal;">Asal</p>
                             </div>
                             <div class="col-3">
-                                <p class="fw-bold text-primary">{{$item->origin}}</p>
+                                <p class="text-primary">{{$item->origin}}</p>
                             </div>
                              <div class="col-1 d-flex align-items-start justify-content-start">
                                 <p style="font-weight: normal;">Tujuan</p>
                             </div>
                             <div class="col-3">
-                                <p class="fw-bold text-primary">{{$item->destination}}</p>
+                                <p class="text-primary">{{$item->destination}}</p>
                             </div>
                             
                             <div class="col-4 d-flex flex-column flex-sm-row align-items-start justify-content-end">
@@ -353,7 +353,7 @@
                                 <p class="mb-0" style="font-weight: normal;">ETA</p>
                             </div>
                             <div class="col-3">
-                                <p class="text-primary">{{$item->getETA()}}</p>
+                                <p class="text-primary">{{$item->getarrivaldate()}}</p>
                             </div>
                             <div class="col-4 text-end">
                                 <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-50 w-md-50"><span class="mb-2">Pilih</span></a>

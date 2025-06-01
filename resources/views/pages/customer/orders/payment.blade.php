@@ -36,7 +36,7 @@
                                 <div class="col-6">
                                     <p>Asal :</p>
                                 </div>
-                                <div class="col-6 text-end">
+                                <div class="col-6 ">
                                     <p><b>{{$order['origin']}}</b></p>
                                 </div>
                             </div>
@@ -44,65 +44,68 @@
                                 <div class="col-6">
                                     <p>Tujuan :</p>
                                 </div>
-                                <div class="col-6 text-end">
+                                <div class="col-6 ">
                                     <p><b>{{$order['destination']}}</b></p>
                                 </div>
                             </div>
+                            @if (!empty($order->pickupAddress))
                             <div class="row">
                                 <div class="col-6">
-                                    <p>Tangal Muat :</p>
+                                    <p>Tangal Muat Barang:</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$order['loading_date_formatted']}}</b></p>
+                                <div class="col-6">
+                                    <p><b>{{$order->getpickupDate()}}</b></p>
+                                </div>
+                            </div>   
+                            @endif
+                            
+                            <div class="row">
+                                <div class="col-6">
+                                    <p>Esitmated Time Departure :</p>
+                                </div>
+                                <div class="col-6">
+                                    <p><b>{{$order->getEtd()}}</b></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <p>Tangal Pengiriman :</p>
+                                    <p>Estimated Time Arrival :</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$order['shipping_date_formatted']}}</b></p>
+                                <div class="col-6">
+                                    <p><b>{{$order->geteta()}}</b></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <p>Estimasi Tangal Tiba :</p>
+                                    <p>Tipe Muatan :</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$order['estimation_date_formatted']}}</b></p>
+                                <div class="col-6">
+                                    <p><b>{{$itemName}}</b></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <p>Berat Barang :</p>
+                                    <p>Total Berat :</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$userOrder['weight']}} Kg</b></p>
+                                <div class="col-6">
+                                    <p><b>{{$totalWeight}} Kg</b></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <p>Volume :</p>
+                                    <p>Total Volume :</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$userOrder['volume']}} CBM</b></p>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-6">
-                                    <p>Tipe Barang :</p>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$userOrder['commodities']}}</b></p>
+                                    <p><b>{{$totalVolume}} CBM</b></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <p>Layanan yang dipilih :</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    @if(!empty($userOrder->services))
-                                    <p><b>{{ $userOrder->services }}</b></p>
+                                <div class="col-6">
+                                   @if(!$services->isEmpty())
+                                        <p><b>{{ $serviceNames }}</b></p>
                                     @else
                                         <p><b>Tidak ada layanan yang dipilih</b></p>
                                     @endif
