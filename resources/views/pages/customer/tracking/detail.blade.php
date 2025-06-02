@@ -284,6 +284,41 @@
                         </div>
                     </div>
                 </div>
+                @if ($userOrder->order->shipmentType == 'FCL')
+                <div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Detail Container</h5>
+                                {{-- <span class="text-primary">{{ $userOrder->order->container->name ?? 'Tidak ada tipe kontainer' }}</span> --}}
+                            </div>
+                            <hr>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered nowrap" id="pc-dt-simple" style="min-width: 100px;">
+                                    <thead>
+                                        <tr>
+                                            <th><p class="mb-0">Container</p></th>
+                                            <th><p class="mb-0 text-center">Qty</p></th>
+                                            <th><p class="mb-0 text-center">Volume Muatan</p></th>
+                                            <th><p class="mb-0 text-center">Berat Muatan</p></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($items as $item)
+                                        <tr>
+                                            <td><p class="mb-0">{{ $userOrder->order->container->name ?? 'Tidak ada tipe kontainer' }}</p></td>
+                                            <td><p class="mb-0 text-center">{{$item->qty}}</p></td>
+                                            <td><p class="mb-0 text-center">{{ (int) $item->volume }} CBM</p></td>
+                                            <td><p class="mb-0 text-center">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                @else
                 <div>
                     <div class="card">
                         <div class="card-body">
@@ -308,7 +343,7 @@
                                             <td><p class="mb-0">{{$item->commodities}}</p></td>
                                             <td><p class="mb-0 text-center">{{$item->qty}}</p></td>
                                             <td><p class="mb-0 text-center">{{ (int) $item->volume }} CBM</p></td>
-                                            <td><p class="mb-0 text-center">{{ (int) $item->weight }} Kg</p></td>
+                                            <td><p class="mb-0 text-center">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -317,6 +352,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <div>
                     <div class="card">
                         <div class="card-body">

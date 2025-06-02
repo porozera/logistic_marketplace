@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-@section('title', 'Detail Penawaran')
+@section('title', 'Detail Offer')
 @section('content')
  <!-- [ Main Content ] start -->
  <div class="pc-container">

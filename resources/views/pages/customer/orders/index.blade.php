@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-@section('title', 'Pemesanan')
+@section('title', 'Order Form')
 @section('style')
 <style>
 .container {
@@ -197,7 +197,7 @@
                     </div>
                     <div class="col-6 text-end">
                       <div class="d-flex justify-content-end align-items-center">
-                        <p class="text-danger fw-bold mb-0">{{ $offer['maxWeight'] }} Kg</p>
+                        <p class="text-danger fw-bold mb-0">{{ $offer['maxWeight'] }} kg</p>
                         <p class="mb-0 ms-2 text-gray-500">/ Container</p>
                       </div>
                     </div>
@@ -210,7 +210,7 @@
                     <div class="col-6 text-end">
                       <div class="d-flex justify-content-end align-items-center">
                         <p class="text-danger fw-bold mb-0">{{ $offer['remainingWeight'] }}</p>
-                        <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} Kg</p>
+                        <p class="mb-0 ms-2 text-gray-500">/ {{ $offer['maxWeight'] }} kg</p>
                       </div>
                     </div>
                   </div>
@@ -273,6 +273,9 @@
                 <div class="card-body">
                   <h4 class="mb-3">Form Pemesanan</h4>
                   @if ($offer['shipmentType'] == 'FCL')
+                  @php
+                    $oldItems = old('items', [ [] ]);
+                  @endphp
                   <div class="row">
                     <div class="col-12">
                         <select class="form-control" name="items[0][commodities]">
@@ -284,10 +287,10 @@
                   </div>
                   <div class="row mt-2">
                     <div class="col-6">
-                      <input type="number" name="items[0][weight]" class="form-control weight" placeholder="Berat (kg)">
+                      <input type="number" name="items[0][weight]" class="form-control weight" placeholder="Berat (kg)" value="{{ old("items.weight", $item['weight'] ?? '') }}">
                     </div>
                     <div class="col-6">
-                      <input type="number" name="items[0][qty]" class="form-control qty" placeholder="Qty">
+                      <input type="number" name="items[0][qty]" class="form-control qty" placeholder="Qty" value="{{ old("items.qty", $item['qty'] ?? '') }}">
                     </div>
                   </div>
                   <input type="number" name="items[0][length]" class="form-control length" placeholder="Panjang (cm)" value=1 hidden>
@@ -333,7 +336,7 @@
                         </div>
                         <div class="col-3">
                           <div class="input-group mb-3">
-                            <input type="number" name="items[{{ $i }}][volume]" class="form-control volume" value="{{ old("items.$i.volume", $item['volume'] ?? '') }}">
+                            <input type="number" name="items[{{ $i }}][volume]" class="form-control volume" value="{{ old("items.$i.volume", $item['volume'] ?? '') }}" disabled>
                             <span class="input-group-text"> CBM</span>
                           </div>
                         </div>

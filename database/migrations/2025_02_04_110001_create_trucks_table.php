@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('driverName');
             $table->string('driverContact');
             $table->string('color');
+            $table->string('picture')->nullable();
             $table->timestamps();
 
             // Foreign key

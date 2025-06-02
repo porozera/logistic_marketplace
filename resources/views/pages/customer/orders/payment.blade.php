@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-@section('title', 'Pembayaran')
+@section('title', 'Payment')
 @section('content')
 <div class="pc-container">
     <div class="pc-content">
@@ -16,8 +16,8 @@
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0)">Detail Pemesanan</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Pembayaran</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0)">Offer Detail</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Payment</li>
                         </ul>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-6">
-                <h4 class="m-b-10">Pembayaran</h4>
+                <h4 class="m-b-10">Payment</h4>
                 <div class="card">
                     <div class="card-header">
                         <h5>Detail Pemesanan</h5>
@@ -33,81 +33,108 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Asal :</p>
+                                <div class="col-5">
+                                    <p class="">Asal</p>
                                 </div>
-                                <div class="col-6 ">
-                                    <p><b>{{$order['origin']}}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order['origin']}}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Tujuan :</p>
+                                <div class="col-5">
+                                    <p class="">Tujuan</p>
                                 </div>
-                                <div class="col-6 ">
-                                    <p><b>{{$order['destination']}}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order['destination']}}</p>
                                 </div>
                             </div>
-                            @if (!empty($order->pickupAddress))
+                            @if (!empty($order->pickupDate))
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Tangal Muat Barang:</p>
+                                <div class="col-5">
+                                    <p class="">Tangal Muat Barang</p>
                                 </div>
-                                <div class="col-6">
-                                    <p><b>{{$order->getpickupDate()}}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order->getpickupDate()}}</p>
                                 </div>
                             </div>   
                             @endif
                             
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Esitmated Time Departure :</p>
+                                <div class="col-5">
+                                    <p class="">Tanggal Berangkat (ETD)</p>
                                 </div>
-                                <div class="col-6">
-                                    <p><b>{{$order->getEtd()}}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p>Estimated Time Arrival :</p>
-                                </div>
-                                <div class="col-6">
-                                    <p><b>{{$order->geteta()}}</b></p>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order->getEtd()}}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Tipe Muatan :</p>
+                                <div class="col-5">
+                                    <p class="">Tanggal Tiba (ETA)</p>
                                 </div>
-                                <div class="col-6">
-                                    <p><b>{{$itemName}}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p>Total Berat :</p>
-                                </div>
-                                <div class="col-6">
-                                    <p><b>{{$totalWeight}} Kg</b></p>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order->geteta()}}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Total Volume :</p>
+                                <div class="col-5">
+                                    <p class="">Tipe Muatan</p>
                                 </div>
-                                <div class="col-6">
-                                    <p><b>{{$totalVolume}} CBM</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$itemName}}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Layanan yang dipilih :</p>
+                                <div class="col-5">
+                                    <p class="">Total Berat</p>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{ number_format($totalWeight, 0, ',', '.') }} kg</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <p class="">Total Volume</p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$totalVolume}} CBM</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <p class="">Layanan yang dipesan</p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
                                    @if(!$services->isEmpty())
-                                        <p><b>{{ $serviceNames }}</b></p>
+                                        <p>{{ $serviceNames }}</p>
                                     @else
-                                        <p><b>Tidak ada layanan yang dipilih</b></p>
+                                        <p>Tidak ada layanan yang dipilih</p>
                                     @endif
                                 </div>                                
                             </div>

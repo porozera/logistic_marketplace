@@ -54,6 +54,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call(TruckSeeder::class);
+        $this->call([
+            ContainerSeeder::class,
+        ]);
         $this->call(OffersSeeder::class);
 
         $this->call([
@@ -62,9 +65,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ServiceSeeder::class);
         $this->call(CategoriesSeeder::class);
-        $this->call([
-            ContainerSeeder::class,
-        ]);
         // $this->call([
         //     OrderSeeder::class, 
         // ]);

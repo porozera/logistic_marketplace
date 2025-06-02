@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-@section('title', 'Permintaan Rute')
+@section('title', 'Request Routes')
 @section('content')
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.min.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.css" type="text/css">
@@ -27,7 +27,7 @@
               </div>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                    <li class="breadcrumb-item" aria-current="page">Permintaan Rute</li>
+                    <li class="breadcrumb-item" aria-current="page">Request Routes</li>
                 </ul>
             </div>
           </div>
@@ -38,7 +38,7 @@
       <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-md-12 col-xl-12">
-            <h4 class="m-b-10">Buat Permintaan Rute</h4>
+            <h4 class="m-b-10">Request Routes</h4>
           <div class="card">
             <div class="card-body">
               <h4 class="mb-2">Detail Pengiriman</h4>
@@ -158,17 +158,43 @@
                             });
                         </script>                        
                     </div>
+                    {{-- <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Alamat Pick Up</label>
+                                <textarea class="form-control" name="originAddress" rows="3" placeholder="Alamat Tujuan Pengiriman">{{ old('originAddress') }}</textarea>
+                                @error('originAddress') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="form-label">Alamat Tujuan</label>
+                                <textarea class="form-control" name="destinationAddress" rows="3" placeholder="Alamat Tujuan Pengiriman">{{ old('destinationAddress') }}</textarea>
+                                @error('destinationAddress') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                            </div>
+                        </div>
+                    </div> --}}
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group mb-3">
                                 <label class="form-label">Tipe Pengiriman</label>
                                 <select class="form-control" name="shipmentType" id="shipmentType">
-                                    <option value="LCL">LCL</option>
-                                    <option value="FCL">FCL</option>
+                                    <option value="LCL">Less Container Load (LCL)</option>
+                                    <option value="FCL">Full Container Load (FCL)</option>
                                 </select> 
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
+                            <div class="form-group mb-3">
+                            <label class="form-label">Jalur Pengiriman</label>
+                            <select class="form-control" name="shipmentMode" id="shipmentMode">
+                                <option value="laut">Laut</option>
+                                <option value="darat">darat</option>
+                            </select>                            
+                            @error('shipmentMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group mb-3">
                             <label class="form-label">Mode Pengiriman</label>
                             <select class="form-control" name="shipmentMode" id="shipmentMode">
@@ -181,81 +207,128 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Tanggal Pengiriman</label>
-                                <input type="date" name="shippingDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ old('shippingDate') }}">
-                                @error('shippingDate') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                            <label class="form-label">Ready To Load</label>
+                            <div class="input-group">
+                                <input type="date" name="RTL_start_date" class="form-control" value="{{ old('RTL_start_date') }}">
+                                <span class="input-group-text">s/d</span>
+                                <input type="date" name="RTL_end_date" class="form-control" value="{{ old('RTL_end_date') }}">
+                            </div>
+                            <div class="row">
+                                <div class="col-6">@error('RTL_start_date') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror</div>
+                                <div class="col-6">@error('RTL_end_date') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror</div>
                             </div>
                         </div>
                     </div>
+                    
+                    <br>
+                    <h4 class="mb-0">Detail Muatan</h4>
+                    <br>
+                    <div class="row">
+                    <div id="itemsContainer">
+                        @php
+                            $oldItems = old('items', [ [] ]);
+                        @endphp
+                        @foreach ($oldItems as $i => $item)
+                        <div class="item-row border p-3 mb-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <select class="form-control" name="items[{{ $i }}][commodities]">
+                                        @foreach ($categories as $category)
+                                            <option value="{{$category->name}}" {{ (old("items.$i.commodities", $item['commodities'] ?? '') == $category->name) ? 'selected' : '' }}>
+                                                {{$category->code}} - {{$category->name}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="row mt-2">
+                                    <div class="col-2">
+                                        <input type="number" name="items[{{ $i }}][length]" class="form-control length" placeholder="Panjang (cm)" value="{{ old("items.$i.length", $item['length'] ?? '') }}">
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="number" name="items[{{ $i }}][width]" class="form-control width" placeholder="Lebar (cm)" value="{{ old("items.$i.width", $item['width'] ?? '') }}">
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="number" name="items[{{ $i }}][height]" class="form-control height" placeholder="Tinggi (cm)" value="{{ old("items.$i.height", $item['height'] ?? '') }}">
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="number" name="items[{{ $i }}][qty]" class="form-control qty" placeholder="Qty" value="{{ old("items.$i.qty", $item['qty'] ?? '') }}">
+                                    </div>
+                                    <div class="col-2">
+                                        <input type="number" name="items[{{ $i }}][weight]" class="form-control weight" placeholder="Berat (kg)" value="{{ old("items.$i.weight", $item['weight'] ?? '') }}">
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="input-group mb-3">
+                                            <input type="number" name="items[{{ $i }}][volume]" class="form-control volume" value="{{ old("items.$i.volume", $item['volume'] ?? '') }}" readonly>
+                                            <span class="input-group-text"> CBM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end mt-2">
+                                <button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                    <div class="text-end mb-3">
+                        <button type="button" id="addItemBtn" class="btn btn-secondary">+ Tambah Barang</button>
+                    </div>
+
+                    {{-- <h4>Detail Kontainer</h4>
+                    <div class="row">
+                        <div id="itemsContainer">
+                            @php
+                                $oldItems = old('items', [ [] ]);
+                            @endphp
+                            <div class="item-row border p-3 mb-3">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label">HS Code</label>
+                                        <select class="form-control" name="items[{{ $i }}][commodities]">
+                                            @foreach ($categories as $category)
+                                                <option value="{{$category->name}}" {{ (old("items.$i.commodities", $item['commodities'] ?? '') == $category->name) ? 'selected' : '' }}>
+                                                    {{$category->code}} - {{$category->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label">Tipe Kontainer</label>
+                                            <select class="form-control" name="container_id" id="container_id">
+                                                @foreach ($containers as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Berat</label>
+                                        <input type="number" name="items[{{ $i }}][weight]" class="form-control weight" placeholder="Berat (kg)" value="{{ old("items.$i.weight", $item['weight'] ?? '') }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Qty Kontainer</label>
+                                        <input type="number" name="items[{{ $i }}][qty]" class="form-control qty" placeholder="Qty" value="{{ old("items.$i.qty", $item['qty'] ?? '') }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Volume</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" name="items[{{ $i }}][volume]" class="form-control volume" value="" disabled>
+                                            <span class="input-group-text"> CBM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
                     <div class="row">
                         <div class="form-group mb-3">
-                            <label class="form-label">Alamat Tujuan Pengiriman</label>
-                            <textarea class="form-control" name="address" rows="4" placeholder="Alamat Tujuan Pengiriman">{{ old('address') }}</textarea>
-                            @error('address') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                        </div>
-                    </div>
-                    <br>
-                    <h4 class="mb-2">Detail Barang</h4>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Panjang (cm)</label>
-                                <input type="number" name="length" class="form-control" placeholder="cm" value="{{ old('length') }}">
-                                @error('length') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Lebar (cm)</label>
-                                <input type="number" name="width" class="form-control" placeholder="cm" value="{{ old('width') }}">
-                                @error('width') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Tinggi (cm)</label>
-                                <input type="number" name="height" class="form-control" placeholder="cm" value="{{ old('height') }}">
-                                @error('height') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Berat (kg)</label>
-                                <input type="number" name="weight" class="form-control" placeholder="kg" value="{{ old('weight') }}">
-                                @error('weight') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Kategori Barang</label>
-                                <select class="form-control" name="commodities" id="commodities">
-                                    @foreach ($categories as $item)
-                                        <option value="{{ $item->name }}">{{ $item->code }} - {{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label class="form-label">Tipe Kontainer</label>
-                                <select class="form-control" name="container_id" id="container_id">
-                                    @foreach ($containers as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('commodities') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group mb-3">
-                            <label class="form-label">Deskripsi</label>
-                            <textarea class="form-control" name="description" rows="4" placeholder="Deskripsi">{{ old('description') }}</textarea>
+                            <label class="form-label">Informasi Tambahan</label>
+                            <textarea class="form-control" name="description" rows="3" placeholder="">{{ old('description') }}</textarea>
                             @error('description') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                         </div>
                     </div>
@@ -360,7 +433,131 @@
                 </div>
             </div>
         </div>
-    
+
+        <script>
+          let itemIndex = 1;
+
+          document.getElementById('addItemBtn').addEventListener('click', function () {
+            const container = document.getElementById('itemsContainer');
+            const newItem = document.querySelector('.item-row').cloneNode(true);
+
+            const itemIndex = container.querySelectorAll('.item-row').length;
+
+            newItem.querySelectorAll('input, select').forEach((input) => {
+              const name = input.getAttribute('name');
+              const newName = name.replace(/\[\d+\]/, `[${itemIndex}]`);
+              input.setAttribute('name', newName);
+              if (input.tagName === "SELECT") {
+                input.selectedIndex = 0;
+              } else {
+                input.value = '';
+              }
+            });
+
+            container.appendChild(newItem);
+            registerCBMListeners(); // 
+          });
+
+          // Event delegation untuk tombol hapus
+          document.getElementById('itemsContainer').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-item')) {
+              const rows = document.querySelectorAll('.item-row');
+              if (rows.length > 1) {
+                e.target.closest('.item-row').remove();
+                calculateCBM(); 
+              } else {
+                alert("Minimal harus ada satu item.");
+              }
+            }
+          });
+        </script>
+
+        <script>
+          function registerCBMListeners() {
+            document.querySelectorAll(".item-row input").forEach(input => {
+                input.removeEventListener("input", calculateCBM);
+                input.addEventListener("input", calculateCBM);
+            });
+            document.querySelectorAll('.item-row select').forEach(select => {
+                select.removeEventListener("change", calculateCBM);
+                select.addEventListener("change", calculateCBM);
+            });
+            }
+
+          function calculateCBM() {
+            let shipmentType = document.getElementById("shipmentType").value;
+            let maxVolume = 33;
+            let maxWeightPerCBM = 600;
+
+            let totalCBMToBuy = 0;
+            let totalCBM = 0;
+
+            if (shipmentType === 'FCL') {
+                let qty = parseFloat(document.querySelector('input[name="items[0][qty]"]')?.value) || 0;
+                let cbmToBuy = qty * maxVolume;
+                totalCBMToBuy = cbmToBuy;
+                totalCBM = cbmToBuy;
+                // Jika ingin set volumeInput pada FCL, bisa tambahkan di sini
+            } else {
+                const items = document.querySelectorAll(".item-row");
+                items.forEach((item, idx) => {
+                let length = parseFloat(item.querySelector(".length")?.value) || 0;
+                let width = parseFloat(item.querySelector(".width")?.value) || 0;
+                let height = parseFloat(item.querySelector(".height")?.value) || 0;
+                let weight = parseFloat(item.querySelector(".weight")?.value) || 0;
+                let qty = parseFloat(item.querySelector(".qty")?.value) || 0;
+
+                let lengthM = length / 100;
+                let widthM = width / 100;
+                let heightM = height / 100;
+
+                let cbm = lengthM * widthM * heightM;
+                let cbmRounded = Math.ceil(cbm * 1000) / 1000;
+                let cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
+                let cbmByVolume = Math.ceil(cbmRounded);
+                let extraCBM = 0;
+                if (length > 100) extraCBM++;
+                if (width > 100) extraCBM++;
+                if (height > 100) extraCBM++;
+                let cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) * qty;
+
+                totalCBM += cbmRounded * qty;
+                totalCBMToBuy += cbmToBuy;
+
+                let volumeInput = item.querySelector('.volume');
+                // === Perbaikan di sini ===
+                // Jika semua input kosong, set volumeInput.value = 0
+                if (
+                    length === 0 &&
+                    width === 0 &&
+                    height === 0 &&
+                    weight === 0 &&
+                    qty === 0
+                ) {
+                    if (volumeInput) volumeInput.value = 0;
+                } else {
+                    if (volumeInput) volumeInput.value = cbmToBuy;
+                }
+                });
+            }
+
+            document.getElementById("cbmResult").innerText = totalCBM.toFixed(3);
+            document.getElementById("cbmToBuy").innerText = totalCBMToBuy;
+
+            updateTotalPrice();
+            }
+
+          document.addEventListener("DOMContentLoaded", function() {
+            if (document.getElementById("shipmentType").value === "FCL") {
+              document.querySelector('input[name="items[0][qty]"]').addEventListener('input', calculateCBM);
+              document.querySelector('select[name="items[0][commodities]"]').addEventListener('change', calculateCBM);
+            }
+            registerCBMListeners();
+            calculateCBM();
+          });
+        </script>
+        
+
         <script>
             document.getElementById('submitFormButton').addEventListener('click', function () {
                 // Submit the form

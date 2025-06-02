@@ -38,7 +38,8 @@ class OffersSeeder extends Seeder
                 'is_for_lsp' => true,
                 'is_for_customer' => true,
                 'truck_first_id' => 1,
-                'truck_second_id' => 2
+                'truck_second_id' => 2,
+                'container_id' => 1
             ],
             [
                 'noOffer' => 'OFF'.Str::random(5),
@@ -66,7 +67,8 @@ class OffersSeeder extends Seeder
                 'is_for_lsp' => true,
                 'is_for_customer' => true,
                 'truck_first_id' => 1,
-                'truck_second_id' => 2
+                'truck_second_id' => 2,
+                'container_id' => 1
             ],
             [
                 'noOffer' => 'OFF'.Str::random(5),
@@ -94,7 +96,8 @@ class OffersSeeder extends Seeder
                 'is_for_lsp' => true,
                 'is_for_customer' => true,
                 'truck_first_id' => 1,
-                'truck_second_id' => 2
+                'truck_second_id' => 2,
+                'container_id' => 1
             ],
         ];
 

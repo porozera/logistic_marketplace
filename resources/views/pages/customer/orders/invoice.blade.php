@@ -204,6 +204,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th class="text-center"><p class="mb-0">No</p></th>
+                                    <th class="text-center"><p class="mb-0">Kontainer</p></th>
                                     <th class="text-center"><p class="mb-0">Muatan</p></th>
                                     <th class="text-center"><p class="mb-0">Berat</p></th>
                                     <th class="text-center"><p class="mb-0">Volume</p></th>
@@ -220,6 +221,7 @@
                                 @foreach ($items as $item )
                                 <tr>
                                     <td class="text-center"><p class="mb-0">{{ $noItem}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $offer->container->name }}</p></td>
                                     <td class="text-center"><p class="mb-0">{{ $item->commodities}}</p></td>
                                     <td class="text-end"><p class="mb-0">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->volume }} CBM</p></td>
@@ -233,7 +235,7 @@
                                 ?>
                                 @endforeach
                                 <tr>
-                                    <th class="text-center" colspan="5"><p class="mb-0">Total</p></th>
+                                    <th class="text-center" colspan="6"><p class="mb-0">Total</p></th>
                                     <th class="text-end"><p class="mb-0">Rp. {{ number_format($totalPrice, 0, ',', '.') }}</p></th>
                                 </tr>
                             </tbody>
