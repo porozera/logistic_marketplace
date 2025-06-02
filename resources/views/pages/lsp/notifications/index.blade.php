@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <small class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
+                                {{-- <small class="text-muted">{{ $item->created_at->diffForHumans() }}</small> --}}
                                 <form action="{{ route('notification-customer.markAsRead', $item->id) }}" method="POST" class="mt-2">
                                     @csrf
                                     @method('PUT')
@@ -88,8 +88,8 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <small class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
-                                <form action="{{ route('notification-customer.delete', $item->id) }}" method="POST" class="mt-2">
+                                {{-- <small class="text-muted">{{ $item->created_at->diffForHumans() }}</small> --}}
+                                <form action="{{ route('notification-lsp.delete', $item->id) }}" method="POST" class="mt-2">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-icon btn-light-danger ms-1"><i class="ti ti-trash"></i></button>
@@ -112,7 +112,7 @@
   <!-- [ Main Content ] end -->
 
         <!-- Modal -->
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        {{-- <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <script>
             document.getElementById('submitFormButton').addEventListener('click', function () {
