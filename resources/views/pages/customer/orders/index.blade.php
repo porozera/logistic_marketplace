@@ -287,10 +287,16 @@
                   </div>
                   <div class="row mt-2">
                     <div class="col-6">
-                      <input type="number" name="items[0][weight]" class="form-control weight" placeholder="Berat (kg)" value="{{ old("items.weight", $item['weight'] ?? '') }}">
+                      <div class="input-group mb-3">
+                      <input type="number" name="items[0][weight]" class="form-control weight" placeholder="Berat" value="{{ old("items.weight", $item['weight'] ?? '') }}">
+                      <span class="input-group-text"> kg</span>
+                      </div>
                     </div>
                     <div class="col-6">
+                      <div class="input-group mb-3">
                       <input type="number" name="items[0][qty]" class="form-control qty" placeholder="Qty" value="{{ old("items.qty", $item['qty'] ?? '') }}">
+                      <span class="input-group-text"> qty</span>
+                      </div>
                     </div>
                   </div>
                   <input type="number" name="items[0][length]" class="form-control length" placeholder="Panjang (cm)" value=1 hidden>
@@ -305,7 +311,7 @@
                   @foreach ($oldItems as $i => $item)
                   <div class="item-row border p-3 mb-3">
                     <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-10">
                         <select class="form-control" name="items[{{ $i }}][commodities]">
                           @foreach ($categories as $category)
                             <option value="{{$category->name}}" {{ (old("items.$i.commodities", $item['commodities'] ?? '') == $category->name) ? 'selected' : '' }}>
@@ -314,36 +320,59 @@
                           @endforeach
                         </select>
                       </div>
+                      <div class="col-md-2 text-end">
+                        <button type="button" class="btn btn-icon btn-light-danger remove-item"><i class="ti ti-trash"></i></button>
+                      </div>
                     </div>
                     <div class="item">
-                      <div class="row mt-2">
-                        <div class="col-4">
-                          <input type="number" name="items[{{ $i }}][length]" class="form-control length" placeholder="Panjang (cm)" value="{{ old("items.$i.length", $item['length'] ?? '') }}">
+                      <div class="row mt-3">
+                        <div class="col-md-12">
+                          <div class="input-group mb-3">
+                              <input type="number" name="items[{{ $i }}][length]" class="form-control length" placeholder="Panjang" value="{{ old("items.$i.length", $item['length'] ?? '') }}">
+                              <span class="input-group-text"><i class="ti ti-x"></i></span>
+                              <input type="number" name="items[{{ $i }}][width]" class="form-control width" placeholder="Lebar" value="{{ old("items.$i.width", $item['width'] ?? '') }}">
+                              <span class="input-group-text"><i class="ti ti-x"></i></span>
+                              <input type="number" name="items[{{ $i }}][height]" class="form-control height" placeholder="Tinggi" value="{{ old("items.$i.height", $item['height'] ?? '') }}">
+                              <span class="input-group-text">cm</span>
+                            </div>
+                        </div>
+                        {{-- <div class="col-4">
+                          <div class="input-group mb-3">
+                          <input type="number" name="items[{{ $i }}][width]" class="form-control width" placeholder="Lebar" value="{{ old("items.$i.width", $item['width'] ?? '') }}">
+                          <span class="input-group-text"> cm</span>
+                          </div>
                         </div>
                         <div class="col-4">
-                          <input type="number" name="items[{{ $i }}][width]" class="form-control width" placeholder="Lebar (cm)" value="{{ old("items.$i.width", $item['width'] ?? '') }}">
-                        </div>
-                        <div class="col-4">
-                          <input type="number" name="items[{{ $i }}][height]" class="form-control height" placeholder="Tinggi (cm)" value="{{ old("items.$i.height", $item['height'] ?? '') }}">
-                        </div>
+                          <div class="input-group mb-3">
+                          <input type="number" name="items[{{ $i }}][height]" class="form-control height" placeholder="Tinggi" value="{{ old("items.$i.height", $item['height'] ?? '') }}">
+                          <span class="input-group-text"> cm</span>
+                          </div>
+                        </div> --}}
                       </div>
-                      <div class="row mt-2">
-                        <div class="col-6">
-                          <input type="number" name="items[{{ $i }}][weight]" class="form-control weight" placeholder="Berat (kg)" value="{{ old("items.$i.weight", $item['weight'] ?? '') }}">
+                      <div class="row mt-0">
+                        <div class="col-5">
+                          <div class="input-group mb-3">
+                          <input type="number" name="items[{{ $i }}][weight]" class="form-control weight" placeholder="Berat" value="{{ old("items.$i.weight", $item['weight'] ?? '') }}">
+                          <span class="input-group-text"> kg</span>
+                          </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
+                          <div class="input-group mb-3">
                           <input type="number" name="items[{{ $i }}][qty]" class="form-control qty" placeholder="Qty" value="{{ old("items.$i.qty", $item['qty'] ?? '') }}">
+                          <span class="input-group-text"> qty</span>
+                          </div>
                         </div>
                         <div class="col-3">
                           <div class="input-group mb-3">
-                            <input type="number" name="items[{{ $i }}][volume]" class="form-control volume" value="{{ old("items.$i.volume", $item['volume'] ?? '') }}" disabled>
+                            <input type="number" name="items[{{ $i }}][volume]" class="form-control volume" value="{{ old("items.$i.volume", $item['volume'] ?? '') }}" readonly>
                             <span class="input-group-text"> CBM</span>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="text-end mt-2">
-                      <button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button>
+                      
+                      {{-- <button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button> --}}
                     </div>
                   </div>
                   @endforeach
@@ -390,7 +419,10 @@
                   <div class="row">
                     <div class="form-group mb-3">
                       <label class="form-label">No Telepon Penerima</label>
-                      <input type="text" name="receiverTelpNumber" class="form-control" placeholder="+62" value="{{ old('receiverTelpNumber') }}">
+                      <div class="input-group mb-3">
+                      <span class="input-group-text">+62</span>
+                      <input type="text" name="receiverTelpNumber" class="form-control" placeholder="" value="{{ old('receiverTelpNumber') }}">
+                      </div>
                       @error('receiverTelpNumber') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                     </div>
                   </div>
@@ -549,12 +581,12 @@
             registerCBMListeners(); // 
           });
 
-          // Event delegation untuk tombol hapus
           document.getElementById('itemsContainer').addEventListener('click', function (e) {
-            if (e.target.classList.contains('remove-item')) {
+            const removeBtn = e.target.closest('.remove-item');
+            if (removeBtn) {
               const rows = document.querySelectorAll('.item-row');
               if (rows.length > 1) {
-                e.target.closest('.item-row').remove();
+                removeBtn.closest('.item-row').remove();
                 calculateCBM(); 
               } else {
                 alert("Minimal harus ada satu item.");
@@ -569,7 +601,7 @@
               input.removeEventListener("input", calculateCBM);
               input.addEventListener("input", calculateCBM);
             });
-            // Tambahkan event listener untuk select kategori
+
             document.querySelectorAll('.item-row select').forEach(select => {
               select.removeEventListener("change", calculateCBM);
               select.addEventListener("change", calculateCBM);
