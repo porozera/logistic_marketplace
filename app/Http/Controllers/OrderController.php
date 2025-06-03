@@ -116,7 +116,7 @@ class OrderController extends Controller
                 "arrivalDate" => $attributes['arrivalDate']??$attributes['eta'],
                 "maxWeight" => $attributes['maxWeight'],
                 "maxVolume" => $attributes['maxVolume'],
-                // "status" => "Loading Item",
+                "status" => "Loading Item",
                 "remainingWeight" => $attributes['remainingWeight'] - $totalWeight,
                 "remainingVolume" => $attributes['remainingVolume'] - $totalVolume,
                 "price" => $attributes['price'],

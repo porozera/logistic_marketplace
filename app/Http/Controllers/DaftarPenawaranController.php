@@ -9,7 +9,9 @@ use App\Models\offersModel;
 use App\Models\Order;
 use App\Models\RequestRoute;
 use App\Models\Service;
+use App\Models\ServiceOrdered;
 use App\Models\UserOrder;
+use App\Models\UserOrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -21,27 +23,36 @@ class DaftarPenawaranController extends Controller
     public function index(Request $request)
     {
         $query = Bid::where('status', "active");
+        $searchPerformed = false;
         if ($request->has('btn_radio1')) {
             if ($request->btn_radio1 == 'Murah') {
-                $query->orderBy('price', 'asc');
+                $query->selectRaw('*, CASE 
+                    WHEN shipmentType = "FCL" THEN price * maxVolume
+                    ELSE price
+                END as total_price');
+                $query->orderBy('total_price', 'asc');
             } elseif ($request->btn_radio1 == 'Cepat') {
                 $query->orderByRaw("DATEDIFF(estimationDate, shippingDate) asc");
             }
             $searchPerformed = true;
         }
         if ($request->has('maxPrice') && $request->maxPrice != '') {
-            $query->where('price', '<=', $request->maxPrice);
+            $query->whereRaw('
+                (CASE 
+                    WHEN shipmentType = "FCL" THEN price * maxVolume
+                    ELSE price
+                END) <= ?', [$request->maxPrice]);
             $searchPerformed = true;
         }
         if ($request->has('maxTime') && $request->maxTime != '') {
-            $query->whereRaw("DATEDIFF(estimationDate, shippingDate) <= ?", [$request->maxTime]);
+            $query->whereRaw("DATEDIFF(arrivalDate, etd) <= ?", [$request->maxTime]);
             $searchPerformed = true;
         }
-        $bids = $query->get();
+        $offers = $query->get();
         $services = Service::all();
         $categories = Category::distinct('type')->pluck('type')->toArray();
         $containers = Container::all();
-        return view('pages.customer.daftar_penawaran.index',compact('bids', 'services', 'categories', 'containers'));
+        return view('pages.customer.daftar_penawaran.index',compact('offers', 'services', 'categories', 'containers','searchPerformed'));
     }
 
     public function detail($id)
@@ -59,84 +70,102 @@ class DaftarPenawaranController extends Controller
     {
         $offer = Bid::find($id);
         $services = Service::all();
-        $categories = Category::all();
+        $categories = Category::where('type', $offer->cargoType)->get();
         return view('pages.customer.daftar_penawaran.order', compact('offer','services','categories'));
     }
 
     public function order(Request $request)
     {
         $attributes = $request->validate([
-            'weight' => 'required',
-            'width' => 'required',
-            'height' => 'required',
-            'length' => 'required',
-            'commodities' => 'required',
-            'telpNumber' => 'required',
+            'items' => 'required|array|min:1',
+            'items.*.weight' => 'required|numeric|min:0',
+            'items.*.width' => 'required|numeric|min:0',
+            'items.*.height' => 'required|numeric|min:0',
+            'items.*.length' => 'required|numeric|min:0',
+            'items.*.volume' => 'required|numeric|min:0',
+            'items.*.qty' => 'required|numeric|min:1',
+            'items.*.commodities' => 'required|string|max:255',
             'description' => 'required',
             'noOffer' => 'required',
-            'lspName' => 'required',
             'origin' => 'required',
             'destination' => 'required',
+            'portOrigin' => 'required',
+            'portDestination' => 'required',
             'shipmentMode' => 'required',
             'shipmentType' => 'required',
-            'loadingDate' => 'required',
-            'estimationDate' => 'required',
-            'shippingDate' => 'required',
+            'transportationMode' => 'required',
+            'pickupDate' => 'nullable',
+            'cyClosingDate' => 'nullable',
+            'etd' => 'required',
+            'eta' => 'required',
+            'deliveryDate' => 'nullable',
+            'arrivalDate' => 'required',
             'maxWeight' => 'required',
             'maxVolume' => 'required',
             'price' => 'required',
             'total_cbm' => 'required',
             'total_price' => 'required',
-            'selected_services' => 'nullable',
+            'selected_services' => 'nullable|array',
+            'selected_services.*' => 'exists:services,id',
             'remainingWeight' => 'required',
             'remainingVolume' => 'required',
             'user_id' => 'required',
-            'is_for_customer' => 'required',
-            'is_for_lsp' => 'required',
             'status' => 'required',
+            'destinationAddress' => 'nullable',
+            'originAddress' => 'nullable',
+            'RTL_start_date'=> 'required',
+            'RTL_end_date' => 'required',
             'lsp_id' => 'required',
-            'address' => 'required',
             'truck_first_id' => 'nullable',
             'truck_second_id' => 'nullable',
             'cargoType' => 'nullable',
             'container_id' => 'nullable',
+            'receiverName' => 'required',
+            'receiverTelpNumber' => 'required',
         ]);
 
-        if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
-            throw ValidationException::withMessages([
-                'total_cbm' => 'Total CBM yang harus dibeli melebihi sisa volume yang tersedia.',
-            ]);
-        }
-        
-        if ($attributes['weight'] > $attributes['remainingWeight']) {
-            throw ValidationException::withMessages([
-                'weight' => 'Berat melebihi sisa berat yang tersedia.',
-            ]);
+        $totalWeight = ceil(collect($attributes['items'])->sum('weight'));
+        $totalVolume = ceil(collect($attributes['items'])->sum('volume'));
+        if ($attributes['shipmentType'] === "LCL"){
+            if ($attributes['total_cbm'] > $attributes['remainingVolume']) {
+                throw ValidationException::withMessages([
+                    'total_cbm' => 'Total CBM yang harus dibeli melebihi sisa volume yang tersedia.',
+                ]);
+            }
+            if ($totalWeight > $attributes['remainingWeight']) {
+                throw ValidationException::withMessages([
+                    'weight' => 'Total berat barang melebihi sisa berat yang tersedia.',
+                ]);
+            }
         }
         $order = Order::where('noOffer', $attributes['noOffer'])->first();
 
         if (!$order) {
             $order = Order::create([
                 "noOffer" => $attributes['noOffer'],
-                "lspName" => $attributes['lspName'],
                 "origin" => $attributes['origin'],
                 "destination" => $attributes['destination'],
+                "portDestination" => $attributes['portDestination'],
+                "portOrigin" => $attributes['portOrigin'],
                 "shipmentType" => $attributes['shipmentType'],
                 "shipmentMode" => $attributes['shipmentMode'],
-                "loadingDate" => $attributes['loadingDate'],
-                "estimationDate" => $attributes['estimationDate'],
-                "shippingDate" => $attributes['shippingDate'],
+                "transportationMode" => $attributes['transportationMode'],
+                "pickupDate" => $attributes['pickupDate'],
+                "cyClosingDate" => $attributes['cyClosingDate'],
+                "etd" => $attributes['etd'],
+                "eta" => $attributes['eta'],
+                "deliveryDate" => $attributes['deliveryDate'],
+                "arrivalDate" => $attributes['arrivalDate']??$attributes['eta'],
                 "maxWeight" => $attributes['maxWeight'],
                 "maxVolume" => $attributes['maxVolume'],
-                "commodities" => $attributes['commodities'],
                 "status" => "Loading Item",
-                "remainingWeight" => $attributes['remainingWeight'] - $attributes['weight'],
-                "remainingVolume" => $attributes['remainingVolume'] - $attributes['total_cbm'],
+                "remainingWeight" => $attributes['remainingWeight'] - $totalWeight,
+                "remainingVolume" => $attributes['remainingVolume'] - $totalVolume,
                 "price" => $attributes['price'],
                 "totalAmount" => $attributes['total_price'],
                 "paidAmount" => 0,
                 "remainingAmount" => $attributes['total_price'],
-                "address" => $attributes['address'],
+                "remainingAmount" => $attributes['total_price'],
                 "lsp_id" => $attributes['lsp_id'],
                 "paymentStatus" => "Belum Lunas",
                 "truck_first_id" => $attributes['truck_first_id'],
@@ -145,42 +174,57 @@ class DaftarPenawaranController extends Controller
                 "container_id" => $attributes['container_id'],
             ]);
         } else {
-            $remainingWeight = $order->remainingWeight - $attributes['weight'];
-            $remainingVolume = $order->remainingVolume - $attributes['total_cbm'];
-        
-            $existingCommodities = $order->commodities ? array_map('trim', explode(', ', $order->commodities)) : [];
-            $newCommodities = $attributes['commodities'] ? array_map('trim', explode(', ', $attributes['commodities'])) : [];
-        
-            $filteredCommodities = array_diff($newCommodities, $existingCommodities);
-        
-            $updatedCommodities = !empty($filteredCommodities) 
-                ? implode(', ', array_merge($existingCommodities, $filteredCommodities)) 
-                : $order->commodities;
-        
+            $remainingWeight = $order->remainingWeight - $totalWeight;
+            $remainingVolume = $order->remainingVolume - $totalVolume;
             $order->update([
                 "remainingWeight" => max(0, $remainingWeight),
                 "remainingVolume" => max(0, $remainingVolume),
                 "totalAmount" => $order->totalAmount + $attributes['total_price'],
                 "remainingAmount" => $order->remainingAmount + $attributes['total_price'],
-                "commodities" => $updatedCommodities,
+                "paymentStatus" => "Belum Lunas"
             ]);
         }
         
         $userOrder = UserOrder::create([
             "user_id" => Auth::id(),
             "order_id" => $order->id,
-            "username" => Auth::user()->username,
-            "telpNumber" => $attributes['telpNumber'],
+            "receiverTelpNumber" => $attributes['receiverTelpNumber'],
+            "receiverName" => $attributes['receiverName'],
+            "RTL_start_date" => $attributes['RTL_start_date'],
+            "RTL_end_date" => $attributes['RTL_end_date'],
+            "originAddress" => $attributes['originAddress']??null,
+            "destinationAddress" => $attributes['destinationAddress']??null,
             "description" => $attributes['description'],
             "totalPrice" => $attributes['total_price'],
+            "invoiceNumber" => 'INV-' . date('YmdHis') . '-' . str_pad(rand(0, 999), 3, '0', STR_PAD_LEFT),
             "paymentStatus" => "Belum Lunas",
-            "weight" => $attributes['weight'],
-            "volume" => $attributes['total_cbm'],
-            "commodities" => $attributes['commodities'],
-            "services" => $attributes['selected_services'] ?? "",
             "payment_token" => Str::uuid(),
-            "expires_at" => Carbon::now()->addMinutes(30),
+            "expires_at" => Carbon::now()->addDays(30),
         ]);
+
+        $items = $request->input('items', []);
+        foreach ($items as $item) {
+            $itemPrice = ($item['volume'] ?? 1) * ($attributes['price'] ?? 0);
+            UserOrderItem::create([
+                "userOrder_id" => $userOrder->id,
+                "weight" => $item['weight'],
+                "width" => $item['width'] ?? 1,
+                "height" => $item['height'] ?? 1,
+                "length" => $item['length'] ?? 1,
+                "volume" => $item['volume'],
+                "qty" => $item['qty'],
+                "price" => $itemPrice,
+                "commodities" => $item['commodities'],
+            ]);  
+        }
+
+        $selectedServices = $request->input('selected_services', []);
+        foreach ($selectedServices as $serviceId) {
+            ServiceOrdered::create([
+                "userOrder_id" => $userOrder->id,
+                "service_id" => $serviceId,
+            ]);
+        }
 
         // Set your Merchant Server Key
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
@@ -209,34 +253,43 @@ class DaftarPenawaranController extends Controller
 
         if($attributes['shipmentType']=="LCL"){
             $status = 'active';
+            $is_for_lsp = true;
+            $is_for_customer = true;
         } else {
             $status = 'deactive';
+            $is_for_lsp = true;
+            $is_for_customer = true;
         }
 
         $user_id = Bid::where('noOffer', $attributes['noOffer'])->first()->user_id;
         $offer = offersModel::create([
             "noOffer" => $attributes['noOffer'],
-            "lspName" => $attributes['lspName'],
             "origin" => $attributes['origin'],
             "destination" => $attributes['destination'],
+            "portOrigin" => $attributes['portOrigin'],
+            "portDestination" => $attributes['portDestination'],
+            "transportationMode" => $attributes['transportationMode'],
             "shipmentMode" => $attributes['shipmentMode'],
             "shipmentType" => $attributes['shipmentType'],
-            "loadingDate" => $attributes['loadingDate'],
-            "shippingDate" => $attributes['shippingDate'],
-            "estimationDate" => $attributes['estimationDate'],
+            "pickupDate" => $attributes['pickupDate'],
+            "cyClosingDate" => $attributes['cyClosingDate'],
+            "etd" => $attributes['etd'],
+            "eta" => $attributes['eta'],
+            "deliveryDate" => $attributes['deliveryDate'],
+            "arrivalDate" => $attributes['arrivalDate'],
             "maxWeight" => $attributes['maxWeight'],
             "maxVolume" => $attributes['maxVolume'],
-            "remainingWeight" => $attributes['maxWeight'] - $attributes['weight'],
-            "remainingVolume" => $attributes['maxVolume'] - $attributes['total_cbm'],
-            "commodities" => $attributes['commodities'],
+            "remainingWeight" => $attributes['maxWeight'] - $totalWeight,
+            "remainingVolume" => $attributes['maxVolume'] - $totalVolume,
             "status" => $status,
             "price" => $attributes['price'],
+            "cargoType" => $attributes['cargoType'],
             "user_id" => $user_id,
-            "is_for_lsp" => $attributes['is_for_lsp'],
-            "is_for_customer" => $attributes['is_for_customer'],
-            "timestamp" => now(),
+            "is_for_lsp" => $is_for_lsp,
+            "is_for_customer" => $is_for_customer,
             "truck_first_id" => $attributes['truck_first_id'],
             "truck_second_id" => $attributes['truck_second_id'],
+            "container_id" => $attributes['container_id'],
         ]);
 
         $bid = Bid::where('noOffer', $attributes['noOffer'])->first();

@@ -10,7 +10,6 @@ return new class extends Migration {
         Schema::create('bids', function (Blueprint $table) {
             $table->id();
             $table->string('noOffer')->unique();
-            $table->string('lspName');
             $table->string('origin');
             $table->string('destination');
             $table->string('portOrigin')->nullable();

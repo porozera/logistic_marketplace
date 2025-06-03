@@ -452,11 +452,17 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label class="form-label">Berat</label>
-                                            <input type="number" name="items[0][weight]" class="form-control weight" placeholder="Berat (kg)" value="{{ old('items.0.weight', $oldItems[0]['weight'] ?? '') }}">
+                                            <div class="input-group mb-3">
+                                            <input type="number" name="items[0][weight]" class="form-control weight" placeholder="" value="{{ old('items.0.weight', $oldItems[0]['weight'] ?? '') }}">
+                                            <span class="input-group-text"> kg</span>
+                                            </div>
                                         </div>
                                         <div class="col-md-2">
                                             <label class="form-label">Qty Kontainer</label>
-                                            <input type="number" name="items[0][qty]" class="form-control qty" placeholder="Qty" value="{{ old('items.0.qty', $oldItems[0]['qty'] ?? '') }}">
+                                            <div class="input-group mb-3">
+                                            <input type="number" name="items[0][qty]" class="form-control qty" placeholder="" value="{{ old('items.0.qty', $oldItems[0]['qty'] ?? '') }}">
+                                            <span class="input-group-text"> qty</span>
+                                            </div>
                                         </div>
                                         <div class="col-md-2">
                                             <label class="form-label">Volume</label>
