@@ -96,25 +96,22 @@ class offerController extends Controller
             'shipmentType' => 'required|in:FCL,LCL',
             'maxWeight' => 'required|integer',
             'maxVolume' => 'required|integer',
-            'commodities' => 'required|string',
+            // 'commodities' => 'required|string',
             'status' => 'required|in:active,deactive',
             'price' => 'required|numeric',
-            'loadingDate' => 'required|date',
-            'shippingDate' => 'required|date',
-            'estimationDate' => 'required|date',
+            // 'loadingDate' => 'required|date',
+            // 'shippingDate' => 'required|date',
+            // 'estimationDate' => 'required|date',
             'remainingWeight' => 'nullable|integer',
             'remainingVolume' => 'nullable|integer',
             'container_id' => 'required|exists:containers,id',
             'truck_first_id' => 'required|exists:trucks,id',
             'truck_second_id' => 'required|exists:trucks,id',
         ]);
-        // dd($attributes);
         $noOffer = 'OFR-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
         $category = Category::where('name', $attributes['commodities'])->first();
-        // dd($attributes['commodities'], $category);
         $cargoType = $category->type ?? null;
 
-        // offersModel::create($request->all());
         $offer = offersModel::create([
             // 'noOffer' => $attributes['noOffer'],
             'noOffer' => $noOffer,
@@ -123,14 +120,14 @@ class offerController extends Controller
             'destination' => $attributes['destination'],
             'shipmentMode' => $attributes['shipmentMode'],
             'shipmentType' => $attributes['shipmentType'],
-            'loadingDate' => $attributes['loadingDate'],
-            'shippingDate' => $attributes['shippingDate'],
-            'estimationDate' => $attributes['estimationDate'],
+            // 'loadingDate' => $attributes['loadingDate'],
+            // 'shippingDate' => $attributes['shippingDate'],
+            // 'estimationDate' => $attributes['estimationDate'],
             'maxWeight' => $attributes['maxWeight'],
             'maxVolume' => $attributes['maxVolume'],
             'remainingWeight' => $attributes['remainingWeight'],
             'remainingVolume' => $attributes['remainingVolume'],
-            'commodities' => $attributes['commodities'],
+            // 'commodities' => $attributes['commodities'],
             'status' => $attributes['status'],
             'price' => $attributes['price'],
             'user_id' =>Auth::id(),
@@ -141,7 +138,16 @@ class offerController extends Controller
             'is_for_customer' => 1,
             'is_for_lsp' => $attributes['shipmentType'] === 'LCL' ? 1 : 0,
             'timestamp' => now(),
-            'cargoType' => $cargoType,
+            // 'cargoType' => $cargoType,
+            'portOrigin'=> $attributes['portOrigin'],
+            'portDestination'=> $attributes['portDestination'],
+            'transportationMode'=> $attributes['transportationMode'],
+            'pickupDate'=> $attributes['pickupDate'],
+            'cyClosingDate'=> $attributes['cyClosingDate'],
+            'etd'=> $attributes['etd'],
+            'eta'=> $attributes['eta'],
+            'arrivalDate'=> $attributes['arrivalDate'],
+            'deliveryDate'=> $attributes['deliveryDate'],
         ]);
         return redirect()->route('offers.index')->with('success', 'Route successfully created!');
     }
