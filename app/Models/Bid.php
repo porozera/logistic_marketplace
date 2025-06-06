@@ -22,6 +22,7 @@ class Bid extends Model
         'shipmentType',
         'transportationMode',
         'pickupDate',
+        'departureDate',
         'cyClosingDate',
         'etd',
         'eta',
@@ -64,10 +65,8 @@ class Bid extends Model
 
     public function getEstimatedDaysAttribute()
     {
-        // Prioritas penentuan start date: pickupDate > etd
-        $startDate = $this->pickupDate ?? $this->etd ?? null;
+        $startDate = $this->pickupDate ?? $this->departureDate ?? $this->etd ?? null;
 
-        // Prioritas penentuan end date: arrivalDate > deliveryDate
         $endDate = $this->arrivalDate ?? $this->eta ?? null;
 
         if ($startDate && $endDate) {
@@ -76,8 +75,6 @@ class Bid extends Model
 
             return $start->diffInDays($end);
         }
-
-        // Jika tidak cukup data untuk menghitung estimasi
         return null;
     }
 
@@ -103,6 +100,14 @@ class Bid extends Model
         return 'Tidak ada informasi tanggal';
         }
         return Carbon::parse($this->pickupDate)->translatedFormat('d F Y');
+    }
+
+    public function getdepartureDate()
+    {
+        if (!$this->departureDate) {
+        return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->departureDate)->translatedFormat('d F Y');
     }
 
     public function getcyclosingDate()

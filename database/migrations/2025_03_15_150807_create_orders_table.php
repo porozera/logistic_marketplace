@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('shipmentType', ['FCL', 'LCL']);
             $table->enum('transportationMode', ['darat', 'laut']);
             $table->dateTime('pickupDate')->nullable();
+            $table->dateTime('departureDate')->nullable();
             $table->dateTime('cyClosingDate')->nullable();
             $table->dateTime('etd');
             $table->dateTime('eta');
