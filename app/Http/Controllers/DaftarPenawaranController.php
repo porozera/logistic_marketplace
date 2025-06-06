@@ -45,7 +45,12 @@ class DaftarPenawaranController extends Controller
             $searchPerformed = true;
         }
         if ($request->has('maxTime') && $request->maxTime != '') {
-            $query->whereRaw("DATEDIFF(arrivalDate, etd) <= ?", [$request->maxTime]);
+            $query->whereRaw("
+                DATEDIFF(
+                    COALESCE(arrivalDate, eta),
+                    COALESCE(pickupDate, departureDate, etd)
+                ) <= ?
+            ", [$request->maxTime]);
             $searchPerformed = true;
         }
         $offers = $query->get();
@@ -95,6 +100,7 @@ class DaftarPenawaranController extends Controller
             'shipmentType' => 'required',
             'transportationMode' => 'required',
             'pickupDate' => 'nullable',
+            'departureDate' => 'nullable',
             'cyClosingDate' => 'nullable',
             'etd' => 'required',
             'eta' => 'required',
@@ -145,17 +151,18 @@ class DaftarPenawaranController extends Controller
                 "noOffer" => $attributes['noOffer'],
                 "origin" => $attributes['origin'],
                 "destination" => $attributes['destination'],
-                "portDestination" => $attributes['portDestination'],
-                "portOrigin" => $attributes['portOrigin'],
+                "portDestination" => $attributes['portDestination'] ?? null,
+                "portOrigin" => $attributes['portOrigin'] ?? null,
                 "shipmentType" => $attributes['shipmentType'],
                 "shipmentMode" => $attributes['shipmentMode'],
                 "transportationMode" => $attributes['transportationMode'],
-                "pickupDate" => $attributes['pickupDate'],
-                "cyClosingDate" => $attributes['cyClosingDate'],
+                "pickupDate" => $attributes['pickupDate'] ?? null,
+                "departureDate" => $attributes['departureDate'] ?? null,
+                "cyClosingDate" => $attributes['cyClosingDate'] ?? null,
                 "etd" => $attributes['etd'],
                 "eta" => $attributes['eta'],
-                "deliveryDate" => $attributes['deliveryDate'],
-                "arrivalDate" => $attributes['arrivalDate']??$attributes['eta'],
+                "deliveryDate" => $attributes['deliveryDate'] ?? null,
+                "arrivalDate" => $attributes['arrivalDate'] ?? $attributes['eta'],
                 "maxWeight" => $attributes['maxWeight'],
                 "maxVolume" => $attributes['maxVolume'],
                 "status" => "Loading Item",

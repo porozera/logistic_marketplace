@@ -277,13 +277,21 @@
                                 <p style="font-weight: normal;">ETD</p>
                             </div>
                             <div class="col-3">
-                                <p class="text-primary">{{$item->getETD()}}</p>
+                                @if (!empty($item->departureDate))
+                                    <p class="text-primary">{{$item->getdeparturedate()}}</p>
+                                @else
+                                    <p class="text-primary">{{$item->getETD()}}</p>
+                                @endif
                             </div>
                             <div class="col-1">
                                 <p class="mb-0" style="font-weight: normal;">ETA</p>
                             </div>
                             <div class="col-3">
-                                <p class="text-primary">{{$item->getarrivaldate()}}</p>
+                                @if (!empty($item->arrivalDate))
+                                    <p class="text-primary">{{$item->getarrivaldate()}}</p>
+                                @else
+                                    <p class="text-primary">{{$item->geteta()}}</p>
+                                @endif
                             </div>
                             <div class="col-4 text-end">
                                 <a href="/list-offer/{{$item['id']}}" class="btn btn-primary w-50 w-md-50"><span class="mb-2">Pilih</span></a>

@@ -121,7 +121,11 @@
                             <p class="mb-0">Estimasi</p>
                         </div>
                         <div class="col-7 d-flex align-items-end justify-content-start">
+                            @if(!empty($item->order->arrivalDate))
                             <p class="text-primary mb-0">{{$item->order->getarrivaldate()}}</p>
+                            @else
+                            <p class="text-primary mb-0">{{$item->order->geteta()}}</p>
+                            @endif
                         </div>
                         <div class="col-3 d-flex align-items-end justify-content-end">
                             <a href="/tracking/detail/{{$item->id}}" class="btn btn-sm btn-primary d-inline-flex">Lihat detail <i class="ti ti-chevron-right ms-1"></i></a>

@@ -191,20 +191,6 @@
                                     </p>
                                 </div>
                             </div>
-                            @if (!empty($userOrder->originAddress))
-                            <div class="row">
-                                <p>Alamat Pick Up :</p> 
-                                <p class="text-primary">{{ $userOrder->originAddress }}</p>
-                            </div>
-                            @endif
-                            @if (!empty($userOrder->destinationAddress))
-                            <div class="row">
-                                <p>Alamat Tujuan :</p> 
-                                <p class="text-primary">{{ $userOrder->destinationAddress }}</p>
-                            </div>
-                            @endif
-                            <hr>
-
                             <div class="row">
                                 <div class="col"><p>Asal Pengiriman</p></div>
                                 <div class="col">
@@ -218,6 +204,19 @@
                                     <p class="text-primary">{{ $userOrder->order->destination }}</p>
                                 </div>
                             </div>
+                            @if (!empty($userOrder->originAddress))
+                            <div class="row">
+                                <p>Alamat Pick Up :</p> 
+                                <p class="text-primary">{{ $userOrder->originAddress }}</p>
+                            </div>
+                            @endif
+                            @if (!empty($userOrder->destinationAddress))
+                            <div class="row">
+                                <p>Alamat Tujuan :</p> 
+                                <p class="text-primary">{{ $userOrder->destinationAddress }}</p>
+                            </div>
+                            @endif
+                            <hr> 
 
                             @if(!empty($userOrder->order->pickupAddress))
                             <div class="row">
@@ -227,59 +226,69 @@
                                 </div>
                             </div>
                             @endif
-
-                            @if(!empty($userOrder->order->cyClosingDate))
-                            <div class="row">
-                                <div class="col"><p>Tanggal CY Closing</p></div>
-                                <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->getcyclosingdate() }}</p>
-                                </div>
+                             <div class="d-flex justify-content-between align-items-center">
+                                <p class="">Tanggal Pengiriman</p>
                             </div>
-                            @endif
-
-                            @if(!empty($userOrder->order->etd))
-                            <div class="row">
-                                <div class="col"><p>Estimated Time Departure (ETD)</p></div>
-                                <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->getetd() }}</p>
-                                </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered nowrap" id="pc-dt-simple" style="min-width: 100px;">
+                                    <thead>
+                                        <tr>
+                                            <th><p class="mb-0 text-center">Nama</p></th>
+                                            <th><p class="mb-0 text-center">Tanggal</p></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (!empty($userOrder->order->pickupDate))
+                                        <tr>
+                                            <td><p class="mb-0 text-start">Pick Up Date</p></td>
+                                            <td><p class="mb-0 text-center">{{ $userOrder->order->getpickupdate() }}</p></td>
+                                        </tr>
+                                        @endif
+                                        @if (!empty($userOrder->order->departureDate))
+                                        <tr>
+                                            <td><p class="mb-0 text-start">Truck Departure Date</p></td>
+                                            <td><p class="mb-0 text-center">{{ $userOrder->order->getdeparturedate() }}</p></td>
+                                        </tr>
+                                        @endif
+                                        @if (!empty($userOrder->order->cyClosingDate))
+                                        <tr>
+                                            <td><p class="mb-0 text-start">CY Closing Date</p></td>
+                                            <td><p class="mb-0 text-center">{{ $userOrder->order->getcyclosingdate() }}</p></td>
+                                        </tr>
+                                        @endif
+                                        <tr>
+                                            <td><p class="mb-0 text-start">Estimated Time Departure</p></td>
+                                            <td><p class="mb-0 text-center">{{ $userOrder->order->getetd() }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="mb-0 text-start">Estimated Time Arrival</p></td>
+                                            <td><p class="mb-0 text-center">{{ $userOrder->order->geteta() }}</p></td>
+                                        </tr>
+                                        @if (!empty($userOrder->order->deliveryDate))
+                                        <tr>
+                                            <td><p class="mb-0 text-start">Delivery Date</p></td>
+                                            <td><p class="mb-0 text-center">{{ $userOrder->order->getdeliverydate() }}</p></td>
+                                        </tr>
+                                        @endif
+                                        @if (!empty($userOrder->order->arrivalDate))
+                                        <tr>
+                                            <td><p class="mb-0 text-start">Arrival Date</p></td>
+                                            <td><p class="mb-0 text-center">{{ $userOrder->order->getarrivaldate() }}</p></td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
-                            @endif
 
-                            @if(!empty($userOrder->order->eta))
-                            <div class="row">
-                                <div class="col"><p>Estimated Time Arrival (ETA)</p></div>
-                                <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->geteta() }}</p>
-                                </div>
-                            </div>
-                            @endif
-
-                            @if(!empty($userOrder->order->deliveryDate))
-                            <div class="row">
-                                <div class="col"><p>Tanggal Pengiriman</p></div>
-                                <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->getdeliverydate() }}</p>
-                                </div>
-                            </div>
-                            @endif
-
-                            @if(!empty($userOrder->order->arrivalDate))
-                            <div class="row">
-                                <div class="col"><p>Tanggal Tiba</p></div>
-                                <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->getarrivaldate() }}</p>
-                                </div>
-                            </div>
-                            @endif
-
-                            @if(!empty($services))
+                            @if($services->isNotEmpty())
+                            <hr>
                             <div class="row">
                                 <div class="col"><p>Layanan Yang Dipesan</p></div>
                                 <div class="col">
                                     <p class="text-primary">{{ $serviceNames }}</p>
                                 </div>
-                            </div>
+                            </div>  
                             @endif
                         </div>
                     </div>

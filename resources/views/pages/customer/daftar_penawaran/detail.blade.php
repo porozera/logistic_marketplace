@@ -296,10 +296,10 @@
                                 <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
                             </div>
                             <div class="col-5">
-                                {{-- <div class="p-3 rounded border">
-                                    <p class="font-semibold mb-1">Tanggal Pengiriman</p>
-                                    <p class="text-sm mb-0">{{ $offer['shipping_date_formatted'] }}</p>
-                                </div> --}}
+                                <div class="p-3 rounded border">
+                                    <p class="font-semibold mb-1">Truck Departure Date</p>
+                                    <p class="text-sm mb-0">{{ $offer->getdeparturedate()}}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -429,8 +429,12 @@
                             </div>
                             <div class="col-5">
                                 <div class="p-3 rounded border">
-                                    <p class="font-semibold mb-1">Estimated Time Departure</p>
-                                    <p class="text-sm mb-0">{{ $offer->getETD() }}</p>
+                                    <p class="font-semibold mb-1">Truck Departure</p>
+                                    @if (!empty($offer->departureDate))
+                                        <p class="text-sm mb-0">{{ $offer->getdeparturedate() }}</p>
+                                    @else
+                                        <p class="text-sm mb-0">{{ $offer->getetd() }}</p>
+                                    @endif  
                                 </div>
                             </div>
                         </div>
@@ -540,10 +544,10 @@
                                 <div class="bg-primary mx-auto" style="width: 1px; height: 100px;"></div>
                             </div>
                             <div class="col-5">
-                                {{-- <div class="p-3 rounded border">
-                                    <p class="font-semibold mb-1">Tanggal Pengiriman</p>
-                                    <p class="text-sm mb-0">{{ $offer['shipping_date_formatted'] }}</p>
-                                </div> --}}
+                                <div class="p-3 rounded border">
+                                    <p class="font-semibold mb-1">Truck Departure</p>
+                                    <p class="text-sm mb-0">{{ $offer->getdeparturedate() }}</p>
+                                </div>
                             </div>
                         </div>
                         <div class="row">

@@ -175,8 +175,8 @@
                                     <th class="text-center"><p class="mb-0">Tujuan</p></th>
                                     <th class="text-center"><p class="mb-0">Tipe Pengiriman</p></th>
                                     <th class="text-center"><p class="mb-0">Mode Pengiriman</p></th>
-                                    <th class="text-center"><p class="mb-0">ETD</p></th>
-                                    <th class="text-center"><p class="mb-0">ETA</p></th>
+                                    <th class="text-center"><p class="mb-0">Berangkat</p></th>
+                                    <th class="text-center"><p class="mb-0">Sampai</p></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -185,8 +185,19 @@
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->destination}}</p></td>
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->shipmentType}}</p></td>
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->shipmentMode}}</p></td>
+                                    @if(!empty($userOrder->order->pickupDate))
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->getpickupdate()}}</p></td>
+                                    @elseif(!empty($userOrder->order->departureDate))
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->getdeparturedate()}}</p></td>
+                                    @else
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->getetd()}}</p></td>
+                                    @endif
+
+                                    @if(!empty( $userOrder->order->arrivalDate))
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->getarrivaldate()}}</p></td>
+                                    @else
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->geteta()}}</p></td>
+                                    @endif
                                 </tr>
                             </tbody>
                         </table>

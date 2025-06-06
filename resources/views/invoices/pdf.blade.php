@@ -93,8 +93,19 @@
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->destination}}</p></td>
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->shipmentType}}</p></td>
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->shipmentMode}}</p></td>
+                                    @if(!empty($userOrder->order->pickupDate))
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->getpickupdate()}}</p></td>
+                                    @elseif(!empty($userOrder->order->departureDate))
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->getdeparturedate()}}</p></td>
+                                    @else
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->getetd()}}</p></td>
+                                    @endif
+
+                                    @if(!empty( $userOrder->order->arrivalDate))
+                                    <td class="text-center"><p class="mb-0">{{ $userOrder->order->getarrivaldate()}}</p></td>
+                                    @else
                                     <td class="text-center"><p class="mb-0">{{ $userOrder->order->geteta()}}</p></td>
+                                    @endif
                                 </tr>
                             </tbody>
                         </table>

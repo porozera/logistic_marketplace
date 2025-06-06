@@ -485,6 +485,7 @@
                     <input type="text" name="shipmentType" class="form-control" value="{{ $offer['shipmentType'] }}" hidden>
                     <input type="text" name="transportationMode" class="form-control" value="{{ $offer['transportationMode'] }}" hidden>
                     <input type="datetime" name="pickupDate" class="form-control" value="{{ $offer['pickupDate'] }}" hidden>
+                    <input type="datetime" name="departureDate" class="form-control" value="{{ $offer['departureDate'] }}" hidden>
                     <input type="datetime" name="cyClosingDate" class="form-control" value="{{ $offer['cyClosingDate'] }}" hidden>
                     <input type="datetime" name="etd" class="form-control" value="{{ $offer['etd'] }}" hidden>
                     <input type="datetime" name="eta" class="form-control" value="{{ $offer['eta'] }}" hidden>

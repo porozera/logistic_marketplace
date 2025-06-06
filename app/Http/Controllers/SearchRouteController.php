@@ -23,7 +23,6 @@ class SearchRouteController extends Controller
     
         $searchPerformed = false;
 
-        // ini adalah search barnya
         if ($request->has('origin') && $request->origin != '') {
             $query->where('origin', 'LIKE', '%' . $request->origin . '%');
             $searchPerformed = true;
@@ -43,9 +42,7 @@ class SearchRouteController extends Controller
             $query->where('shipmentType', $request->shipmentType);
             $searchPerformed = true;
         }
-        //search bar end
 
-        // Yang ini filter dan harusnya mem filter hasil search bar tolong perbaiki
         if ($request->has('maxPrice') && $request->maxPrice != '') {
             $query->where('price', '<=', $request->maxPrice);
             $searchPerformed = true;
@@ -66,7 +63,12 @@ class SearchRouteController extends Controller
         }
 
         if ($request->has('maxTime') && $request->maxTime != '') {
-            $query->whereRaw("DATEDIFF(arrivalDate, etd) <= ?", [$request->maxTime]);
+            $query->whereRaw("
+                DATEDIFF(
+                    COALESCE(arrivalDate, eta),
+                    COALESCE(pickupDate, departureDate, etd)
+                ) <= ?
+            ", [$request->maxTime]);
             $searchPerformed = true;
         }
     
