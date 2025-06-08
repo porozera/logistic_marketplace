@@ -107,9 +107,19 @@ class offerController extends Controller
             'container_id' => 'required|exists:containers,id',
             'truck_first_id' => 'required|exists:trucks,id',
             'truck_second_id' => 'required|exists:trucks,id',
+            'portOrigin' => 'string',
+            'portDestination' => 'string',
+            'transportationMode' => 'required|in:darat,laut',
+            'pickupDate' => 'date',
+            'cyClosingDate' => 'date',
+            'etd' => 'date',
+            'eta' => 'date',
+            'arrivalDate' => 'date',
+            'deliveryDate' => 'date',
+            'departureDate' => 'date',
         ]);
         $noOffer = 'OFR-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
-        $category = Category::where('name', $attributes['commodities'])->first();
+        // $category = Category::where('name', $attributes['commodities'])->first();
         $cargoType = $category->type ?? null;
 
         $offer = offersModel::create([
@@ -148,6 +158,7 @@ class offerController extends Controller
             'eta'=> $attributes['eta'],
             'arrivalDate'=> $attributes['arrivalDate'],
             'deliveryDate'=> $attributes['deliveryDate'],
+            'departureDate'=> $attributes['departureDate'],
         ]);
         return redirect()->route('offers.index')->with('success', 'Route successfully created!');
     }

@@ -104,7 +104,7 @@
                                 <div class="accordion-body">
                                     <div class="mb-3" id="form-port-origin" style="display: block;">
                                         <label for="portOrigin" class="form-label">Pelabuhan Asal (Origin Port)</label>
-                                        <input type="text" class="form-control" placeholder="Masukkan pelabuhan asal" name="portOrigin" >
+                                        <input type="text" class="form-control" placeholder="Masukkan pelabuhan asal" name="portOrigin" id="portOrigin">
                                     </div>
 
                                     <div class="mb-3">
