@@ -291,11 +291,18 @@
                             <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
                             <span class="pc-mtext">Bidding List</span>
                         </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="{{ route('calculator') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-calculator"></i></span>
+                            <span class="pc-mtext">Load Calculator</span>
+                        </a>
+                    </li>
                     <li class="pc-item pc-caption">
                         <label>Orders</label>
                         <i class="ti ti-news"></i>
                     </li>
-                    </li>
+                    
                     <li class="pc-item">
                         <a href="{{ route('list-payment') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-cash"></i></span>

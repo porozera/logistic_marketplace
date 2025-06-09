@@ -24,6 +24,28 @@
   
     <link rel="stylesheet" href="{{ asset('template/waterboat/css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+    .site-blocks-cover,
+    .intro-section {
+        min-height: 350px !important; /* Atur sesuai kebutuhan, misal 350px */
+        height: 350px !important;
+        padding-top: 60px;
+        padding-bottom: 60px;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+    }
+    @media (max-width: 768px) {
+        .site-blocks-cover,
+        .intro-section {
+            min-height: 220px !important;
+            height: 220px !important;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+    }
+</style>
 </head>
   
 

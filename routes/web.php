@@ -47,6 +47,7 @@ use App\Http\Controllers\DaftarPenawaranController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
 use App\Http\Controllers\AdminNotificationController;
+use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\DashboardLspController;
 use App\Http\Controllers\LandingPageController;
@@ -346,6 +347,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //DASHBOARD
     Route::get('/dashboard/customer', [DashboardCustomerController::class, 'index'])->name('dashboard-customer');
+
+    //CALCULATOR
+    Route::get('/load-calculator', [CalculatorController::class, 'index'])->name('calculator');
 });
 
 
