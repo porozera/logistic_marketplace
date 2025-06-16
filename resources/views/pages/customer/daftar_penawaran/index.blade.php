@@ -301,7 +301,8 @@
                 </div>  
                 @endforeach               
             @endif
-
+                </div>
+            </div>
         </div>
 {{-- End Card Offer --}}
       </div>
