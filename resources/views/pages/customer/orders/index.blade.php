@@ -666,7 +666,7 @@
 
                 let cbmRounded = 0, cbmByWeight = 0, cbmByVolume = 0, cbmToBuy = 0;
 
-                let cbm = lengthM * widthM * heightM;
+                let cbm = lengthM * widthM * heightM * qty;
                 cbmRounded = Math.ceil(cbm * 1000) / 1000;
                 cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
                 cbmByVolume = Math.ceil(cbmRounded);
@@ -675,8 +675,8 @@
                 if (length > 100) extraCBM++;
                 if (width > 100) extraCBM++;
                 if (height > 100) extraCBM++;
-                cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) * qty;
-                totalCBM += cbmRounded * qty;
+                cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) ;
+                totalCBM += cbmRounded;
                 totalCBMToBuy += cbmToBuy;
                 if (volumeInput) volumeInput.value = cbmToBuy;
 

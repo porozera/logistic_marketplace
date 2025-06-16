@@ -599,7 +599,7 @@
                 let widthM = width / 100;
                 let heightM = height / 100;
 
-                let cbm = lengthM * widthM * heightM;
+                let cbm = lengthM * widthM * heightM * qty;
                 let cbmRounded = Math.ceil(cbm * 1000) / 1000;
                 let cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
                 let cbmByVolume = Math.ceil(cbmRounded);
@@ -607,9 +607,9 @@
                 if (length > 100) extraCBM++;
                 if (width > 100) extraCBM++;
                 if (height > 100) extraCBM++;
-                let cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) * qty;
+                let cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM);
 
-                totalCBM += cbmRounded * qty;
+                totalCBM += cbmRounded;
                 totalCBMToBuy += cbmToBuy;
 
                 let volumeInput = item.querySelector('.volume');

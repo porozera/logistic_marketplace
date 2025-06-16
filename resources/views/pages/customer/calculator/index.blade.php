@@ -147,6 +147,8 @@
                         <h5>Hasil Perhitungan</h5>
                     </div>
                     <div class="card-body">
+                        <p class="">Total Volume Muatan: <span id="totalWeight" class="text-danger fw-bold">0</span> CBM</p>
+                        <hr>
                         <p class="">Total Berat Muatan: <span id="totalWeight" class="text-danger fw-bold">0</span> kg</p>
                         <hr>
                         <p class="">CBM yang Harus Dibeli: <span id="cbmToBuy" class="text-danger fw-bold">0</span> CBM</p>
@@ -238,7 +240,7 @@
                 let widthM = width / 100;
                 let heightM = height / 100;
 
-                let cbm = lengthM * widthM * heightM;
+                let cbm = lengthM * widthM * heightM * qty;
                 let cbmRounded = Math.ceil(cbm * 1000) / 1000;
                 let cbmByWeight = Math.ceil(weight / 600);
                 let cbmByVolume = Math.ceil(cbmRounded);
@@ -246,8 +248,8 @@
                 if (length > 100) extraCBM++;
                 if (width > 100) extraCBM++;
                 if (height > 100) extraCBM++;
-                let cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) * qty;
-                totalCBM += cbmRounded * qty;
+                let cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM);
+                totalCBM += cbmRounded;
                 totalCBMToBuy += cbmToBuy;
                 totalWeight += weight * qty;
 
