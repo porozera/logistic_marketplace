@@ -196,11 +196,11 @@
                                         @foreach ($userOrder as $item)
                                         <tr>
                                             <td class="text-center text-primary"><small>{{$item->order->noOffer}}</small></td>
-                                            <td class="text-center"><small>{{$item->order->lspName}}</small></td>
-                                            <td class="text-center"><small>{{$item->order->origin}}</small></td>
+                                            <td class="text-center"><small>{{$item->order->lsp->companyName}}</small></td>
+                                            <td class="text-center"><small>{{ $item->order->origin }}</small></td>
                                             <td class="text-center"><small>{{$item->order->destination}}</small></td>
-                                            <td class="text-center"><small>{{$item->weight}} Kg</small></td>
-                                            <td class="text-center"><small>{{$item->volume}} CBM</small></td>
+                                            <td class="text-center"><small>{{$item->getTotalWeightAttribute()}} Kg</small></td>
+                                            <td class="text-center"><small>{{$item->getTotalVolumeAttribute()}} CBM</small></td>
                                             <td class="text-center">
                                                 @if ($item->order->status == "Loading Item")
                                                 <span class="badge rounded-pill text-bg-warning" style="font-size: 14px;">Loading Item</span>

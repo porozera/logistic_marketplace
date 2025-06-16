@@ -347,14 +347,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $totalQty = 0;
+                                            $totalVolume = 0;
+                                            $totalWeight = 0;
+                                        @endphp
                                         @foreach ($items as $item)
-                                        <tr>
-                                            <td><p class="mb-0">{{$item->commodities}}</p></td>
-                                            <td><p class="mb-0 text-center">{{$item->qty}}</p></td>
-                                            <td><p class="mb-0 text-center">{{ (int) $item->volume }} CBM</p></td>
-                                            <td><p class="mb-0 text-center">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
-                                        </tr>
+                                            @php
+                                                $totalQty += $item->qty;
+                                                $totalVolume += $item->volume;
+                                                $totalWeight += $item->weight;
+                                            @endphp
+                                            <tr>
+                                                <td><p class="mb-0">{{$item->commodities}}</p></td>
+                                                <td><p class="mb-0 text-center">{{$item->qty}}</p></td>
+                                                <td><p class="mb-0 text-center">{{ (int) $item->volume }} CBM</p></td>
+                                                <td><p class="mb-0 text-center">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
+                                            </tr>
                                         @endforeach
+                                        <tr>
+                                            <th><p class="mb-0">Total</p></th>
+                                            <th><p class="mb-0 text-center">{{ $totalQty }}</p></th>
+                                            <th><p class="mb-0 text-center">{{ (int) $totalVolume }} CBM</p></th>
+                                            <th><p class="mb-0 text-center">{{ number_format($totalWeight, 0, ',', '.') }} kg</p></th>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

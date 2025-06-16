@@ -53,7 +53,7 @@ class UserOrder extends Model
 
     public function items()
     {
-        return $this->hasMany(UserOrderItem::class);
+        return $this->hasMany(UserOrderItem::class,'userOrder_id','id',);
     }
 
     /**
@@ -70,5 +70,19 @@ class UserOrder extends Model
             return 'Tidak ada informasi tanggal';
         }
         return Carbon::parse($this->created_at)->translatedFormat('d F Y');
+    }
+    
+    public function getTotalWeightAttribute()
+    {
+        return $this->items->sum(function ($item) {
+            return $item->weight * $item->qty;
+        });
+    }
+
+    public function getTotalVolumeAttribute()
+    {
+        return $this->items->sum(function ($item) {
+            return $item->volume * $item->qty;
+        });
     }
 }
