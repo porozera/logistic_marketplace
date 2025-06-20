@@ -207,7 +207,10 @@ class OrderController extends Controller
             'customer_details' => array(
                 'name' => Auth::user()->username,
                 'email' => Auth::user()->email,
-            )
+            ),
+            'callbacks' => [
+                'finish' => route('payment.success', ['token' => $userOrder->payment_token])
+            ]
         );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);

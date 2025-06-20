@@ -276,9 +276,9 @@
                                     <th class="text-center"><p class="mb-0">Panjang</p></th>
                                     <th class="text-center"><p class="mb-0">Lebar</p></th>
                                     <th class="text-center"><p class="mb-0">Tinggi</p></th>
+                                    <th class="text-center"><p class="mb-0">Qty</p></th>
                                     <th class="text-center"><p class="mb-0">Berat</p></th>
                                     <th class="text-center"><p class="mb-0">Volume</p></th>
-                                    <th class="text-center"><p class="mb-0">Qty</p></th>
                                     <th class="text-center"><p class="mb-0">Harga</p></th>
                                 </tr>
                             </thead>
@@ -295,14 +295,14 @@
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->length}} cm</p></td>
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->width}} cm</p></td>
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->height}} cm</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ (int) $item->qty}}</p></td>
                                     <td class="text-end"><p class="mb-0">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->volume }} CBM</p></td>
-                                    <td class="text-center"><p class="mb-0">{{ (int) $item->qty}}</p></td>
-                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price * $item->qty, 0, ',', '.') }}</p></td>
+                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price, 0, ',', '.') }}</p></td>
                                 </tr>
                                 <?php
                                 $noItem++;
-                                $totalPrice += $item->price * $item->qty; 
+                                $totalPrice += $item->price; 
                                 $totalVolume += $item->volume; 
                                 ?>
                                 @endforeach
@@ -358,7 +358,7 @@
                         <table class="no-border mb-0 mt-4" style="margin-bottom: 20px;">
                             <tr>
                                 <td class="no-border text-end">
-                                <h5 class="mb-0"><strong>Total Tagihan: Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</strong></h5>
+                                <h5 class="mb-0"><strong>Total Tagihan dengan PPn (11%): Rp. {{ number_format($userOrder->totalPrice+($userOrder->totalPrice*11/100), 0, ',', '.') }}</strong></h5>
                                 </td>
                             </tr>
                         </table>

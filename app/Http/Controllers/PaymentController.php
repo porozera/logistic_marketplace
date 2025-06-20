@@ -20,10 +20,10 @@ class PaymentController extends Controller
         $userOrder = UserOrder::where('payment_token', $token)->firstOrFail();
         $item = UserOrderItem::where('userOrder_id', $userOrder->id)->get();
         $totalWeight = $item->sum(function ($i) {
-            return $i->weight * $i->qty;
+            return $i->weight;
         });
         $totalVolume = $item->sum(function ($i) {
-            return $i->volume * $i->qty;
+            return $i->volume;
         });
         $itemName = $item->pluck('commodities')->unique()->implode(', ');
         $services = ServiceOrdered::with('service')->where('userOrder_id', $userOrder->id)->get();

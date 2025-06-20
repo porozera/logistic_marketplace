@@ -28,7 +28,7 @@
     .site-blocks-cover,
     .intro-section {
         min-height: 350px !important; /* Atur sesuai kebutuhan, misal 350px */
-        height: 350px !important;
+        height: 500px !important;
         padding-top: 60px;
         padding-bottom: 60px;
         background-size: cover;

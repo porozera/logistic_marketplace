@@ -350,7 +350,7 @@
                         </div> --}}
                       </div>
                       <div class="row mt-0">
-                        <div class="col-5">
+                        <div class="col-4">
                           <div class="input-group mb-3">
                           <input type="number" name="items[{{ $i }}][weight]" class="form-control weight" placeholder="Berat" value="{{ old("items.$i.weight", $item['weight'] ?? '') }}">
                           <span class="input-group-text"> kg</span>
@@ -362,7 +362,7 @@
                           <span class="input-group-text"> qty</span>
                           </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-4">
                           <div class="input-group mb-3">
                             <input type="number" name="items[{{ $i }}][volume]" class="form-control volume" value="{{ old("items.$i.volume", $item['volume'] ?? '') }}" readonly>
                             <span class="input-group-text"> CBM</span>
@@ -672,9 +672,9 @@
                 cbmByVolume = Math.ceil(cbmRounded);
                 let volumeInput = item.querySelector('.volume');
                 let extraCBM = 0;
-                if (length > 100) extraCBM++;
-                if (width > 100) extraCBM++;
-                if (height > 100) extraCBM++;
+              //   if (length > 100) extraCBM += Math.floor((length - 1) / 100);
+              // if (width > 100) extraCBM += Math.floor((width - 1) / 100);
+              // if (height > 100) extraCBM += Math.floor((height - 1) / 100);
                 cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) ;
                 totalCBM += cbmRounded;
                 totalCBMToBuy += cbmToBuy;
@@ -700,7 +700,7 @@
             }
 
             cbmPriceCard.innerHTML = cbmCardHTML;
-            document.getElementById("cbmResult").innerText = totalCBM.toFixed(3);
+            document.getElementById("cbmResult").innerText = totalCBM.toFixed(1);
             document.getElementById("cbmToBuy").innerText = totalCBMToBuy;
 
             updateTotalPrice();
