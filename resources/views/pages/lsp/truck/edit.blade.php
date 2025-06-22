@@ -5,7 +5,7 @@
     <div class="pc-content">
         <h4 class="mb-4">Edit Truk</h4>
 
-        <form action="{{ route('trucks.update', $truck->id) }}" method="POST">
+        <form action="{{ route('trucks.update', $truck->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -32,6 +32,18 @@
             <div class="mb-3">
                 <label class="form-label">Plate Number</label>
                 <input type="text" name="plateNumber" class="form-control" value="{{ $truck->plateNumber }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Picture</label>
+                <input type="file" name="picture" class="form-control">
+                <label class="form-label mt-2">Preview : </label>
+                @if ($truck->picture)
+                    <img src="{{ asset('storage/' . $truck->picture) }}" alt="Truck Picture" class="img-thumbnail"
+                        style="width: 100px; height: 100px;">
+                @else
+                    <p class="text-muted">Tidak ada gambar</p>
+                @endif
             </div>
 
             <div class="mb-3">

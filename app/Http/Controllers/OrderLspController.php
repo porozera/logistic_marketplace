@@ -248,7 +248,7 @@ $attributes = $request->validate($rules);
         //     ->orderBy('created_at', 'desc')
         //     ->paginate(10);
         // return view('pages.lsp.manage-order.index', compact('userOrders'));
-        $orders = Order::where('lspName', Auth::user()->username)->latest()->get();
+        $orders = Order::where('lsp_id', Auth::user()->id)->latest()->get();
         return view('pages.lsp.manage-order.index', compact('orders'));
     }
 

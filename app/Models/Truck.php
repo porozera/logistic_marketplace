@@ -20,6 +20,7 @@ class Truck extends Model
         'driverName',
         'driverContact',
         'color',
+        'picture',
         'timestamp',
     ];
 

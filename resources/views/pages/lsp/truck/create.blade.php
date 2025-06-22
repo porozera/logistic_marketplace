@@ -5,7 +5,7 @@
         <div class="pc-content">
             <h4 class="mb-4">Tambah Truk</h4>
 
-            <form action="{{ route('trucks.store') }}" method="POST">
+            <form action="{{ route('trucks.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -31,6 +31,11 @@
                 <div class="mb-3">
                     <label class="form-label">Plate Number</label>
                     <input type="text" name="plateNumber" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Picture</label>
+                    <input type="file" name="picture" class="form-control" required>
                 </div>
 
                 <div class="mb-3">

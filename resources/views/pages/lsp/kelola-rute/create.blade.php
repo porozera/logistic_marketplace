@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('title', 'Add Route')
+<head>
+    <style>
+    .accordion-button::after {
+        display: none !important;
+    }
+</style>
+</head>
 
 @section('content')
     <div class="container" style="padding-left: 250px; padding-top:80px;">
@@ -61,11 +68,81 @@
                     <div class="mb-3">
                         <label for="shipmentMode" class="form-label">Shipment Mode</label>
                         <select name="shipmentMode" class="form-control" required>
-                            <option value="D2D">D2D</option>
-                            <option value="D2P">D2P</option>
-                            <option value="P2D">P2D</option>
-                            <option value="P2P">P2P</option>
+                            <option value="D2D">Door to Door (D2D)</option>
+                            <option value="D2P">Door to Port(D2P)</option>
+                            <option value="P2D">Port to Door(P2D)</option>
+                            <option value="P2P">Port to Port(P2P)</option>
                         </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="transportationMode" class="form-label">Transportation Mode</label>
+                        <select name="transportationMode" class="form-control" required>
+                            <option value="darat">Darat</option>
+                            <option value="laut">Laut</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3" id="pickupDate">
+                        <label for="pickupDate" class="form-label">Pickup Date</label>
+                        <input type="date" class="form-control" placeholder="Masukkan pickup date" name="pickupDate" required >
+                    </div>
+
+                    <div class="mb-3" id="departureDate">
+                        <label for="departureDate" class="form-label">Departure Date</label>
+                        <input type="date" class="form-control" placeholder="Masukkan departure date" name="departureDate" required >
+                    </div>
+
+                    <div id="port-section" class="accordion mb-3" style="display: none;">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" aria-expanded="true" aria-controls="collapseOne">
+                                    Data pelabuhan
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="mb-3" id="form-port-origin" style="display: block;">
+                                        <label for="portOrigin" class="form-label">Pelabuhan Asal (Origin Port)</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan pelabuhan asal" name="portOrigin" id="portOrigin">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="portDestination" class="form-label">Pelabuhan Tujuan (Destination Port)</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan pelabuhan tujuan" name="portDestination" >
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="cyClosingDate" class="form-label">Container Yard Closing Date</label>
+                                        <input type="date" class="form-control" placeholder="Masukkan cyClosingDate" name="cyClosingDate">
+                                        <label for="etd" class="text-primary">*barang sampai di container yard</label>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="etd" class="form-label">Estimated Time Departure (ETD)</label>
+                                        <input type="date" class="form-control" placeholder="Masukkan ETD" name="etd" id="etd">
+                                        <label for="etd" class="text-primary">*estimasi keberangkatan kapal</label>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="eta" class="form-label">Estimated Time Arrival (ETA)</label>
+                                        <input type="date" class="form-control" placeholder="Masukkan ETA" name="eta" id="eta">
+                                        <label for="etd" class="text-primary">*estimasi kedatangan kapal</label>
+                                    </div>
+
+                                    <div class="mb-3" id="form-delivery-date">
+                                        <label for="deliveryDate" class="form-label">Delivery date</label>
+                                        <input type="date" class="form-control" placeholder="Masukkan ETA" name="deliveryDate">
+                                        <label for="etd" class="text-primary">*pengiriman dari pelabuhan ke tujuan</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="arrivalDate" class="form-label">Arrival Date</label>
+                        <input type="date" class="form-control" placeholder="Masukkan arrival date" name="arrivalDate" required id="arrivalDate">
                     </div>
 
                     <div class="mb-3">
@@ -77,13 +154,6 @@
                     </div>
 
                     <div class="mb-3">
-                        {{-- <label for="container">Pilih Jenis Container</label>
-                        <select name="container" class="form-control" id="container">
-                            @foreach ($containers as $container)
-                                <option value="{{ $container->id }}">{{ $container->name }} - </option>
-                            @endforeach
-                        </select> --}}
-
                         <label for="container">Pilih Jenis Container</label>
                             <select name="container_id" class="form-control" id="container">
                                 <option value="">-- Pilih Container --</option>
@@ -113,58 +183,12 @@
                         <input type="hidden" name="remainingVolume" id="remainingVolumeInput">
                     </div>
 
-                    {{-- <div class="mb-3">
-                        <label for="maxWeight" class="form-label">Max Weight</label>
-                        <input type="number" name="maxWeight" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="maxVolume" class="form-label">Max Volume</label>
-                        <input type="number" name="maxVolume" class="form-control" required>
-                    </div> --}}
-
-                    <div class="mb-3">
-                        <label for="commodities" class="form-label">Commodities</label>
-                        {{-- <input type="text" name="commodities" class="form-control"> --}}
-                        <select class="form-select" name="commodities" id="commodities">
-                            <option value="">-- Pilih Commodities --</option>
-                            @foreach ($commodities as $commodity)
-                                <option value="{{ $commodity->name }}">{{ $commodity->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
                         {{-- <input type="number" name="price" class="form-control" step="0.01" required> --}}
                         <input type="text" class="form-control" id="price_display" placeholder="Masukkan harga" required>
                         <input type="hidden" name="price" id="price">
                     </div>
-
-                    <div class="mb-3">
-                        <label for="loadingDate" class="form-label">Loading Date</label>
-                        <input type="date" name="loadingDate" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="shippingDate" class="form-label">Shipping Date</label>
-                        <input type="date" name="shippingDate" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="estimationDate" class="form-label">Estimation Date</label>
-                        <input type="date" name="estimationDate" class="form-control" required>
-                    </div>
-
-                    {{-- <div class="mb-3">
-                        <label for="remainingWeight" class="form-label">Remaining Weight</label>
-                        <input type="number" name="remainingWeight" class="form-control">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="remainingVolume" class="form-label">Remaining Volume</label>
-                        <input type="number" name="remainingVolume" class="form-control">
-                    </div> --}}
 
                     <div class="mb-3">
                         <label for="truck_first_id" class="form-label">First Truck</label>
@@ -287,6 +311,85 @@
             return rupiah;
         }
         </script>
+
+        {{-- buat bikin ETA = Arrival date --}}
+        {{-- <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const etaInput = document.getElementById('eta');
+                    const arrivalInput = document.getElementById('arrivalDate');
+
+                    etaInput.addEventListener('input', function () {
+                        arrivalInput.value = etaInput.value;
+                    });
+                });
+        </script> --}}
+
+        {{-- form pelabuhan --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const transportationSelect = document.querySelector('select[name="transportationMode"]');
+                const shipmentSelect = document.querySelector('select[name="shipmentMode"]');
+                const portSection = document.getElementById('port-section');
+                const portOrigin = document.getElementById('form-port-origin');
+                const deliveryDate = document.getElementById('form-delivery-date');
+                const etaInput = document.getElementById('eta');
+                const arrivalInput = document.getElementById('arrivalDate');
+                const etdInput = document.getElementById('etd');
+                const departureDate = document.getElementById('departureDate');
+                const pickupDate = document.getElementById('pickupDate');
+
+                // Fungsi untuk toggle tampilan port
+                const togglePortSection = () => {
+                    if (transportationSelect.value === 'laut' && shipmentSelect.value === 'D2D' ) {
+                        portSection.style.display = 'block';
+                        portOrigin.style.display = 'block';
+                        deliveryDate.style.display = 'block';
+                        arrivalInput.disabled = false;
+                        pickupDate.style.display = 'block';
+                        departureDate.style.display = 'block';
+                    }else if (transportationSelect.value === 'darat' && shipmentSelect.value === 'D2D'){
+                        portSection.style.display = 'none';
+                        arrivalInput.addEventListener('input', function () {
+                        etaInput.value = arrivalInput.value;});
+                        departureDate.addEventListener('input', function () {
+                        etdInput.value = departureDate.value;});
+                        arrivalInput.disabled = false;
+                        pickupDate.style.display = 'block';
+                        departureDate.style.display = 'block';
+                    }else if (shipmentSelect.value === 'D2P') {
+                        portSection.style.display = 'block';
+                        deliveryDate.style.display = 'none';
+                        etaInput.addEventListener('input', function () {
+                        arrivalInput.value = etaInput.value;});
+                        arrivalInput.disabled = true;
+                        pickupDate.style.display = 'block';
+                        departureDate.style.display = 'block';
+                    }else if (shipmentSelect.value === 'P2P') {
+                        portSection.style.display = 'block';
+                        deliveryDate.style.display = 'none';
+                        etaInput.addEventListener('input', function () {
+                        arrivalInput.value = etaInput.value;});
+                        arrivalInput.disabled = true;
+                        pickupDate.style.display = 'none';
+                        departureDate.style.display = 'none';
+                    }else if (shipmentSelect.value === 'P2D') {
+                        portSection.style.display = 'block';
+                        deliveryDate.style.display = 'block';
+                        pickupDate.style.display = 'none';
+                        departureDate.style.display = 'none';
+                        arrivalInput.disabled = false;
+                    }
+                };
+
+                // Cek saat halaman dimuat
+                togglePortSection();
+
+                // Event saat dropdown diubah
+                transportationSelect.addEventListener('change', togglePortSection);
+                shipmentSelect.addEventListener('change', togglePortSection);
+            });
+        </script>
+
 
 
 @endsection
