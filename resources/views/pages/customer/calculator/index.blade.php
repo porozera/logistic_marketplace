@@ -147,7 +147,7 @@
                         <h5>Hasil Perhitungan</h5>
                     </div>
                     <div class="card-body">
-                        <p class="">Total Volume Muatan: <span id="totalWeight" class="text-danger fw-bold">0</span> CBM</p>
+                        <p class="">Total Volume Muatan: <span id="cbmResult" class="text-danger fw-bold">0</span> CBM</p>
                         <hr>
                         <p class="">Total Berat Muatan: <span id="totalWeight" class="text-danger fw-bold">0</span> kg</p>
                         <hr>
@@ -245,9 +245,9 @@
                 let cbmByWeight = Math.ceil(weight / 600);
                 let cbmByVolume = Math.ceil(cbmRounded);
                 let extraCBM = 0;
-                if (length > 100) extraCBM++;
-                if (width > 100) extraCBM++;
-                if (height > 100) extraCBM++;
+                // if (length > 100) extraCBM++;
+                // if (width > 100) extraCBM++;
+                // if (height > 100) extraCBM++;
                 let cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM);
                 totalCBM += cbmRounded;
                 totalCBMToBuy += cbmToBuy;
@@ -256,7 +256,7 @@
                 let volumeInput = item.querySelector('.volume');
                 if (volumeInput) volumeInput.value = cbmToBuy;
             });
-
+            document.getElementById("cbmResult").innerText = totalCBM.toFixed(1);
             document.getElementById("cbmToBuy").innerText = totalCBMToBuy;
             document.getElementById("totalWeight").innerText = totalWeight;
 

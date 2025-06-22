@@ -378,41 +378,7 @@
                     </div>
                 </div>
                 @endif
-                <div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5>Detail Penyedia Jasa Logistik</h5>
-                            <hr>
-                            <div class="row">
-                                <div class="col"><p>Nama</p></div>
-                                <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->lsp->companyName }}</p>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col"><p>Email</p></div>
-                                <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->lsp->email }}</p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col"><p>Nomor Telepon</p></div>
-                                <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->lsp->telpNumber }}</p>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col"><p>Alamat Kantor</p></div>
-                                <div class="col">
-                                    <p class="text-primary">{{ $userOrder->order->lsp->address }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                
             </div>
             <div class="col-sm-12 col-md-6 col-xl-6">
@@ -472,7 +438,7 @@
                     </div>
                 </div>
                 
-                @php
+                {{-- @php
                 $count = 1
                 @endphp
                 @if ($userOrder->order->truck_first && $userOrder->order->truck_second)
@@ -709,7 +675,156 @@
                         </div>
                     </div>
                 </div>
-                @endif
+                @endif --}}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive" style="overflow-x: auto;"> 
+                           <table class="table table-striped table-bordered nowrap" id="pc-dt-simple" style="min-width: 100px;">
+                                <thead>
+                                        <tr>
+                                            <th><p class="mb-0 text-center">No</p></th>
+                                            <th><p class="mb-0 text-center">Penanggung Jawab</p></th>
+                                            <th><p class="mb-0 text-center">Nomor Telepon</p></th>
+                                            <th style="width: 200px;"><p class="mb-0 text-center">Plat Nomor</p></th>
+                                            <th><p class="mb-0 text-center">Brand</p></th>
+                                            <th><p class="mb-0 text-center">Tahun Produksi</p></th>
+                                            <th><p class="mb-0 text-center">Tipe</p></th>
+                                            <th><p class="mb-0 text-center">Gambar</p></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($userOrder->order->truck_first && $userOrder->order->truck_second)
+                                        <tr>
+                                            <td><p class="mb-0 text-center">1</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->driverName}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->driverContact}}</p></td>
+                                            <td style="width: 120px; min-width: 120px; max-width: 200px; white-space: nowrap;"><p class="mb-0 text-center">{{$userOrder->order->truck_first->plateNumber}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->brand}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->yearBuilt}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->type}}</p></td>
+                                            <td>
+                                                <p class="mb-0 text-center">
+                                                    @if(!empty($userOrder->order->truck_first->picture))
+                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" target="_blank">
+                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ asset('images/truck-not-found.jpeg') }}" target="_blank">
+                                                            <img src="{{ asset('images/truck-not-found.jpeg') }}" alt="Tidak ada gambar" class="img-fluid rounded" style="max-height: 180px;">
+                                                        </a>
+                                                    @endif
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><p class="mb-0 text-center">2</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->driverName}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->driverContact}}</p></td>
+                                            <td style="width: 120px; min-width: 120px; max-width: 200px; white-space: nowrap;"><p class="mb-0 text-center">{{$userOrder->order->truck_second->plateNumber}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->brand}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->yearBuilt}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->type}}</p></td>
+                                            <td>
+                                                <p class="mb-0 text-center">
+                                                    @if(!empty($userOrder->order->truck_second->picture))
+                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" target="_blank">
+                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ asset('images/truck-not-found.jpeg') }}" target="_blank">
+                                                            <img src="{{ asset('images/truck-not-found.jpeg') }}" alt="Tidak ada gambar" class="img-fluid rounded" style="max-height: 180px;">
+                                                        </a>
+                                                    @endif
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        @elseif ($userOrder->order->truck_first)
+                                        <tr>
+                                            <td><p class="mb-0 text-center">1</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->driverName}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->driverContact}}</p></td>
+                                            <td style="width: 120px; min-width: 120px; max-width: 200px; white-space: nowrap;"><p class="mb-0 text-center">{{$userOrder->order->truck_first->plateNumber}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->brand}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->yearBuilt}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_first->type}}</p></td>
+                                            <td>
+                                                <p class="mb-0 text-center">
+                                                    @if(!empty($userOrder->order->truck_first->picture))
+                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" target="_blank">
+                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ asset('images/truck-not-found.jpeg') }}" target="_blank">
+                                                            <img src="{{ asset('images/truck-not-found.jpeg') }}" alt="Tidak ada gambar" class="img-fluid rounded" style="max-height: 180px;">
+                                                        </a>
+                                                    @endif
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        @elseif ($userOrder->order->truck_second)
+                                        <tr>
+                                            <td><p class="mb-0 text-center">1</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->driverName}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->driverContact}}</p></td>
+                                            <td style="width: 120px; min-width: 120px; max-width: 200px; white-space: nowrap;"><p class="mb-0 text-center">{{$userOrder->order->truck_second->plateNumber}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->brand}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->yearBuilt}}</p></td>
+                                            <td><p class="mb-0 text-center">{{$userOrder->order->truck_second->type}}</p></td>
+                                            <td>
+                                                <p class="mb-0 text-center">
+                                                    @if(!empty($userOrder->order->truck_second->picture))
+                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" target="_blank">
+                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ asset('images/truck-not-found.jpeg') }}" target="_blank">
+                                                            <img src="{{ asset('images/truck-not-found.jpeg') }}" alt="Tidak ada gambar" class="img-fluid rounded" style="max-height: 180px;">
+                                                        </a>
+                                                    @endif
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                            </table>
+                        </div>     
+                    </div>
+                </div>
+                <div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Detail Penyedia Jasa Logistik</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col"><p>Nama</p></div>
+                                <div class="col">
+                                    <p class="text-primary">{{ $userOrder->order->lsp->companyName }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col"><p>Email</p></div>
+                                <div class="col">
+                                    <p class="text-primary">{{ $userOrder->order->lsp->email }}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col"><p>Nomor Telepon</p></div>
+                                <div class="col">
+                                    <p class="text-primary">{{ $userOrder->order->lsp->telpNumber }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col"><p>Alamat Kantor</p></div>
+                                <div class="col">
+                                    <p class="text-primary">{{ $userOrder->order->lsp->address }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>    
         </div>
     </div>
