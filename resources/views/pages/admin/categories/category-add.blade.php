@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-12">
               <div class="page-header-title">
-                <h2 class="mb-0">Create Kategori Barang</h2>
+                <h2 class="mb-0">Create HS Code  </h2>
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
 
       <div class="card">
         <div class="card-header">
-          <h5>Form Tambah Data Kategori Barang</h5>
+          <h5>Form Tambah Data HS Code</h5>
         </div>
         <div class="card-body">
           <form action="/admin/category-add" method="post">

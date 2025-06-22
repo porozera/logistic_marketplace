@@ -107,6 +107,9 @@
                     <span class="mt-4 text-sm text-muted ms-2">Dengan Mendaftar, Anda menyetujui <a href="/terms-of-service/lsp" class="text-primary"> Kebijakan Layanan </a> kami.</span>
                   </label>
                   @error('terms') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                  <div class="alert alert-warning mt-3" role="alert">
+                      <strong>Perhatian!</strong> Setelah melakukan pendaftaran, mohon kirimkan Surat Izin Penyelenggaraan Anda dalam waktu <strong>1x24 jam</strong> ke email <a href="mailto:sentralogix@gmail.com">sentralogix@gmail.com</a> sebagai verifikasi legalitas perusahaan.
+                  </div>
                   <div class="d-grid mt-3">
                     <button type="submit" class="btn btn-primary">Buat Akun</button>
                   </div>   

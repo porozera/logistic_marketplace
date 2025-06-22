@@ -28,7 +28,8 @@ class ComplainController extends Controller
             'email' => 'required|email',
             'username' => 'required|string',
             'pesan' => 'required|string',
-            'complain_id' => 'required|exists:complains,id' // pastikan valid
+            'complain_id' => 'required|exists:complains,id', // pastikan valid
+            'status' => 'required|in:Solved,Pending' 
         ]);
     
         // Kirim email
@@ -39,7 +40,7 @@ class ComplainController extends Controller
     
         // Update status jadi "Solved"
         $complain = Complain::findOrFail($request->complain_id);
-        $complain->status = 'Solved';
+        $complain->status = $request->status;
         $complain->save();
     
         // Redirect kembali dengan sweetalert notification
@@ -62,7 +63,7 @@ class ComplainController extends Controller
         return back()->withErrors($validator)->withInput()->with('error', 'Mohon periksa kembali isian Anda.');
     }
 
-    Complain::create([
+    $complain = Complain::create([
         'username' => $request->username,
         'email' => $request->email,
         'description' => $request->pesan,
@@ -78,6 +79,8 @@ class ComplainController extends Controller
         'header' => 'Komplain Baru Diterima',
         'description' => "Komplain dari {$request->username} telah diterima dan menunggu peninjauan.",
         'is_read' => false,
+        'type' => 'complaint',
+        'related_id' => $complain->id,
     ]);
     
 

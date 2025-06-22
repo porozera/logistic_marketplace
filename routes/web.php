@@ -50,16 +50,9 @@ use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\DashboardLspController;
 use App\Http\Controllers\LandingPageController;
-use App\Http\Controllers\OpenContainerController;
-use App\Http\Controllers\TruckController;
-use App\Http\Controllers\TrackingLspController;
 use App\Http\Controllers\NotificationCustomerController;
 use App\Http\Controllers\NotificationLspController;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\TrackingController;
-use App\Http\Livewire\MapLocation;
 
-use App\Http\Controllers\NotificationCustomerController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
