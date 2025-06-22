@@ -250,54 +250,6 @@
                             <span class="pc-mtext">Profile</span>
                         </a>
                     </li>
-                    <li class="pc-item pc-caption">
-                        <label>Penawaran</label>
-                        <i class="ti ti-news"></i>
-                    </li>
-                    <li class="pc-item">
-                        <a href="{{ route('search-route') }}" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-world"></i></span>
-                            <span class="pc-mtext">Cari Rute</span>
-                        </a>
-                    </li>
-                    <li class="pc-item">
-                        <a href="{{ route('request-route') }}" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-location"></i></span>
-                            <span class="pc-mtext">Permintaan Rute</span>
-                        </a>
-                    </li>
-                    <li class="pc-item">
-                        <a href="{{ route('list-offer') }}" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
-                            <span class="pc-mtext">Daftar Penawaran</span>
-                        </a>
-                    <li class="pc-item pc-caption">
-                        <label>Pemesanan</label>
-                        <i class="ti ti-news"></i>
-                    </li>
-                    </li>
-                    <li class="pc-item">
-                        <a href="{{ route('list-payment') }}" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-cash"></i></span>
-                            <span class="pc-mtext">Payment History</span>
-                        </a>
-                    </li>
-                    <li class="pc-item">
-                        <a href="{{ route('tracking-customer') }}" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-map-2"></i></span>
-                            <span class="pc-mtext">Tracking Order</span>
-                        </a>
-                    </li>
-                    <li class="pc-item">
-                        <a href="{{ route('review') }}" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-color-picker"></i></span>
-                            <span class="pc-mtext">Daftar Ulasan</span>
-                        </a>
-                    </li>
-                    <li class="pc-item pc-caption">
-                        <label>Pesan</label>
-                        <i class="ti ti-news"></i>
-                    </li>
                     <li class="pc-item">
                         <a href="{{ route('notification-customer') }}" class="pc-link">
                             <span class="pc-micon position-relative">
@@ -315,17 +267,62 @@
                                     </span>
                                 @endif
                             </span>
-                            <span class="pc-mtext">Kotak Pesan</span>
+                            <span class="pc-mtext">Inbox</span>
                         </a>
                     </li>
-                    {{-- <li class="pc-item">
-                        <a href="../dashboard/index.html" class="pc-link">
-                            <span class="pc-micon"><i class="ti ti-message-circle"></i></span>
-                            <span class="pc-mtext">Chat</span>
-                        </a>
-                    </li> --}}
                     <li class="pc-item pc-caption">
-                        <label>Bantuan</label>
+                        <label>Offers</label>
+                        <i class="ti ti-news"></i>
+                    </li>
+                    <li class="pc-item">
+                        <a href="{{ route('search-route') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-world"></i></span>
+                            <span class="pc-mtext">Search Routes</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="{{ route('request-route') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-location"></i></span>
+                            <span class="pc-mtext">Request Routes</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="{{ route('list-offer') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-clipboard"></i></span>
+                            <span class="pc-mtext">Bidding List</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="{{ route('calculator') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-calculator"></i></span>
+                            <span class="pc-mtext">Load Calculator</span>
+                        </a>
+                    </li>
+                    <li class="pc-item pc-caption">
+                        <label>Orders</label>
+                        <i class="ti ti-news"></i>
+                    </li>
+                    
+                    <li class="pc-item">
+                        <a href="{{ route('list-payment') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-cash"></i></span>
+                            <span class="pc-mtext">Payment History</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="{{ route('tracking-customer') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-map-2"></i></span>
+                            <span class="pc-mtext">Tracking Order</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="{{ route('review') }}" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-color-picker"></i></span>
+                            <span class="pc-mtext">Review History</span>
+                        </a>
+                    </li>
+                    <li class="pc-item pc-caption">
+                        <label>Helps</label>
                         <i class="ti ti-news"></i>
                     </li>
                     <li class="pc-item">

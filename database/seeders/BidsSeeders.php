@@ -7,23 +7,22 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-class OffersSeeder extends Seeder
+class BidsSeeders extends Seeder
 {
     public function run()
     {
-        $offers = [
+        $bids = [
             [
-                'noOffer' => 'OFF'.Str::random(5),
+                'noOffer' => 'BIDs'.Str::random(5),
                 'origin' => 'KOTA JAKARTA UTARA', 
-                'destination' => 'KOTA PADANG',
+                'destination' => 'KOTA JAYAPURA',
                 'portOrigin' => 'TANJUNG PRIOK',
-                'portDestination' => 'PORT OF PADANG',
+                'portDestination' => 'PORT OF JAYAPURA',
                 'shipmentMode' => 'D2D',
                 'shipmentType' => 'LCL',
                 'transportationMode' => 'laut',
-                'pickupDate' => Carbon::now()->addDays(2),
-                'departureDate' => Carbon::now()->addDays(3),
-                'cyClosingDate' => Carbon::now()->addDays(4),
+                'pickupDate' => null,
+                'cyClosingDate' => Carbon::now()->addDays(2),
                 'etd' => Carbon::now()->addDays(5),
                 'eta' => Carbon::now()->addDays(7),
                 'deliveryDate' => Carbon::now()->addDays(8),
@@ -36,44 +35,13 @@ class OffersSeeder extends Seeder
                 'status' => 'active',
                 'price' => 1500000.00,
                 'user_id' => 2,
-                'is_for_lsp' => true,
-                'is_for_customer' => true,
                 'truck_first_id' => 1,
                 'truck_second_id' => 2,
-                'container_id' => 1
+                'container_id' => 1,
+                'requestOffer_id' => 1,
             ],
             [
-                'noOffer' => 'OFF'.Str::random(5),
-                'origin' => 'KOTA JAKARTA UTARA', 
-                'destination' => 'KOTA AMBON',
-                'portOrigin' => 'TANJUNG PRIOK',
-                'portDestination' => 'PORT OF AMBON',
-                'shipmentMode' => 'D2D',
-                'shipmentType' => 'LCL',
-                'transportationMode' => 'darat',
-                'pickupDate' => Carbon::now()->addDays(2),
-                'departureDate' => Carbon::now()->addDays(3),
-                'cyClosingDate' => null,
-                'etd' => Carbon::now()->addDays(3),
-                'eta' => Carbon::now()->addDays(7),
-                'deliveryDate' => null,
-                'arrivalDate' => Carbon::now()->addDays(7),
-                'maxWeight' => 10000,
-                'maxVolume' => 33,
-                'remainingWeight' => 10000,
-                'remainingVolume' => 33,
-                'cargoType' => 'General Cargo',
-                'status' => 'active',
-                'price' => 1500000.00,
-                'user_id' => 2,
-                'is_for_lsp' => true,
-                'is_for_customer' => true,
-                'truck_first_id' => 1,
-                'truck_second_id' => 2,
-                'container_id' => 1
-            ],
-            [
-                'noOffer' => 'OFF'.Str::random(5),
+                'noOffer' => 'BIDs'.Str::random(5),
                 'origin' => 'KOTA JAKARTA', 
                 'destination' => 'KOTA SURABAYA',
                 'portOrigin' => 'TANJUNG PRIOK',
@@ -82,7 +50,6 @@ class OffersSeeder extends Seeder
                 'shipmentType' => 'LCL',
                 'transportationMode' => 'laut',
                 'pickupDate' => null,
-                'departureDate' => null,
                 'cyClosingDate' => Carbon::now()->addDays(2),
                 'etd' => Carbon::now()->addDays(5),
                 'eta' => Carbon::now()->addDays(7),
@@ -95,15 +62,14 @@ class OffersSeeder extends Seeder
                 'cargoType' => 'Special Cargo',
                 'status' => 'active',
                 'price' => 1500000.00,
-                'user_id' => 2,
-                'is_for_lsp' => true,
-                'is_for_customer' => true,
                 'truck_first_id' => 1,
                 'truck_second_id' => 2,
-                'container_id' => 1
+                'container_id' => 1,
+                'requestOffer_id' => 1,
+                'user_id' => 2,
             ],
             [
-                'noOffer' => 'OFF'.Str::random(5),
+                'noOffer' => 'BIDs'.Str::random(5),
                 'origin' => 'KOTA JAKARTA', 
                 'destination' => 'KOTA ACEH',
                 'portOrigin' => 'TANJUNG PRIOK',
@@ -111,13 +77,12 @@ class OffersSeeder extends Seeder
                 'shipmentMode' => 'D2P',
                 'shipmentType' => 'FCL',
                 'transportationMode' => 'laut',
-                'pickupDate' => Carbon::now()->addDays(2),
-                'departureDate' => Carbon::now()->addDays(3),
+                'pickupDate' => Carbon::now(),
                 'cyClosingDate' => Carbon::now()->addDays(4),
                 'etd' => Carbon::now()->addDays(5),
                 'eta' => Carbon::now()->addDays(7),
-                'deliveryDate' => null,
-                'arrivalDate' => Carbon::now()->addDays(7),
+                'deliveryDate' => Carbon::now()->addDays(8),
+                'arrivalDate' => Carbon::now()->addDays(9),
                 'maxWeight' => 10000,
                 'maxVolume' => 33,
                 'remainingWeight' => 10000,
@@ -126,14 +91,13 @@ class OffersSeeder extends Seeder
                 'status' => 'active',
                 'price' => 1500000.00,
                 'user_id' => 2,
-                'is_for_lsp' => true,
-                'is_for_customer' => true,
                 'truck_first_id' => 1,
                 'truck_second_id' => 2,
-                'container_id' => 1
+                'container_id' => 1,
+                'requestOffer_id' => 1,
             ],
         ];
 
-        DB::table('offers')->insert($offers);
+        DB::table('bids')->insert($bids);
     }
 }

@@ -59,14 +59,14 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-end mb-4">
               <h3 class="mb-0"><b>Login</b></h3>
-              <a href="/register-customer" class="link-primary">Tidak punya akun?</a>
+              {{-- <a href="/register-customer" class="link-primary">Tidak punya akun?</a> --}}
             </div>
             
          <form action="/login" method="POST">
               @csrf
               <div class="form-group mb-3">
-                <label for="email" class="form-label">Email Address</label>
-                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email Address" autofocus required value="{{ old('email') }}">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" autofocus required value="{{ old('email') }}">
                 @error('email')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -94,6 +94,9 @@
               </div>
               <div class="d-grid mt-4">
                 <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+              <div class="d-grid mt-2">
+                <a href="/register-customer"class="btn btn-warning">Buat Akun</a>
               </div>
             </form>
 

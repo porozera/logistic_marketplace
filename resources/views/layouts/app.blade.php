@@ -53,7 +53,8 @@
 
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
-
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.12.0/mapbox-gl.js"></script>
     @yield('style')
 </head>
 <body data-pc-preset="preset-1" data-pc-direction="ltr" data-pc-theme="light">
@@ -87,7 +88,7 @@
     </div>
   </div>
 
-
+  @yield('scripts')
   <!-- [Page Specific JS] start -->
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/apexcharts.min.js') }}"></script>
   <script src="{{ asset('template/mantis/dist/assets/js/pages/dashboard-default.js') }}"></script>
