@@ -47,12 +47,14 @@ use App\Http\Controllers\DaftarPenawaranController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
 use App\Http\Controllers\AdminNotificationController;
+use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\DashboardLspController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NotificationCustomerController;
 use App\Http\Controllers\NotificationLspController;
 
+use App\Models\Tracking;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -312,6 +314,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/profile/customer', [ProfileCustomerController::class, 'index'])->name('profile-customer');
     Route::get('/profile/customer/edit', [ProfileCustomerController::class, 'edit'])->name('profile-customer.edit');
     Route::put('/profile/customer/edit/perform', [ProfileCustomerController::class, 'update'])->name('profile-customer.update');
+    Route::get('/payment/redirect', [PaymentController::class, 'handleRedirect']);
 
     //FAQ
     Route::get('/FAQ-customer', [FAQCustomerController::class, 'index'])->name('FAQ-customer');
@@ -347,7 +350,11 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //DASHBOARD
     Route::get('/dashboard/customer', [DashboardCustomerController::class, 'index'])->name('dashboard-customer');
+
+    //CALCULATOR
+    Route::get('/load-calculator', [CalculatorController::class, 'index'])->name('calculator');
 });
+
 
 
 

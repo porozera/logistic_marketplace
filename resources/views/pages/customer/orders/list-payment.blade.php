@@ -1,5 +1,13 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 @section('title', 'Payment History')
+@section('styles')
+<style>
+.badge-status {
+    min-width: 100px;
+    display: inline-block;
+    text-align: center;
+}
+</style>
 @section('content')
 <div class="pc-container">
     <div class="pc-content">
@@ -32,18 +40,15 @@
                             <table class="table table-hover" id="pc-dt-simple" style="min-width: 1200px;">
                                 <thead>
                                     <tr>
-                                      <th><small>No</small></th>
-                                      <th><small>Asal</small></th>
-                                      <th><small>Tujuan</small></th>
-                                      <th><small>Tipe</small></th>
-                                      <th><small>Moda</small></th>
-                                      <th><small>Jenis Barang</small></th>
-                                      <th><small>Berat</small></th>
-                                      <th><small>Volume</small></th>
-                                      <th><small>Tanggal Pengiriman</small></th>
-                                      <th><small>Total Harga</small></th>
-                                      <th><small>Status</small></th>
-                                      <th><small>Actions</small></th>
+                                      <th class="text-center"><small>No</small></th>
+                                      <th class="text-center"><small>Asal</small></th>
+                                      <th class="text-center"><small>Tujuan</small></th>
+                                      <th class="text-center"><small>Tipe</small></th>
+                                      <th class="text-center"><small>Moda</small></th>
+                                      <th class="text-center"><small>Tanggal Pengiriman</small></th>
+                                      <th class="text-center"><small>Total Harga</small></th>
+                                      <th class="text-center"><small>Status</small></th>
+                                      <th class="text-center"><small>Actions</small></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,32 +62,40 @@
                                     @endphp
                                     @foreach ($userOrders as $userOrder)
                                     <tr>
-                                        <td><small>{{ $no++ }}</small></td>
-                                        <td><small>{{ $userOrder->order->origin }}</small></td>
-                                        <td><small>{{ $userOrder->order->destination }}</small></td>
-                                        <td><small>{{ $userOrder->order->shipmentType }}</small></td>
-                                        <td><small>{{ $userOrder->order->shipmentMode }}</small></td>
-                                        <td><small>{{ $userOrder->commodities }}</small></td>
-                                        <td><small>{{ $userOrder->weight }} kg</small></td>
-                                        <td><small>{{ $userOrder->volume }} CBM</small></td>
-                                        <td><small>{{ $userOrder->order->shippingDate }}</small></td>
-                                        <td><small>Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</small></td>
+                                        <td class="text-center"><small>{{ $no++ }}</small></td>
+                                        <td class="text-center"><small>{{ $userOrder->order->origin }}</small></td>
+                                        <td class="text-center"><small>{{ $userOrder->order->destination }}</small></td>
+                                        <td class="text-center"><small>{{ $userOrder->order->shipmentType }}</small></td>
+                                        <td class="text-center"><small>{{ $userOrder->order->shipmentMode }}</small></td>
+                                        @if ($userOrder->order?->getpickupDate() == "Tidak ada informasi tanggal")
+                                            <td class="text-center"><small>{{ $userOrder->order?->getetd() }}</small></td>
+                                        @else
+                                            <td class="text-center"><small>{{ $userOrder->order?->getpickupDate() }}</small></td>
+                                        @endif
                                         
-                                        <td>
+                                        <td class="text-center"><small>Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</small></td>
+                                        
+                                        <td class="text-center">
                                             @if ($userOrder['paymentStatus'] == "Belum Lunas")
-                                            <span class="badge rounded-pill text-bg-danger">Belum Lunas</span>
+                                                <span class="badge rounded-pill text-bg-warning badge-status">Belum Lunas</span>
+                                            @elseif ($userOrder['paymentStatus'] == "Lunas")
+                                                <span class="badge rounded-pill text-bg-success badge-status">Lunas</span>
                                             @else
-                                            <span class="badge rounded-pill text-bg-success">Lunas</span>
+                                                <span class="badge rounded-pill text-bg-danger badge-status">Canceled</span>
                                             @endif
                                         </td>
-                                        <td>
-                                            @if ($userOrder['paymentStatus'] == "Belum Lunas")
-                                            {{-- <a href="" class="btn btn-icon btn-light-warning"><i class="ti ti-cash"></i></a> --}}
-                                            <a href="/payment/{{$userOrder->payment_token}}"><small>Bayar</small></a>
-                                            @else
-                                            {{-- <a href="" class="btn btn-icon btn-light-primary"><i class="ti ti-compass"></i></a> --}}
-                                            <a href="/invoice/{{$userOrder->payment_token}}"><small>Invoice</small></a>
-                                            @endif
+                                        <td class="text-center">
+                                            <div class="">
+                                                @if ($userOrder['paymentStatus'] == "Belum Lunas")
+                                                    <a href="/payment/{{ $userOrder->payment_token }}" class="" title="Bayar">
+                                                        <i class="ti ti-cash mt-0"></i> <small>Bayar</small>
+                                                    </a>
+                                                @else
+                                                <a href="/invoice/{{ $userOrder->payment_token }}" class="" title="Lihat Invoice">
+                                                    <i class="ti ti-file-text"></i> <small>Invoice</small>
+                                                </a>
+                                                @endif
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach

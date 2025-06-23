@@ -1,153 +1,311 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Rute')
+@section('title', 'Add Route')
+<head>
+    <style>
+    .accordion-button::after {
+        display: none !important;
+    }
+</style>
+</head>
 
 @section('content')
-    <div class="pc-container">
-        <div class="pc-content">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Edit Detail Offer</h5>
+    <div class="container" style="padding-left: 250px; padding-top:80px;">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0)">Route</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Tambah Data</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h2 class="mb-0">Edit Route</h2>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <form action="{{ route('offers.update', $offer->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
 
-                        <div class="mb-3">
+        <div class="card">
+            <div class="card-header">
+                <h5>Form Edit Route</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('offers.update', $offer->id) }}" method="POST"">
+                    @csrf
+                    @method('PUT')
+
+                    {{-- <div class="mb-3">
+                        <label for="origin" class="form-label">Provinsi Asal</label>
+                        <select id="origin_province" class="form-control" value={{$offer-></select>}}></select>
+                    </div> --}}
+                    <div class="mb-3">
                             <label for="noOffer" class="form-label">No Offer</label>
-                            <input type="text" class="form-control" id="noOffer" name="noOffer"
-                                value="{{ $offer->noOffer }}" disabled>
+                            <input type="text" class="form-control" id="noOffer" name="noOffer" value="{{ $offer->noOffer }}" disabled>
+                            <input type="text" class="form-control" id="noOffer" name="noOffer" value="{{ $offer->noOffer }}" hidden>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="origin" class="form-label">Origin</label>
-                            <input type="text" class="form-control" id="origin" name="origin"
-                                value="{{ $offer->origin }}" disabled>
-                        </div>
+                    <div class="mb-3">
+                        <label for="origin" class="form-label">Kota Asal</label>
+                        <input type="text" name="origin" id="origin_city" class="form-control" value="{{ $offer->origin }}" disabled>
+                        <input type="text" name="origin" id="origin_city" class="form-control" value="{{ $offer->origin }}" hidden>
+                        @error('origin')
+                            <p class="text-danger text-xs pt-1"> {{ $message }} </p>
+                        @enderror
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="destination" class="form-label">Destination</label>
-                            <input type="text" class="form-control" id="destination" name="destination"
-                                value="{{ $offer->destination }}" disabled>
-                        </div>
+                    <div class="mb-3">
+                        <label for="destination" class="form-label">Kota Tujuan</label>
+                        <input name="destination" id="destination_city" class="form-control" value="{{ $offer->destination }}" disabled></input>
+                        <input name="destination" id="destination_city" class="form-control" value="{{ $offer->destination }}" hidden></input>
+                        @error('destination') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="container">Pilih Jenis Container</label>
-                            <select name="container_id" class="form-control" id="container_id" required>
-                                <option disabled selected>-- Pilih --</option>
+                    <input name="portOrigin" id="portOrigin" class="form-control" value="{{ $offer->portorigin }}" hidden></input>
+                    <input name="portDestination" id="portDestination" class="form-control" value="{{ $offer->portDestination }}" hidden></input>
+
+                    <div class="mb-3">
+                        <label for="shipmentMode" class="form-label">Shipment Mode</label>
+                        <select name="shipmentMode" class="form-control" required>
+                            <option value="D2D" {{ $offer->shipmentMode == 'D2D' ? 'selected' : '' }}>D2D</option>
+                            <option value="D2P" {{ $offer->shipmentMode == 'D2P' ? 'selected' : '' }}>D2P</option>
+                            <option value="P2D" {{ $offer->shipmentMode == 'P2D' ? 'selected' : '' }}>P2D</option>
+                            <option value="P2P" {{ $offer->shipmentMode == 'P2P' ? 'selected' : '' }}>P2P</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="transportationMode" class="form-label">Transportation Mode</label>
+                        <select name="transportationMode" class="form-control" required>
+                            <option value="darat" {{ $offer->transportationMode == 'darat' ? 'selected' : ''}}>Darat</option>
+                            <option value="laut" {{ $offer->transportationMode == 'laut' ? 'selected' : ''}}>Laut</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3" id="pickupDate">
+                        <label for="pickupDate" class="form-label">Pickup Date</label>
+                        <input type="date" class="form-control" placeholder="Masukkan pickup date" name="pickupDate" value="{{ $offer->pickupDate ? \Carbon\Carbon::parse($offer->pickupDate)->format('Y-m-d') : '' }}"  >
+                    </div>
+
+                    <div class="mb-3" id="departureDate">
+                        <label for="departureDate" class="form-label">Departure Date</label>
+                        <input type="date" class="form-control" placeholder="Masukkan departure date" name="departureDate" value="{{ $offer->departureDate ? \Carbon\Carbon::parse($offer->departureDate)->format('Y-m-d') : '' }}"      >
+                    </div>
+
+                    <div id="port-section" class="accordion mb-3" style="display: none;">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" aria-expanded="true" aria-controls="collapseOne">
+                                    Data pelabuhan
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="mb-3" id="form-port-origin" style="display: block;">
+                                        <label for="portOrigin" class="form-label">Pelabuhan Asal (Origin Port)</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan pelabuhan asal" name="portOrigin" id="portOrigin" value="{{ $offer->portOrigin ? $offer->portOrigin : ''}}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="portDestination" class="form-label">Pelabuhan Tujuan (Destination Port)</label>
+                                        <input type="text" class="form-control" placeholder="Masukkan pelabuhan tujuan" name="portDestination" value="{{ $offer->portDestination ? $offer->portDestination : ''}}" >
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="cyClosingDate" class="form-label">Container Yard Closing Date</label>
+                                        <input type="date" class="form-control" placeholder="Masukkan cyClosingDate" name="cyClosingDate" value="{{ $offer->cyClosingDate ? \Carbon\Carbon::parse($offer->cyClosingDate)->format('Y-m-d') : '' }}">
+                                        <label for="etd" class="text-primary">*barang sampai di container yard</label>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="etd" class="form-label">Estimated Time Departure (ETD)</label>
+                                        <input type="date" class="form-control" placeholder="Masukkan ETD" name="etd" id="etd" value="{{ $offer->etd ? \Carbon\Carbon::parse($offer->etd)->format('Y-m-d') : '' }}">
+                                        <label for="etd" class="text-primary">*estimasi keberangkatan kapal</label>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="eta" class="form-label">Estimated Time Arrival (ETA)</label>
+                                        <input type="date" class="form-control" placeholder="Masukkan ETA" name="eta" id="eta" value="{{ $offer->eta ? \Carbon\Carbon::parse($offer->eta)->format('Y-m-d') : '' }}">
+                                        <label for="etd" class="text-primary">*estimasi kedatangan kapal</label>
+                                    </div>
+
+                                    <div class="mb-3" id="form-delivery-date">
+                                        <label for="deliveryDate" class="form-label">Delivery date</label>
+                                        <input type="date" class="form-control" placeholder="Masukkan ETA" name="deliveryDate" value="{{ $offer->deliveryDate ? \Carbon\Carbon::parse($offer->deliveryDate)->format('Y-m-d') : '' }}">
+                                        <label for="etd" class="text-primary">*pengiriman dari pelabuhan ke tujuan</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="arrivalDate" class="form-label">Arrival Date</label>
+                        <input type="date" class="form-control" placeholder="Masukkan arrival date" name="arrivalDate" required id="arrivalDate" value="{{ $offer->arrivalDate ? \Carbon\Carbon::parse($offer->arrivalDate)->format('Y-m-d') : '' }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="shipmentType" class="form-label">Shipment Type</label>
+                        <select name="shipmentType" class="form-control" required>
+                            <option value="FCL" {{ $offer->shipmentType == 'FCL' ? 'selected' : ''}}>FCL</option>
+                            <option value="LCL" {{ $offer->shipmentType == 'LCL' ? 'selected' : ''}}>LCL</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="container">Pilih Jenis Container</label>
+                            <select name="container_id" class="form-control" id="container">
+                                <option value="">-- Pilih Container --</option>
                                 @foreach ($containers as $container)
-                                    <option value="{{ $container->id }}"
+                                    <option
+                                        value="{{ $container->id }}"
                                         data-weight="{{ $container->weight }}"
                                         data-volume="{{ $container->volume }}"
-                                        {{ $offer->container_id == $container->id ? 'selected' : '' }}>
+                                        data-description="{{ $container->description }}"
+                                        {{ $offer->container_id == $container->id ? 'selected' : '' }}
+                                    >
                                         {{ $container->name }}
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
-
-                        {{-- Preview Container Info --}}
-                        <div id="container-info" class="mt-3" style="{{ $offer->container_id ? '' : 'display:none;' }}">
-                            <p><strong>Berat Maksimal:</strong> <span id="weight-preview">{{ $offer->container->weight ?? '' }}</span> Kg</p>
-                            <p><strong>Volume Maksimal:</strong> <span id="volume-preview">{{ $offer->container->volume ?? '' }}</span> CBM</p>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="commodities" class="form-label">Commodities</label>
-                            {{-- <input type="text" class="form-control" id="commodities" name="commodities"
-                                value="{{ $offer->commodities }}" required> --}}
-                                <select class="form-select" name="commodities" id="commodities">
-                                    @foreach ($commodities as $commodities)
-                                        <option value="{{ $commodities->name }}"
-                                            {{ $offer->commodities == $commodities->name ? 'selected' : '' }}>
-                                            {{ $commodities->name }}
-                                        </option>
-
-                                    @endforeach
-                                </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="shipmentMode" class="form-label">Shipment Mode</label>
-                            <select class="form-select" id="shipmentMode" name="shipmentMode" required>
-                                <option value="D2D" {{ $offer->shipmentMode == 'D2D' ? 'selected' : '' }}>D2D</option>
-                                <option value="D2P" {{ $offer->shipmentMode == 'D2P' ? 'selected' : '' }}>D2P</option>
-                                <option value="P2D" {{ $offer->shipmentMode == 'P2D' ? 'selected' : '' }}>P2D</option>
-                                <option value="P2P" {{ $offer->shipmentMode == 'P2P' ? 'selected' : '' }}>P2P</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="shipmentType" class="form-label">Shipment Type</label>
-                            <select class="form-select" id="shipmentType" name="shipmentType" required>
-                                <option value="FCL" {{ $offer->shipmentType == 'FCL' ? 'selected' : '' }}>FCL</option>
-                                <option value="LCL" {{ $offer->shipmentType == 'LCL' ? 'selected' : '' }}>LCL</option>
-                            </select>
-                        </div>
-
-                        {{-- <div class="mb-3">
-                            <label for="maxWeight" class="form-label">Max Weight</label>
-                            <input type="number" class="form-control" id="maxWeight" name="maxWeight"
-                                value="{{ $offer->maxWeight }}" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="maxVolume" class="form-label">Max Volume</label>
-                            <input type="number" class="form-control" id="maxVolume" name="maxVolume"
-                                value="{{ $offer->maxVolume }}" required>
-                        </div> --}}
-
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
-                            {{-- <input type="text" class="form-control" id="price" name="price"
-                                value="{{ $offer->price }}" required> --}}
-                            <input type="text" class="form-control" id="price_display" value="{{ number_format((float) $offer->price, 0, ',', '.') }}">
-                            <input type="hidden" name="price" id="price" value="{{ $offer->price }}">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="truck_first_id" class="form-label">First Truck</label>
-                            <select class="form-select" name="truck_first_id" id="truck_first_id" required>
-                                @foreach ($trucks as $truck)
-                                    <option value="{{ $truck->id }}"
-                                        {{ $offer->truck_id == $truck->id ? 'selected' : '' }}>{{ $truck->type }} -
-                                        {{ $truck->brand }} - {{ $truck->plateNumber }} ({{ $truck->driverName }})
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="truck_second_id" class="form-label">Second Truck</label>
-                            <select class="form-select" name="truck_second_id" id="truck_second_id" required>
-                                @foreach ($trucks as $truck)
-                                    <option value="{{ $truck->id }}"
-                                        {{ $offer->truck_id == $truck->id ? 'selected' : '' }}>{{ $truck->type }} -
-                                        {{ $truck->brand }} - {{ $truck->plateNumber }} ({{ $truck->driverName }})
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
+                    </div>
+                    {{-- <div id="container-info" class="card p-3 mt-3" style="display: block;">
+                        <h5>Detail Container</h5>
                         <hr>
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-select" id="status" name="status" required>
-                                <option value="active" {{ $offer->status == 'active' ? 'selected' : '' }}>Active</option>
-                                <option value="deactive" {{ $offer->status == 'deactive' ? 'selected' : '' }}>Deactive
-                                </option>
-                            </select>
-                        </div>
+                        <p><strong>Berat Maksimal:</strong> <span id="max-weight"></span> Kg</p>
+                        <p><strong>Volume Maksimal:</strong> <span id="max-volume"></span> CBM</p>
+                        <p><strong>Deskripsi:</strong> <span id="container-description"></span></p>
 
-                        <button type="submit" class="btn btn-primary">Update Offer</button>
-                    </form>
-                </div>
+                        <!-- Input hidden untuk dikirim ke backend -->
+                        <input type="hidden" name="maxWeight" id="maxWeightInput">
+                        <input type="hidden" name="maxVolume" id="maxVolumeInput">
+                        <input type="hidden" name="remainingWeight" id="remainingWeightInput">
+                        <input type="hidden" name="remainingVolume" id="remainingVolumeInput">
+                    </div> --}}
+
+                    <div id="container-info" class="mt-3" style="{{ $offer->container_id ? '' : 'display:none;' }}">
+                        <p><strong>Berat Maksimal:</strong> <span id="weight-preview">{{ $offer->container->weight ?? '' }}</span> Kg</p>
+                        <p><strong>Volume Maksimal:</strong> <span id="volume-preview">{{ $offer->container->volume ?? '' }}</span> CBM</p>
+                        <input type="text" name="maxWeight" value="{{ $offer->container->weight ?? '' }}" hidden>
+                        <input type="text" name="maxVolume" value="{{ $offer->container->volume ?? '' }}" hidden>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        {{-- <input type="number" name="price" class="form-control" step="0.01" required> --}}
+                        <input type="text" class="form-control" id="price_display" placeholder="Masukkan harga" required value="{{ $offer->price ? number_format($offer->price, 0, ',', '.') : '' }}">
+                        <input type="hidden" name="price" id="price" value="{{ $offer->price }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="truck_first_id" class="form-label">First Truck</label>
+                        <select class="form-select" name="truck_first_id" id="truck_first_id" required>
+                                @foreach ($trucks as $truck)
+                                    <option value="{{ $truck->id }}"
+                                        {{ $offer->truck_first_id == $truck->id ? 'selected' : '' }}>{{ $truck->type }} -
+                                        {{ $truck->brand }} - {{ $truck->plateNumber }} ({{ $truck->driverName }})
+                                    </option>
+                                @endforeach
+                            </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="truck_second_id" class="form-label">Second Truck</label>
+                        <select class="form-select" name="truck_second_id" id="truck_second_id" required>
+                                @foreach ($trucks as $truck)
+                                    <option value="{{ $truck->id }}"
+                                        {{ $offer->truck_second_id == $truck->id ? 'selected' : '' }}>{{ $truck->type }} -
+                                        {{ $truck->brand }} - {{ $truck->plateNumber }} ({{ $truck->driverName }})
+                                    </option>
+                                @endforeach
+                            </select>
+                    </div>
+
+                    <hr>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select name="status" class="form-control" required >
+                            <option value="active" {{$offer->status == 'active' ? 'selected' : ''}}>Active</option>
+                            <option value="deactive" {{$offer->status == 'deactive' ? 'selected' : ''}}>Deactive</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <a href="{{ url()->previous() }}" class="btn btn-danger"> Batalkan </a>
+                </form>
+
             </div>
         </div>
+
     </div>
 
     <script>
+        // Load provinsi saat halaman pertama kali dibuka
+        const loadProvinces = async (selectId) => {
+            const res = await fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
+            const provinces = await res.json();
+            const select = document.getElementById(selectId);
+            select.innerHTML = '<option value="">Pilih Provinsi</option>';
+            provinces.forEach(p => {
+                select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
+            });
+        }
+
+        // Load kota/kabupaten berdasarkan provinsi
+        const loadCities = async (provinceId, targetSelectId) => {
+            const res = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`);
+            const cities = await res.json();
+            const select = document.getElementById(targetSelectId);
+            select.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>';
+            cities.forEach(c => {
+                select.innerHTML += `<option value="${c.name}">${c.name}</option>`;
+            });
+        }
+
+        // Load provinsi saat awal
+        window.addEventListener("DOMContentLoaded", () => {
+            loadProvinces("origin_province");
+            loadProvinces("destination_province");
+
+            // Event Listener untuk load kota berdasarkan provinsi
+            document.getElementById("origin_province").addEventListener("change", function () {
+                loadCities(this.value, "origin_city");
+            });
+
+            document.getElementById("destination_province").addEventListener("change", function () {
+                loadCities(this.value, "destination_city");
+            });
+        });
+
+        // document.getElementById('container').addEventListener('change', function() {
+        //     const selectedOption = this.options[this.selectedIndex];
+        //     const weight = selectedOption.getAttribute('data-weight');
+        //     const volume = selectedOption.getAttribute('data-volume');
+        //     const description = selectedOption.getAttribute('data-description');
+
+        //     if (weight && volume) {
+        //         // Tampilkan container info
+        //         document.getElementById('container-info').style.display = 'block';
+        //         document.getElementById('max-weight').textContent = weight;
+        //         document.getElementById('max-volume').textContent = volume;
+        //         document.getElementById('container-description').textContent = description;
+
+        //         // Set input hidden
+        //         document.getElementById('maxWeightInput').value = weight;
+        //         document.getElementById('maxVolumeInput').value = volume;
+        //         document.getElementById('remainingWeightInput').value = weight;
+        //         document.getElementById('remainingVolumeInput').value = volume;
+        //     } else {
+        //         document.getElementById('container-info').style.display = 'none';
+        //     }
+        // });
+
         document.getElementById('container').addEventListener('change', function () {
             const selectedOption = this.options[this.selectedIndex];
             const weight = selectedOption.getAttribute('data-weight');
@@ -159,19 +317,11 @@
             document.getElementById('container-info').style.display = 'block';
         });
     </script>
-
     <script>
-        // Format angka pada saat pertama kali tampil (edit form)
-        window.addEventListener("DOMContentLoaded", () => {
-            let display = document.getElementById("price_display");
-            let value = document.getElementById("price").value;
-            display.value = formatRupiah(value);
-        });
-
         document.getElementById("price_display").addEventListener("input", function(e) {
-            let input = this.value.replace(/\D/g, ''); // hanya angka
-            this.value = formatRupiah(input);
-            document.getElementById("price").value = input;
+            let input = this.value.replace(/\D/g, ''); // ambil angka aja
+            this.value = formatRupiah(input); // tampilkan yang sudah diformat
+            document.getElementById("price").value = input; // simpan angka murni ke hidden input
         });
 
         function formatRupiah(angka) {
@@ -187,7 +337,86 @@
 
             return rupiah;
         }
-</script>
+        </script>
+
+        {{-- buat bikin ETA = Arrival date --}}
+        {{-- <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const etaInput = document.getElementById('eta');
+                    const arrivalInput = document.getElementById('arrivalDate');
+
+                    etaInput.addEventListener('input', function () {
+                        arrivalInput.value = etaInput.value;
+                    });
+                });
+        </script> --}}
+
+        {{-- form pelabuhan --}}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const transportationSelect = document.querySelector('select[name="transportationMode"]');
+                const shipmentSelect = document.querySelector('select[name="shipmentMode"]');
+                const portSection = document.getElementById('port-section');
+                const portOrigin = document.getElementById('form-port-origin');
+                const deliveryDate = document.getElementById('form-delivery-date');
+                const etaInput = document.getElementById('eta');
+                const arrivalInput = document.getElementById('arrivalDate');
+                const etdInput = document.getElementById('etd');
+                const departureDate = document.getElementById('departureDate');
+                const pickupDate = document.getElementById('pickupDate');
+
+                // Fungsi untuk toggle tampilan port
+                const togglePortSection = () => {
+                    if (transportationSelect.value === 'laut' && shipmentSelect.value === 'D2D' ) {
+                        portSection.style.display = 'block';
+                        portOrigin.style.display = 'block';
+                        deliveryDate.style.display = 'block';
+                        arrivalInput.disabled = false;
+                        pickupDate.style.display = 'block';
+                        departureDate.style.display = 'block';
+                    }else if (transportationSelect.value === 'darat' && shipmentSelect.value === 'D2D'){
+                        portSection.style.display = 'none';
+                        arrivalInput.addEventListener('input', function () {
+                        etaInput.value = arrivalInput.value;});
+                        departureDate.addEventListener('input', function () {
+                        etdInput.value = departureDate.value;});
+                        arrivalInput.disabled = false;
+                        pickupDate.style.display = 'block';
+                        departureDate.style.display = 'block';
+                    }else if (shipmentSelect.value === 'D2P') {
+                        portSection.style.display = 'block';
+                        deliveryDate.style.display = 'none';
+                        etaInput.addEventListener('input', function () {
+                        arrivalInput.value = etaInput.value;});
+                        arrivalInput.disabled = true;
+                        pickupDate.style.display = 'block';
+                        departureDate.style.display = 'block';
+                    }else if (shipmentSelect.value === 'P2P') {
+                        portSection.style.display = 'block';
+                        deliveryDate.style.display = 'none';
+                        etaInput.addEventListener('input', function () {
+                        arrivalInput.value = etaInput.value;});
+                        arrivalInput.disabled = true;
+                        pickupDate.style.display = 'none';
+                        departureDate.style.display = 'none';
+                    }else if (shipmentSelect.value === 'P2D') {
+                        portSection.style.display = 'block';
+                        deliveryDate.style.display = 'block';
+                        pickupDate.style.display = 'none';
+                        departureDate.style.display = 'none';
+                        arrivalInput.disabled = false;
+                    }
+                };
+
+                // Cek saat halaman dimuat
+                togglePortSection();
+
+                // Event saat dropdown diubah
+                transportationSelect.addEventListener('change', togglePortSection);
+                shipmentSelect.addEventListener('change', togglePortSection);
+            });
+        </script>
+
 
 
 @endsection

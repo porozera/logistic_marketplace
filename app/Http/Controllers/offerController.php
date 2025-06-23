@@ -96,25 +96,32 @@ class offerController extends Controller
             'shipmentType' => 'required|in:FCL,LCL',
             'maxWeight' => 'required|integer',
             'maxVolume' => 'required|integer',
-            'commodities' => 'required|string',
+            // 'commodities' => 'required|string',
             'status' => 'required|in:active,deactive',
             'price' => 'required|numeric',
-            'loadingDate' => 'required|date',
-            'shippingDate' => 'required|date',
-            'estimationDate' => 'required|date',
+            // 'loadingDate' => 'required|date',
+            // 'shippingDate' => 'required|date',
+            // 'estimationDate' => 'required|date',
             'remainingWeight' => 'nullable|integer',
             'remainingVolume' => 'nullable|integer',
             'container_id' => 'required|exists:containers,id',
             'truck_first_id' => 'required|exists:trucks,id',
             'truck_second_id' => 'required|exists:trucks,id',
+            'portOrigin' => 'string',
+            'portDestination' => 'string',
+            'transportationMode' => 'required|in:darat,laut',
+            'pickupDate' => 'date',
+            'cyClosingDate' => 'date',
+            'etd' => 'date',
+            'eta' => 'date',
+            'arrivalDate' => 'date',
+            'deliveryDate' => 'date',
+            'departureDate' => 'date',
         ]);
-        // dd($attributes);
         $noOffer = 'OFR-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
-        $category = Category::where('name', $attributes['commodities'])->first();
-        // dd($attributes['commodities'], $category);
+        // $category = Category::where('name', $attributes['commodities'])->first();
         $cargoType = $category->type ?? null;
 
-        // offersModel::create($request->all());
         $offer = offersModel::create([
             // 'noOffer' => $attributes['noOffer'],
             'noOffer' => $noOffer,
@@ -123,14 +130,14 @@ class offerController extends Controller
             'destination' => $attributes['destination'],
             'shipmentMode' => $attributes['shipmentMode'],
             'shipmentType' => $attributes['shipmentType'],
-            'loadingDate' => $attributes['loadingDate'],
-            'shippingDate' => $attributes['shippingDate'],
-            'estimationDate' => $attributes['estimationDate'],
+            // 'loadingDate' => $attributes['loadingDate'],
+            // 'shippingDate' => $attributes['shippingDate'],
+            // 'estimationDate' => $attributes['estimationDate'],
             'maxWeight' => $attributes['maxWeight'],
             'maxVolume' => $attributes['maxVolume'],
             'remainingWeight' => $attributes['remainingWeight'],
             'remainingVolume' => $attributes['remainingVolume'],
-            'commodities' => $attributes['commodities'],
+            // 'commodities' => $attributes['commodities'],
             'status' => $attributes['status'],
             'price' => $attributes['price'],
             'user_id' =>Auth::id(),
@@ -141,7 +148,17 @@ class offerController extends Controller
             'is_for_customer' => 1,
             'is_for_lsp' => $attributes['shipmentType'] === 'LCL' ? 1 : 0,
             'timestamp' => now(),
-            'cargoType' => $cargoType,
+            // 'cargoType' => $cargoType,
+            'portOrigin'=> $attributes['portOrigin'],
+            'portDestination'=> $attributes['portDestination'],
+            'transportationMode'=> $attributes['transportationMode'],
+            'pickupDate'=> $attributes['pickupDate'],
+            'cyClosingDate'=> $attributes['cyClosingDate'],
+            'etd'=> $attributes['etd'],
+            'eta'=> $attributes['eta'],
+            'arrivalDate'=> $attributes['arrivalDate'],
+            'deliveryDate'=> $attributes['deliveryDate'],
+            'departureDate'=> $attributes['departureDate'],
         ]);
         return redirect()->route('offers.index')->with('success', 'Route successfully created!');
     }
@@ -163,46 +180,102 @@ class offerController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         // Validasi input
         $request->validate([
-            // 'noOffer' => 'required|string|unique:offers,noOffer,' . $id,
-            // 'origin' => 'required|string',
-            // 'destination' => 'required|string',
-            'shipmentMode' => 'required|in:D2D,D2P,P2D,P2P',
-            'shipmentType' => 'required|in:FCL,LCL',
-            // 'maxWeight' => 'required|integer',
-            // 'maxVolume' => 'required|integer',
-            'commodities' => 'required|string',
-            'price' => 'required|numeric',
-            'truck_first_id' => 'required|exists:trucks,id',
-            'truck_second_id' => 'required|exists:trucks,id',
-            'container_id' => 'required|exists:containers,id',
-            'status' => 'required|in:active,deactive',
+            // // 'noOffer' => 'required|string|unique:offers,noOffer,' . $id,
+            // // 'origin' => 'required|string',
+            // // 'destination' => 'required|string',
+            // 'shipmentMode' => 'required|in:D2D,D2P,P2D,P2P',
+            // 'shipmentType' => 'required|in:FCL,LCL',
+            // // 'maxWeight' => 'required|integer',
+            // // 'maxVolume' => 'required|integer',
+            // 'commodities' => 'required|string',
+            // 'price' => 'required|numeric',
+            // 'truck_first_id' => 'required|exists:trucks,id',
+            // 'truck_second_id' => 'required|exists:trucks,id',
+            // 'container_id' => 'required|exists:containers,id',
+            // 'status' => 'required|in:active,deactive',
+            'noOffer' => 'string|max:255',
+            'origin' => 'string|max:255',
+            'destination' => 'string|max:255',
+            'portOrigin' => 'string|max:255',
+            'portDestination' => 'string|max:255',
+            'shipmentMode' => 'in:D2D,D2P,P2D,P2P',
+            'transportationMode' => 'in:darat,laut',
+            'shipmentType' => 'in:FCL,LCL',
+            'pickupDate' => 'nullable|date',
+            'departureDate' => 'nullable|date',
+            'cyClosingDate' => 'nullable|date',
+            'etd' => 'nullable|date',
+            'eta' => 'nullable|date',
+            'deliveryDate' => 'nullable|date',
+            'arrivalDate' => 'date',
+            'maxWeight' => 'integer|min:0',
+            'maxVolume' => 'integer|min:0',
+            // 'remainingWeight' => 'nullable|integer|min:0',
+            // 'remainingVolume' => 'nullable|integer|min:0',
+            // 'cargoType' => 'nullable|string|max:255', // atau gunakan enum:General Cargo,...
+            'status' => 'in:active,deactive',
+            'price' => 'numeric|min:0',
+            // 'is_for_lsp' => 'nullable|boolean',
+            // 'is_for_customer' => 'nullable|boolean',
+            'container_id' => 'exists:containers,id',
+            'truck_first_id' => 'exists:trucks,id',
+            'truck_second_id' => 'exists:trucks,id',
         ]);
 
         // Cari offer berdasarkan ID
         $offer = offersModel::findOrFail($id);
-        $category = Category::where('name', $request['commodities'])->first();
-        // dd($attributes['commodities'], $category);
-        $cargoType = $category->type ?? null;
-
+        // $category = Category::where('name', $request['commodities'])->first();
+        // // dd($attributes['commodities'], $category);
+        // $cargoType = $category->type ?? null;
+        $arrivalDate = $request['shipmentMode'] === 'D2P' ? $request['eta'] : $request['arrivalDate'];
         // Update data
         $offer->update([
-            // 'noOffer' => $request->noOffer,
-            // 'origin' => $request->origin,
-            // 'destination' => $request->destination,
-            'shipmentMode' => $request->shipmentMode,
-            'shipmentType' => $request->shipmentType,
-            // 'maxWeight' => $request->maxWeight,
-            // 'maxVolume' => $request->maxVolume,
-            'commodities' => $request->commodities,
-            'price' => $request->price,
-            // 'truck_id' => $request['truck_id'],
-            'truck_first_id' => $request['truck_first_id'],
-            'truck_second_id' => $request['truck_second_id'],
-            'container_id' => $request['container_id'],
-            'status' => $request->status,
-            'cargoType' => $cargoType,
+            // // 'noOffer' => $request->noOffer,
+            // // 'origin' => $request->origin,
+            // // 'destination' => $request->destination,
+            // 'shipmentMode' => $request->shipmentMode,
+            // 'shipmentType' => $request->shipmentType,
+            // // 'maxWeight' => $request->maxWeight,
+            // // 'maxVolume' => $request->maxVolume,
+            // 'commodities' => $request->commodities,
+            // 'price' => $request->price,
+            // // 'truck_id' => $request['truck_id'],
+            // 'truck_first_id' => $request['truck_first_id'],
+            // 'truck_second_id' => $request['truck_second_id'],
+            // 'container_id' => $request['container_id'],
+            // 'status' => $request->status,
+            // 'cargoType' => $cargoType,
+        'noOffer' => $request['noOffer'],
+        'origin' => $request['origin'],
+        'destination' => $request['destination'],
+        'portOrigin' => $request['portOrigin'],
+        'portDestination' => $request['portDestination'],
+        'shipmentMode' => $request['shipmentMode'],
+        'transportationMode' => $request['transportationMode'],
+        'shipmentType' => $request['shipmentType'],
+        'pickupDate' => $request['pickupDate'],
+        'departureDate' => $request['departureDate'],
+        'cyClosingDate' => $request['cyClosingDate'],
+        'etd' => $request['etd'],
+        'eta' => $request['eta'],
+        'deliveryDate' => $request['deliveryDate'],
+        'arrivalDate' => $arrivalDate,
+        'maxWeight' => $request['maxWeight'],
+        'maxVolume' => $request['maxVolume'],
+        // 'remainingWeight' => $request['remainingWeight'],
+        // 'remainingVolume' => $request['remainingVolume'],
+        // 'cargoType' => $request['cargoType'],
+        'status' => $request['status'],
+        'price' => $request['price'],
+        // 'is_for_lsp' => $request->has('is_for_lsp') ? 1 : 0,
+        // 'is_for_customer' => $request->has('is_for_customer') ? 1 : 0,
+        'container_id' => $request['container_id'],
+        'truck_first_id' => $request['truck_first_id'],
+        'truck_second_id' => $request['truck_second_id'],
+
         ]);
 
         // Redirect dengan pesan sukses

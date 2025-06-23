@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\offersModel;
 use App\Models\Order;
+use App\Models\ServiceOrdered;
 use App\Models\Tracking;
 use App\Models\UserOrder;
+use App\Models\UserOrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -16,8 +18,18 @@ class PaymentController extends Controller
     public function index($token)
     {
         $userOrder = UserOrder::where('payment_token', $token)->firstOrFail();
+        $item = UserOrderItem::where('userOrder_id', $userOrder->id)->get();
+        $totalWeight = $item->sum(function ($i) {
+            return $i->weight;
+        });
+        $totalVolume = $item->sum(function ($i) {
+            return $i->volume;
+        });
+        $itemName = $item->pluck('commodities')->unique()->implode(', ');
+        $services = ServiceOrdered::with('service')->where('userOrder_id', $userOrder->id)->get();
+        $serviceNames = $services->pluck('service.serviceName')->unique()->implode(', ');
         $order = Order::find($userOrder->order_id);
-        return view('pages.customer.orders.payment', compact('userOrder', 'order'));
+        return view('pages.customer.orders.payment', compact('userOrder', 'order','totalWeight','totalVolume','itemName','serviceNames','services'));
     }
 
     public function failed(){
@@ -97,7 +109,9 @@ class PaymentController extends Controller
         }
         $order = Order::find($userOrder->order_id);
         $offer = offersModel::where('noOffer', $order->noOffer)->first();
-        return view('pages.customer.orders.invoice', compact('userOrder','order','offer'));
+        $items = UserOrderItem::where('userOrder_id', $userOrder->id)->get();
+        $services = ServiceOrdered::with('service')->where('userOrder_id', $userOrder->id)->get();
+        return view('pages.customer.orders.invoice', compact('userOrder','order','offer','items','services'));
     }
 
     public function invoice_download($token)
@@ -110,8 +124,10 @@ class PaymentController extends Controller
     
         $order = $userOrder->order; // sudah eager-loaded
         $offer = offersModel::where('noOffer', $order->noOffer)->first();
+        $items = UserOrderItem::where('userOrder_id', $userOrder->id)->get();
+        $services = ServiceOrdered::with('service')->where('userOrder_id', $userOrder->id)->get();
     
-        $pdf = Pdf::loadView('invoices.pdf', compact('userOrder'))
+        $pdf = Pdf::loadView('invoices.pdf', compact('userOrder', 'order', 'offer', 'items', 'services'))
                   ->setPaper('A4', 'portrait');
     
         return $pdf->download('invoice-' . $order->noOffer . '.pdf');

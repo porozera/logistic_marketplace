@@ -54,7 +54,7 @@
                                         {{-- {{ asset('storage/' . $user->profilePicture) }} --}}
                                         {{-- @foreach ($user as $user) --}}
                                         {{-- {{dd($request->user->profilePicture);}} --}}
-                                        <img src="{{ asset('storage/' . $request->user->profilePicture) }}"
+                                        <img src="{{asset('default-profile.jpg')}}"
                                             alt="Profile Picture" class="rounded-circle border border-white"
                                             style="width: 43px; height: 43px; object-fit: cover;">
                                         {{-- @endforeach --}}

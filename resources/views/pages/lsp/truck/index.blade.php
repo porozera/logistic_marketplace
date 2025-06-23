@@ -40,13 +40,14 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Picture</th>
                                             <th>Brand</th>
                                             <th>Type</th>
                                             <th>Color</th>
                                             <th>Year Built</th>
                                             <th>Plate Number</th>
-                                            <th>Driver Name</th>
-                                            <th>Driver Contact</th>
+                                            <th>Coordinator Name</th>
+                                            <th>Coordinator Contact</th>
                                             <th style="text-align: center">Aksi</th>
                                         </tr>
                                     </thead>
@@ -54,6 +55,15 @@
                                         @foreach ($trucks as $truck)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>
+                                                    @if ($truck->picture)
+                                                        <img src="{{ asset('storage/' . $truck->picture) }}"
+                                                            alt="Truck Picture" class="img-thumbnail"
+                                                            style="width: 100px; height: 100px;">
+                                                    @else
+                                                        <p class="text-muted">Tidak ada gambar</p>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $truck->brand }}</td>
                                                 <td>{{ $truck->type }}</td>
                                                 <td>{{ $truck->color ?? '-' }}</td>
