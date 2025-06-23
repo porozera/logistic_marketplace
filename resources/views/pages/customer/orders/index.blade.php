@@ -429,7 +429,7 @@
                   <div class="row">
                     <div class="form-group mb-3">
                       <div class="col-md-12">
-                        <label class="form-label">Ready To Load</label>
+                        <label class="form-label">Tanggal Siap Muat Barang</label>
                         <div class="input-group">
                           <input type="date" name="RTL_start_date" class="form-control" value="{{ old('RTL_start_date') }}">
                           <span class="input-group-text">s/d</span>
@@ -672,7 +672,7 @@
                 cbmByVolume = Math.ceil(cbmRounded);
                 let volumeInput = item.querySelector('.volume');
                 let extraCBM = 0;
-              //   if (length > 100) extraCBM += Math.floor((length - 1) / 100);
+              // if (length > 100) extraCBM += Math.floor((length - 1) / 100);
               // if (width > 100) extraCBM += Math.floor((width - 1) / 100);
               // if (height > 100) extraCBM += Math.floor((height - 1) / 100);
                 cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM) ;

@@ -34,8 +34,27 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
     
-        if ($request->has('arrivalDate') && $request->arrivalDate != '') {
-            $query->whereDate('arrivalDate', $request->arrivalDate);
+        // if ($request->filled('departureDate') && $request->filled('arrivalDate')) {
+        //     $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', $request->departureDate)
+        //         ->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), '<=', $request->arrivalDate);
+        //     $searchPerformed = true;
+        // } elseif ($request->filled('departureDate')) {
+        //     $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', $request->departureDate);
+        //     $searchPerformed = true;
+        // } elseif ($request->filled('arrivalDate')) {
+        //     $query->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), '>=', $request->arrivalDate);
+        //     $searchPerformed = true;
+        // }
+
+        if ($request->filled('departureDate') && $request->filled('arrivalDate')) {
+            $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', $request->departureDate)
+                ->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), '<=', $request->arrivalDate);
+            $searchPerformed = true;
+        } elseif ($request->filled('departureDate')) {
+            $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), $request->departureDate);
+            $searchPerformed = true;
+        } elseif ($request->filled('arrivalDate')) {
+            $query->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), $request->arrivalDate);
             $searchPerformed = true;
         }
     

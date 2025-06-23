@@ -308,6 +308,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/list-payment', [PaymentController::class, 'list_payment'])->name('list-payment');
     Route::get('/invoice/{token}', [PaymentController::class, 'invoice'])->name('invoice');
     Route::get('/invoice/{token}/download', [PaymentController::class, 'invoice_download'])->name('invoice.download');
+    Route::get('/payment/check/{token}', [PaymentController::class, 'check'])->name('payment.check');
 
 
     //PROFILE CUSTOMER

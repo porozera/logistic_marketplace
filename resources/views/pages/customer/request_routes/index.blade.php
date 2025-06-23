@@ -213,7 +213,7 @@
                             <input type="date" name="arrivalDate" class="form-control" value="{{ old('arrivalDate') }}">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Ready To Load</label>
+                            <label class="form-label">Tanggal Siap Muat Barang</label>
                             <div class="input-group">
                                 <input type="date" name="RTL_start_date" class="form-control" value="{{ old('RTL_start_date') }}">
                                 <span class="input-group-text">s/d</span>

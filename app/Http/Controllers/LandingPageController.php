@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\offersModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LandingPageController extends Controller
 {
@@ -18,7 +19,7 @@ class LandingPageController extends Controller
     {
         $query = offersModel::where('is_for_customer', true)
             ->where('status', "active")
-            ->whereDate('shippingDate', '>=', Carbon::today());
+            ->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', Carbon::today());
     
         $searchPerformed = false;
     
@@ -32,8 +33,15 @@ class LandingPageController extends Controller
             $searchPerformed = true;
         }
     
-        if ($request->has('shippingDate') && $request->shippingDate != '') {
-            $query->whereDate('shippingDate', $request->shippingDate);
+        if ($request->filled('departureDate') && $request->filled('arrivalDate')) {
+            $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', $request->departureDate)
+                ->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), '<=', $request->arrivalDate);
+            $searchPerformed = true;
+        } elseif ($request->filled('departureDate')) {
+            $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), $request->departureDate);
+            $searchPerformed = true;
+        } elseif ($request->filled('arrivalDate')) {
+            $query->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), $request->arrivalDate);
             $searchPerformed = true;
         }
     
@@ -62,7 +70,12 @@ class LandingPageController extends Controller
         }
 
         if ($request->has('maxTime') && $request->maxTime != '') {
-            $query->whereRaw("DATEDIFF(estimationDate, shippingDate) <= ?", [$request->maxTime]);
+            $query->whereRaw("
+                DATEDIFF(
+                    COALESCE(arrivalDate, eta),
+                    COALESCE(pickupDate, departureDate, etd)
+                ) <= ?
+            ", [$request->maxTime]);
             $searchPerformed = true;
         }
     
@@ -70,7 +83,7 @@ class LandingPageController extends Controller
             if ($request->btn_radio1 == 'Murah') {
                 $query->orderBy('price', 'asc');
             } elseif ($request->btn_radio1 == 'Cepat') {
-                $query->orderByRaw("DATEDIFF(estimationDate, shippingDate) asc");
+                $query->orderByRaw("DATEDIFF(arrivalDate, etd) asc");
             }
             $searchPerformed = true;
         }

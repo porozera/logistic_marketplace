@@ -34,29 +34,36 @@
           <div class="card">
             <div class="card-body">
                 <form action="{{ route('search-route') }}">
-                    <div class="row">
+                    <div class="row d-flex align-items-end">
                         <div class="col-sm-12 col-md-3">
+                            <label class="form-label">Kota Asal</label>
                             <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ request('origin') }}">
                         </div>
                         <div class="col-sm-12 col-md-3">
+                            <label class="form-label">Kota Tujuan</label>
                             <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ request('destination') }}">
                         </div>
                         <div class="col-sm-12 col-md-3">
-                            <input type="date" name="arrivalDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ request('arrivalDate') }}">
+                            <label class="form-label">Tanggal Pengiriman</label>
+                            <div class="input-group">
+                                <input type="date" name="departureDate" class="form-control" value="{{ request('departureDate') }}">
+                                <span class="input-group-text">s/d</span>
+                                <input type="date" name="arrivalDate" class="form-control" value="{{ request('arrivalDate') }}">
+                            </div>
                         </div>
                         <div class="col-sm-12 col-md-2">
+                            <label class="form-label">Tipe Pengiriman </label>
                             <select class="form-control" name="shipmentType" id="shipmentType">
                                 <option value="FCL" {{ request('shipmentType') == 'FCL' ? 'selected' : '' }}>FCL</option>
                                 <option value="LCL" {{ request('shipmentType') == 'LCL' ? 'selected' : '' }}>LCL</option>
                             </select>
                         </div>
-                        <div class="col-sm-12 col-md-1">
-                            <button type="submit" class="btn btn-primary h-100"><i class="ti ti-search mt-4"></i></button>
+                        <div class="col-sm-12 col-md-1 d-grid align-items-end">
+                            <button type="submit" class="btn btn-primary" style="height: 50px;"><i class="ti ti-search"></i></button>
                         </div>
                     </div>
-                
+                </div>
             </div>
-          </div>
         </div>
       </div>
 
