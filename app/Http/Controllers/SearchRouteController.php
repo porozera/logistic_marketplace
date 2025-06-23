@@ -12,6 +12,7 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SearchRouteController extends Controller
 {
@@ -19,7 +20,7 @@ class SearchRouteController extends Controller
     {
         $query = offersModel::where('is_for_customer', true)
             ->where('status', "active")
-            ->whereDate('etd', '>=', Carbon::today());
+            ->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', Carbon::today());
     
         $searchPerformed = false;
 
