@@ -2,92 +2,92 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\City;
+use App\Models\Container;
 use App\Models\offersModel;
 use App\Models\Order;
+use App\Models\Review;
+use App\Models\Service;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class OpenContainerController extends Controller
 {
     public function index(Request $request)
-{
-    $searchPerformed = false;
-    $offers = collect([]); // Default: Kosong saat pertama kali dibuka
+    {
+        $query = offersModel::where('is_for_lsp', true)
+            ->where('status', "active")
+            ->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', Carbon::today());
 
-    if ($request->has('origin') || $request->has('destination') || $request->has('shippingDate') || $request->has('shipmentMode')) {
-        $searchPerformed = true;
+        $searchPerformed = false;
 
-        $query = offersModel::query()
-            ->where('is_for_lsp', true)
-            ->where('shipmentType', 'LCL')
-            ->where('status', 'active');
-
-        if ($request->filled('origin')) {
+        if ($request->has('origin') && $request->origin != '') {
             $query->where('origin', 'LIKE', '%' . $request->origin . '%');
+            $searchPerformed = true;
         }
 
-        if ($request->filled('destination')) {
+        if ($request->has('destination') && $request->destination != '') {
             $query->where('destination', 'LIKE', '%' . $request->destination . '%');
+            $searchPerformed = true;
         }
 
-        if ($request->filled('shippingDate')) {
-            $query->whereDate('shippingDate', $request->shippingDate);
+        if ($request->has('arrivalDate') && $request->arrivalDate != '') {
+            $query->whereDate('arrivalDate', $request->arrivalDate);
+            $searchPerformed = true;
         }
 
-        if ($request->filled('shipmentMode')) {
-            $query->where('shipmentMode', $request->shipmentMode);
+        if ($request->has('shipmentType') && in_array($request->shipmentType, ['FCL', 'LCL'])) {
+            $query->where('shipmentType', $request->shipmentType);
+            $searchPerformed = true;
         }
 
-        $offers = $query->with('user:id,username,profilePicture,rating')->get();
+        if ($request->has('maxPrice') && $request->maxPrice != '') {
+            $query->where('price', '<=', $request->maxPrice);
+            $searchPerformed = true;
+        }
+
+        if ($request->has('category') && $request->category != '') {
+            $query->where(function ($q) use ($request) {
+                foreach ($request->category as $category) {
+                    $q->orWhere('cargoType', $category);
+                }
+            });
+            $searchPerformed = true;
+        }
+
+        if ($request->has('container') && $request->filled('container')) {
+            $query->whereIn('container_id', $request->container);
+            $searchPerformed = true;
+        }
+
+        if ($request->has('maxTime') && $request->maxTime != '') {
+            $query->whereRaw("
+                DATEDIFF(
+                    COALESCE(arrivalDate, eta),
+                    COALESCE(pickupDate, departureDate, etd)
+                ) <= ?
+            ", [$request->maxTime]);
+            $searchPerformed = true;
+        }
+
+        if ($request->has('btn_radio1')) {
+            if ($request->btn_radio1 == 'Murah') {
+                $query->orderBy('price', 'asc');
+            } elseif ($request->btn_radio1 == 'Cepat') {
+                $query->orderByRaw("DATEDIFF(arrivalDate, etd) asc");
+            }
+            $searchPerformed = true;
+        }
+
+        $offers = $query->orderBy('created_at', 'desc')->get();
+        $services = Service::all();
+        $categories = Category::distinct('type')->pluck('type')->toArray();
+        $containers = Container::all();
+        $cities = City::pluck('name')->toArray();
+
+        return view('pages.lsp.opencontainer.index', compact('offers', 'searchPerformed', 'cities','services','categories','containers'));
     }
-
-    return view('pages.lsp.opencontainer.index', compact('offers', 'searchPerformed'));
-}
-
-public function ajukanPenawaran($id)
-{
-    $offer = offersModel::findOrFail($id);
-    return view('pages.lsp.opencontainer.ajukan', compact('offer'));
-}
-
-public function storePenawaran(Request $request, $id)
-{
-    $offer = OffersModel::findOrFail($id);
-
-    // Validasi data kalau perlu
-    $request->validate([
-        'telp' => 'required',
-        'itemType' => 'required',
-        'paymentMethod' => 'required',
-    ]);
-
-    Order::create([
-        'noOffer' => $offer->noOffer,
-        'lspName' => $offer->lspName,
-        'origin' => $offer->origin,
-        'destination' => $offer->destination,
-        'shipmentMode' => $offer->shipmentMode,
-        'shipmentType' => $offer->shipmentType,
-        'loadingDate' => $offer->loadingDate,
-        'shippingDate' => $offer->shippingDate,
-        'estimationDate' => $offer->estimationDate,
-        'maxWeight' => $offer->maxWeight,
-        'maxVolume' => $offer->maxVolume,
-        'remainingWeight' => $offer->remainingWeight,
-        'remainingVolume' => $offer->remainingVolume,
-        'commodities' => $request->description,
-        'status' => 'waiting',
-        'price' => $offer->price,
-        'totalAmount' => $offer->price,
-        'remainingAmount' => $offer->price,
-        'paidAmount' => 0,
-        'paymentStatus' => $request->paymentMethod,
-        'container_id' => $offer->container_id,
-        'truck_first_id' => $offer->truck_first_id,
-        'truck_second_id' => $offer->truck_second_id,
-        'address' => null,
-        'timestamp' => now(),
-    ]);
-
-    return redirect()->route('opencontainer.index')->with('success', 'Penawaran berhasil diajukan.');
-}
 }
