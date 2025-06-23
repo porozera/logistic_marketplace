@@ -37,11 +37,11 @@
                     <div class="row d-flex align-items-end">
                         <div class="col-sm-12 col-md-3">
                             <label class="form-label">Kota Asal</label>
-                            <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ request('origin') }}">
+                            <input type="search" name="origin" class="form-control" placeholder="Kota Asal" value="{{ request('origin') }}">
                         </div>
                         <div class="col-sm-12 col-md-3">
                             <label class="form-label">Kota Tujuan</label>
-                            <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ request('destination') }}">
+                            <input type="search" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ request('destination') }}">
                         </div>
                         <div class="col-sm-12 col-md-3">
                             <label class="form-label">Tanggal Pengiriman</label>

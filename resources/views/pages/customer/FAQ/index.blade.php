@@ -28,12 +28,19 @@
             <div class="col-8">
                 <h3 class="m-b-10">General FAQs</h3>
                 <p class="text-gray-700">General FAQs adalah bagian yang dirancang untuk memberikan jawaban atas pertanyaan umum yang sering diajukan pengguna.</p>
-                <div class="input-group mb-3">
-                    <input type="search" class="form-control" id="" name="" placeholder="Cari bantuan..." value="">
-                    <span class="input-group-text bg-primary">
-                      <i class="ti ti-search" style="cursor: pointer; color: white;"></i>
-                    </span>
-                </div>       
+                <div class="input-group mb-1">
+                    <form action="{{ route('FAQ-customer') }}" class="d-flex w-100">
+                        <input type="search" class="form-control" id="header" name="header" placeholder="Cari bantuan..." value="{{ request('header') }}">
+                        <button type="submit" class="btn btn-primary ms-2 d-flex align-items-center">
+                            <i class="ti ti-search" style="color: white;"></i>
+                        </button>
+                    </form>
+                </div>  
+                @if ($faqs->isEmpty())
+                    <div class="alert alert-danger">
+                        Tidak ada FAQ yang sesuai.
+                    </div>
+                @else
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -58,6 +65,8 @@
                         </div>
                     </div>
                 </div>           
+                @endif     
+                
             </div>
         </div>
     </div>
