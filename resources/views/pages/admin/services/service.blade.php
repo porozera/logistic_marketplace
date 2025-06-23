@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-12">
               <div class="page-header-title">
-                <h2 class="mb-0">Data Layanan</h2>
+                <h2 class="mb-0">Data Layanan Tambahan</h2>
               </div>
             </div>
           </div>
@@ -34,10 +34,10 @@
               <div class="d-flex justify-content-between align-items-center p-4">
                 <div class="flex-grow-1" style="max-width: 80%;">
                   <h5 class="mb-2 mb-md-2">
-                    Master Data Layanan
+                    Master Data Layanan Tambahan
                   </h5>
                   <p class="mb-0">
-                    Halaman ini digunakan untuk mengelola data layanan, termasuk penambahan, pengeditan, dan penghapusan informasi layanan
+                    Halaman ini digunakan untuk mengelola data layanan tambahan, termasuk penambahan, pengeditan, dan penghapusan informasi layanan
                   </p>
                 </div>
                 <a href="/admin/service-add" class="btn btn-primary d-inline-flex align-items-center ms-3">

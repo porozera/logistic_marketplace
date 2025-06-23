@@ -43,10 +43,6 @@
                   <label class="form-label">Deskripsi Komplain / Keluhan</label>
                   <textarea class="form-control" rows="5" readonly>{{ $complain->description }}</textarea>
                 </div>
-                <div class="mb-3">
-                  <label class="form-label">Status</label>
-                  <input type="text" class="form-control" value="{{ $complain->status }}" readonly>
-                </div>
               </div>
 
               <form action="/send-answer-email" method="post">
@@ -66,6 +62,13 @@
                         <div class="mb-3">
                             <label for="pesan" class="form-label">Pesan Tanggapan</label>
                             <textarea class="form-control" id="pesan" name="pesan" rows="5" placeholder="Tulis tanggapan Anda..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status Komplain</label>
+                            <select class="form-select" name="status">
+                                <option value="Pending" {{ $complain->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="Solved" {{ $complain->status == 'Solved' ? 'selected' : '' }}>Solved</option>
+                            </select>
                         </div>
                         <div class="d-flex justify-content-between">
                             <a href="{{ url('/admin/complain') }}" class="btn btn-secondary">Kembali</a>

@@ -8,7 +8,15 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['sender_id','receiver_id','header', 'description','is_read'];
+    protected $fillable = [
+        'sender_id',
+        'receiver_id',
+        'header', 
+        'description',
+        'is_read',
+        'type',         // tambahkan ini!
+        'related_id'
+    ];
 
     public function sender()
     {

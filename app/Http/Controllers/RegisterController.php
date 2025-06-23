@@ -84,6 +84,8 @@ class RegisterController extends Controller
                 'header' => 'Pendaftaran LSP Baru',
                 'description' => "Permintaan pendaftaran dari perusahaan {$request->companyName} telah diterima dan menunggu peninjauan.",
                 'is_read' => false,
+                'type' => 'approval_lsp',
+                'related_id' => $data->id,
             ]);
             
     

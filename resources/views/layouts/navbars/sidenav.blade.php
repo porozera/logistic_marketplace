@@ -64,13 +64,13 @@
                     <li class="pc-item {{ Request::is('admin/service*') ? 'active' : '' }}">
                         <a href="{{ route('admin.service') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
-                            <span class="pc-mtext">Layanan</span>
+                            <span class="pc-mtext">Layanan Tambahan</span>
                         </a>
                     </li>
                     <li class="pc-item {{ Request::is('admin/category*') ? 'active' : '' }}">
                         <a href="{{ route('admin.category') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-box"></i></span>
-                            <span class="pc-mtext">Kategori Barang</span>
+                            <span class="pc-mtext">HS Code</span>
                         </a>
                     </li>
                     {{-- <li class="pc-item {{ Request::is('admin/province*') ? 'active' : '' }}">
