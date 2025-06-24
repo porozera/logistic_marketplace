@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Complain;
+use App\Models\Response;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Mail\ComplainAnswerMail;
@@ -19,8 +20,33 @@ class ComplainController extends Controller
     } 
     
     public function detail($id) {
-        $complain = Complain::findOrFail($id);
+        // $complain = Complain::findOrFail($id);
+        $complain = Complain::with(['user', 'responses.user'])->findOrFail($id);
         return view('pages.admin.complains.complain-detail', ['complain' => $complain]);
+    }
+
+    // Tambahkan fungsi baru ini untuk menyimpan balasan admin
+    public function storeResponse(Request $request, $complain_id)
+    {
+        $request->validate([
+            'response' => 'required|string|min:3',
+        ]);
+
+        $complain = Complain::findOrFail($complain_id);
+
+        Response::create([
+            'complain_id' => $complain->id,
+            'user_id' => Auth::id(), // Mengambil ID admin yang sedang login
+            'response' => $request->response,
+        ]);
+
+        // Setelah membalas, ubah status komplain menjadi "Solved" jika belum
+        if ($complain->status == 'Pending') {
+            $complain->status = 'Solved';
+            $complain->save();
+        }
+
+        return redirect()->back()->with('success', 'Balasan berhasil dikirim!');
     }
 
     public function sendAnswer(Request $request) {

@@ -64,4 +64,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class, 'lsp_id');
     }   
+    public function responses()
+    {
+        return $this->hasMany(Response::class);
+    }
 }

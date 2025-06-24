@@ -181,6 +181,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         //Manajemen Komplain
         Route::get('/complain', [ComplainController::class, 'index'])->name('admin.complain.index');
         Route::get('/complain-detail/{id}', [ComplainController::class, 'detail'])->name('admin.complain.detail');
+        Route::post('/complain-detail/{id}/response', [ComplainController::class, 'storeResponse'])->name('admin.complain.storeResponse');
 
         //Notifikasi
         Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');
