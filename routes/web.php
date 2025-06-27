@@ -346,9 +346,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //COMPLAIN
     Route::get('/complain', [ComplainController::class, 'index_customer'])->name('complain-customer');
-    Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
+    // Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
+    Route::get('/complain/customer/detail/{id}', [ComplainController::class, 'detail_customer'])->name('complain.detail');
     Route::get('/complain/create', [ComplainController::class, 'create'])->name('complain.create');
     Route::post('/complain/create/perform', [ComplainController::class, 'store'])->name('complain.create.store');
+    Route::post('/response/create/perform/{id}', [ComplainController::class, 'storeResponseCustomer'])->name('response.customer.store');
+    Route::put('/response/customer/update-status/{id}', [ComplainController::class, 'updateStatusCustomer'])->name('response.update-status');
 
     //DASHBOARD
     Route::get('/dashboard/customer', [DashboardCustomerController::class, 'index'])->name('dashboard-customer');
