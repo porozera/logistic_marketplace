@@ -68,8 +68,8 @@
                     </div>
                 </div>
                 <div class="card-footer text-end">
+                  <a href="{{ url('/admin/faq') }}" class="btn btn-danger me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ url('/admin/faq') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>
