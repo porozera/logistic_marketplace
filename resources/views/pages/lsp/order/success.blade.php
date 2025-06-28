@@ -64,7 +64,7 @@
 
               <hr>
               <div class="row">
-                <a href="/trackings" class="btn btn-primary">Track Order</a>
+                <a href="/trackings/{{$userOrderItem->id}}" class="btn btn-primary">Track Order</a>
               </div>
             <div class="col-md-4 text-center col-xl-4">
 

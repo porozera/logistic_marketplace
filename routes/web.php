@@ -241,6 +241,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::post('/order/perform', [OrderLspController::class, 'order'])->name('opencontainer.order.perform');
         Route::get('/payment/{token}', [PaymentLspController::class, 'index'])->name('opencontainer.payment');
         Route::get('/payment/success/{token}', [PaymentLspController::class, 'success'])->name('opencontainer.payment.success');
+        Route::get('/payment/failed', [PaymentLspController::class, 'failed'])->name('opencontainer.payment.failed');
         Route::get('/list-payment', [PaymentLspController::class, 'list_payment'])->name('opencontainer.list-payment');
     });
 
