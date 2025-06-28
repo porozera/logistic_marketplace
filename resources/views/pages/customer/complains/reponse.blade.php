@@ -56,6 +56,8 @@
                                 {{ $resp->user->name }}
                                 @if($is_admin)
                                     <span class="badge bg-light-primary text-primary rounded-pill ms-2">Admin</span>
+                                @else
+                                    <span class="badge bg-light-success text-success rounded-pill ms-2">{{$resp->user->firstName}}</span>
                                 @endif
                             </p>
                         </div>
@@ -76,12 +78,32 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="mb-3">Kirim Balasan Anda</h5>
-                        <form action="{{ route('admin.complain.storeResponse', $complain->id) }}" method="POST">
+                        <form action="{{ route('response.customer.store', $complain->id) }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <textarea name="response" class="form-control" rows="4" placeholder="Tulis balasan Anda di sini..." required></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3">Kirim Balasan</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="mb-3">Apakah masalah ini sudah terselesaikan?</h5>
+                        <form action="{{ route('response.update-status', $complain->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="d-flex gap-3">
+                                <button type="submit" name="solved" value="yes" class="btn btn-success d-flex align-items-center">
+                                    <i class="ti ti-check me-2"></i> Iya
+                                </button>
+                                <button type="" name="solved" value="no" class="btn btn-danger d-flex align-items-center">
+                                    <i class="ti ti-x me-2"></i> Tidak
+                                </button>
+                            </div>
+                            <br>
+                            <small>*Jika masalah sudah selesai bisa menekan tombol "Iya" diatas.</small>
                         </form>
                     </div>
                 </div>
