@@ -25,6 +25,12 @@ class ComplainController extends Controller
         return view('pages.admin.complains.complain-detail', ['complain' => $complain]);
     }
 
+    public function detail_customer($id) {
+        // $complain = Complain::findOrFail($id);
+        $complain = Complain::with(['user', 'responses.user'])->findOrFail($id);
+        return view('pages.customer.complains.reponse', ['complain' => $complain]);
+    }
+
     // Tambahkan fungsi baru ini untuk menyimpan balasan admin
     public function storeResponse(Request $request, $complain_id)
     {
@@ -41,10 +47,10 @@ class ComplainController extends Controller
         ]);
 
         // Setelah membalas, ubah status komplain menjadi "Solved" jika belum
-        if ($complain->status == 'Pending') {
-            $complain->status = 'Solved';
-            $complain->save();
-        }
+        // if ($complain->status == 'Pending') {
+        //     $complain->status = 'Solved';
+        //     $complain->save();
+        // }
 
         return redirect()->back()->with('success', 'Balasan berhasil dikirim!');
     }
@@ -140,8 +146,42 @@ class ComplainController extends Controller
         return redirect()->route('complain-customer')->with('success', 'Complain submitted successfully.');
     }
 
-    public function detail_customer($id) {
-        $complain = Complain::findOrFail($id);
-        return view('pages.customer.complains.detail', compact('complain'));
+    public function storeResponseCustomer(Request $request, $complain_id)
+    {
+        $request->validate([
+            'response' => 'required|string|min:3',
+        ]);
+
+        $complain = Complain::findOrFail($complain_id);
+
+        Response::create([
+            'complain_id' => $complain->id,
+            'user_id' => Auth::id(), // Mengambil ID admin yang sedang login
+            'response' => $request->response,
+        ]);
+
+        // if ($complain->status == 'Pending') {
+        //     $complain->status = 'Solved';
+        //     $complain->save();
+        // }
+
+        return redirect()->back()->with('success', 'Balasan berhasil dikirim!');
     }
+
+     public function updateStatusCustomer(Request $request, $complain_id)
+    {
+
+        $complain = Complain::findOrFail($complain_id);
+            $complain->status = 'Solved';
+            $complain->save();
+
+        return redirect()->route('complain-customer')->with('success', 'Komplain telah solved.');
+    }
+
+       
+
+    // public function detail_customer($id) {
+    //     $complain = Complain::findOrFail($id);
+    //     return view('pages.customer.complains.detail', compact('complain'));
+    // }
 }
