@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
-@section('title', 'Pembayaran')
+@section('title', 'Payment')
 @section('content')
 <div class="pc-container">
     <div class="pc-content">
@@ -16,8 +16,8 @@
                         </div>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0)">Detail Pemesanan</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Pembayaran</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0)">Offer Detail</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Payment</li>
                         </ul>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
         </div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-6">
-                <h4 class="m-b-10">Pembayaran</h4>
+                <h4 class="m-b-10">Payment</h4>
                 <div class="card">
                     <div class="card-header">
                         <h5>Detail Pemesanan</h5>
@@ -33,78 +33,108 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Asal :</p>
+                                <div class="col-5">
+                                    <p class="">Asal</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$order['origin']}}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p>Tujuan :</p>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$order['destination']}}</b></p>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order['origin']}}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Tangal Muat :</p>
+                                <div class="col-5">
+                                    <p class="">Tujuan</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$order['loading_date_formatted']}}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order['destination']}}</p>
+                                </div>
+                            </div>
+                            @if (!empty($order->pickupDate))
+                            <div class="row">
+                                <div class="col-5">
+                                    <p class="">Tangal Muat Barang</p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order->getpickupDate()}}</p>
+                                </div>
+                            </div>   
+                            @endif
+                            
+                            <div class="row">
+                                <div class="col-5">
+                                    <p class="">Tanggal Berangkat (ETD)</p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order->getEtd()}}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Tangal Pengiriman :</p>
+                                <div class="col-5">
+                                    <p class="">Tanggal Tiba (ETA)</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$order['shipping_date_formatted']}}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p>Estimasi Tangal Tiba :</p>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$order['estimation_date_formatted']}}</b></p>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$order->geteta()}}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Berat Barang :</p>
+                                <div class="col-5">
+                                    <p class="">Tipe Muatan</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$userOrder['weight']}} Kg</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p>Volume :</p>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$userOrder['volume']}} CBM</b></p>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$itemName}}</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Tipe Barang :</p>
+                                <div class="col-5">
+                                    <p class="">Total Berat</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    <p><b>{{$userOrder['commodities']}}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{ number_format($totalWeight, 0, ',', '.') }} kg</p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <p>Layanan yang dipilih :</p>
+                                <div class="col-5">
+                                    <p class="">Total Volume</p>
                                 </div>
-                                <div class="col-6 text-end">
-                                    @if(!empty($userOrder->services))
-                                    <p><b>{{ $userOrder->services }}</b></p>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                    <p>{{$totalVolume}} CBM</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <p class="">Layanan yang dipesan</p>
+                                </div>
+                                <div class="col-1">
+                                    <p class="">:</p>
+                                </div>
+                                <div class="col-6 text-start text-primary">
+                                   @if(!$services->isEmpty())
+                                        <p>{{ $serviceNames }}</p>
                                     @else
-                                        <p><b>Tidak ada layanan yang dipilih</b></p>
+                                        <p>Tidak ada layanan yang dipilih</p>
                                     @endif
                                 </div>                                
                             </div>
@@ -141,11 +171,14 @@
             },
             // Optional
             onPending: function(result){
-              /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+              window.location.href = '{{ route('payment.failed') }}';
             },
             // Optional
             onError: function(result){
                 window.location.href = '{{ route('payment.failed') }}';
+            },
+            onClose: function() {
+                 console.log("Snap popup closed by user.");
             }
           });
         };

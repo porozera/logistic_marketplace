@@ -14,19 +14,24 @@ class Bid extends Model
 
     protected $fillable = [
         'noOffer',
-        'lspName',
         'origin',
         'destination',
+        'portOrigin',
+        'portDestination',
         'shipmentMode',
         'shipmentType',
-        'loadingDate',
-        'shippingDate',
-        'estimationDate',
+        'transportationMode',
+        'pickupDate',
+        'departureDate',
+        'cyClosingDate',
+        'etd',
+        'eta',
+        'deliveryDate',
+        'arrivalDate',
         'maxWeight',
         'maxVolume',
         'remainingWeight',
         'remainingVolume',
-        'commodities',
         'status',
         'size',
         'price',
@@ -38,7 +43,7 @@ class Bid extends Model
         'container_id',
     ];
 
-    public function user()
+        public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -60,24 +65,73 @@ class Bid extends Model
 
     public function getEstimatedDaysAttribute()
     {
-        $shippingDate = Carbon::parse($this->shippingDate);
-        $estimationDate = Carbon::parse($this->estimationDate);
-        return $shippingDate->diffInDays($estimationDate);
+        $startDate = $this->pickupDate ?? $this->departureDate ?? $this->etd ?? null;
+
+        $endDate = $this->arrivalDate ?? $this->eta ?? null;
+
+        if ($startDate && $endDate) {
+            $start = Carbon::parse($startDate);
+            $end = Carbon::parse($endDate);
+
+            return $start->diffInDays($end);
+        }
+        return null;
     }
 
-    public function getLoadingDateFormattedAttribute()
+    public function getETA()
     {
-        return Carbon::parse($this->loadingDate)->translatedFormat('d F Y');
+        if (!$this->eta) {
+        return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->eta)->translatedFormat('d F Y');
     }
 
-    public function getShippingDateFormattedAttribute()
+    public function getETD()
     {
-        return Carbon::parse($this->shippingDate)->translatedFormat('d F Y');
+        if (!$this->etd) {
+        return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->etd)->translatedFormat('d F Y');
     }
 
-    public function getEstimationDateFormattedAttribute()
+    public function getpickupDate()
     {
-        return Carbon::parse($this->estimationDate)->translatedFormat('d F Y');
+        if (!$this->pickupDate) {
+        return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->pickupDate)->translatedFormat('d F Y');
+    }
+
+    public function getdepartureDate()
+    {
+        if (!$this->departureDate) {
+        return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->departureDate)->translatedFormat('d F Y');
+    }
+
+    public function getcyclosingDate()
+    {
+        if (!$this->cyClosingDate) {
+        return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->cyClosingDate)->translatedFormat('d F Y');
+    }
+
+    public function getdeliveryDate()
+    {
+        if (!$this->deliveryDate) {
+        return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->deliveryDate)->translatedFormat('d F Y');
+    }
+
+    public function getarrivalDate()
+    {
+        if (!$this->arrivalDate) {
+        return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->arrivalDate)->translatedFormat('d F Y');
     }
     public function container()
     {

@@ -73,7 +73,7 @@
                         <div class="row">
                             <div class="d-flex justify-content-between align-items-center">
                                 <p>{{$item->description}}</p>
-                                {{-- <a href="/complain/detail/{{$item->id}}" class="btn btn-icon btn-light-primary"><i class="ti ti-arrow-narrow-right"></i></a> --}}
+                                <a href="/complain/customer/detail/{{$item->id}}" class="btn btn-icon btn-light-primary"><i class="ti ti-arrow-narrow-right"></i></a>
                             </div>
                         </div>
                         

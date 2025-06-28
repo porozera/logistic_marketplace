@@ -84,7 +84,7 @@
                             @endif --}}
                         </div>
                         <div class="col-4 d-flex align-items-center justify-content-end">
-                            <p class="text-primary">ID: {{$item->order->noOffer}}</p>
+                            <p class="text-primary">No Offer: {{$item->order->noOffer}}</p>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -96,7 +96,7 @@
                             <div class="bg-primary mx-auto" style="width: 1px; height: 50px;"></div>
                         </div>
                         <div class="col-6">
-                            <p>{{$item->order->origin}}</p>
+                            <p class="text-primary">{{$item->order->origin}}</p>
                         </div>
                         <div class="col-4 d-flex align-items-start justify-content-end ">
                             <button type="button" class="btn btn-success rounded-pill">
@@ -104,27 +104,31 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mb-0">
                         <div class="col-1 d-flex align-items-start justify-content-start">
                             Tujuan
                         </div>
                         <div class="col-1">
                             <div class="rounded-circle bg-primary mx-auto" style="width: 8px; height: 8px;"></div>
                         </div>
-                        <div class="col-7">
-                            <p>{{$item->order->destination}}</p>
+                        <div class="col-10">
+                            <p class="text-primary">{{$item->order->destination}}</p>
                         </div>
                         
                     </div>
-                    <div class="row d-flex justify-content-between align-items-end">
+                    <div class="row mt-0 d-flex justify-content-between align-items-end">
                         <div class="col-2 d-flex align-items-end justify-content-start">
                             <p class="mb-0">Estimasi</p>
                         </div>
                         <div class="col-7 d-flex align-items-end justify-content-start">
-                            <p class="text-primary mb-0">{{$item->order->estimation_date_formatted}}</p>
+                            @if(!empty($item->order->arrivalDate))
+                            <p class="text-primary mb-0">{{$item->order->getarrivaldate()}}</p>
+                            @else
+                            <p class="text-primary mb-0">{{$item->order->geteta()}}</p>
+                            @endif
                         </div>
                         <div class="col-3 d-flex align-items-end justify-content-end">
-                            <a href="/tracking/detail/{{$item->id}}" class="btn btn-primary d-inline-flex">Lihat detail <i class="ti ti-chevron-right ms-1"></i></a>
+                            <a href="/tracking/detail/{{$item->id}}" class="btn btn-sm btn-primary d-inline-flex">Lihat detail <i class="ti ti-chevron-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Container;
+use App\Models\RequestItem;
 use App\Models\RequestRoute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,43 +25,57 @@ class RequestRouteController extends Controller
         $attributes = $request->validate([
             'origin' => 'required',
             'destination' => 'required',
-            'shippingDate' => 'required',
+            'RTL_start_date' => 'required',
+            'RTL_end_date' => 'required',
+            'arrivalDate' => 'required',
             'shipmentMode' => 'required',
             'shipmentType' => 'required',
+            'transportationMode' => 'required',
             'description' => 'required',
-            'weight' => 'required',
-            'length' => 'required',
-            'width' => 'required',
-            'height' => 'required',
-            'commodities' => 'required',
-            'address' => 'required',
+            'items' => 'required|array|min:1',
+            'items.*.weight' => 'required|numeric|min:0',
+            'items.*.width' => 'required|numeric|min:0',
+            'items.*.height' => 'required|numeric|min:0',
+            'items.*.length' => 'required|numeric|min:0',
+            'items.*.volume' => 'required|numeric|min:0',
+            'items.*.qty' => 'required|numeric|min:1',
+            'items.*.commodities' => 'required|string|max:255',
             'container_id' => 'nullable',
         ]);
 
-        $category = Category::where('name', $attributes['commodities'])->first();
-        // dd($attributes['commodities'], $category);
+        $category = Category::where('name', $attributes['items'][0]['commodities'])->first();
         $cargoType = $category->type ?? null;
 
         $requestRoute = RequestRoute::create([
             "origin" => $attributes['origin'],
             "destination" => $attributes['destination'],
-            "shippingDate" => $attributes['shippingDate'],
+            "RTL_start_date" => $attributes['RTL_start_date'],
+            "RTL_end_date" => $attributes['RTL_end_date'],
+            "arrivalDate" => $attributes['arrivalDate'],
+            "transportationMode" => $attributes['transportationMode'],
             "shipmentMode" => $attributes['shipmentMode'],
             "shipmentType" => $attributes['shipmentType'],
             "description" => $attributes['description'],
-            "weight" => $attributes['weight'],
-            "volume" => ($attributes['length']/100) * ($attributes['width']/100) * ($attributes['height']/100),
-            "commodities" => $attributes['commodities'],
-            "address" => $attributes['address'],
             "status" => "active",
             "user_id" => Auth::id(),
             "username" => Auth::user()->username,
             "deadline" => Carbon::now()->addDays(7)->toDateString(),
             "cargoType" => $cargoType,
-            "container_id" => $attributes['container_id'],
+            "container_id" => $attributes['container_id']??null,
         ]);
-        $deadline = Carbon::now()->addDays(7)->toDateString();
-        // return redirect("/request-routes/success?deadline=$deadline")->with('success', 'Permintaan rute berhasil dikrimkan!');
+        $items = $request->input('items', []);
+        foreach ($items as $item) {
+            RequestItem::create([
+                "requestOffer_id" => $requestRoute->id,
+                "weight" => $item['weight'],
+                "width" => $item['width'] ?? 1,
+                "height" => $item['height'] ?? 1,
+                "length" => $item['length'] ?? 1,
+                "volume" => $item['volume'],
+                "qty" => $item['qty'],
+                "commodities" => $item['commodities'],
+            ]);  
+        }
         return redirect("/request-routes")->with('success', 'Permintaan rute berhasil dikrimkan! Silakan cek kotak pesan secara berkala');
     }
 

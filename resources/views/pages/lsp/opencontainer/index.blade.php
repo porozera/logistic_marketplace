@@ -1,302 +1,331 @@
-@extends('layouts.app')
-
+@extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
+@section('title', 'Search Routes')
 @section('content')
-@section('title', 'Open Container')
-@php
-    \Carbon\Carbon::setLocale('id');
-@endphp
-<style>
-    .search-container {
-        background-color: white;
-        padding: 10px;
-        border-radius: 10px;
-    }
-
-    .search-holder {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .form-control {
-        min-width: 220px;
-    }
-
-    .btn-group .btn {
-        min-width: 100px;
-    }
-
-    .btn.active {
-        background-color: #007bff;
-        color: white;
-    }
-
-    #result-container img {
-        opacity: 0.6;
-        text-align: center;
-    }
-
-    .modal-header {
-        justify-content: center;
-    }
-</style>
-
-<div class="pc-container">
+ <!-- [ Main Content ] start -->
+ <div class="pc-container">
     <div class="pc-content">
-        <div class="page-header">
-            <div class="page-block">
-                <div class="row align-items-center">
-                    <div class="col-md-12">
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Open Container</li>
-                        </ul>
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="page-header-title">
+
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+              </div>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
+                    <li class="breadcrumb-item" aria-current="page">Open Container</li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12 col-md-12 col-xl-12">
+        <h4 class="m-b-10">Search Routes</h4>
+          <div class="card">
+            <div class="card-body">
+                <form action="{{ route('opencontainer.index') }}">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ request('origin') }}">
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ request('destination') }}">
+                        </div>
+                        <div class="col-sm-12 col-md-2">
+                            <input type="date" name="arrivalDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ request('arrivalDate') }}">
+                        </div>
+                        <div class="col-sm-12 col-md-2">
+                            <input type="date" name="#" class="form-control" placeholder="Tanggal Pengiriman" value="{{ request('arrivalDate') }}">
+                        </div>
+                        {{-- <div class="col-sm-12 col-md-2">
+                            <select class="form-control" name="shipmentType" id="shipmentType">
+                                <option value="FCL" {{ request('shipmentType') == 'FCL' ? 'selected' : 'LCL' }}>FCL</option>
+                                <option value="LCL" {{ request('shipmentType') == 'LCL' ? 'selected' : 'LCL' }}>LCL</option>
+                            </select>
+                        </div> --}}
+                        <input type="hidden" name="shipmentType" value="LCL">
+
+                        <div class="col-sm-12 col-md-1">
+                            <button type="submit" class="btn btn-primary h-100"><i class="ti ti-search mt-4"></i></button>
+                        </div>
+                    </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+{{-- Card Offer --}}
+        <div class="">
+            @if(!$searchPerformed)
+                <div class="card text-center p-4">
+                    <div class="card-body">
+                        <img src="{{ asset('template/mantis/dist/assets/images/search_icon.png') }}" alt="Search Icon" class="mb-3" style="max-width: 100px;">
+                        <h3 class="mb-2">Cari untuk memulai!</h3>
+                        <p class="text-muted">Masukkan kota asal dan tujuan untuk memulai pencarian.</p>
+                    </div>
+                </div>
+            @elseif ($offers->isEmpty())
+                <div class="card text-center p-4">
+                    <div class="card-body">
+                        <img src="{{ asset('template/mantis/dist/assets/images/unavailable_icon.png') }}" alt="Search Icon" class="mb-3" style="max-width: 100px;">
+                        <h3 class="mb-2">Rute tidak tersedia</h3>
+                        {{-- <p class="text-muted">Buat permintaan rute pengiriman baru</p>
+                        <a href="/request-routes" class="btn btn-primary w-50">Buat Permintaan</a> --}}
+                    </div>
+                </div>
+            @else
+                @foreach ($offers as $item )
+                {{-- <div class="card card-hover mb-3">
+                    <div class="card-body">
+                        <div class="row align-items-center text-center text-md-start">
+                            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start">
+                                <div class="me-4">
+                                    <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}"
+                                        alt="profile-lsp"
+                                        class="user-avtar wid-35 rounded-circle">
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <h5 class="mb-0 fw-bold">{{ $item['lspName']}}</h5>
+                                    <i class="fas fa-star text-warning ms-2"></i>
+                                    <h5 class="mb-0 fw-bold">{{$item->user->rating}}</h5>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
+                                @if ($item['shipmentMode'] == 'laut')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-sailboat me-1"></i> Laut
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-truck-delivery me-1"></i> Darat
+                                    </button>
+                                @endif
+
+                                @if ($item['shipmentType'] == 'LCL')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-box me-1"></i> LCL
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-box me-1"></i> FCL
+                                    </button>
+                                @endif
+                            </div>
+
+                            <div class="col-12 col-md-2 d-none d-md-block text-center text-md-end mt-2 mt-md-0">
+                                <button type="button" class="btn btn-icon btn-light-primary">
+                                    <i class="ti ti-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row align-items-center text-center text-md-start">
+                            <div class="col-12 col-md-8 d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-start mt-2">
+                                <h5 class="mb-0 fw-bold">{{ $item['origin']}}</h5>
+
+                                <!-- Garis dan ikon hanya muncul di layar medium ke atas -->
+                                <div class="d-none d-md-flex align-items-center mx-4">
+                                    <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
+                                    <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
+                                    <i class="ti ti-clock mx text-primary"></i>
+                                    <h5 class="mb-0 mx-2 text-primary">{{ $item['estimated_days']}} Hari</h5>
+                                    <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
+                                    <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
+                                </div>
+
+                                <!-- Estimasi tetap terlihat di layar kecil tanpa garis -->
+                                <div class="d-block d-md-none mt-1">
+                                    <i class="ti ti-clock text-primary"></i>
+                                    <h5 class="mb-0 text-primary">{{ $item['estimated_days']}} Hari</h5>
+                                </div>
+
+                                <h5 class="mb-0 fw-bold">{{ $item['destination']}}</h5>
+                            </div>
+
+                            <div class="col-12 col-md-4 text-center text-md-end mt-2">
+                                <div class="d-flex align-items-center justify-content-center justify-content-md-end mb-2">
+                                    <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
+                                    <h5 class="mb-0 ms-2">/CBM</h5>
+                                </div>
+                                <a href="/search-routes/{{$item['id']}}" class="btn btn-primary w-75 w-md-50">Pilih</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>                  --}}
+                <div class="card card-hover mb-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 d-flex align-items-center">
+                                <a href="/profile/lsp/{{ $item->user->id }}" class="me-4">
+                                    <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('default-profile.jpg') }}"
+                                        alt="profile-lsp"
+                                        class="user-avtar border wid-35 rounded-circle"
+                                        style="object-fit: cover; width: 25px; height: 25px;">
+                                </a>
+                                <div class="d-flex align-items-center gap-2">
+                                    <p class="mb-0 fw-bold">{{ $item->user->companyName }}</p>
+                                    <i class="fas fa-star text-warning ms-2"></i>
+                                    <p class="mb-0 fw-bold">{{$item->user->rating}}</p>
+                                </div>
+                            </div>
+                            <div class="col-4 d-none d-md-flex justify-content-center gap-2 mt-2 mt-md-0">
+                                {{-- @if ($item['shipmentMode'] == 'D2D')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-truck-delivery me-1"></i> D2D
+                                    </button>
+                                @elseif( $item['shipmentMode'] == 'D2P')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-truck-delivery me-1"></i> D2P
+                                    </button>
+                                @elseif( $item['shipmentMode'] == 'P2P')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-sailboat me-1"></i> P2P
+                                    </button>
+                                @elseif( $item['shipmentMode'] == 'P2D')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-truck-delivery me-1"></i> P2D
+                                    </button>
+                                @endif --}}
+                                @if ($item['transportationMode'] == 'darat')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-truck-delivery me-1"></i> Darat
+                                    </button>
+                                @elseif( $item['transportationMode'] == 'laut')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti ti-ship me-1"></i> Laut
+                                    </button>
+                                @endif
+                                @if ($item['shipmentType'] == 'LCL')
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-box me-1"></i> LCL
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                        <i class="ti ti-box me-1"></i> FCL
+                                    </button>
+                                @endif
+                                {{-- <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-box me-1"></i> 20' Container
+                                </button>  --}}
+                                {{-- <button type="button" class="btn btn-outline-primary d-flex align-items-center rounded-pill">
+                                    <i class="ti ti-box me-1"></i> General Cargo
+                                </button>  --}}
+                            </div>
+                            <div class="col-4 d-flex align-items-center justify-content-end">
+                                @if ($item->remainingVolume > ($item->maxVolume * 0.5))
+                                    <button type="button" class="btn btn-success d-inline-flex rounded-pill"><span class="me-2 fw-bold"> {{ $item->remainingVolume }}</span>CBM tersedia</button>
+                                @elseif ($item->remainingVolume <= ($item->maxVolume * 0.5 && $item->remainingVolume > ($item->maxVolume * 0.2)))
+                                    <button type="button" class="btn btn-warning rounded-pill"><span class="me-2 fw-bold"> {{ $item->remainingVolume }}</span>CBM tersedia</button>
+                                @elseif ($item->remainingVolume <= ($item->maxVolume * 0.2))
+                                    <button type="button" class="btn btn-danger rounded-pill"><span class="me-2 fw-bold"> {{ $item->remainingVolume }}</span>CBM tersedia</button>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-1 d-flex align-items-start justify-content-start">
+                                <p style="font-weight: normal;">Asal</p>
+                            </div>
+                            <div class="col-3">
+                                <p class="text-primary">{{$item->origin}}</p>
+                            </div>
+                             <div class="col-1 d-flex align-items-start justify-content-start">
+                                <p style="font-weight: normal;">Tujuan</p>
+                            </div>
+                            <div class="col-3">
+                                <p class="text-primary">{{$item->destination}}</p>
+                            </div>
+
+                            <div class="col-4 d-flex flex-column flex-sm-row align-items-start justify-content-end">
+                                @if ($item['shipmentType'] == 'FCL')
+                                    <div class="d-flex flex-column align-items-end">
+                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price']*$item['maxVolume'], 0, ',', '.')}}</h4>
+                                        <p class="mb-0 ms-sm-2 mt-sm-1 p">/Container</p>
+                                    </div>
+                                @else
+                                    <div class="d-flex flex-column align-items-end">
+                                        <h4 class="text-danger fw-bold mb-0">Rp. {{ number_format($item['price'], 0, ',', '.')}}</h4>
+                                        <p class="mb-0 ms-sm-2 mt-sm-1 p">/CBM</p>
+                                    </div>
+                                @endif
+                            </div>
+
+                        </div>
+                        <div class="row">
+                           <div class="col-1">
+                                <p style="font-weight: normal;">ETD</p>
+                            </div>
+                            <div class="col-3">
+                                @if (!empty($item->departureDate))
+                                    <p class="text-primary">{{$item->getdeparturedate()}}</p>
+                                @else
+                                    <p class="text-primary">{{$item->getETD()}}</p>
+                                @endif
+                            </div>
+                            <div class="col-1">
+                                <p class="mb-0" style="font-weight: normal;">ETA</p>
+                            </div>
+                            <div class="col-3">
+                                @if (!empty($item->arrivalDate))
+                                    <p class="text-primary">{{$item->getarrivaldate()}}</p>
+                                @else
+                                    <p class="text-primary">{{$item->geteta()}}</p>
+                                @endif
+                            </div>
+                            <div class="col-4 text-end">
+                                <a href="/opencontainer/order/{{$item['id']}}" class="btn btn-primary w-50 w-md-50"><span class="mb-2">Pilih</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            @endif
+
+        </div>
+{{-- End Card Offer --}}
+      </div>
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+        <!-- Modal -->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah anda yakin menambah data ini?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="submitFormButton">Save Changes</button>
                     </div>
                 </div>
             </div>
         </div>
-        <h2 class="mb-4">Open Container</h2>
-        <div class="search-container">
-            <form action="{{ route('opencontainer.index') }}" method="GET" class="search-holder">
-                <input type="text" name="origin" class="form-control" placeholder="Asal Kota, Pelabuhan, Negara"
-                    style="width: 500px; border-radius:10px" value="{{ request('origin') }}">
 
-                <input type="text" name="destination" class="form-control"
-                    placeholder="Tujuan Kota, Pelabuhan, Negara" style="width: 500px; border-radius:10px"
-                    value="{{ request('destination') }}">
-
-                <input type="date" name="shippingDate" class="form-control w-auto" style="border-radius:10px"
-                    value="{{ request('shippingDate') }}">
-
-                <div style="border-right: 2px solid rgba(0, 0, 0, 0.25)"></div>
-
-                <!-- Tombol Filter Laut & Darat -->
-                <div class="btn-group">
-                    <input type="hidden" name="shipmentMode" id="shipmentMode"
-                        value="{{ request('shipmentMode', '') }}">
-                    <button type="button"
-                        class="btn {{ request('shipmentMode') == 'laut' ? 'btn-primary' : 'btn-outline-primary' }}"
-                        id="filter-sea">
-                        <i class="fas fa-ship"></i> Laut
-                    </button>
-                    <button type="button"
-                        class="btn {{ request('shipmentMode') == 'darat' ? 'btn-primary' : 'btn-outline-primary' }}"
-                        id="filter-land">
-                        <i class="fas fa-truck"></i> Darat
-                    </button>
-                </div>
-
-                <div style="border-right: 2px solid rgba(0, 0, 0, 0.25);"></div>
-
-                <!-- Tombol Cari -->
-                <button type="submit" class="btn btn-primary" style="border-radius: 10px">
-                    <i class="fas fa-search"></i> Cari
-                </button>
-            </form>
-        </div>
-        <div class="mt-4">
-            @if (!$searchPerformed)
-                {{-- Tampilan Awal --}}
-                <div id="result-container" class="text-center mt-5">
-                    <img src="{{ asset('template/mantis/dist/assets/images/search_icon.png') }}" alt="Cari"
-                        width="100">
-                    <h3 class="mt-3">Cari untuk memulai!</h3>
-                    <p>Masukkan Asal dan Tujuan untuk memulai</p>
-                </div>
-            @elseif ($offers->isEmpty())
-                {{-- Jika Tidak Ada Hasil Pencarian --}}
-                <div class="card text-center p-4">
-                    <div class="card-body">
-                        <img src="{{ asset('template/mantis/dist/assets/images/unavailable_icon.png') }}"
-                            alt="No Result" class="mb-3" style="max-width: 100px;">
-                        <h3 class="mb-2">Rute tidak tersedia</h3>
-                        <p class="text-muted">Buat permintaan rute pengiriman baru</p>
-                        <a href="/request-routes" class="btn btn-primary w-50">Buat Permintaan</a>
-                    </div>
-                </div>
-            @else
-                {{-- Jika Ada Hasil Pencarian --}}
-                @foreach ($offers as $item)
-                    <div class="card card-hover mb-3" style="border-radius: 10px">
-                        <div class="card-body">
-                            {{-- Bagian Header (LSP Info) --}}
-                            <div class="row align-items-center">
-                                <div class="col-md-6 d-flex align-items-center">
-                                    <div class="me-2">
-                                        <img src="{{ $item->user->profilePicture ? asset('storage/' . $item->user->profilePicture) : asset('template/mantis/dist/assets/images/user/avatar-2.jpg') }}"
-                                            alt="profile-lsp" class="user-avatar wid-35 rounded-circle">
-                                    </div>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <h5 class="mb-0 fw-bold">{{ $item->lspName }}</h5>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <h5 class="mb-0 fw-bold">{{ $item->user->rating ?? '0.0' }}</h5>
-                                    </div>
-                                </div>
-
-                                {{-- Shipment Mode & Type --}}
-                                <div class="col-md-4 d-flex justify-content-center gap-2">
-                                    <button type="button"
-                                        class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i
-                                            class="ti {{ $item->shipmentMode == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1"></i>
-                                        {{ ucfirst($item->shipmentMode) }}
-                                    </button>
-                                    <button type="button"
-                                        class="btn btn-outline-primary d-flex align-items-center rounded-pill">
-                                        <i class="ti ti-box me-1"></i> {{ $item->shipmentType }}
-                                    </button>
-                                </div>
-
-                                {{-- Copy Button --}}
-                                <div class="col-md-2 d-flex align-items-center gap-2 text-end"
-                                    style="justify-content: flex-end">
-                                    <h5 class="mb-0">ID : {{ $item->id }}</h5>
-                                    <button type="button" class="btn btn-icon btn-light-primary">
-                                        <i class="ti ti-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            {{-- Rute Pengiriman --}}
-                            <div class="row align-items-center mt-3">
-                                <div class="col-md-8 d-flex align-items-center justify-content-start">
-                                    <h5 class="mb-0 fw-bold">{{ $item->origin }}</h5>
-                                    <div class="d-flex align-items-center mx-4">
-                                        <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;">
-                                        </div>
-                                        <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
-                                        <i class="ti ti-clock text-primary"></i>
-                                        <h5 class="mb-0 mx-2 text-primary">{{ $item->estimated_days }} Hari</h5>
-                                        <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
-                                        <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;">
-                                        </div>
-                                    </div>
-                                    <h5 class="mb-0 fw-bold">{{ $item->destination }}</h5>
-                                </div>
-
-                                {{-- Harga & Pilih Button --}}
-                                <div class="col-md-4 text-end">
-                                    <div class="d-flex align-items-center justify-content-end mb-2">
-                                        <h4 class="text-danger fw-bold mb-0">Rp.
-                                            {{ number_format($item->price, 0, ',', '.') }}</h4>
-                                        <h5 class="mb-0 ms-2">/CBM</h5>
-                                    </div>
-                                    {{-- <a href="/search-routes/{{ $item->id }}" class="btn btn-primary w-50">Pilih</a> --}}
-                                    <button type="button" class="btn btn-primary w-50" data-bs-toggle="modal"
-                                        data-bs-target="#detailModal{{ $item->id }}">Pilih</button>
-                                </div>
-                            </div>
-                            <div class="row align-items-center mt-3">
-                                <div class="col-md-8 d-flex align-items-center justify-content-start">
-                                    <h5 class="mb-0 fw-bold">Loading Date :
-                                        {{ \Carbon\Carbon::parse($item->loadingDate)->translatedFormat('l, d F Y') }}
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Modal Detail -->
-                    <div class="modal fade" id="detailModal{{ $item->id }}" tabindex="-1"
-                        aria-labelledby="modalLabel{{ $item->id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalLabel{{ $item->id }}">Detail Kontainer</h5>
-                                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
-                                </div>
-                                <div class="modal-body">
-                                    <p><strong>Penyedia Jasa :</strong> {{ $item->lspName }}</p>
-                                    <p><strong>ID :</strong> {{ $item->id }}</p>
-                                    <hr>
-                                    <div>
-                                        <p><strong>Kontainer Dibuka Untuk :</strong></p>
-                                        <p>{{ $item->commodities }}</p>
-                                    </div>
-                                    <div style="display: flex; justify-content:space-between">
-                                        <p><strong>Mode Pengiriman : </strong></p>
-                                        <i
-                                            class="ti {{ $item->shipmentMode == 'laut' ? 'ti-sailboat' : 'ti-truck-delivery' }} me-1">
-                                            {{ ucfirst($item->shipmentMode) }}</i>
-                                    </div>
-                                    <div style="display: flex; justify-content:space-between">
-                                        <p><strong>Tipe Pengiriman : </strong></p>
-                                        <p> {{ $item->shipmentType }} </p>
-                                    </div>
-                                    <p><strong>Asal Pengiriman :</strong></p>
-                                    <p>{{ $item->origin }}</p>
-                                    <p><strong>Tujuan Pengiriman :</strong></p>
-                                    <p>{{ $item->destination }}</p>
-                                    <hr>
-                                    <div style="display: flex; justify-content:space-between">
-                                        <p><strong>Tanggal Muat :</strong></p>
-                                        <p>{{ \Carbon\Carbon::parse($item->loadingDate)->translatedFormat('l, d F Y') }}
-                                        </p>
-                                    </div>
-                                    <div style="display: flex; justify-content:space-between">
-                                        <p><strong>Tanggal Pengiriman :</strong></p>
-                                        <p>{{ \Carbon\Carbon::parse($item->shippingDate)->translatedFormat('l, d F Y') }}
-                                        </p>
-                                    </div>
-                                    <div style="display: flex; justify-content:space-between">
-                                        <p><strong>Estimasi Pengiriman :</strong></p>
-                                        <p>{{ \Carbon\Carbon::parse($item->shippingDate)->diffInDays(\Carbon\Carbon::parse($item->estimationDate)) }}
-                                            Hari</p>
-                                    </div>
-                                    <hr>
-                                    <div style="display: flex; justify-content:space-between; margin-bottom:0; ">
-                                        <p><strong>Harga:</strong></p>
-                                        <p>Rp. {{ number_format($item->price, 0, ',', '.') }} / CBM</p>
-                                    </div>
-                                    <hr>
-                                    <h5 style="margin-bottom:20px">Detail Kargo</h5>
-                                    <div style="display: flex; justify-content:space-between">
-                                        <p>Berat Maksimal : </p>
-                                        <p>{{ $item->maxWeight }} Kg </p>
-                                    </div>
-                                    <div style="display: flex; justify-content:space-between; margin-bottom:0; ">
-                                        <p>Volume Maksimal : </p>
-                                        <p>{{ $item->maxVolume }} CBM </p>
-                                    </div>
-                                    <div style="display: flex; justify-content:space-between; margin-bottom:0; ">
-                                        <p>Berat Tersisa : </p>
-                                        <p><span style="color:#007bff ;">{{ $item->remainingWeight }} </span> /
-                                            {{ $item->maxWeight }} Kg</p>
-                                    </div>
-                                    <div style="display: flex; justify-content:space-between; margin-bottom:0; ">
-                                        <p>Volume Tersisa : </p>
-                                        <p><span style="color:#007bff ;">{{ $item->remainingVolume }} </span> /
-                                            {{ $item->maxVolume }} CBM</p>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="{{ route('opencontainer.order', $item->id) }}" type="button"
-                                        class="btn btn-primary w-50">Ajukan Penawaran</a>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Tutup</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
-        </div>
-    </div>
-
-    <script>
-        document.getElementById('filter-sea').addEventListener('click', function() {
-            document.getElementById('shipmentMode').value = 'laut';
-            this.classList.add('btn-primary');
-            this.classList.remove('btn-outline-primary');
-            document.getElementById('filter-land').classList.add('btn-outline-primary');
-            document.getElementById('filter-land').classList.remove('btn-primary');
-        });
-
-        document.getElementById('filter-land').addEventListener('click', function() {
-            document.getElementById('shipmentMode').value = 'darat';
-            this.classList.add('btn-primary');
-            this.classList.remove('btn-outline-primary');
-            document.getElementById('filter-sea').classList.add('btn-outline-primary');
-            document.getElementById('filter-sea').classList.remove('btn-primary');
-        });
-    </script>
-
+        <script>
+            document.getElementById('submitFormButton').addEventListener('click', function () {
+                // Submit the form
+                document.getElementById('requestRouteAddForm').submit();
+            });
+        </script>
 @endsection

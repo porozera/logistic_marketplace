@@ -32,7 +32,7 @@
               <br>
               <br>  
               <h4 class="mb-2">Pembayaran Gagal!</h4>
-              <h7>Mohon untuk melakukan pembayaran atau pemesanan ulang.</h7>
+              <h7>Mohon untuk melakukan pembayaran ulang pada halaman <a href="">Payment History</a>.</h7>
 
               <hr>
               <div class="row">

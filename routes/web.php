@@ -47,11 +47,14 @@ use App\Http\Controllers\DaftarPenawaranController;
 use App\Http\Controllers\ProfileCustomerController;
 use App\Http\Controllers\RequestRouteLspController;
 use App\Http\Controllers\AdminNotificationController;
+use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\DashboardLspController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NotificationCustomerController;
 use App\Http\Controllers\NotificationLspController;
+
+use App\Models\Tracking;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -178,6 +181,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         //Manajemen Komplain
         Route::get('/complain', [ComplainController::class, 'index'])->name('admin.complain.index');
         Route::get('/complain-detail/{id}', [ComplainController::class, 'detail'])->name('admin.complain.detail');
+        Route::post('/complain-detail/{id}/response', [ComplainController::class, 'storeResponse'])->name('admin.complain.storeResponse');
 
         //Notifikasi
         Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');
@@ -237,6 +241,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::post('/order/perform', [OrderLspController::class, 'order'])->name('opencontainer.order.perform');
         Route::get('/payment/{token}', [PaymentLspController::class, 'index'])->name('opencontainer.payment');
         Route::get('/payment/success/{token}', [PaymentLspController::class, 'success'])->name('opencontainer.payment.success');
+        Route::get('/payment/failed', [PaymentLspController::class, 'failed'])->name('opencontainer.payment.failed');
         Route::get('/list-payment', [PaymentLspController::class, 'list_payment'])->name('opencontainer.list-payment');
     });
 
@@ -305,12 +310,14 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/list-payment', [PaymentController::class, 'list_payment'])->name('list-payment');
     Route::get('/invoice/{token}', [PaymentController::class, 'invoice'])->name('invoice');
     Route::get('/invoice/{token}/download', [PaymentController::class, 'invoice_download'])->name('invoice.download');
+    Route::get('/payment/check/{token}', [PaymentController::class, 'check'])->name('payment.check');
 
 
     //PROFILE CUSTOMER
     Route::get('/profile/customer', [ProfileCustomerController::class, 'index'])->name('profile-customer');
     Route::get('/profile/customer/edit', [ProfileCustomerController::class, 'edit'])->name('profile-customer.edit');
     Route::put('/profile/customer/edit/perform', [ProfileCustomerController::class, 'update'])->name('profile-customer.update');
+    Route::get('/payment/redirect', [PaymentController::class, 'handleRedirect']);
 
     //FAQ
     Route::get('/FAQ-customer', [FAQCustomerController::class, 'index'])->name('FAQ-customer');
@@ -340,13 +347,20 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //COMPLAIN
     Route::get('/complain', [ComplainController::class, 'index_customer'])->name('complain-customer');
-    Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
+    // Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
+    Route::get('/complain/customer/detail/{id}', [ComplainController::class, 'detail_customer'])->name('complain.detail');
     Route::get('/complain/create', [ComplainController::class, 'create'])->name('complain.create');
     Route::post('/complain/create/perform', [ComplainController::class, 'store'])->name('complain.create.store');
+    Route::post('/response/create/perform/{id}', [ComplainController::class, 'storeResponseCustomer'])->name('response.customer.store');
+    Route::put('/response/customer/update-status/{id}', [ComplainController::class, 'updateStatusCustomer'])->name('response.update-status');
 
     //DASHBOARD
     Route::get('/dashboard/customer', [DashboardCustomerController::class, 'index'])->name('dashboard-customer');
+
+    //CALCULATOR
+    Route::get('/load-calculator', [CalculatorController::class, 'index'])->name('calculator');
 });
+
 
 
 

@@ -41,8 +41,8 @@
                             'destination' => 'Tujuan',
                             'shipmentMode' => 'Moda Pengiriman',
                             'shipmentType' => 'Tipe Pengiriman',
-                            'loadingDate' => 'Tanggal Loading',
-                            'shippingDate' => 'Tanggal Pengiriman',
+                            'deliveryDate' => 'Tanggal Pengiriman',
+                            'arrivalDate' => 'Tanggal Sampai',
                             'estimationDate' => 'Estimasi Tiba',
                             'maxWeight' => 'Berat Maksimal',
                             'maxVolume' => 'Volume Maksimal'

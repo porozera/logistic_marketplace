@@ -69,7 +69,19 @@
                     <form action="{{ route('admin.notifications.markAsRead', $item->id) }}" method="POST" class="mt-2">
                       @csrf
                       @method('PUT')
-                      <button type="submit" class="btn btn-sm btn-primary">Tandai telah dibaca</button>
+                      <div class="mt-2 d-flex gap-2 align-items-center">
+                        @if ($item->type === 'approval_lsp')
+                          <a href="{{ route('admin.approval-lsp.detail', $item->related_id) }}" class="btn btn-sm text-white" style="background-color: #198754;">
+                            Lihat Detail
+                          </a>
+                        @elseif ($item->type === 'complaint')
+                          <a href="{{ route('admin.complain.detail', $item->related_id) }}" class="btn btn-sm text-white" style="background-color: #198754;">
+                            Lihat Detail
+                          </a>
+                        @endif
+                        <button type="submit" class="btn btn-sm btn-primary">Tandai telah dibaca</button>
+                      </div>
+
                     </form>
                   </div>
                 </div>

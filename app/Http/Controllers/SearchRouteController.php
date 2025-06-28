@@ -12,6 +12,7 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SearchRouteController extends Controller
 {
@@ -19,10 +20,10 @@ class SearchRouteController extends Controller
     {
         $query = offersModel::where('is_for_customer', true)
             ->where('status', "active")
-            ->whereDate('shippingDate', '>=', Carbon::today());
+            ->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', Carbon::today());
     
         $searchPerformed = false;
-    
+
         if ($request->has('origin') && $request->origin != '') {
             $query->where('origin', 'LIKE', '%' . $request->origin . '%');
             $searchPerformed = true;
@@ -33,8 +34,27 @@ class SearchRouteController extends Controller
             $searchPerformed = true;
         }
     
-        if ($request->has('shippingDate') && $request->shippingDate != '') {
-            $query->whereDate('shippingDate', $request->shippingDate);
+        // if ($request->filled('departureDate') && $request->filled('arrivalDate')) {
+        //     $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', $request->departureDate)
+        //         ->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), '<=', $request->arrivalDate);
+        //     $searchPerformed = true;
+        // } elseif ($request->filled('departureDate')) {
+        //     $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', $request->departureDate);
+        //     $searchPerformed = true;
+        // } elseif ($request->filled('arrivalDate')) {
+        //     $query->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), '>=', $request->arrivalDate);
+        //     $searchPerformed = true;
+        // }
+
+        if ($request->filled('departureDate') && $request->filled('arrivalDate')) {
+            $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), '>=', $request->departureDate)
+                ->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), '<=', $request->arrivalDate);
+            $searchPerformed = true;
+        } elseif ($request->filled('departureDate')) {
+            $query->whereDate(DB::raw('COALESCE(departureDate, etd)'), $request->departureDate);
+            $searchPerformed = true;
+        } elseif ($request->filled('arrivalDate')) {
+            $query->whereDate(DB::raw('COALESCE(arrivalDate, eta)'), $request->arrivalDate);
             $searchPerformed = true;
         }
     
@@ -42,7 +62,7 @@ class SearchRouteController extends Controller
             $query->where('shipmentType', $request->shipmentType);
             $searchPerformed = true;
         }
-    
+
         if ($request->has('maxPrice') && $request->maxPrice != '') {
             $query->where('price', '<=', $request->maxPrice);
             $searchPerformed = true;
@@ -63,7 +83,12 @@ class SearchRouteController extends Controller
         }
 
         if ($request->has('maxTime') && $request->maxTime != '') {
-            $query->whereRaw("DATEDIFF(estimationDate, shippingDate) <= ?", [$request->maxTime]);
+            $query->whereRaw("
+                DATEDIFF(
+                    COALESCE(arrivalDate, eta),
+                    COALESCE(pickupDate, departureDate, etd)
+                ) <= ?
+            ", [$request->maxTime]);
             $searchPerformed = true;
         }
     
@@ -71,7 +96,7 @@ class SearchRouteController extends Controller
             if ($request->btn_radio1 == 'Murah') {
                 $query->orderBy('price', 'asc');
             } elseif ($request->btn_radio1 == 'Cepat') {
-                $query->orderByRaw("DATEDIFF(estimationDate, shippingDate) asc");
+                $query->orderByRaw("DATEDIFF(arrivalDate, etd) asc");
             }
             $searchPerformed = true;
         }

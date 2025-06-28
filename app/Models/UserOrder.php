@@ -20,15 +20,16 @@ class UserOrder extends Model
     protected $fillable = [
         'user_id',
         'order_id',
-        'username',
-        'telpNumber',
+        'receiverName',
+        'receiverTelpNumber',
         'description',
+        'destinationAddress',
+        'originAddress',
+        'invoiceNumber',
         'totalPrice',
         'paymentStatus',
-        'weight',
-        'volume',
-        'commodities',
-        'services',
+        'RTL_start_date',
+        'RTL_end_date',
         'snap_token',
         'payment_token',
         'expires_at'
@@ -50,6 +51,11 @@ class UserOrder extends Model
         return $this->belongsTo(Order::class);
     }
 
+    public function items()
+    {
+        return $this->hasMany(UserOrderItem::class,'userOrder_id','id',);
+    }
+
     /**
      * Format total harga ke dalam Rupiah
      */
@@ -57,26 +63,26 @@ class UserOrder extends Model
     {
         return "Rp " . number_format($this->totalPrice, 2, ',', '.');
     }
-
-    public function getEstimatedDaysAttribute()
+    
+    public function getInvoiceDate()
     {
-        $shippingDate = Carbon::parse($this->shippingDate);
-        $estimationDate = Carbon::parse($this->estimationDate);
-        return $shippingDate->diffInDays($estimationDate);
-    }
-
-    public function getLoadingDateFormattedAttribute()
-    {
-        return Carbon::parse($this->loadingDate)->startOfDay()->translatedFormat('d F Y');
+        if (!$this->created_at) {
+            return 'Tidak ada informasi tanggal';
+        }
+        return Carbon::parse($this->created_at)->translatedFormat('d F Y');
     }
     
-    public function getShippingDateFormattedAttribute()
+    public function getTotalWeightAttribute()
     {
-        return Carbon::parse($this->shippingDate)->startOfDay()->translatedFormat('d F Y');
+        return $this->items->sum(function ($item) {
+            return $item->weight * $item->qty;
+        });
     }
-    
-    public function getEstimationDateFormattedAttribute()
+
+    public function getTotalVolumeAttribute()
     {
-        return Carbon::parse($this->estimationDate)->startOfDay()->translatedFormat('d F Y');
-    }    
+        return $this->items->sum(function ($item) {
+            return $item->volume * $item->qty;
+        });
+    }
 }

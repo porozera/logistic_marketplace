@@ -71,7 +71,7 @@
                                 <div class="card">
                                     <div class="card-body text-center">
                                             <p class="mt-4">Dapatkan harga kompetitif di pengiriman mu.</p>
-                                            <a href="/search-routes" class="btn btn-primary">Cari Rute Sekarang</a>
+                                            <a href="/opencontainer`" class="btn btn-primary">Buat rute sekarang</a>
                                     </div>
                                 </div>
                             </div>

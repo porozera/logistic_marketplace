@@ -46,8 +46,8 @@
                         <th>Asal</th>
                         <th>Tujuan</th>
                         <th>Status</th>
-                        <th>Waktu Loading</th>
                         <th>Waktu Pengiriman</th>
+                        <th>Waktu Sampai</th>
                         <th>Tipe Pengiriman</th>
                         <th>Status Pembayaran</th>
                         <th>Aksi</th>
@@ -73,8 +73,8 @@
                               {{ $shipment->status }}
                           </span>
                       </td>
-                        <td>{{ $shipment->loadingDate }}</td>
-                        <td>{{ $shipment->shippingDate }}</td>
+                        <td>{{ $shipment->deliveryDate }}</td>
+                        <td>{{ $shipment->arrivalDate }}</td>
                         <td>{{ $shipment->shipmentType }}</td>
                       <td class="text-center">
                         @php

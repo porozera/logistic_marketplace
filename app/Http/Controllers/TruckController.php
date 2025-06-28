@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Truck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class TruckController extends Controller
 {
@@ -23,6 +25,7 @@ class TruckController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'brand' => 'required|string',
             'type' => 'required|string',
@@ -31,6 +34,7 @@ class TruckController extends Controller
             'plateNumber' => 'required|string|unique:trucks',
             'driverName' => 'required|string',
             'driverContact' => 'required|string',
+            'picture' => 'nullable|image|mimes:jpg,jpeg,png'
             // 'user_id' => 'required|exists:users,id'
         ]);
         $truck = new Truck();
@@ -42,6 +46,19 @@ class TruckController extends Controller
         $truck->driverName = $request->driverName;
         $truck->driverContact = $request->driverContact;
         $truck->color = $request->color;
+
+    if ($request->hasFile('picture')) {
+        $file = $request->file('picture');
+        $extension = $file->getClientOriginalExtension(); // jpg / png
+        $filename = Str::slug($request->plateNumber) . '-' . time() . '.' . $extension;
+
+        // Simpan file manual ke storage/app/public/truck
+        $file->storeAs('public/truck', $filename);
+
+        // Simpan nama file ke database
+        $truck->picture = 'truck/' . $filename;
+    }
+
         $truck->save();
 
         // Truck::create($request->all());
@@ -56,6 +73,7 @@ class TruckController extends Controller
 
     public function update(Request $request, Truck $truck)
     {
+        // dd($request->all());
         $request->validate([
             'brand' => 'required|string',
             'type' => 'required|string',
@@ -64,10 +82,26 @@ class TruckController extends Controller
             'plateNumber' => 'required|string|unique:trucks,plateNumber,' . $truck->id,
             'driverName' => 'required|string',
             'driverContact' => 'required|string',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
+            'picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $truck->update($request->all());
+    // Update manual semua field
+    $truck->brand = $request->brand;
+    $truck->type = $request->type;
+    $truck->color = $request->color;
+    $truck->yearBuilt = $request->yearBuilt;
+    $truck->plateNumber = $request->plateNumber;
+    $truck->driverName = $request->driverName;
+    $truck->driverContact = $request->driverContact;
+    $truck->user_id = $request->user_id;
+
+    if ($request->hasFile('picture')) {
+        $profilePath = $request->file('picture')->store('truck', 'public');
+        $truck->picture = $profilePath;
+    }
+
+    $truck->save();
 
         return redirect()->route('trucks.index')->with('success', 'Truk berhasil diperbarui!');
     }

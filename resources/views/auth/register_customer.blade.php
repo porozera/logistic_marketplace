@@ -99,10 +99,17 @@
                     @error('email') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="Password" value="{{ old('password') }}">
-                    @error('password') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+                <label class="form-label">Password</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="ti ti-lock"></i></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="{{ old('password') }}">
+                    <span class="input-group-text">
+                      <i class="ti ti-eye-off" id="togglePassword" 
+                     style="cursor: pointer"></i>
+                     </span>
                 </div>
+                @error('password') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
+              </div>
                 <div class="form-group mb-3">
                     <label class="form-label">Nomor Telepon</label>
                     <input type="text" name="telpNumber" class="form-control" placeholder="Nomor Telepon" value="{{ old('telpNumber') }}">
@@ -155,6 +162,18 @@
           window.location.href = this.dataset.url;
         }
       });
+    });
+  </script>
+  <script>
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+
+    togglePassword.addEventListener("click", function () {
+    
+    const type = password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    this.classList.toggle('ti-eye-off');
+    this.classList.toggle('ti-eye');
     });
   </script>
   <script src="{{ asset('template/mantis/dist/assets/js/plugins/popper.min.js') }}"></script>

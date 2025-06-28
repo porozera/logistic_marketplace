@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-12">
               <div class="page-header-title">
-                <h2 class="mb-0">Data Kategori Barang</h2>
+                <h2 class="mb-0">Data HS Code</h2>
               </div>
             </div>
           </div>
@@ -34,10 +34,10 @@
               <div class="d-flex justify-content-between align-items-center p-4">
                 <div class="flex-grow-1" style="max-width: 80%;">
                   <h5 class="mb-2 mb-md-2">
-                    Master Data Kategori Barang
+                    Master Data HS Code
                   </h5>
                   <p class="mb-0">
-                    Halaman ini digunakan untuk mengelola data kategori barang, termasuk penambahan, pengeditan, dan penghapusan informasi kategori barang.
+                    Halaman ini digunakan untuk mengelola data HS Code, termasuk penambahan, pengeditan, dan penghapusan informasi kategori barang.
                   </p>
                 </div>
                 <a href="/admin/category-add" class="btn btn-primary d-inline-flex align-items-center ms-3">
@@ -49,7 +49,7 @@
                   <thead>
                     <tr>
                       <th></th>
-                      <th>Kode</th>
+                      <th>HS Code</th>
                       <th>Nama Barang</th>
                       <th>Tipe</th>
                       <th>Deskripsi</th>

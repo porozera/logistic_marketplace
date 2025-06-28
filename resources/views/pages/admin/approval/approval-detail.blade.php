@@ -73,18 +73,18 @@
                         </div>
                         @elseif ($approval->status === 'On Confirmation')
                         <div class="d-flex align-items-center gap-2">
-                            <form action="{{ route('approval.sendEmail') }}" method="post" class="m-0">
-                                @csrf
-                                <input type="hidden" name="email" value="{{ $approval->email }}">
-                                <input type="hidden" name="approval_id" value="{{ $approval->id }}">
-                                <button type="submit" class="btn btn-primary w-100" style="min-width: 100px;">Approve</button>
-                            </form>
-                        
+                            
                             <form action="{{ route('rejected.sendEmail') }}" method="post" class="m-0">
                                 @csrf
                                 <input type="hidden" name="email" value="{{ $approval->email }}">
                                 <input type="hidden" name="approval_id" value="{{ $approval->id }}">
                                 <button type="submit" class="btn btn-danger w-100" style="min-width: 100px;">Reject</button>
+                            </form>
+                            <form action="{{ route('approval.sendEmail') }}" method="post" class="m-0">
+                                @csrf
+                                <input type="hidden" name="email" value="{{ $approval->email }}">
+                                <input type="hidden" name="approval_id" value="{{ $approval->id }}">
+                                <button type="submit" class="btn btn-primary w-100" style="min-width: 100px;">Approve</button>
                             </form>
                         </div>
                         @endif

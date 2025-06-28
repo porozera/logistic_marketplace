@@ -28,7 +28,7 @@ class RegisterController extends Controller
                 'email' => 'required|email|max:255|unique:users,email',
                 'password' => 'required|min:5|max:255',
                 'firstName' => 'required',
-                'lastName' => 'required',
+                'lastName' => 'nullable',
                 'telpNumber' => 'required',
                 'address' => 'required',
                 'role' => 'required',
@@ -84,6 +84,8 @@ class RegisterController extends Controller
                 'header' => 'Pendaftaran LSP Baru',
                 'description' => "Permintaan pendaftaran dari perusahaan {$request->companyName} telah diterima dan menunggu peninjauan.",
                 'is_read' => false,
+                'type' => 'approval_lsp',
+                'related_id' => $data->id,
             ]);
             
     
