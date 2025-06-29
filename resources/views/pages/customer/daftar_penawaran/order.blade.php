@@ -384,7 +384,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-12">
-                        <p class="fw-bold">Volume: <span id="cbmResult">0</span> CBM</p>
+                        <p class="fw-bold">Total Volume: <span id="cbmResult">0</span> CBM</p>
                         <p class="fw-bold">CBM yang Harus Dibeli: <span id="cbmToBuy">0</span> CBM</p>
                     </div>
                   </div>
@@ -650,6 +650,9 @@
               `;
             } else {
               const items = document.querySelectorAll(".item");
+              let totalCBMRaw = 0;
+              let totalWeight = 0;
+              let cbmCardDetails = [];
               items.forEach((item, idx) => {
                 let categorySelect = item.closest('.item-row').querySelector('select[name^="items"]');
                 let categoryName = categorySelect ? categorySelect.options[categorySelect.selectedIndex].text : `Barang ${idx+1}`;
@@ -664,39 +667,63 @@
                 let widthM = width / 100;
                 let heightM = height / 100;
 
-                let cbmRounded = 0, cbmByWeight = 0, cbmByVolume = 0, cbmToBuy = 0;
-
                 let cbm = lengthM * widthM * heightM * qty;
-                cbmRounded = Math.ceil(cbm * 1000) / 1000;
-                cbmByWeight = Math.ceil(weight / maxWeightPerCBM);
-                cbmByVolume = Math.ceil(cbmRounded);
+                totalCBMRaw += cbm;
+                totalWeight += weight;
+
                 let volumeInput = item.querySelector('.volume');
-                let extraCBM = 0;
-                // if (length > 100) extraCBM++;
-                // if (width > 100) extraCBM++;
-                // if (height > 100) extraCBM++;
-                cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM);
-                totalCBM += cbmRounded;
-                totalCBMToBuy += cbmToBuy;
-                if (volumeInput) volumeInput.value = cbmToBuy;
+                if (volumeInput) volumeInput.value = cbm.toFixed(3);
 
-                let subtotal = cbmToBuy * cbmPrice;
+                cbmCardDetails.push({
+                  categoryName,
+                  cbm: cbm.toFixed(3),
+                  weight: weight
+                });
+              });
 
+              // Calculate total CBM to buy after summing all items
+              let cbmRounded = Math.ceil(totalCBMRaw * 1000) / 1000;
+              let cbmByWeight = Math.ceil(totalWeight / maxWeightPerCBM);
+              let cbmToBuy = Math.max(Math.ceil(cbmRounded), cbmByWeight);
+
+              let subtotal = cbmToBuy * cbmPrice;
+
+              // Show details for each item (optional, can be removed if not needed)
+              cbmCardDetails.forEach(detail => {
                 cbmCardHTML += `
                   <div class="card bg-light-primary mb-1">
                     <div class="card-body p-3">
                       <div class="row">
                         <div class="col-6">
-                          <p class="mb-0 text-black">${categoryName} ${cbmToBuy} CBM</p>
+                          <p class="mb-0 text-black">${detail.categoryName} ${detail.cbm} CBM</p>
                         </div>
                         <div class="col-6 text-end">
-                          <p class="mb-0 text-black">Rp. ${subtotal.toLocaleString("id-ID")}</p>
+                          <p class="mb-0 text-black">${detail.weight} kg</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 `;
               });
+
+              // Show total CBM to buy
+              cbmCardHTML += `
+                <div class="card bg-light-primary mb-1">
+                  <div class="card-body p-3">
+                    <div class="row">
+                      <div class="col-6">
+                        <p class="mb-0 text-black">Total CBM to Buy: ${cbmToBuy} CBM</p>
+                      </div>
+                      <div class="col-6 text-end">
+                        <p class="mb-0 text-black">Rp. ${subtotal.toLocaleString("id-ID")}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `;
+
+              totalCBM = cbmRounded;
+              totalCBMToBuy = cbmToBuy;
             }
 
             cbmPriceCard.innerHTML = cbmCardHTML;

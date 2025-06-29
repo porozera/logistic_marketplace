@@ -297,7 +297,7 @@
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->height}} cm</p></td>
                                     <td class="text-center"><p class="mb-0">{{ (int) $item->qty}}</p></td>
                                     <td class="text-end"><p class="mb-0">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
-                                    <td class="text-end"><p class="mb-0">{{ (int) $item->volume }} CBM</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ ceil($item->volume) }} CBM</p></td>
                                     <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price, 0, ',', '.') }}</p></td>
                                 </tr>
                                 <?php
