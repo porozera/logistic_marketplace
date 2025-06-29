@@ -451,7 +451,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <label class="form-label">Berat</label>
+                                            <label class="form-label">Berat Muatan</label>
                                             <div class="input-group mb-3">
                                             <input type="number" name="items[0][weight]" class="form-control weight" placeholder="" value="{{ old('items.0.weight', $oldItems[0]['weight'] ?? '') }}">
                                             <span class="input-group-text"> kg</span>
@@ -471,6 +471,9 @@
                                                 <span class="input-group-text"> CBM</span>
                                             </div>
                                         </div>
+                                        <input type="number" name="items[0][length]" class="form-control length" placeholder="Panjang (cm)" value=1 hidden>
+                                        <input type="number" name="items[0][width]" class="form-control width" placeholder="Lebar (cm)" value=1 hidden>
+                                        <input type="number" name="items[0][height]" class="form-control height" placeholder="Tinggi (cm)" value=1 hidden>
                                     </div>
                                 </div>
                             </div>

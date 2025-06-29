@@ -287,12 +287,14 @@
                   </div>
                   <div class="row mt-2">
                     <div class="col-6">
+                      <label class="form-label">Berat Muatan</label>
                       <div class="input-group mb-3">
                       <input type="number" name="items[0][weight]" class="form-control weight" placeholder="Berat" value="{{ old("items.weight", $item['weight'] ?? '') }}">
                       <span class="input-group-text"> kg</span>
                       </div>
                     </div>
                     <div class="col-6">
+                      <label class="form-label">Qty Kontainer</label>
                       <div class="input-group mb-3">
                       <input type="number" name="items[0][qty]" class="form-control qty" placeholder="Qty" value="{{ old("items.qty", $item['qty'] ?? '') }}">
                       <span class="input-group-text"> qty</span>
