@@ -237,11 +237,11 @@
                                     <td class="text-end"><p class="mb-0">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
                                     <td class="text-end"><p class="mb-0">{{ (int) $item->volume }} CBM</p></td>
                                     <td class="text-center"><p class="mb-0">{{ (int) $item->qty}}</p></td>
-                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price * $item->volume * $item->qty, 0, ',', '.') }}</p></td>
+                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price * $item->qty, 0, ',', '.') }}</p></td>
                                 </tr>
                                 <?php
                                 $noItem++;
-                                $totalPrice += $item->price * $item->volume * $item->qty; 
+                                $totalPrice += $item->price * $item->qty; 
                                 $totalVolume += $item->volume; 
                                 ?>
                                 @endforeach
@@ -279,39 +279,48 @@
                                     <th class="text-center"><p class="mb-0">Qty</p></th>
                                     <th class="text-center"><p class="mb-0">Berat</p></th>
                                     <th class="text-center"><p class="mb-0">Volume</p></th>
-                                    <th class="text-center"><p class="mb-0">Harga</p></th>
                                 </tr>
                             </thead>
                             <?php
                             $noItem = 1;
-                            $totalPrice = 0; 
-                            $totalVolume = 0; 
+                            $totalVolume = 0;
                             ?>
                             <tbody>
-                                @foreach ($items as $item )
+                                @foreach ($items as $item)
                                 <tr>
-                                    <td class="text-center"><p class="mb-0">{{ $noItem}}</p></td>
-                                    <td class="text-center"><p class="mb-0">{{ $item->commodities}}</p></td>
-                                    <td class="text-end"><p class="mb-0">{{ (int) $item->length}} cm</p></td>
-                                    <td class="text-end"><p class="mb-0">{{ (int) $item->width}} cm</p></td>
-                                    <td class="text-end"><p class="mb-0">{{ (int) $item->height}} cm</p></td>
-                                    <td class="text-center"><p class="mb-0">{{ (int) $item->qty}}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $noItem }}</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ $item->commodities }}</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ (int) $item->length }} cm</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ (int) $item->width }} cm</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ (int) $item->height }} cm</p></td>
+                                    <td class="text-center"><p class="mb-0">{{ (int) $item->qty }}</p></td>
                                     <td class="text-end"><p class="mb-0">{{ number_format($item->weight, 0, ',', '.') }} kg</p></td>
                                     <td class="text-end"><p class="mb-0">{{ number_format($item->volume, 2, ',', '.') }} CBM</p></td>
-                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($item->price, 0, ',', '.') }}</p></td>
                                 </tr>
                                 <?php
                                 $noItem++;
-                                $totalPrice += $item->price; 
-                                $totalVolume += $item->volume; 
+                                $totalVolume += $item->volume;
                                 ?>
                                 @endforeach
                                 <tr>
-                                    <th class="text-center" colspan="8"><p class="mb-0">Total</p></th>
-                                    <th class="text-end"><p class="mb-0">Rp. {{ number_format($totalPrice, 0, ',', '.') }}</p></th>
+                                    <td class="text-center" colspan="7"><p class="mb-0">Total Volume</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ number_format($totalVolume, 2, ',', '.') }} CBM</p></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" colspan="7"><p class="mb-0">CBM Dibeli</p></td>
+                                    <td class="text-end"><p class="mb-0">{{ ceil($totalVolume) }} CBM</p></td>
                                 </tr>
                             </tbody>
+                        </table>  
+
+                        <table class="no-border mb-0 mt-0" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border text-end">
+                                <h5 class="mb-0"><strong>Biaya Pengiriman: Rp. {{ number_format($userOrder->totalPrice - $servicePrice, 0, ',', '.') }}</strong></h5>
+                                </td>
+                            </tr>
                         </table>
+                        
 
                         <table class="no-border mb-0 mt-3" style="margin-bottom: 20px;">
                             <tr>
@@ -327,7 +336,8 @@
                                     <th class="text-center"><p class="mb-0">No</p></th>
                                     <th class="text-center"><p class="mb-0">Layanan</p></th>
                                     <th class="text-center"><p class="mb-0">Deskripsi</p></th>
-                                    <th class="text-center"><p class="mb-0">Harga</p></th>
+                                    <th style="width: 120px; min-width: 120px; max-width: 200px; white-space: nowrap;" class="text-center"><p class="mb-0">Harga</p></th>
+                            
                                 </tr>
                             </thead>
                             <?php
@@ -349,13 +359,18 @@
                                 ?>
                                 @endforeach
                                 <tr>
-                                    <th class="text-center" colspan="3"><p class="mb-0">Total</p></th>
-                                    <th class="text-end"><p class="mb-0">Rp. {{ number_format($totalServicePrice, 0, ',', '.') }}</p></th>
+                                    <td class="text-center" colspan="3"><p class="mb-0">Total</p></td>
+                                    <td class="text-end"><p class="mb-0">Rp. {{ number_format($totalServicePrice, 0, ',', '.') }}</p></td>
                                 </tr>
                             </tbody>
                         </table>
 
                         <table class="no-border mb-0 mt-4" style="margin-bottom: 20px;">
+                            <tr>
+                                <td class="no-border text-end">
+                                <h5 class="mb-0"><strong>Total Tagihan: Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</strong></h5>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="no-border text-end">
                                 <h5 class="mb-0"><strong>Total Tagihan dengan PPn (11%): Rp. {{ number_format($userOrder->totalPrice+($userOrder->totalPrice*11/100), 0, ',', '.') }}</strong></h5>

@@ -111,7 +111,10 @@ class PaymentController extends Controller
         $offer = offersModel::where('noOffer', $order->noOffer)->first();
         $items = UserOrderItem::where('userOrder_id', $userOrder->id)->get();
         $services = ServiceOrdered::with('service')->where('userOrder_id', $userOrder->id)->get();
-        return view('pages.customer.orders.invoice', compact('userOrder','order','offer','items','services'));
+        $servicePrice = $services->sum(function($item) {
+            return $item->service ? $item->service->price : 0;
+        });
+        return view('pages.customer.orders.invoice', compact('userOrder','order','offer','items','services','servicePrice'));
     }
 
     public function invoice_download($token)
@@ -126,8 +129,10 @@ class PaymentController extends Controller
         $offer = offersModel::where('noOffer', $order->noOffer)->first();
         $items = UserOrderItem::where('userOrder_id', $userOrder->id)->get();
         $services = ServiceOrdered::with('service')->where('userOrder_id', $userOrder->id)->get();
-    
-        $pdf = Pdf::loadView('invoices.pdf', compact('userOrder', 'order', 'offer', 'items', 'services'))
+        $servicePrice = $services->sum(function($item) {
+            return $item->service ? $item->service->price : 0;
+        });
+        $pdf = Pdf::loadView('invoices.pdf', compact('userOrder', 'order', 'offer', 'items', 'services','servicePrice'))
                   ->setPaper('A4', 'portrait');
     
         return $pdf->download('invoice-' . $order->noOffer . '.pdf');
