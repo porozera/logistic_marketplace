@@ -188,10 +188,6 @@
                             <div class="col-md-6"></div>
                             <div class="col-md-6"></div>
                         </div>
-                        <div class="row">
-                            <p>Alamat Tujuan</p> 
-                            <span class="text-primary">{{ optional($order)->address ?? '-' }}</span>
-                        </div>
         
         
                         <hr>
