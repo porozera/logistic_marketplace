@@ -8,10 +8,22 @@ use Illuminate\Http\Request;
 class ShipmentReportController extends Controller
 {
     public function index() {
-        $shipments = Order::select('id', 'noOffer', 'lspName', 'origin', 'destination', 'loadingDate', 'shippingDate', 'shipmentType', 'status', 'paymentStatus')->get();
+    $shipments = Order::with('user') // eager load user
+        ->select(
+            'id',
+            'user_id', // dibutuhkan agar bisa relasi ke user
+            'noOffer',
+            'origin',
+            'destination',
+            'shipmentType',
+            'deliveryDate',
+            'arrivalDate',
+            'status',
+            'paymentStatus'
+        )->get();
 
-        return view('pages.admin.shipments.shipment', compact('shipments'));
-    }
+    return view('pages.admin.shipments.shipment', compact('shipments'));
+}
 
     public function show($id) {
         $shipment = Order::findOrFail($id);
