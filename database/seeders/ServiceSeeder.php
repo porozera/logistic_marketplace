@@ -45,6 +45,48 @@ class ServiceSeeder extends Seeder
                 'price' => 50000,
                 'icon' => 'ti ti-leaf',
             ],
+            [
+                'code' => 'SVC005',
+                'serviceName' => 'Asuransi Pengiriman',
+                'description' => 'Menjamin keamanan barang selama proses pengiriman.',
+                'price' => 75000,
+                'icon' => 'ti ti-shield-check',
+            ],
+            [
+                'code' => 'SVC006',
+                'serviceName' => 'Pengemasan Premium',
+                'description' => 'Menggunakan bahan kemasan berkualitas tinggi untuk keamanan ekstra.',
+                'price' => 60000,
+                'icon' => 'ti ti-package',
+            ],
+            [
+                'code' => 'SVC007',
+                'serviceName' => 'Penjagaan Penuh',
+                'description' => 'Ekstra Proteksi.',
+                'price' => 30000,
+                'icon' => 'ti ti-map-pin',
+            ],
+            [
+                'code' => 'SVC008',
+                'serviceName' => 'Penjemputan Barang di Lokasi',
+                'description' => 'Kurir akan menjemput barang langsung ke alamat Anda.',
+                'price' => 80000,
+                'icon' => 'ti ti-truck',
+            ],
+            [
+                'code' => 'SVC009',
+                'serviceName' => 'Layanan Prioritas',
+                'description' => 'Pengiriman lebih cepat dan diprioritaskan.',
+                'price' => 100000,
+                'icon' => 'ti ti-clock-fast',
+            ],
+            [
+                'code' => 'SVC010',
+                'serviceName' => 'Bantuan Bongkar Muat',
+                'description' => 'Tenaga bantuan untuk proses bongkar muat barang.',
+                'price' => 90000,
+                'icon' => 'ti ti-armchair',
+            ],
         ];
 
         foreach ($services as $service) {
