@@ -57,7 +57,7 @@
                       @foreach($shipments as $shipment)
                       <tr>
                         <td>{{ $shipment->noOffer }}</td>
-                        <td>{{ $shipment->user->name ?? '-' }}</td>
+                        <td>{{ $shipment->lsp->companyName ?? '-' }}</td>
                         <td>{{ $shipment->origin }}</td>
                         <td>{{ $shipment->destination }}</td>
                         <td>{{ $shipment->shipmentType }}</td>
@@ -76,7 +76,7 @@
                               {{ $shipment->status }}
                           </span>
                         </td>
-                        <td>
+                        <td class="text-center">
                           @php
                               $paymentBadge = match($shipment->paymentStatus) {
                                   'Belum Lunas' => 'bg-light-danger',

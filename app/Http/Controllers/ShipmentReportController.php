@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class ShipmentReportController extends Controller
 {
     public function index() {
-    $shipments = Order::with('user') // eager load user
+    $shipments = Order::with('lsp') // eager load user
         ->select(
             'id',
-            'user_id', // dibutuhkan agar bisa relasi ke user
+            'lsp_id', // dibutuhkan agar bisa relasi ke user
             'noOffer',
             'origin',
             'destination',
