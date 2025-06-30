@@ -619,12 +619,12 @@
                     ) {
                         if (volumeInput) volumeInput.value = 0;
                     } else {
-                        if (volumeInput) volumeInput.value = cbm.toFixed(3);
+                        if (volumeInput) volumeInput.value = cbm.toFixed(2);
                     }
                 });
             }
 
-            document.getElementById("cbmResult").innerText = totalCBM.toFixed(3);
+            document.getElementById("cbmResult").innerText = totalCBM.toFixed(2);
             document.getElementById("cbmToBuy").innerText = totalCBMToBuy;
 
             updateTotalPrice();

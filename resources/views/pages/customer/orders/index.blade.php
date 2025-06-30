@@ -674,11 +674,11 @@
                 totalWeight += weight;
 
                 let volumeInput = item.querySelector('.volume');
-                if (volumeInput) volumeInput.value = cbm.toFixed(3);
+                if (volumeInput) volumeInput.value = cbm.toFixed(2);
 
                 cbmCardDetails.push({
                   categoryName,
-                  cbm: cbm.toFixed(3),
+                  cbm: cbm.toFixed(2),
                   weight: weight
                 });
               });
@@ -729,7 +729,7 @@
             }
 
             cbmPriceCard.innerHTML = cbmCardHTML;
-            document.getElementById("cbmResult").innerText = totalCBM.toFixed(3);
+            document.getElementById("cbmResult").innerText = totalCBM.toFixed(2);
             document.getElementById("cbmToBuy").innerText = totalCBMToBuy;
 
             updateTotalPrice();

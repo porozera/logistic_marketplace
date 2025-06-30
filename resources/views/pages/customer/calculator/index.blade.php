@@ -256,7 +256,7 @@
             let cbmRoundedTotal = Math.round(totalCBM * 1000) / 1000;
             let cbmToBuy = Math.max(Math.ceil(cbmRoundedTotal), Math.ceil(totalCBMByWeight));
 
-            document.getElementById("cbmResult").innerText = cbmRoundedTotal.toFixed(3);
+            document.getElementById("cbmResult").innerText = cbmRoundedTotal.toFixed(2);
             document.getElementById("cbmToBuy").innerText = cbmToBuy;
             document.getElementById("totalWeight").innerText = totalWeight.toFixed(1);
 
