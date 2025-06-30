@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Pemesanan')
+@section('title', 'Detail Pengiriman')
 
 @section('content')
 <div class="pc-container">
     <div class="pc-content">
-    <!-- [ breadcrumb ] start -->
+        <!-- [ breadcrumb ] start -->
         <div class="page-header">
             <div class="page-block">
                 <div class="row align-items-center">
@@ -13,7 +13,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Home</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('admin.shipment.index') }}">Pengiriman</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Detail Pengiriman</li>
+                            <li class="breadcrumb-item active" aria-current="page">Detail Pengiriman</li>
                         </ul>
                     </div>
                     <div class="col-md-12">
@@ -32,46 +32,80 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <!-- Kiri -->
-                    <div class="col-lg-6">
-                        @foreach ([
-                            'noOffer' => 'No Offer',
-                            'lspName' => 'Pengirim',
-                            'origin' => 'Asal',
-                            'destination' => 'Tujuan',
-                            'shipmentMode' => 'Moda Pengiriman',
-                            'shipmentType' => 'Tipe Pengiriman',
-                            'deliveryDate' => 'Tanggal Pengiriman',
-                            'arrivalDate' => 'Tanggal Sampai',
-                            'estimationDate' => 'Estimasi Tiba',
-                            'maxWeight' => 'Berat Maksimal',
-                            'maxVolume' => 'Volume Maksimal'
-                        ] as $field => $label)
+                    <!-- Kolom Kiri -->
+                    <div class="col-md-6">
+                        @php
+                            $fieldsLeft = [
+                                'noOffer' => 'No Penawaran',
+                                'origin' => 'Asal',
+                                'destination' => 'Tujuan',
+                                'portOrigin' => 'Pelabuhan Asal',
+                                'portDestination' => 'Pelabuhan Tujuan',
+                                'shipmentMode' => 'Moda Pengiriman',
+                                'shipmentType' => 'Tipe Pengiriman',
+                                'transportationMode' => 'Moda Transportasi',
+                                'pickupDate' => 'Tanggal Pickup',
+                                'departureDate' => 'Tanggal Keberangkatan',
+                                'cyClosingDate' => 'CY Closing Date',
+                                'etd' => 'ETD',
+                            ];
+                        @endphp
+
+                        @foreach ($fieldsLeft as $key => $label)
                             <div class="form-group">
                                 <label class="form-label">{{ $label }}</label>
-                                <input type="text" class="form-control" value="{{ $shipment->$field }}" disabled>
+                                <input type="text" class="form-control" value="{{ $shipment->$key ?? '-' }}" disabled>
                             </div>
                         @endforeach
+
+                        <div class="form-group">
+                            <label class="form-label">Truck Pertama</label>
+                            <input type="text" class="form-control" value="{{ $shipment->truckFirst->plate_number ?? '-' }}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Truck Kedua</label>
+                            <input type="text" class="form-control" value="{{ $shipment->truckSecond->plate_number ?? '-' }}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Container</label>
+                            <input type="text" class="form-control" value="{{ $shipment->container->container_number ?? '-' }}" disabled>
+                        </div>
                     </div>
 
-                    <!-- Kanan -->
-                    <div class="col-lg-6">
-                        @foreach ([
-                            'remainingWeight' => 'Sisa Berat',
-                            'remainingVolume' => 'Sisa Volume',
-                            'commodities' => 'Komoditas',
-                            'status' => 'Status Pengiriman',
-                            'price' => 'Harga',
-                            'totalAmount' => 'Total Biaya',
-                            'remainingAmount' => 'Sisa Tagihan',
-                            'paidAmount' => 'Jumlah Dibayar',
-                            'paymentStatus' => 'Status Pembayaran'
-                        ] as $field => $label)
+                    <!-- Kolom Kanan -->
+                    <div class="col-md-6">
+                        @php
+                            $fieldsRight = [
+                                'eta' => 'ETA',
+                                'deliveryDate' => 'Tanggal Pengiriman',
+                                'arrivalDate' => 'Tanggal Sampai',
+                                'maxWeight' => 'Berat Maksimal',
+                                'maxVolume' => 'Volume Maksimal',
+                                'remainingWeight' => 'Sisa Berat',
+                                'remainingVolume' => 'Sisa Volume',
+                                'cargoType' => 'Tipe Kargo',
+                                'status' => 'Status Pengiriman',
+                                'price' => 'Harga',
+                                'totalAmount' => 'Total Biaya',
+                                'remainingAmount' => 'Sisa Tagihan',
+                                'paidAmount' => 'Jumlah Dibayar',
+                                'paymentStatus' => 'Status Pembayaran',
+                            ];
+                        @endphp
+
+                        @foreach ($fieldsRight as $key => $label)
                             <div class="form-group">
                                 <label class="form-label">{{ $label }}</label>
-                                <input type="text" class="form-control" value="{{ $shipment->$field ?? '-' }}" disabled>
+                                <input type="text" class="form-control" value="{{ $shipment->$key ?? '-' }}" disabled>
                             </div>
                         @endforeach
+
+                        <div class="form-group">
+                            <label class="form-label">Pengirim (LSP)</label>
+                            <input type="text" class="form-control" value="{{ $shipment->lsp->name ?? '-' }}" disabled>
+                        </div>
                     </div>
                 </div>
 

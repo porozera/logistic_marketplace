@@ -88,8 +88,8 @@
             </div>
 
             <div class="card-footer text-end">
+              <a href="/admin/container" class="btn btn-danger me-2">Cancel</a>
               <button class="btn btn-primary me-2">Submit</button>
-              <a href="/admin/container" class="btn btn-secondary me-2">Cancel</a>
             </div>
 
           </form>
