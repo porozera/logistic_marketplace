@@ -88,40 +88,43 @@ class offerController extends Controller
 
     public function store(Request $request)
     {
+
         $attributes = $request->validate([
-            // 'noOffer' => 'required|unique:offers,noOffer',
             'origin' => 'required|string',
             'destination' => 'required|string',
             'shipmentMode' => 'required|in:D2D,D2P,P2D,P2P',
             'shipmentType' => 'required|in:FCL,LCL',
             'maxWeight' => 'required|integer',
             'maxVolume' => 'required|integer',
-            // 'commodities' => 'required|string',
             'status' => 'required|in:active,deactive',
             'price' => 'required|numeric',
-            // 'loadingDate' => 'required|date',
-            // 'shippingDate' => 'required|date',
-            // 'estimationDate' => 'required|date',
             'remainingWeight' => 'nullable|integer',
             'remainingVolume' => 'nullable|integer',
             'container_id' => 'required|exists:containers,id',
             'truck_first_id' => 'required|exists:trucks,id',
             'truck_second_id' => 'required|exists:trucks,id',
-            'portOrigin' => 'string',
-            'portDestination' => 'string',
+            'portOrigin' => 'nullable|string',
+            'portDestination' => 'nullable|string',
             'transportationMode' => 'required|in:darat,laut',
-            'pickupDate' => 'date',
-            'cyClosingDate' => 'date',
-            'etd' => 'date',
-            'eta' => 'date',
-            'arrivalDate' => 'date',
-            'deliveryDate' => 'date',
-            'departureDate' => 'date',
+            'pickupDate' => 'nullable|date',
+            'cyClosingDate' => 'nullable|date',
+            'etd' => 'nullable|date',
+            'eta' => 'nullable|date',
+            'arrivalDate' => 'nullable|date',
+            'deliveryDate' => 'nullable|date',
+            'departureDate' => 'nullable|date',
         ]);
         $noOffer = 'OFR-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
         // $category = Category::where('name', $attributes['commodities'])->first();
-        $cargoType = $category->type ?? null;
+        // $cargoType = $category->type ?? null;
+        // Jika etd kosong dan mode transportasi darat D2D
+        if (empty($attributes['etd']) &&
+            $attributes['transportationMode'] === 'darat' &&
+            $attributes['shipmentMode'] === 'D2D') {
+            $attributes['etd'] = $attributes['departureDate'];
+        }
 
+        // dd($request->all());
         $offer = offersModel::create([
             // 'noOffer' => $attributes['noOffer'],
             'noOffer' => $noOffer,
@@ -210,7 +213,7 @@ class offerController extends Controller
             'etd' => 'nullable|date',
             'eta' => 'nullable|date',
             'deliveryDate' => 'nullable|date',
-            'arrivalDate' => 'date',
+            'arrivalDate' => 'nullable|date',
             'maxWeight' => 'integer|min:0',
             'maxVolume' => 'integer|min:0',
             // 'remainingWeight' => 'nullable|integer|min:0',
@@ -231,6 +234,11 @@ class offerController extends Controller
         // // dd($attributes['commodities'], $category);
         // $cargoType = $category->type ?? null;
         $arrivalDate = $request['shipmentMode'] === 'D2P' ? $request['eta'] : $request['arrivalDate'];
+        if (empty($attributes['etd']) &&
+            $attributes['transportationMode'] === 'darat' &&
+            $attributes['shipmentMode'] === 'D2D') {
+            $attributes['etd'] = $attributes['departureDate'];
+        }
         // Update data
         $offer->update([
             // // 'noOffer' => $request->noOffer,
@@ -248,38 +256,38 @@ class offerController extends Controller
             // 'container_id' => $request['container_id'],
             // 'status' => $request->status,
             // 'cargoType' => $cargoType,
-        'noOffer' => $request['noOffer'],
-        'origin' => $request['origin'],
-        'destination' => $request['destination'],
-        'portOrigin' => $request['portOrigin'],
-        'portDestination' => $request['portDestination'],
-        'shipmentMode' => $request['shipmentMode'],
-        'transportationMode' => $request['transportationMode'],
-        'shipmentType' => $request['shipmentType'],
-        'pickupDate' => $request['pickupDate'],
-        'departureDate' => $request['departureDate'],
-        'cyClosingDate' => $request['cyClosingDate'],
-        'etd' => $request['etd'],
-        'eta' => $request['eta'],
-        'deliveryDate' => $request['deliveryDate'],
-        'arrivalDate' => $arrivalDate,
-        'maxWeight' => $request['maxWeight'],
-        'maxVolume' => $request['maxVolume'],
-        // 'remainingWeight' => $request['remainingWeight'],
-        // 'remainingVolume' => $request['remainingVolume'],
-        // 'cargoType' => $request['cargoType'],
-        'status' => $request['status'],
-        'price' => $request['price'],
-        // 'is_for_lsp' => $request->has('is_for_lsp') ? 1 : 0,
-        // 'is_for_customer' => $request->has('is_for_customer') ? 1 : 0,
-        'container_id' => $request['container_id'],
-        'truck_first_id' => $request['truck_first_id'],
-        'truck_second_id' => $request['truck_second_id'],
+            'noOffer' => $request['noOffer'],
+            'origin' => $request['origin'],
+            'destination' => $request['destination'],
+            'portOrigin' => $request['portOrigin'],
+            'portDestination' => $request['portDestination'],
+            'shipmentMode' => $request['shipmentMode'],
+            'transportationMode' => $request['transportationMode'],
+            'shipmentType' => $request['shipmentType'],
+            'pickupDate' => $request['pickupDate'],
+            'departureDate' => $request['departureDate'],
+            'cyClosingDate' => $request['cyClosingDate'],
+            'etd' => $request['etd'],
+            'eta' => $request['eta'],
+            'deliveryDate' => $request['deliveryDate'],
+            'arrivalDate' => $arrivalDate,
+            'maxWeight' => $request['maxWeight'],
+            'maxVolume' => $request['maxVolume'],
+            // 'remainingWeight' => $request['remainingWeight'],
+            // 'remainingVolume' => $request['remainingVolume'],
+            // 'cargoType' => $request['cargoType'],
+            'status' => $request['status'],
+            'price' => $request['price'],
+            // 'is_for_lsp' => $request->has('is_for_lsp') ? 1 : 0,
+            // 'is_for_customer' => $request->has('is_for_customer') ? 1 : 0,
+            'container_id' => $request['container_id'],
+            'truck_first_id' => $request['truck_first_id'],
+            'truck_second_id' => $request['truck_second_id'],
 
-        ]);
+            ]);
 
-        // Redirect dengan pesan sukses
-        return redirect()->route('offers.index')->with('success', 'Offer updated successfully.');
+            // Redirect dengan pesan sukses
+            return redirect()->route('offers.index')->with('success', 'Offer updated successfully.');
     }
 
 
