@@ -67,7 +67,9 @@
                                 </div>
                             </div>
                             <div class="text-end">
-                                <small class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
+                                @if ($item->created_at)
+                                    <small class="text-muted">{{ $item->created_at->diffForHumans() }}</small>
+                                @endif
                                 <form action="{{ route('notification-customer.markAsRead', $item->id) }}" method="POST" class="mt-2">
                                     @csrf
                                     @method('PUT')

@@ -58,7 +58,7 @@ class offersModel extends Model
             $start = Carbon::parse($startDate);
             $end = Carbon::parse($endDate);
 
-            return $start->diffInDays($end);
+            return (int) round($start->diffInDays($end));
         }
         return null;
     }

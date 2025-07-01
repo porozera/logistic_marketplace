@@ -181,6 +181,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
         //Manajemen Komplain
         Route::get('/complain', [ComplainController::class, 'index'])->name('admin.complain.index');
         Route::get('/complain-detail/{id}', [ComplainController::class, 'detail'])->name('admin.complain.detail');
+        Route::post('/complain-detail/{id}/response', [ComplainController::class, 'storeResponse'])->name('admin.complain.storeResponse');
 
         //Notifikasi
         Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');
@@ -309,6 +310,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
     Route::get('/list-payment', [PaymentController::class, 'list_payment'])->name('list-payment');
     Route::get('/invoice/{token}', [PaymentController::class, 'invoice'])->name('invoice');
     Route::get('/invoice/{token}/download', [PaymentController::class, 'invoice_download'])->name('invoice.download');
+    Route::get('/payment/check/{token}', [PaymentController::class, 'check'])->name('payment.check');
 
 
     //PROFILE CUSTOMER
@@ -345,9 +347,12 @@ Route::middleware(['auth', RoleMiddleware::class . ':customer'])->group(function
 
     //COMPLAIN
     Route::get('/complain', [ComplainController::class, 'index_customer'])->name('complain-customer');
-    Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
+    // Route::get('/complain/detail/{id}', [ComplainController::class, 'detail'])->name('complain.detail');
+    Route::get('/complain/customer/detail/{id}', [ComplainController::class, 'detail_customer'])->name('complain.detail');
     Route::get('/complain/create', [ComplainController::class, 'create'])->name('complain.create');
     Route::post('/complain/create/perform', [ComplainController::class, 'store'])->name('complain.create.store');
+    Route::post('/response/create/perform/{id}', [ComplainController::class, 'storeResponseCustomer'])->name('response.customer.store');
+    Route::put('/response/customer/update-status/{id}', [ComplainController::class, 'updateStatusCustomer'])->name('response.update-status');
 
     //DASHBOARD
     Route::get('/dashboard/customer', [DashboardCustomerController::class, 'index'])->name('dashboard-customer');

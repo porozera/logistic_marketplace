@@ -45,10 +45,10 @@
                         <th>Pengirim</th>
                         <th>Asal</th>
                         <th>Tujuan</th>
-                        <th>Status</th>
-                        <th>Waktu Pengiriman</th>
-                        <th>Waktu Sampai</th>
                         <th>Tipe Pengiriman</th>
+                        <th>Tanggal Kirim</th>
+                        <th>Tanggal Sampai</th>
+                        <th>Status</th>
                         <th>Status Pembayaran</th>
                         <th>Aksi</th>
                       </tr>
@@ -57,9 +57,12 @@
                       @foreach($shipments as $shipment)
                       <tr>
                         <td>{{ $shipment->noOffer }}</td>
-                        <td>{{ $shipment->lspName }}</td>
+                        <td>{{ $shipment->lsp->companyName ?? '-' }}</td>
                         <td>{{ $shipment->origin }}</td>
                         <td>{{ $shipment->destination }}</td>
+                        <td>{{ $shipment->shipmentType }}</td>
+                        <td>{{ $shipment->deliveryDate }}</td>
+                        <td>{{ $shipment->arrivalDate ?? '-' }}</td>
                         <td>
                           @php
                               $badgeClass = match($shipment->status) {
@@ -72,23 +75,19 @@
                           <span class="badge {{ $badgeClass }} rounded-pill f-12">
                               {{ $shipment->status }}
                           </span>
-                      </td>
-                        <td>{{ $shipment->deliveryDate }}</td>
-                        <td>{{ $shipment->arrivalDate }}</td>
-                        <td>{{ $shipment->shipmentType }}</td>
-                      <td class="text-center">
-                        @php
-                            $badgeClass = match($shipment->paymentStatus) {
-                                'Belum Lunas' => 'bg-light-warning',
-                                'Gagal' => 'bg-light-danger',
-                                'Lunas' => 'bg-light-success',
-                                default => 'bg-light-secondary'
-                            };
-                        @endphp
-                        <span class="badge {{ $badgeClass }} rounded-pill f-12">
-                            {{ $shipment->paymentStatus }}
-                        </span>
-                    </td>
+                        </td>
+                        <td class="text-center">
+                          @php
+                              $paymentBadge = match($shipment->paymentStatus) {
+                                  'Belum Lunas' => 'bg-light-danger',
+                                  'Lunas' => 'bg-light-success',
+                                  default => 'bg-light-secondary'
+                              };
+                          @endphp
+                          <span class="badge {{ $paymentBadge }} rounded-pill f-12">
+                              {{ $shipment->paymentStatus }}
+                          </span>
+                        </td>
                         <td>
                           <ul class="list-inline me-auto mb-0">
                             <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="View">
@@ -101,7 +100,7 @@
                       </tr>
                       @endforeach
                     </tbody>
-                    <tfoot>
+                    {{-- <tfoot>
                       <tr>
                         <th>No Offer</th>
                         <th>Pengirim</th>
@@ -113,7 +112,7 @@
                         <th>Tipe Pengiriman</th>
                         <th>Status Pembayaran</th>
                       </tr>
-                    </tfoot>
+                    </tfoot> --}}
                   </table>
                 </div>
               </div>

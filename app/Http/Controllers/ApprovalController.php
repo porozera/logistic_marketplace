@@ -24,7 +24,7 @@ class ApprovalController extends Controller
                 'Approved' => 'bg-light-success',
                 'Rejected' => 'bg-light-danger',
                 'Requested' => 'bg-light-warning',
-                'On Confirmation' => 'bg-light-primary',
+                // 'On Confirmation' => 'bg-light-primary',
             };
             return $item;
         });
@@ -107,26 +107,26 @@ class ApprovalController extends Controller
         return redirect()->route('admin.approval-lsp')->with('rejected', 'Akun telah ditolak dan notifikasi telah dikirim.');
     }
 
-    public function sendConfirmationEmail(Request $request) {
-        $email = $request->input('email');
-        $approvalId = $request->input('approval_id');
+    // public function sendConfirmationEmail(Request $request) {
+    //     $email = $request->input('email');
+    //     $approvalId = $request->input('approval_id');
 
-        if (!$email || !$approvalId) {
-            return redirect()->route('admin.approval-lsp')->with('error', 'Data tidak lengkap.');
-        }
+    //     if (!$email || !$approvalId) {
+    //         return redirect()->route('admin.approval-lsp')->with('error', 'Data tidak lengkap.');
+    //     }
 
-        $approval = RequestUser::find($approvalId);
-        if (!$approval) {
-            return redirect()->route('admin.approval-lsp')->with('error', 'Data tidak ditemukan.');
-        }
-        // Update status approval
-        $approval->status = 'On Confirmation';
-        $approval->save();
+    //     $approval = RequestUser::find($approvalId);
+    //     if (!$approval) {
+    //         return redirect()->route('admin.approval-lsp')->with('error', 'Data tidak ditemukan.');
+    //     }
+    //     // Update status approval
+    //     $approval->status = 'On Confirmation';
+    //     $approval->save();
 
-        // Kirim email
-        Mail::to($approval->email)->send(new ConfirmationAccountMail($approval));
+    //     // Kirim email
+    //     Mail::to($approval->email)->send(new ConfirmationAccountMail($approval));
 
-        return redirect()->route('admin.approval-lsp')->with('success', 'Permintaan konfirmasi berhasil dikirim!');
-    }
+    //     return redirect()->route('admin.approval-lsp')->with('success', 'Permintaan konfirmasi berhasil dikirim!');
+    // }
 
 }

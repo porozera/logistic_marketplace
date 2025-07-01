@@ -21,6 +21,8 @@ return new class extends Migration
             $table->enum('transportationMode', ['darat', 'laut']);
             $table->date('arrivalDate');
             $table->date('deadline');
+            $table->dateTime('RTL_start_date')->nullable();
+            $table->dateTime('RTL_end_date')->nullable();
             $table->enum('cargoType', ['General Cargo', 'Special Cargo', 'Dangerous Cargo'])->nullable();
             $table->enum('status', ['active', 'deactive']);
             $table->text('description')->nullable();

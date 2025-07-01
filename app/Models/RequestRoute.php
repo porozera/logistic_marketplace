@@ -21,7 +21,9 @@ class RequestRoute extends Model
         'status',
         'deadline',
         'cargoType',
-        'container_id'
+        'container_id',
+        'RTL_start_date',
+        'RTL_end_date',
     ];
 
     public function user()

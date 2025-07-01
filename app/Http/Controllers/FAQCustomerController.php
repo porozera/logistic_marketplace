@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 
 class FAQCustomerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $faqs = Faq::all();
+        $faqs = Faq::query();
+
+        if ($request->filled('header')) {
+            $faqs->where('header', 'like', '%' . $request->header . '%');
+        }
+
+        $faqs = $faqs->get();
+
         return view('pages.customer.FAQ.index', compact('faqs'));
     }
 }

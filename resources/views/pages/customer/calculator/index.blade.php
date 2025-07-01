@@ -216,20 +216,21 @@
                 document.getElementById('orderForm').submit();
             });
 
-          function calculateCBM() {
+        function calculateCBM() {
             const containerSelect = document.getElementById('containerSelect');
             const containerQtyInput = document.getElementById('containerQty');
             const selectedOption = containerSelect.options[containerSelect.selectedIndex];
             const maxVolume = parseFloat(selectedOption.getAttribute('data-volume')) || 1;
             const maxWeight = parseFloat(selectedOption.getAttribute('data-weight')) || 1;
             const containerQty = parseInt(containerQtyInput.value) || 1;
+            const maxWeightPerCBM = 600;
 
-            let totalCBMToBuy = 0;
             let totalCBM = 0;
             let totalWeight = 0;
+            let totalCBMByWeight = 0;
 
             const items = document.querySelectorAll(".item-row");
-            items.forEach((item, idx) => {
+            items.forEach((item) => {
                 let length = parseFloat(item.querySelector(".length")?.value) || 0;
                 let width = parseFloat(item.querySelector(".width")?.value) || 0;
                 let height = parseFloat(item.querySelector(".height")?.value) || 0;
@@ -241,29 +242,28 @@
                 let heightM = height / 100;
 
                 let cbm = lengthM * widthM * heightM * qty;
-                let cbmRounded = Math.ceil(cbm * 1000) / 1000;
-                let cbmByWeight = Math.ceil(weight / 600);
-                let cbmByVolume = Math.ceil(cbmRounded);
-                let extraCBM = 0;
-                // if (length > 100) extraCBM++;
-                // if (width > 100) extraCBM++;
-                // if (height > 100) extraCBM++;
-                let cbmToBuy = (Math.max(cbmByVolume, cbmByWeight) + extraCBM);
-                totalCBM += cbmRounded;
-                totalCBMToBuy += cbmToBuy;
+                let cbmByWeight = (weight * qty) / maxWeightPerCBM;
+                let cbmRounded = Math.round(cbm * 1000) / 1000;
+
+                totalCBM += cbm;
+                totalCBMByWeight += cbmByWeight;
                 totalWeight += weight * qty;
 
                 let volumeInput = item.querySelector('.volume');
-                if (volumeInput) volumeInput.value = cbmToBuy;
+                if (volumeInput) volumeInput.value = cbmRounded;
             });
-            document.getElementById("cbmResult").innerText = totalCBM.toFixed(1);
-            document.getElementById("cbmToBuy").innerText = totalCBMToBuy;
-            document.getElementById("totalWeight").innerText = totalWeight;
+
+            let cbmRoundedTotal = Math.round(totalCBM * 1000) / 1000;
+            let cbmToBuy = Math.max(Math.ceil(cbmRoundedTotal), Math.ceil(totalCBMByWeight));
+
+            document.getElementById("cbmResult").innerText = cbmRoundedTotal.toFixed(2);
+            document.getElementById("cbmToBuy").innerText = cbmToBuy;
+            document.getElementById("totalWeight").innerText = totalWeight.toFixed(1);
 
             let maxTotalVolume = maxVolume * containerQty;
             let maxTotalWeight = maxWeight * containerQty;
-            let volumePercent = ((totalCBMToBuy / maxTotalVolume) * 100).toFixed(1);
-            let weightPercent = ((totalWeight / maxTotalWeight) * 100).toFixed(1);
+            let volumePercent = maxTotalVolume > 0 ? ((cbmToBuy / maxTotalVolume) * 100).toFixed(1) : 0;
+            let weightPercent = maxTotalWeight > 0 ? ((totalWeight / maxTotalWeight) * 100).toFixed(1) : 0;
 
             document.getElementById("volumePercent").innerText = volumePercent;
             document.getElementById("weightPercent").innerText = weightPercent;

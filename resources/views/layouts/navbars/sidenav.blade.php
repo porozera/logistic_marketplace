@@ -302,13 +302,32 @@
                         <label>Orders</label>
                         <i class="ti ti-news"></i>
                     </li>
-                    
                     <li class="pc-item">
+                        <a href="{{ route('list-payment') }}" class="pc-link">
+                            <span class="pc-micon position-relative">
+                                <i class="ti ti-cash"></i>
+                                @php
+                                    $unpaid = \App\Models\UserOrder::where('user_id', Auth::id())
+                                        ->where('paymentStatus', 'Belum Lunas')
+                                        ->count();
+                                @endphp
+                                @if ($unpaid > 0)
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger">
+                                        {{ $unpaid }}
+                                        <span class="visually-hidden">unpaid order</span>
+                                    </span>
+                                @endif
+                            </span>
+                            <span class="pc-mtext">Payment History</span>
+                        </a>
+                    </li>
+                    {{-- <li class="pc-item">
                         <a href="{{ route('list-payment') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-cash"></i></span>
                             <span class="pc-mtext">Payment History</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="pc-item">
                         <a href="{{ route('tracking-customer') }}" class="pc-link">
                             <span class="pc-micon"><i class="ti ti-map-2"></i></span>

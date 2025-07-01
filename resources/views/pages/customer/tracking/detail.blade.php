@@ -678,6 +678,7 @@
                 @endif --}}
                 <div class="card">
                     <div class="card-body">
+                        <h5>Detail Truk</h5>
                         <div class="table-responsive" style="overflow-x: auto;"> 
                            <table class="table table-striped table-bordered nowrap" id="pc-dt-simple" style="min-width: 100px;">
                                 <thead>

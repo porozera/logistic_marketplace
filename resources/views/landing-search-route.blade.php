@@ -162,14 +162,18 @@
                 <div class="card-body">
                     <form action="{{ route('landing-page.search-route') }}">
                         <div class="row mb-0 mt-0">
-                            <div class="col-sm-12 col-md-3">
+                            <div class="col-sm-12 col-md-2">
                                 <input type="text" name="origin" class="form-control" placeholder="Kota Asal" value="{{ request('origin') }}">
                             </div>
-                            <div class="col-sm-12 col-md-3">
+                            <div class="col-sm-12 col-md-2">
                                 <input type="text" name="destination" class="form-control" placeholder="Kota Tujuan" value="{{ request('destination') }}">
                             </div>
-                            <div class="col-sm-12 col-md-3">
-                                <input type="date" name="shippingDate" class="form-control" placeholder="Tanggal Pengiriman" value="{{ request('shippingDate') }}">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="input-group">
+                                    <input type="date" name="departureDate" class="form-control" value="{{ request('departureDate') }}">
+                                    <span class="input-group-text">s/d</span>
+                                    <input type="date" name="arrivalDate" class="form-control" value="{{ request('arrivalDate') }}">
+                                </div>
                             </div>
                             <div class="col-sm-12 col-md-2">
                                 <select class="form-control" name="shipmentType" id="shipmentType">
