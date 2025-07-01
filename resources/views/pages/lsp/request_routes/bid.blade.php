@@ -40,6 +40,8 @@
                 <form action="{{ route('bids.store') }}" method="POST">
                     @csrf
 
+                    <input type="hidden" name="requestOffer_id" value="{{ $requestOffer_id }}">
+
                     <div class="mb-3">
                         <label for="origin" class="form-label">Kota Asal</label>
                         <input type="text" class="form-control" name="origin" value="{{ $requestRoute->origin }}" readonly>
@@ -76,17 +78,27 @@
 
                     <div class="mb-3" id="arrivalDate">
                         <label for="arrivalDate" class="form-label">Arrival Date</label>
-                        <input type="date" class="form-control" placeholder="Masukkan pickup date" name="arrivalDate" value="{{ $requestRoute->arrivalDate }}" readonly >
+                        <input type="date" class="form-control" placeholder="Masukkan arrival date" name="arrivalDate" value="{{ $requestRoute->arrivalDate }}" readonly >
                     </div>
 
                     <div class="mb-3" id="cargoType">
                         <label for="cargoType" class="form-label">Cargo Type</label>
-                        <input type="text" class="form-control" placeholder="Masukkan departure date" name="cargoType" value="{{ $requestRoute->cargoType}}" readonly >
+                        <input type="text" class="form-control" placeholder="Masukkan Cargo Type" name="cargoType" value="{{ $requestRoute->cargoType}}" readonly >
+                    </div>
+
+                    <div class="mb-3" id="pickupDate">
+                        <label for="pickupDate" class="form-label">Pickup Date</label>
+                        <input type="date" class="form-control" placeholder="Masukkan pickup date" name="pickupDate" required>
                     </div>
 
                     <div class="mb-3" id="departureDate">
                         <label for="departureDate" class="form-label">Departure Date</label>
                         <input type="date" class="form-control" placeholder="Masukkan departure date" name="departureDate" required >
+                    </div>
+
+                    <div class="mb-3" id="deliveryDate">
+                        <label for="deliveryDate" class="form-label">Delivery Date</label>
+                        <input type="date" class="form-control" placeholder="Masukkan delivery date" name="deliveryDate" required >
                     </div>
 
 
@@ -183,6 +195,11 @@
                                     {{ $truck->plateNumber }} ({{ $truck->driverName }}) </option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="mb-3" id="price">
+                        <label for="price" class="form-label">Cargo Type</label>
+                        <input type="text" class="form-control" placeholder="Masukkan Harga" name="price" value="{{ $requestRoute->price}}">
                     </div>
 
                     <hr>
@@ -391,7 +408,7 @@
 
 </script> --}}
 
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function () {
     // Ganti selector ke input karena di HTML menggunakan input readonly, bukan select
     const transportationInput = document.querySelector('input[name="transportationMode"]');
@@ -470,5 +487,96 @@
     // transportationInput.addEventListener('change', togglePortSection);
     // shipmentInput.addEventListener('change', togglePortSection);
 });
+</script> --}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Ganti selector ke input karena di HTML menggunakan input readonly, bukan select
+    const transportationInput = document.querySelector('input[name="transportationMode"]');
+    const shipmentInput = document.querySelector('input[name="shipmentMode"]');
+    const portSection = document.getElementById('port-section');
+    const portOrigin = document.getElementById('form-port-origin');
+    const deliveryDate = document.getElementById('form-delivery-date');
+    const etaInput = document.getElementById('eta');
+    const arrivalInput = document.getElementById('arrivalDate');
+    const etdInput = document.getElementById('etd');
+    const departureDate = document.querySelector('input[name="departureDate"]');
+    const pickupDate = document.getElementById('pickupDate');
+
+    // Sync tanggal saat halaman dimuat
+    if (arrivalInput && etaInput && arrivalInput.value) {
+        etaInput.value = arrivalInput.value;
+    }
+
+    if (departureDate && etdInput && departureDate.value) {
+        etdInput.value = departureDate.value;
+    }
+
+    // Event listener untuk sync tanggal (untuk perubahan di masa depan)
+    if (arrivalInput && etaInput) {
+        arrivalInput.addEventListener('input', function () {
+            etaInput.value = arrivalInput.value;
+        });
+    }
+
+    if (departureDate && etdInput) {
+        departureDate.addEventListener('input', function () {
+            etdInput.value = departureDate.value;
+        });
+    }
+
+    const togglePortSection = () => {
+        // Ambil nilai dari input (lowercase untuk konsistensi)
+        const transportationMode = transportationInput ? transportationInput.value.toLowerCase() : '';
+        const shipmentMode = shipmentInput ? shipmentInput.value.toLowerCase() : '';
+
+        console.log('Transportation Mode:', transportationMode); // Debug
+        console.log('Shipment Mode:', shipmentMode); // Debug
+
+        if (transportationMode === 'laut' && shipmentMode === 'd2d') {
+            portSection.style.display = 'block';
+            portOrigin.style.display = 'block';
+            deliveryDate.style.display = 'block';
+            arrivalInput.disabled = false;
+            if (pickupDate) pickupDate.style.display = 'block';
+            if (departureDate) departureDate.parentElement.style.display = 'block';
+        } else if (transportationMode === 'darat' && shipmentMode === 'd2d') {
+            portSection.style.display = 'none';
+            arrivalInput.disabled = false;
+            if (pickupDate) pickupDate.style.display = 'block';
+            if (departureDate) departureDate.parentElement.style.display = 'block';
+        } else if (shipmentMode === 'd2p') {
+            portSection.style.display = 'block';
+            deliveryDate.style.display = 'none';
+            arrivalInput.disabled = true;
+            if (pickupDate) pickupDate.style.display = 'block';
+            if (departureDate) departureDate.parentElement.style.display = 'block';
+        } else if (shipmentMode === 'p2p') {
+            portSection.style.display = 'block';
+            deliveryDate.style.display = 'none';
+            arrivalInput.disabled = true;
+            if (pickupDate) pickupDate.style.display = 'none';
+            if (departureDate) departureDate.parentElement.style.display = 'none';
+        } else if (shipmentMode === 'p2d') {
+            portSection.style.display = 'block';
+            deliveryDate.style.display = 'block';
+            if (pickupDate) pickupDate.style.display = 'none';
+            if (departureDate) departureDate.parentElement.style.display = 'none';
+            arrivalInput.disabled = false;
+        } else {
+            // Default: sembunyikan port section jika tidak ada kondisi yang cocok
+            portSection.style.display = 'none';
+        }
+    };
+
+    // Jalankan saat halaman dimuat
+    togglePortSection();
+
+    // Karena input readonly tidak bisa diubah user, tidak perlu event listener
+    // Tapi jika suatu saat diubah jadi select yang bisa diubah, tambahkan ini:
+    // transportationInput.addEventListener('change', togglePortSection);
+    // shipmentInput.addEventListener('change', togglePortSection);
+});
 </script>
+
 @endsection

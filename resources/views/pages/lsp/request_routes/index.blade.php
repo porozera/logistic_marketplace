@@ -84,9 +84,9 @@
                             <input type="text" class="form-control me-2" placeholder="Tujuan">
                             <button class="btn btn-primary">Cari</button>
                         </div>
-                        @if (session('success'))
+                        {{-- @if (session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
-                        @endif
+                        @endif --}}
 
                         @foreach ($requests as $request)
                             <div class="card mb-3 p-3 border-primary" style="border-radius: 10px">
@@ -187,4 +187,21 @@
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                showConfirmButton: true, // Menampilkan tombol "OK"
+                confirmButtonText: "OK", // Label tombol
+                confirmButtonColor: "#3085d6", // Warna tombol OK
+            });
+        @endif
+    });
+</script>
+
 @endsection

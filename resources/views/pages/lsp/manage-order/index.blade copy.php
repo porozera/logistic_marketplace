@@ -35,7 +35,7 @@
                             <div class="col-md-4 d-flex align-items-center justify-content-start">
                                 @php
                                     $daysLeft = \Carbon\Carbon::now()->diffInDays(
-                                        \Carbon\Carbon::parse($order->pickupDate),
+                                        \Carbon\Carbon::parse($order->loadingDate),
                                         false,
                                     );
                                     $daysLeft = ceil($daysLeft);
@@ -63,7 +63,9 @@
                                     <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                                     <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
                                     <i class="ti ti-clock text-primary"></i>
-                                    <h5 class="mb-0 mx-2 text-primary">{{ \Carbon\Carbon::parse($order->deliveryDate)->diffInDays(\Carbon\Carbon::parse($order->arrivalDate)) }}Hari</h5>
+                                    <h5 class="mb-0 mx-2 text-primary">
+                                        {{ \Carbon\Carbon::parse($order->shippingDate)->diffInDays(\Carbon\Carbon::parse($order->estimationDate)) }}
+                                        Hari</h5>
                                     <div class="bg-primary mx-2" style="width: 80px; height: 1px;"></div>
                                     <div class="rounded-circle bg-primary" style="width: 16px; height: 16px;"></div>
                                 </div>
@@ -87,12 +89,12 @@
                                 <div style="display: block">
                                     <h5 class="mb-0">Tanggal Muat : </h5>
                                     <h5 class="mb-0 text-primary mt-2">
-                                        {{ \Carbon\Carbon::parse($order->pickupDate)->translatedFormat('l, d F Y') }}</h5>
+                                        {{ \Carbon\Carbon::parse($order->loadingDate)->translatedFormat('l, d F Y') }}</h5>
                                 </div>
                                 <div style="display: block" class="ms-4">
                                     <h5 class="mb-0">Tanggal Pengiriman : </h5>
                                     <h5 class="mb-0 text-primary mt-2">
-                                        {{ \Carbon\Carbon::parse($order->deliveryDate)->translatedFormat('l, d F Y') }}
+                                        {{ \Carbon\Carbon::parse($order->shippingDate)->translatedFormat('l, d F Y') }}
                                     </h5>
                                 </div>
                             </div>

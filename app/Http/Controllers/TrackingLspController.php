@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 // use App\Models\Review;
+use App\Models\ServiceOrdered;
 use App\Models\Tracking;
 use App\Models\UserOrder;
+use App\Models\UserOrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,6 +46,9 @@ class TrackingLspController extends Controller
         // $review = Review::where('order_id', $userOrder->order->id)
         //     ->where('customer_id', Auth::id())
         //     ->count();
-        return view('pages.lsp.tracking.detail', compact('userOrder', 'tracking','location'));
+        $services = ServiceOrdered::with('service')->where('userOrder_id', $userOrder->id)->get();
+        $serviceNames = $services->pluck('service.serviceName')->unique()->implode(', ');
+        $items = UserOrderItem::where('userOrder_id', $userOrder->id)->get();
+        return view('pages.lsp.tracking.detail', compact('userOrder', 'tracking','location', 'serviceNames', 'services', 'items'));
     }
 }
