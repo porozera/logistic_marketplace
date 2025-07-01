@@ -12,9 +12,6 @@
                 <div class="page-block">
                     <div class="row align-items-center">
                         <div class="col-md-12">
-                            <div class="page-header-title">
-                                <h4 class="mb-0">Detail Order - {{ $order->noOffer }}</h4>
-                            </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item">
                                     <a href="/dashboard">Home</a>
@@ -24,6 +21,9 @@
                                 </li>
                                 <li class="breadcrumb-item" aria-current="page">Detail Order</li>
                             </ul>
+                        </div>
+                        <div class="page-header-title mt-3">
+                            <h4 class="mb-0">Detail Order - {{ $order->noOffer }}</h4>
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,6 @@
 
             <!-- Divider -->
             <hr class="my-4">
-
             <!-- User Orders Section -->
             <div class="row">
                 <div class="col-12">
@@ -128,16 +127,94 @@
                             @forelse($userOrders as $uo)
                                 <div class="card mb-3 card-hover shadow-sm" style="border-radius: 10px">
                                     <div class="card-body">
+                                        <!-- Header Row -->
+                                        <div class="row mb-3">
+                                            <div class="col-md-3">
+                                                <div class="mb-2">
+                                                    <small class="text-muted fw-bold">ID Pemesanan:</small><br>
+                                                    <span class="fw-bold">{{ $uo->id }}</span>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <small class="text-muted fw-bold">User ID:</small><br>
+                                                    <span>{{ $uo->user_id }}</span>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <small class="text-muted fw-bold">Order ID:</small><br>
+                                                    <span>{{ $uo->order_id }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-2">
+                                                    <small class="text-muted fw-bold">Nama Penerima:</small><br>
+                                                    <span class="fw-bold">{{ $uo->receiverName }}</span>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <small class="text-muted fw-bold">No. Telepon:</small><br>
+                                                    <span>{{ $uo->receiverTelpNumber }}</span>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <small class="text-muted fw-bold">No. Invoice:</small><br>
+                                                    <span>{{ $uo->invoiceNumber }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="mb-2">
+                                                    <small class="text-muted fw-bold">Total Harga:</small><br>
+                                                    <span class="text-success fw-bold fs-5">Rp {{ number_format($uo->totalPrice, 0, ',', '.') }}</span>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <small class="text-muted fw-bold">Status Pembayaran:</small><br>
+                                                    <span class="badge {{ $uo->paymentStatus == 'Lunas' ? 'bg-success' : ($uo->paymentStatus == 'pending' ? 'bg-warning' : 'bg-danger') }} px-3 py-2">
+                                                        {{ ucfirst($uo->paymentStatus) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr class="my-3">
+
+                                        <!-- Address Row -->
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <small class="text-muted fw-bold">Alamat Asal:</small><br>
+                                                <span class="text-dark">{{ $uo->originAddress ?: '-' }}</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <small class="text-muted fw-bold">Alamat Tujuan:</small><br>
+                                                <span class="text-dark">{{ $uo->destinationAddress ?: '-' }}</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Description Row -->
+                                        @if($uo->description)
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <small class="text-muted fw-bold">Deskripsi:</small><br>
+                                                <span class="text-dark">{{ $uo->description }}</span>
+                                            </div>
+                                        </div>
+                                        @endif
+
+                                        <hr class="my-3">
+
+                                        <!-- Date Row -->
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <strong>Nama User:</strong> {{ $uo->username }}<br>
-                                                <strong>Tanggal Pemesanan:</strong>
-                                                {{ \Carbon\Carbon::parse($uo->created_at)->translatedFormat('d F Y H:i') }}
+                                            <div class="col-md-4">
+                                                <small class="text-muted fw-bold">Tanggal Pemesanan:</small><br>
+                                                <span class="text-primary fw-bold">{{ \Carbon\Carbon::parse($uo->created_at)->translatedFormat('d F Y H:i') }}</span>
                                             </div>
-                                            <div class="col-md-6">
-                                                <strong>Volume:</strong> {{ $uo->volume }} CBM<br>
-                                                <strong>Berat:</strong> {{ $uo->weight }} KG
+                                            @if($uo->RTL_start_date)
+                                            <div class="col-md-4">
+                                                <small class="text-muted fw-bold">RTL Start Date:</small><br>
+                                                <span class="text-info fw-bold">{{ \Carbon\Carbon::parse($uo->RTL_start_date)->translatedFormat('d F Y') }}</span>
                                             </div>
+                                            @endif
+                                            @if($uo->RTL_end_date)
+                                            <div class="col-md-4">
+                                                <small class="text-muted fw-bold">RTL End Date:</small><br>
+                                                <span class="text-info fw-bold">{{ \Carbon\Carbon::parse($uo->RTL_end_date)->translatedFormat('d F Y') }}</span>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
