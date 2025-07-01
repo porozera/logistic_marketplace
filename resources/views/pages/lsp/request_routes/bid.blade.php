@@ -18,13 +18,13 @@
                     <div class="col-md-12">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0)">Route</a></li>
-                            <li class="breadcrumb-item" aria-current="page">Tambah Data</li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0)">Permintaan Pengiriman</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Membuat Penawaran</li>
                         </ul>
                     </div>
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h2 class="mb-0">Create Route</h2>
+                            <h2 class="mb-0">Penawaran</h2>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="transportationMode" class="form-label">Shipment Type</label>
+                        <label for="transportationMode" class="form-label">Transportation Mode</label>
                         <input type="text" class="form-control text-capitalize" name="transportationMode" value="{{ $requestRoute->transportationMode }}" readonly>
                     </div>
 
@@ -65,15 +65,54 @@
                         <input type="text" class="form-control text-capitalize" name="shipmentMode" value="{{ $requestRoute->shipmentMode }}" readonly>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="RTL_start_date" class="form-label">Ready to Load</label>
+                        <div class="input-group mb-3">
+                            <input type="text" name="RTL_start_date" class="form-control" value="{{ $requestRoute->RTL_start_date }}" readonly>
+                            <span class="input-group-text">s/d</span>
+                            <input type="text" name="RTL_end_date" class="form-control" value="{{ $requestRoute->RTL_end_date }}" readonly>
+                        </div>
+                    </div>
 
-                    <div class="mb-3" id="pickupDate">
-                        <label for="pickupDate" class="form-label">Pickup Date</label>
-                        <input type="date" class="form-control" placeholder="Masukkan pickup date" name="pickupDate" required >
+                    <div class="mb-3" id="arrivalDate">
+                        <label for="arrivalDate" class="form-label">Arrival Date</label>
+                        <input type="date" class="form-control" placeholder="Masukkan pickup date" name="arrivalDate" value="{{ $requestRoute->arrivalDate }}" readonly >
+                    </div>
+
+                    <div class="mb-3" id="cargoType">
+                        <label for="cargoType" class="form-label">Cargo Type</label>
+                        <input type="text" class="form-control" placeholder="Masukkan departure date" name="cargoType" value="{{ $requestRoute->cargoType}}" readonly >
                     </div>
 
                     <div class="mb-3" id="departureDate">
                         <label for="departureDate" class="form-label">Departure Date</label>
                         <input type="date" class="form-control" placeholder="Masukkan departure date" name="departureDate" required >
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="container">Pilih Jenis Container</label>
+                                <select name="container_id" class="form-control" id="container">
+                                    <option value="">-- Pilih Container --</option>
+                                    @foreach ($containers as $container)
+                                        <option value="{{ $container->id }}" data-weight="{{ $container->weight }}" data-volume="{{ $container->volume }}" data-description="{{ $container->description }}">
+                                        {{ $container->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                    </div>
+                    <div id="container-info" class="card p-3 mt-3" style="display: none;">
+                        <h5>Detail Container</h5>
+                        <hr>
+                        <p><strong>Berat Maksimal:</strong> <span id="max-weight"></span> Kg</p>
+                        <p><strong>Volume Maksimal:</strong> <span id="max-volume"></span> CBM</p>
+                        <p><strong>Deskripsi:</strong> <span id="container-description"></span></p>
+
+                        <!-- Input hidden untuk dikirim ke backend -->
+                        <input type="hidden" name="maxWeight" id="maxWeightInput">
+                        <input type="hidden" name="maxVolume" id="maxVolumeInput">
+                        <input type="hidden" name="remainingWeight" id="remainingWeightInput">
+                        <input type="hidden" name="remainingVolume" id="remainingVolumeInput">
                     </div>
                     {{-- <input type="hidden" name="etd" id="etd_hidden_darat"> --}}
 
@@ -125,56 +164,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="arrivalDate" class="form-label">Arrival Date</label>
-                        <input type="date" class="form-control" placeholder="Masukkan arrival date" name="arrivalDate" required id="arrivalDate">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="shipmentType" class="form-label">Shipment Type</label>
-                        <select name="shipmentType" class="form-control" required>
-                            <option value="FCL">FCL</option>
-                            <option value="LCL">LCL</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="container">Pilih Jenis Container</label>
-                            <select name="container_id" class="form-control" id="container">
-                                <option value="">-- Pilih Container --</option>
-                                @foreach ($containers as $container)
-                                    <option
-                                        value="{{ $container->id }}"
-                                        data-weight="{{ $container->weight }}"
-                                        data-volume="{{ $container->volume }}"
-                                        data-description="{{ $container->description }}"
-                                    >
-                                        {{ $container->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                    </div>
-                    <div id="container-info" class="card p-3 mt-3" style="display: none;">
-                        <h5>Detail Container</h5>
-                        <hr>
-                        <p><strong>Berat Maksimal:</strong> <span id="max-weight"></span> Kg</p>
-                        <p><strong>Volume Maksimal:</strong> <span id="max-volume"></span> CBM</p>
-                        <p><strong>Deskripsi:</strong> <span id="container-description"></span></p>
-
-                        <!-- Input hidden untuk dikirim ke backend -->
-                        <input type="hidden" name="maxWeight" id="maxWeightInput">
-                        <input type="hidden" name="maxVolume" id="maxVolumeInput">
-                        <input type="hidden" name="remainingWeight" id="remainingWeightInput">
-                        <input type="hidden" name="remainingVolume" id="remainingVolumeInput">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Price</label>
-                        {{-- <input type="number" name="price" class="form-control" step="0.01" required> --}}
-                        <input type="text" class="form-control" id="price_display" placeholder="Masukkan harga" required>
-                        <input type="hidden" name="price" id="price">
-                    </div>
-
-                    <div class="mb-3">
                         <label for="truck_first_id" class="form-label">First Truck</label>
                         <select class="form-select" name="truck_first_id" id="truck_first_id" required>
                             <option value="">-- Pilih Truk --</option>
@@ -214,43 +203,6 @@
     </div>
 
     <script>
-        // Load provinsi saat halaman pertama kali dibuka
-        const loadProvinces = async (selectId) => {
-            const res = await fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
-            const provinces = await res.json();
-            const select = document.getElementById(selectId);
-            select.innerHTML = '<option value="">Pilih Provinsi</option>';
-            provinces.forEach(p => {
-                select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
-            });
-        }
-
-        // Load kota/kabupaten berdasarkan provinsi
-        const loadCities = async (provinceId, targetSelectId) => {
-            const res = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`);
-            const cities = await res.json();
-            const select = document.getElementById(targetSelectId);
-            select.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>';
-            cities.forEach(c => {
-                select.innerHTML += `<option value="${c.name}">${c.name}</option>`;
-            });
-        }
-
-        // Load provinsi saat awal
-        window.addEventListener("DOMContentLoaded", () => {
-            loadProvinces("origin_province");
-            loadProvinces("destination_province");
-
-            // Event Listener untuk load kota berdasarkan provinsi
-            document.getElementById("origin_province").addEventListener("change", function () {
-                loadCities(this.value, "origin_city");
-            });
-
-            document.getElementById("destination_province").addEventListener("change", function () {
-                loadCities(this.value, "destination_city");
-            });
-        });
-
         document.getElementById('container').addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const weight = selectedOption.getAttribute('data-weight');
@@ -309,7 +261,7 @@
         </script> --}}
 
         {{-- form pelabuhan --}}
-        <script>
+        {{-- <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const transportationSelect = document.querySelector('select[name="transportationMode"]');
                 const shipmentSelect = document.querySelector('select[name="shipmentMode"]');
@@ -373,7 +325,7 @@
                 shipmentSelect.addEventListener('change', togglePortSection);
             });
             // Tambahkan event listener hanya satu kali
-        </script>
+        </script> --}}
 {{-- <script>
     document.addEventListener('DOMContentLoaded', function () {
     const transportationSelect = document.querySelector('select[name="transportationMode"]');
@@ -438,4 +390,85 @@
 });
 
 </script> --}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Ganti selector ke input karena di HTML menggunakan input readonly, bukan select
+    const transportationInput = document.querySelector('input[name="transportationMode"]');
+    const shipmentInput = document.querySelector('input[name="shipmentMode"]');
+    const portSection = document.getElementById('port-section');
+    const portOrigin = document.getElementById('form-port-origin');
+    const deliveryDate = document.getElementById('form-delivery-date');
+    const etaInput = document.getElementById('eta');
+    const arrivalInput = document.getElementById('arrivalDate');
+    const etdInput = document.getElementById('etd');
+    const departureDate = document.querySelector('input[name="departureDate"]');
+    const pickupDate = document.getElementById('pickupDate');
+
+    // Event listener untuk sync tanggal (hanya sekali)
+    if (arrivalInput && etaInput) {
+        arrivalInput.addEventListener('input', function () {
+            etaInput.value = arrivalInput.value;
+        });
+    }
+
+    if (departureDate && etdInput) {
+        departureDate.addEventListener('input', function () {
+            etdInput.value = departureDate.value;
+        });
+    }
+
+    const togglePortSection = () => {
+        // Ambil nilai dari input (lowercase untuk konsistensi)
+        const transportationMode = transportationInput ? transportationInput.value.toLowerCase() : '';
+        const shipmentMode = shipmentInput ? shipmentInput.value.toLowerCase() : '';
+
+        console.log('Transportation Mode:', transportationMode); // Debug
+        console.log('Shipment Mode:', shipmentMode); // Debug
+
+        if (transportationMode === 'laut' && shipmentMode === 'd2d') {
+            portSection.style.display = 'block';
+            portOrigin.style.display = 'block';
+            deliveryDate.style.display = 'block';
+            arrivalInput.disabled = false;
+            if (pickupDate) pickupDate.style.display = 'block';
+            if (departureDate) departureDate.parentElement.style.display = 'block';
+        } else if (transportationMode === 'darat' && shipmentMode === 'd2d') {
+            portSection.style.display = 'none';
+            arrivalInput.disabled = false;
+            if (pickupDate) pickupDate.style.display = 'block';
+            if (departureDate) departureDate.parentElement.style.display = 'block';
+        } else if (shipmentMode === 'd2p') {
+            portSection.style.display = 'block';
+            deliveryDate.style.display = 'none';
+            arrivalInput.disabled = true;
+            if (pickupDate) pickupDate.style.display = 'block';
+            if (departureDate) departureDate.parentElement.style.display = 'block';
+        } else if (shipmentMode === 'p2p') {
+            portSection.style.display = 'block';
+            deliveryDate.style.display = 'none';
+            arrivalInput.disabled = true;
+            if (pickupDate) pickupDate.style.display = 'none';
+            if (departureDate) departureDate.parentElement.style.display = 'none';
+        } else if (shipmentMode === 'p2d') {
+            portSection.style.display = 'block';
+            deliveryDate.style.display = 'block';
+            if (pickupDate) pickupDate.style.display = 'none';
+            if (departureDate) departureDate.parentElement.style.display = 'none';
+            arrivalInput.disabled = false;
+        } else {
+            // Default: sembunyikan port section jika tidak ada kondisi yang cocok
+            portSection.style.display = 'none';
+        }
+    };
+
+    // Jalankan saat halaman dimuat
+    togglePortSection();
+
+    // Karena input readonly tidak bisa diubah user, tidak perlu event listener
+    // Tapi jika suatu saat diubah jadi select yang bisa diubah, tambahkan ini:
+    // transportationInput.addEventListener('change', togglePortSection);
+    // shipmentInput.addEventListener('change', togglePortSection);
+});
+</script>
 @endsection

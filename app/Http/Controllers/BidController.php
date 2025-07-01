@@ -71,6 +71,7 @@ class BidController extends Controller
 
     public function store(Request $request)
 {
+    // dd($request->all());
     $validated = $request->validate([
         'requestOffer_id' => 'required|exists:request_routes,id',
         'loadingDate' => 'required|date',

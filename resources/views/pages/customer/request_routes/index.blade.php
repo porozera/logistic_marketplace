@@ -108,7 +108,7 @@
                                 @error('origin') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        
+
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label class="form-label">Provinsi Tujuan</label>
@@ -120,7 +120,7 @@
                                 @error('destination') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
-                        
+
                         <script>
                             // Load provinsi saat halaman pertama kali dibuka
                             const loadProvinces = async (selectId) => {
@@ -132,7 +132,7 @@
                                     select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
                                 });
                             }
-                        
+
                             // Load kota/kabupaten berdasarkan provinsi
                             const loadCities = async (provinceId, targetSelectId) => {
                                 const res = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`);
@@ -143,20 +143,20 @@
                                     select.innerHTML += `<option value="${c.name}">${c.name}</option>`;
                                 });
                             }
-                        
+
                             // Load provinsi saat awal
                             loadProvinces("origin_province");
                             loadProvinces("destination_province");
-                        
+
                             // Event Listener untuk load kota berdasarkan provinsi
                             document.getElementById("origin_province").addEventListener("change", function () {
                                 loadCities(this.value, "origin_city");
                             });
-                        
+
                             document.getElementById("destination_province").addEventListener("change", function () {
                                 loadCities(this.value, "destination_city");
                             });
-                        </script>                        
+                        </script>
                     </div>
                     {{-- <div class="row">
                         <div class="col-md-6">
@@ -190,7 +190,7 @@
                             <select class="form-control" name="transportationMode" id="transportationMode">
                                 <option value="laut">Laut</option>
                                 <option value="darat">Darat</option>
-                            </select>                            
+                            </select>
                             @error('transportationMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                                 <option value="D2P">Door to Port (D2P)</option>
                                 <option value="P2P">Port to Port (P2P)</option>
                                 <option value="P2D">Port to Door (P2D)</option>
-                            </select>                            
+                            </select>
                             @error('shipmentMode') <p class="text-danger text-xs pt-1"> {{$message}} </p>@enderror
                             </div>
                         </div>
@@ -225,11 +225,11 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <br>
                     <div id="containerDetail"></div>
 
-                    
+
                     <div class="row">
                         <div class="form-group mb-3">
                             <label class="form-label">Informasi Tambahan</label>
@@ -239,11 +239,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2">
-                            
-                        </div> 
+
+                        </div>
                         <div class="col-md-10 text-end">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Kirim Permintaan</button>
-                        </div> 
+                        </div>
                         <div class="row">
                     <div class="col">
                       @if ($errors->any())
@@ -301,7 +301,7 @@
                                 <td>{{$item['volume']}} CBM</td>
                                 <td>{{$item['commodities']}}</td> --}}
                                 <td class="text-center"><small>{{$item->getarrivaldate()}}</small></td>
-                        
+
                                 <td class="text-center">
                                 @if ($item['status'] == "active")
                                 <span class="badge rounded-pill text-bg-warning">In Bidding</span>
@@ -320,7 +320,7 @@
                 </div>
                 <div class="d-flex justify-content-center mt-4">
                 {{ $list_request->links('pagination::bootstrap-4') }}
-                </div> 
+                </div>
                 </div>
                 </div>
             </div>
@@ -406,7 +406,7 @@
                                     </div>
                                 </div>
                                 <div class="text-end mt-2">
-                                    
+
                                     {{-- <button type="button" class="btn btn-danger btn-sm remove-item">Hapus</button> --}}
                                 </div>
                             </div>
@@ -498,7 +498,7 @@
             tempDiv.appendChild(clone);
 
             setTimeout(() => {
-                setupAddItemListeners();  
+                setupAddItemListeners();
                 registerCBMListeners && registerCBMListeners();
                 calculateCBM && calculateCBM();
             }, 0);
@@ -508,7 +508,7 @@
 
 
             shipmentType.addEventListener('change', renderContainerDetail);
-            renderContainerDetail(); 
+            renderContainerDetail();
 
             function setupAddItemListeners() {
             let itemIndex = 1;
@@ -516,7 +516,7 @@
             const addItemBtn = document.getElementById('addItemBtn');
             const itemsContainer = document.getElementById('itemsContainer');
 
-            if (!addItemBtn || !itemsContainer) return; 
+            if (!addItemBtn || !itemsContainer) return;
 
             addItemBtn.addEventListener('click', function () {
                 const newItem = itemsContainer.querySelector('.item-row').cloneNode(true);
@@ -548,7 +548,7 @@
                 const rows = document.querySelectorAll('.item-row');
                 if (rows.length > 1) {
                     removeBtn.closest('.item-row').remove();
-                    calculateCBM(); 
+                    calculateCBM();
                 } else {
                     alert("Minimal harus ada satu item.");
                 }
@@ -558,7 +558,7 @@
         });
         </script>
 
-        
+
 
         <script>
           function registerCBMListeners() {
@@ -573,7 +573,7 @@
             }
 
           function calculateCBM() {
-            let shipmentType = document.getElementById("shipmentType").value; 
+            let shipmentType = document.getElementById("shipmentType").value;
             let maxWeightPerCBM = 600;
             let totalCBMToBuy = 0;
             let totalCBM = 0;
@@ -630,7 +630,7 @@
             updateTotalPrice();
             }
         </script>
-        
+
 
         <script>
             document.getElementById('submitFormButton').addEventListener('click', function () {
@@ -644,5 +644,5 @@
                 document.getElementById('success-alert').style.display = 'none';
             }, 3000);
         </script>
-        
+
 @endsection
