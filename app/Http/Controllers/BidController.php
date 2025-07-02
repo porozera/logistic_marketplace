@@ -98,7 +98,7 @@ class BidController extends Controller
             'deliveryDate' => 'nullable|date',
             'departureDate' => 'nullable|date',
     ]);
-    $category = Category::where('name', $request['commodities'])->first();
+    $category = Category::where('name', $request['cargoType'])->first();
         // dd($attributes['commodities'], $category);
     $cargoType = $category->type ?? null;
     $noOffer = 'BID-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
@@ -140,7 +140,7 @@ class BidController extends Controller
             'is_for_customer' => 1,
             'is_for_lsp' => $attributes['shipmentType'] === 'LCL' ? 1 : 0,
             'timestamp' => now(),
-            // 'cargoType' => $cargoType,
+            'cargoType' => $cargoType,
             'portOrigin'=> $attributes['portOrigin'],
             'portDestination'=> $attributes['portDestination'],
             'transportationMode'=> $attributes['transportationMode'],
