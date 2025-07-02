@@ -10,6 +10,7 @@ use App\Models\RequestRoute;
 use App\Models\Notification;
 use App\Models\Truck;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BidController extends Controller
 {
@@ -66,53 +67,91 @@ class BidController extends Controller
             ->get();
 
         $containers = Container::all();
-        return view('pages.lsp.request_routes.bid', compact('requestRoute', 'trucks', 'containers'));
+        return view('pages.lsp.request_routes.bid', compact('requestRoute', 'trucks', 'containers'), ['requestOffer_id' => $id]);
     }
 
     public function store(Request $request)
 {
-    $validated = $request->validate([
-        'requestOffer_id' => 'required|exists:request_routes,id',
-        'loadingDate' => 'required|date',
-        'estimationDate' => 'required|date',
-        'maxWeight' => 'required|integer',
-        'maxVolume' => 'required|integer',
-        'price' => 'required|numeric',
-        'container_id' => 'required|exists:containers,id',
-        'truck_first_id' => 'required|exists:trucks,id',
-        'truck_second_id' => 'required|exists:trucks,id',
+    // dd($request->all());
+    $attributes = $request->validate([
+            'origin' => 'required|string',
+            'destination' => 'required|string',
+            'shipmentMode' => 'required|in:D2D,D2P,P2D,P2P',
+            'shipmentType' => 'required|in:FCL,LCL',
+            'maxWeight' => 'required|integer',
+            'maxVolume' => 'required|integer',
+            'status' => 'required|in:active,deactive',
+            'price' => 'required|numeric',
+            'remainingWeight' => 'nullable|integer',
+            'remainingVolume' => 'nullable|integer',
+            'container_id' => 'required|exists:containers,id',
+            'truck_first_id' => 'required|exists:trucks,id',
+            'truck_second_id' => 'required|exists:trucks,id',
+            'portOrigin' => 'nullable|string',
+            'portDestination' => 'nullable|string',
+            'transportationMode' => 'required|in:darat,laut',
+            'pickupDate' => 'nullable|date',
+            'cyClosingDate' => 'nullable|date',
+            'etd' => 'nullable|date',
+            'eta' => 'nullable|date',
+            'arrivalDate' => 'nullable|date',
+            'deliveryDate' => 'nullable|date',
+            'departureDate' => 'nullable|date',
     ]);
     $category = Category::where('name', $request['commodities'])->first();
         // dd($attributes['commodities'], $category);
     $cargoType = $category->type ?? null;
-    Bid::create([
-        'noOffer' => 'BID-' . strtoupper(uniqid()), // Pastikan 'noOffer' memiliki nilai unik
-        'requestOffer_id' => $validated['requestOffer_id'],
-        'origin' => $request->origin,
-        'destination' => $request->destination,
-        'shipmentMode' => $request->shipmentMode,
-        'shipmentType' => $request->shipmentType,
-        'shippingDate' => $request->shippingDate,
-        'loadingDate' => $validated['loadingDate'],
-        'estimationDate' => $validated['estimationDate'],
-        'commodities' => $request->commodities,
-        'maxWeight' => $validated['maxWeight'],
-        'maxVolume' => $validated['maxVolume'],
-        'remainingWeight' => $validated['maxWeight'],
-        'remainingVolume' => $validated['maxVolume'],
-        'price' => $validated['price'],
-        'container_id' => $validated['container_id'],
-        'truck_first_id' => $validated['truck_first_id'],
-        'truck_second_id' => $validated['truck_second_id'],
-        'status' => 'active',
-        'lspName' => auth()->user()->companyName,
-        'user_id' => auth()->id(),
-        'cargoType' => $cargoType,
-        'container_id' => $validated['container_id'],
-        'truck_first_id' => $validated['truck_first_id'],
-        'truck_second_id' => $validated['truck_second_id'],
-    ]);
+    $noOffer = 'BID-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
 
+    if (empty($attributes['etd']) &&
+            $attributes['transportationMode'] === 'darat' &&
+            $attributes['shipmentMode'] === 'D2D') {
+            $attributes['etd'] = $attributes['departureDate'];
+        }
+    if (empty($attributes['eta']) &&
+            $attributes['transportationMode'] === 'darat' &&
+            $attributes['shipmentMode'] === 'D2D') {
+            $attributes['eta'] = $attributes['arrivalDate'];
+        }
+    Bid::create([
+            // 'noOffer' => $attributes['noOffer'],
+            'requestOffer_id' => $request->requestOffer_id,
+            'noOffer' => $noOffer,
+            'lspName' => Auth::user()->username,
+            'origin' => $attributes['origin'],
+            'destination' => $attributes['destination'],
+            'shipmentMode' => $attributes['shipmentMode'],
+            'shipmentType' => $attributes['shipmentType'],
+            // 'loadingDate' => $attributes['loadingDate'],
+            // 'shippingDate' => $attributes['shippingDate'],
+            // 'estimationDate' => $attributes['estimationDate'],
+            'maxWeight' => $attributes['maxWeight'],
+            'maxVolume' => $attributes['maxVolume'],
+            'remainingWeight' => $attributes['remainingWeight'],
+            'remainingVolume' => $attributes['remainingVolume'],
+            // 'commodities' => $attributes['commodities'],
+            'status' => $attributes['status'],
+            'price' => $attributes['price'],
+            'user_id' =>Auth::id(),
+            // 'truck_id' => $attributes['truck_id'],
+            'container_id' => $attributes['container_id'],
+            'truck_first_id' => $attributes['truck_first_id'],
+            'truck_second_id' => $attributes['truck_second_id'],
+            'is_for_customer' => 1,
+            'is_for_lsp' => $attributes['shipmentType'] === 'LCL' ? 1 : 0,
+            'timestamp' => now(),
+            // 'cargoType' => $cargoType,
+            'portOrigin'=> $attributes['portOrigin'],
+            'portDestination'=> $attributes['portDestination'],
+            'transportationMode'=> $attributes['transportationMode'],
+            'pickupDate'=> $attributes['pickupDate'],
+            'cyClosingDate'=> $attributes['cyClosingDate'],
+            'etd'=> $attributes['etd'],
+            'eta'=> $attributes['eta'],
+            'arrivalDate'=> $attributes['arrivalDate'],
+            'deliveryDate'=> $attributes['deliveryDate'],
+            'departureDate'=> $attributes['departureDate'],
+    ]);
 
     // Ambil user pembuat permintaan
     $requestRoute = RequestRoute::findOrFail($request->requestOffer_id);

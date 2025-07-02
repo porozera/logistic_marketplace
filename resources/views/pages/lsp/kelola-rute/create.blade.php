@@ -92,6 +92,7 @@
                         <label for="departureDate" class="form-label">Departure Date</label>
                         <input type="date" class="form-control" placeholder="Masukkan departure date" name="departureDate" required >
                     </div>
+                    {{-- <input type="hidden" name="etd" id="etd_hidden_darat"> --}}
 
                     <div id="port-section" class="accordion mb-3" style="display: none;">
                         <div class="accordion-item">
@@ -115,7 +116,7 @@
                                     <div class="mb-3">
                                         <label for="cyClosingDate" class="form-label">Container Yard Closing Date</label>
                                         <input type="date" class="form-control" placeholder="Masukkan cyClosingDate" name="cyClosingDate">
-                                        <label for="etd" class="text-primary">*barang sampai di container yard</label>
+                                        <label for="cyClosingDate" class="text-primary">*barang sampai di container yard</label>
                                     </div>
 
                                     <div class="mb-3">
@@ -127,13 +128,13 @@
                                     <div class="mb-3">
                                         <label for="eta" class="form-label">Estimated Time Arrival (ETA)</label>
                                         <input type="date" class="form-control" placeholder="Masukkan ETA" name="eta" id="eta">
-                                        <label for="etd" class="text-primary">*estimasi kedatangan kapal</label>
+                                        <label for="eta" class="text-primary">*estimasi kedatangan kapal</label>
                                     </div>
 
                                     <div class="mb-3" id="form-delivery-date">
                                         <label for="deliveryDate" class="form-label">Delivery date</label>
                                         <input type="date" class="form-control" placeholder="Masukkan ETA" name="deliveryDate">
-                                        <label for="etd" class="text-primary">*pengiriman dari pelabuhan ke tujuan</label>
+                                        <label for="deliveryDate" class="text-primary">*pengiriman dari pelabuhan ke tujuan</label>
                                     </div>
                                 </div>
                             </div>
@@ -388,8 +389,70 @@
                 transportationSelect.addEventListener('change', togglePortSection);
                 shipmentSelect.addEventListener('change', togglePortSection);
             });
+            // Tambahkan event listener hanya satu kali
         </script>
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const transportationSelect = document.querySelector('select[name="transportationMode"]');
+    const shipmentSelect = document.querySelector('select[name="shipmentMode"]');
+    const portSection = document.getElementById('port-section');
+    const portOrigin = document.getElementById('form-port-origin');
+    const deliveryDate = document.getElementById('form-delivery-date');
+    const etaInput = document.getElementById('eta');
+    const arrivalInput = document.getElementById('arrivalDate');
+    const etdInput = document.getElementById('etd');
+    const departureDate = document.querySelector('input[name="departureDate"]');
+    const pickupDate = document.getElementById('pickupDate');
 
+    // Event listener hanya sekali!
+    arrivalInput.addEventListener('input', function () {
+        etaInput.value = arrivalInput.value;
+    });
+    departureDate.addEventListener('input', function () {
+        etdInput.value = departureDate.value;
+    });
 
+    const togglePortSection = () => {
+        if (transportationSelect.value === 'laut' && shipmentSelect.value === 'D2D' ) {
+            portSection.style.display = 'block';
+            portOrigin.style.display = 'block';
+            deliveryDate.style.display = 'block';
+            arrivalInput.disabled = false;
+            pickupDate.style.display = 'block';
+            departureDate.parentElement.style.display = 'block';
+        }else if (transportationSelect.value === 'darat' && shipmentSelect.value === 'D2D'){
+            portSection.style.display = 'none';
+            arrivalInput.disabled = false;
+            pickupDate.style.display = 'block';
+            departureDate.parentElement.style.display = 'block';
+        }else if (shipmentSelect.value === 'D2P') {
+            portSection.style.display = 'block';
+            deliveryDate.style.display = 'none';
+            arrivalInput.disabled = true;
+            pickupDate.style.display = 'block';
+            departureDate.parentElement.style.display = 'block';
+        }else if (shipmentSelect.value === 'P2P') {
+            portSection.style.display = 'block';
+            deliveryDate.style.display = 'none';
+            arrivalInput.disabled = true;
+            pickupDate.style.display = 'none';
+            departureDate.parentElement.style.display = 'none';
+        }else if (shipmentSelect.value === 'P2D') {
+            portSection.style.display = 'block';
+            deliveryDate.style.display = 'block';
+            pickupDate.style.display = 'none';
+            departureDate.parentElement.style.display = 'none';
+            arrivalInput.disabled = false;
+        }
+    };
 
+    // Cek saat halaman dimuat
+    togglePortSection();
+
+    // Event saat dropdown diubah
+    transportationSelect.addEventListener('change', togglePortSection);
+    shipmentSelect.addEventListener('change', togglePortSection);
+});
+
+</script> --}}
 @endsection
