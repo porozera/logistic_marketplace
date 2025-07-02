@@ -511,7 +511,7 @@
                     <input type="text" id="cargoType" name="cargoType" class="form-control"  value="{{ $offer['cargoType'] }}" hidden>
                     <input type="text" id="container_id" name="container_id" class="form-control"  value="{{ $offer['container_id'] }}" hidden>
                   </div>
-                  {{-- <div class="row">
+                  <div class="row">
                     <div class="col">
                       @if ($errors->any())
                       <div class="alert alert-danger w-100">
@@ -523,7 +523,7 @@
                       </div>
                       @endif
                     </div>
-                  </div> --}}
+                  </div>
                   <div class="row">
                     <div class="col-12 text-end">
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Pesan Sekarang</button>

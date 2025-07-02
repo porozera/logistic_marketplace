@@ -143,6 +143,16 @@ class ComplainController extends Controller
             'status' => 'Pending',
         ]);
 
+        Notification::create([
+            'sender_id' => 1,
+            'receiver_id' => 1,
+            'header' => 'Komplain Baru Diterima',
+            'description' => "Komplain dari {$request->username} telah diterima dan menunggu peninjauan.",
+            'is_read' => false,
+            'type' => 'complaint',
+            'related_id' => $complain->id,
+        ]);
+
         return redirect()->route('complain-customer')->with('success', 'Complain submitted successfully.');
     }
 
