@@ -67,7 +67,7 @@
                       <td>{{ $item->code }}</td>
                       <td>{{ $item->name }}</td>
                       <td>{{ $item->type }}</td>
-                      <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">{{ $item->description }}</td>
+                      <td style="max-width: 300px; word-wrap: break-word; white-space: normal;">{{ $item->description }}</td>
                       <td class="text-center">
                         <ul class="list-inline me-auto mb-0">
                           <li class="list-inline-item align-bottom">

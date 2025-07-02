@@ -610,7 +610,7 @@
                   </div>
                     <thead>
                         <tr>
-                            <th class="text-center">NO. ORDER</th>
+                            <th class="text-center">NO. Offer</th>
                             <th class="text-center">PERUSAHAAN</th>
                             <th class="text-center">ASAL</th>
                             <th class="text-center">TUJUAN</th>
@@ -618,32 +618,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($recentOrders as $order)
-                            <tr>
-                                <td class="text-center"><a href="#" class="text-muted">{{ $order->noOffer }}</a></td>
-                                <td class="text-center">{{ $order->lspName }}</td>
-                                <td class="text-center">{{ $order->origin }}</td>
-                                <td class="text-center">{{ $order->destination }}</td>
-                                <td class="text-center">
-                                    @php
-                                        $badgeClass = match($order->status) {
-                                            'Loading Item' => 'bg-light-warning',
-                                            'On The Way' => 'bg-light-primary',
-                                            'Finished' => 'bg-light-success',
-                                            default => 'bg-light-secondary'
-                                        };
-                                    @endphp
-                                    <span class="badge {{ $badgeClass }} rounded-pill f-12">
-                                        {{ $order->status }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center">No recent orders available.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
+                      @forelse ($recentOrders as $order)
+                          <tr>
+                              <td class="text-center">
+                                  <a href="#" class="text-muted">{{ $order->noOffer }}</a>
+                              </td>
+                              <td class="text-center">{{ $order->lsp->companyName ?? '-' }}</td>
+                              <td class="text-center">{{ $order->origin }}</td>
+                              <td class="text-center">{{ $order->destination }}</td>
+                              <td class="text-center">
+                                  @php
+                                      $badgeClass = match($order->status) {
+                                          'Loading Item' => 'bg-light-warning',
+                                          'On The Way' => 'bg-light-primary',
+                                          'Finished' => 'bg-light-success',
+                                          default => 'bg-light-secondary'
+                                      };
+                                  @endphp
+                                  <span class="badge {{ $badgeClass }} rounded-pill f-12">
+                                      {{ $order->status }}
+                                  </span>
+                              </td>
+                          </tr>
+                      @empty
+                          <tr>
+                              <td colspan="5" class="text-center">No recent orders available.</td>
+                          </tr>
+                      @endforelse
+                  </tbody>
                 </table>
                 
                 </div>

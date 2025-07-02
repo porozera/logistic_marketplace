@@ -41,7 +41,7 @@
                   <table id="basic-btn" class="table table-hover nowrap">
                     <thead>
                       <tr>
-                        <th>No Offer</th>
+                        <th>NO OFFER</th>
                         <th>Pengirim</th>
                         <th>Asal</th>
                         <th>Tujuan</th>
