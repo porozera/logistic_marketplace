@@ -451,7 +451,7 @@
                                 <div class="col-12">
                                     <div class="border rounded p-3 bg-white text-center" style="max-width: 400px; margin: auto;">
                                         @if(!empty($userOrder->order->truck_first->picture))
-                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->picture) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
                                         @else
                                             <img src="{{ asset('images/truck-not-found.jpeg') }}" alt="Tidak ada gambar" class="img-fluid rounded" style="max-height: 180px;">
                                         @endif
@@ -506,7 +506,7 @@
                                 <div class="col-12">
                                     <div class="border rounded p-3 bg-white text-center" style="max-width: 400px; margin: auto;">
                                         @if(!empty($userOrder->order->truck_second->picture))
-                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->picture) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
                                         @else
                                             <img src="{{ asset('images/truck-not-found.jpeg') }}" alt="Tidak ada gambar" class="img-fluid rounded" style="max-height: 180px;">
                                         @endif
@@ -562,7 +562,7 @@
                                 <div class="col-12">
                                     <div class="border rounded p-3 bg-white text-center" style="max-width: 400px; margin: auto;">
                                         @if(!empty($userOrder->order->truck_first->picture))
-                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->picture) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
                                         @else
                                             <img src="{{ asset('images/truck-not-found.jpeg') }}" alt="Tidak ada gambar" class="img-fluid rounded" style="max-height: 180px;">
                                         @endif
@@ -621,7 +621,7 @@
                                 <div class="col-12">
                                     <div class="border rounded p-3 bg-white text-center" style="max-width: 400px; margin: auto;">
                                         @if(!empty($userOrder->order->truck_second->picture))
-                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->picture) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
                                         @else
                                             <img src="{{ asset('images/truck-not-found.jpeg') }}" alt="Tidak ada gambar" class="img-fluid rounded" style="max-height: 180px;">
                                         @endif
@@ -706,8 +706,8 @@
                                             <td>
                                                 <p class="mb-0 text-center">
                                                     @if(!empty($userOrder->order->truck_first->picture))
-                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" target="_blank">
-                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_first->picture) }}" target="_blank">
+                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->picture) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
                                                         </a>
                                                     @else
                                                         <a href="{{ asset('images/truck-not-found.jpeg') }}" target="_blank">
@@ -728,8 +728,8 @@
                                             <td>
                                                 <p class="mb-0 text-center">
                                                     @if(!empty($userOrder->order->truck_second->picture))
-                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" target="_blank">
-                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_second->picture) }}" target="_blank">
+                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->picture) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
                                                         </a>
                                                     @else
                                                         <a href="{{ asset('images/truck-not-found.jpeg') }}" target="_blank">
@@ -751,8 +751,8 @@
                                             <td>
                                                 <p class="mb-0 text-center">
                                                     @if(!empty($userOrder->order->truck_first->picture))
-                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" target="_blank">
-                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_first->picture) }}" target="_blank">
+                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_first->picture) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
                                                         </a>
                                                     @else
                                                         <a href="{{ asset('images/truck-not-found.jpeg') }}" target="_blank">
@@ -774,8 +774,8 @@
                                             <td>
                                                 <p class="mb-0 text-center">
                                                     @if(!empty($userOrder->order->truck_second->picture))
-                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" target="_blank">
-                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->photo) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
+                                                        <a href="{{ asset('storage/' . $userOrder->order->truck_second->picture) }}" target="_blank">
+                                                            <img src="{{ asset('storage/' . $userOrder->order->truck_second->picture) }}" alt="Foto Truck 1" class="img-fluid rounded" style="max-height: 180px;">
                                                         </a>
                                                     @else
                                                         <a href="{{ asset('images/truck-not-found.jpeg') }}" target="_blank">

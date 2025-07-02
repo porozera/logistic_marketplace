@@ -53,7 +53,7 @@ class DaftarPenawaranController extends Controller
             ", [$request->maxTime]);
             $searchPerformed = true;
         }
-        $offers = $query->get();
+        $offers = $query->orderBy('created_at', 'desc')->get();
         $services = Service::all();
         $categories = Category::distinct('type')->pluck('type')->toArray();
         $containers = Container::all();
