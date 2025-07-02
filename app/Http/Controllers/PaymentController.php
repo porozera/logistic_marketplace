@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\offersModel;
 use App\Models\Order;
 use App\Models\ServiceOrdered;
@@ -85,7 +86,14 @@ class PaymentController extends Controller
                 $order->save();
             }
         }
-    
+
+        Notification::create([
+            'sender_id' => $userOrder->user_id,
+            'receiver_id' => $userOrder->order->lsp_id,
+            'header' => 'Pemesanan Baru Diterima!',
+            'description' => 'Ada pemesanan pengiriman baru dari '.  $userOrder->user->firstName,
+        ]);
+
         $userOrderItem = $userOrder;
         $orderItem = Order::find($userOrder->order_id);
     

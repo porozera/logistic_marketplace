@@ -83,7 +83,7 @@
                             <div class="d-flex align-items-center gap-2">
                                 <h5 class="mb-0 fw-bold">{{ $offer->user->companyName}}</h5>
                                 <i class="fas fa-star text-warning"></i>
-                                <h5 class="mb-0 fw-bold">5.0</h5>
+                                <h5 class="mb-0 fw-bold">{{ $offer->user->rating}}</h5>
                             </div>
                         </div>
             
