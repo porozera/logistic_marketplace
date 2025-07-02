@@ -97,10 +97,11 @@ class BidController extends Controller
             'arrivalDate' => 'nullable|date',
             'deliveryDate' => 'nullable|date',
             'departureDate' => 'nullable|date',
+            'cargoType' => 'required|string',
     ]);
-    $category = Category::where('name', $request['commodities'])->first();
-        // dd($attributes['commodities'], $category);
-    $cargoType = $category->type ?? null;
+    // $category = Category::where('name', $request['cargoType'])->first();
+    //     // dd($attributes['commodities'], $category);
+    // $cargoType = $category->type ?? null;
     $noOffer = 'BID-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
 
     if (empty($attributes['etd']) &&
@@ -140,7 +141,7 @@ class BidController extends Controller
             'is_for_customer' => 1,
             'is_for_lsp' => $attributes['shipmentType'] === 'LCL' ? 1 : 0,
             'timestamp' => now(),
-            // 'cargoType' => $cargoType,
+            'cargoType' => $attributes['cargoType'],
             'portOrigin'=> $attributes['portOrigin'],
             'portDestination'=> $attributes['portDestination'],
             'transportationMode'=> $attributes['transportationMode'],
