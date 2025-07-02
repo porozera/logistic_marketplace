@@ -260,7 +260,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':lsp'])->group(function () {
         Route::get('/', [OrderLspController::class, 'manageOrder'])->name('order-management.index');
         // Route::get('/{id}', [OrderLspController::class, 'show'])->name('order-management.show');
         // Route::put('/{id}', [OrderLspController::class, 'update'])->name('order-management.update');
-        Route::get('/{id}', [OrderLspController::class, 'showOffer'])->name('order-management.showOffer');
+        Route::get('/detail/{id}', [OrderLspController::class, 'showOffer'])->name('order-management.showOffer');
+        Route::put('/update/{id}', [OrderLspController::class, 'updateStatus'])->name('order-management.updateStatus');
     });
 
     // Bids List
