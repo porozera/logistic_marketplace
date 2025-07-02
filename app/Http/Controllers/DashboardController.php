@@ -20,7 +20,8 @@ class DashboardController extends Controller
         $totalOrder = Order::count();
         $totalAmount = Order::sum('totalAmount');
         // Ambil 10 data order terakhir
-        $recentOrders = Order::latest()->take(10)->get();
+        $recentOrders = Order::with('lsp')->latest()->take(10)->get();
+
 
         return view('pages.admin.dashboards.dashboard', compact(
             'totalCustomer',
