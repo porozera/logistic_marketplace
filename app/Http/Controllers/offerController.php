@@ -113,6 +113,7 @@ class offerController extends Controller
             'arrivalDate' => 'nullable|date',
             'deliveryDate' => 'nullable|date',
             'departureDate' => 'nullable|date',
+            'cargoType' => 'required',
         ]);
         $noOffer = 'OFR-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
         // $category = Category::where('name', $attributes['commodities'])->first();
@@ -151,7 +152,7 @@ class offerController extends Controller
             'is_for_customer' => 1,
             'is_for_lsp' => $attributes['shipmentType'] === 'LCL' ? 1 : 0,
             'timestamp' => now(),
-            // 'cargoType' => $cargoType,
+            'cargoType' => $attributes['cargoType'],
             'portOrigin'=> $attributes['portOrigin'],
             'portDestination'=> $attributes['portDestination'],
             'transportationMode'=> $attributes['transportationMode'],
