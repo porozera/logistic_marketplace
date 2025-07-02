@@ -249,16 +249,36 @@ class OrderLspController extends Controller
         //     ->orderBy('created_at', 'desc')
         //     ->paginate(10);
         // return view('pages.lsp.manage-order.index', compact('userOrders'));
+
         $orders = Order::where('lsp_id', Auth::user()->id)->latest()->get();
+        // $request->validate([
+        //     'status' => 'in:Loading Item,On The Way,Finished',
+        // ]);
+        // $orders->update([
+        //     'status' => $request['status']
+        // ]);
         return view('pages.lsp.manage-order.index', compact('orders'));
     }
+
 
     public function showOffer($id)
     {
         $order = Order::findOrFail($id);
         $userOrders = UserOrder::where('order_id', $id)->get();
 
-    return view('pages.lsp.manage-order.show', compact('order', 'userOrders'));
+        return view('pages.lsp.manage-order.show', compact('order', 'userOrders'));
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        // dd($request->all());
+        $request->validate([
+            'status' => 'required|in:Loading Item,On The Way,Finished',
+        ]);
+
+        $order = Order::findOrFail($id);
+        $order->update(['status' => $request->status]);
+
+        return redirect()->route('order-management.showOffer', $order->id)->with('success', 'Status order berhasil diperbarui.');
+    }
 }

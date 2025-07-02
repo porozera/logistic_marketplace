@@ -98,21 +98,35 @@
                         </div>
                     </div>
 
-                    <!-- Dates Info -->
+                    <!-- Dates and Status Info -->
                     <div class="row align-items-center mt-4">
-                        <div class="col-md-8 d-flex align-items-center justify-content-start gap-5">
-                            <div>
-                                <h6 class="mb-1 text-muted">Tanggal Muat:</h6>
-                                <h5 class="mb-0 text-primary fw-semibold">
-                                    {{ \Carbon\Carbon::parse($order->pickupDate)->translatedFormat('l, d F Y') }}
-                                </h5>
-                            </div>
-                            <div>
-                                <h6 class="mb-1 text-muted">Tanggal Pengiriman:</h6>
-                                <h5 class="mb-0 text-primary fw-semibold">
-                                    {{ \Carbon\Carbon::parse($order->deliveryDate)->translatedFormat('l, d F Y') }}
-                                </h5>
-                            </div>
+                        <div class="col-md-4">
+                            <h6 class="mb-1 text-muted">Tanggal Muat:</h6>
+                            <h5 class="mb-0 text-primary fw-semibold">
+                                {{ \Carbon\Carbon::parse($order->pickupDate)->translatedFormat('l, d F Y') }}
+                            </h5>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="mb-1 text-muted">Tanggal Pengiriman:</h6>
+                            <h5 class="mb-0 text-primary fw-semibold">
+                                {{ \Carbon\Carbon::parse($order->deliveryDate)->translatedFormat('l, d F Y') }}
+                            </h5>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="mb-1 text-muted">Status Pengiriman:</h6>
+                            <form action="{{ route('order-management.updateStatus', $order->id) }}" method="POST" class="d-flex align-items-center gap-2">
+                                @csrf
+                                @method('PUT')
+                                <select name="status" class="form-control form-control-sm" style="border-radius: 8px; min-width: 140px;" required>
+                                    <option value="Loading Item" {{ $order->status == 'Loading Item' ? 'selected' : '' }}>Loading Item</option>
+                                    <option value="On The Way" {{ $order->status == 'On The Way' ? 'selected' : '' }}>On The Way</option>
+                                    <option value="Finished" {{ $order->status == 'Finished' ? 'selected' : '' }}>Finished</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm" style="border-radius: 8px; white-space: nowrap;">
+                                    <i class="ti ti-check me-1"></i>
+                                    Update
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -243,5 +257,22 @@
             </div>
         </div>
     </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                showConfirmButton: true, // Menampilkan tombol "OK"
+                confirmButtonText: "OK", // Label tombol
+                confirmButtonColor: "#3085d6", // Warna tombol OK
+            });
+        @endif
+    });
+</script>
 
 @endsection
