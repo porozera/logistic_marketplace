@@ -170,6 +170,16 @@
                                 @endforeach
                             </select>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="cargoType" class="form-label">Tipe Muatan</label>
+                        <select name="cargoType" class="form-control" required>
+                            <option value="General Cargo">General Cargo</option>
+                            <option value="Special Cargo">Special Cargo</option>
+                            <option value="Dangerous Cargo">Dangerous Cargo</option>
+                        </select>
+                    </div>
+
                     <div id="container-info" class="card p-3 mt-3" style="display: none;">
                         <h5>Detail Container</h5>
                         <hr>
