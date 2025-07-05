@@ -371,11 +371,11 @@
                                 <h5 class="mb-0"><strong>Total Tagihan: Rp. {{ number_format($userOrder->totalPrice, 0, ',', '.') }}</strong></h5>
                                 </td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td class="no-border text-end">
                                 <h5 class="mb-0"><strong>Total Tagihan dengan PPn (11%): Rp. {{ number_format($userOrder->totalPrice+($userOrder->totalPrice*11/100), 0, ',', '.') }}</strong></h5>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </table>
 
                         <br><br>
